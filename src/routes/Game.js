@@ -22,7 +22,7 @@ function Game() {
   if (isLoading) {
     return (
         <div className="App">
-            <h1>loading game</h1>
+            <h1>loading new game</h1>
         </div>
     )
   } else {
