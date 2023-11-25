@@ -1,7 +1,25 @@
 import logo from './logo.svg';
-import './App.css';
+import './styles/App.css'
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Champion from './components/Champion';
+
+const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 
 function App() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(`${BASE_URL}champion/all`);
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -16,6 +34,7 @@ function App() {
           rel="noopener noreferrer"
         >
         </a>
+        {data.map(champion => <Champion champion={champion} key={champion.key}/>)}
       </header>
     </div>
   );
