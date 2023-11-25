@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/App.css'
+import GameField from '../components/GameField';
 
 function Game() {
   const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
@@ -35,6 +36,23 @@ function Game() {
           {data.map(gameoption => 
           <p>{gameoption[0].category}: {gameoption[0].name} // {gameoption[1].category}: {gameoption[1].name}</p>
           )}
+        </div>
+        <div className='game-board'>
+          <div className='game-row'>
+            <GameField />
+            <GameField />
+            <GameField />
+          </div>
+          <div className='game-row'>
+            <GameField />
+            <GameField />
+            <GameField />
+          </div>
+          <div className='game-row'>
+            <GameField />
+            <GameField />
+            <GameField />
+          </div>
         </div>
       </div>
     );
