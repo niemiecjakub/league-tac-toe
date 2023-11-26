@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-function InputAutofill({
-  label,
-  pholder,
-  data,
-  onSelected,
-  onChange
-}) {
+function InputAutofill({label, pholder, data, onSelected}) {
   const [suggestions, setSugesstions] = useState([]);
   const [isHideSuggs, setIsHideSuggs] = useState(false);
   const [selectedVal, setSelectedVal] = useState("");
@@ -16,10 +10,9 @@ function InputAutofill({
   };
 
   const handleChange = e => {
-    const input = e.target.value;
+    const input = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1).toLowerCase()
     setIsHideSuggs(false);
     setSelectedVal(input);
-    onChange(input);
   };
 
   const hideSuggs = value => {
