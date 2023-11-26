@@ -27,7 +27,10 @@ function GameField({cat : [category, othercategory], championNamesList}) {
 
   return (
     <>
-      <div className="square" onClick={() => setOpen(o => !o)}>
+      <div className="square" 
+        onClick={() => setOpen(o => !o)} 
+        style={{backgroundImage: currentChampion ? `url(icons/${currentChampion}.png)` :`url(icons/default.png)` , backgroundSize: "cover" }}
+      >
         <button onClick={() => setOpen(o => !o)}>
             <p>{category.category} : {category.name}</p>
             <p>{othercategory.category} : {othercategory.name}</p>
