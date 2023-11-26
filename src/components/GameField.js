@@ -1,27 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import InputAutofill from './InputAutofill'
 import '../styles/App.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentPlayer, setPlayerField } from '../redux/slices/GameSlice';
 
 const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 
-function GameField({cat : [category, othercategory], championNamesList}) {
+function GameField({id, cat : [category, othercategory]}) {
   const [open, setOpen] = useState(false);
   const [currentChampion, setCurrentChampion] = useState('');
+  const [championHistory, setChampionHistory] = useState([]);
   const closeModal = () => setOpen(false);
-  
+  const dispatch = useDispatch()
+
+  const {championNamesList, currentPlayer} = useSelector(state => state.GameReducer)
 
   const getSelectedVal = async (value) => {
+    console.log("fieldId", id)
     const {data: {name}} = await axios(`${BASE_URL}champion/name/${value}`);
     const {data: {champions}} = await axios(`${BASE_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
     console.log(name, champions)
-    if (champions.includes(name)) {
-      console.log("HIT")
+    if (champions.includes(name) && !championHistory.includes(name)) {
       setCurrentChampion(name)
-    } else {
-      console.log("MISS")
+      setChampionHistory(history => [...history, name])
+      dispatch(setPlayerField({
+        player: currentPlayer,
+        fieldId: id
+      }))
     }
+    dispatch(setCurrentPlayer())
     setOpen(o => !o)
   };
 
