@@ -8,11 +8,11 @@ import { getNewGameData } from '../redux/slices/GameSlice';
 function Game() {
   const dispatch = useDispatch()
 
-  const { isLoadingGame } = useSelector(state => state.GameReducer)
+  const { isLoadingGame, isGameOver } = useSelector(state => state.GameReducer)
 
   useEffect(() => {
     dispatch(getNewGameData())
-  }, [dispatch]);
+  }, [dispatch, isGameOver]);
 
   const startNewGame = () => {
     dispatch(getNewGameData())

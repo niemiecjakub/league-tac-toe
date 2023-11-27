@@ -9,6 +9,7 @@ const compareArrays = (a, b) => {
 
 const initialState = {
     gameMode : 'Same screen',
+    isGameOver : false,
     isLoadingGame : true,
     player1: {
         name: "Player 1",
@@ -79,15 +80,15 @@ const GameSlice = createSlice({
             state.possibleFields[fieldId] = champions
         },
         setPlayerField : (state, action) => {
-            const {fieldId} = action.payload
+            const id = action.payload
             const currentPlayer = state.currentPlayer.name === "Player 1" ? state.player1 : state.player2
             const otherPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
-            const index = otherPlayer.fields.indexOf(fieldId)
+            const index = otherPlayer.fields.indexOf(id)
             if (index > -1) { 
                 otherPlayer.fields.splice(index, 1);
                 currentPlayer.steals -= 1;
             }
-            currentPlayer.fields.push(fieldId)
+            currentPlayer.fields.push(id)
         },
         checkWin: (state, action) => {
             const player = state.currentPlayer.name === "Player 1" ? state.player1 : state.player2
@@ -95,7 +96,16 @@ const GameSlice = createSlice({
 
             WNNING_CONDITIONS.forEach(winningCondition => {
                 if (compareArrays(winningCondition, playerFieldsSorted)) {
-                    player.score += 1
+                    const otherPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
+
+                    player.score += 1;
+                    player.fields = []
+                    player.steals = 3
+
+                    otherPlayer.fields = []
+                    otherPlayer.steals = 3
+
+                    state.isGameOver = true
                 }
             })
         },
@@ -117,6 +127,7 @@ const GameSlice = createSlice({
       })
       builder.addCase(getNewGameData.fulfilled, (state, action) => {
         state.isLoadingGame = false
+        state.isGameOver = false
 
         const {possibleFields,horizontal, vertical, list} = action.payload
         state.possibleFields = possibleFields

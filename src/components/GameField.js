@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import InputAutofill from './InputAutofill'
 import '../styles/App.css'
 import { CHAMPION_API_URL, CHAMPION_NAME_LIST } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayerField, checkWin } from '../redux/slices/GameSlice';
+import { setCurrentPlayer, setPlayerField, checkWin, getNewGameData } from '../redux/slices/GameSlice';
 
-function GameField({id, cat : [category, othercategory]}) {
+function GameField({fieldId}) {
 
   const [open, setOpen] = useState(false);
   const [currentChampion, setCurrentChampion] = useState('');
@@ -17,27 +17,26 @@ function GameField({id, cat : [category, othercategory]}) {
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
 
-  const { currentPlayer, player1, player2, possibleFields } = useSelector(state => state.GameReducer)
+  const { currentPlayer, player1, player2, possibleFields, isGameOver } = useSelector(state => state.GameReducer)
 
   const getSelectedVal = async (value) => {
     const {data: {name}} = await axios(`${CHAMPION_API_URL}champion/name/${value}`);
-    console.log(name, possibleFields[id])
-    if (possibleFields[id].includes(name) && !championHistory.includes(name)) {
+    console.log(name, possibleFields[fieldId])
+
+    if (possibleFields[fieldId].includes(name) && !championHistory.includes(name)) {
       setBelongsTo(currentPlayer.name)
       setCurrentChampion(name)
       setChampionHistory(history => [...history, name])
-      dispatch(setPlayerField({
-        fieldId: id,
-      }))
-      dispatch(checkWin())
     }
+    dispatch(setPlayerField(fieldId))
+    dispatch(checkWin())
     dispatch(setCurrentPlayer())
     setOpen(o => !o)
   };
 
   const isFieldDisabled = () => {
     const player = currentPlayer.name === "Player 1" ? player1 : player2
-    if (player.fields.includes(id)) {
+    if (player.fields.includes(fieldId)) {
       return true
     }
     return false
