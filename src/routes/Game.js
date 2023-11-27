@@ -1,57 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import '../styles/App.css'
 import Board from '../components/Board';
 import GameInfo from '../components/GameInfo';
-import { useDispatch } from 'react-redux'
-import { CHAMPION_API_URL } from '../constants';
-import { 
-  setGameFields, 
-  setHorizontalFields, 
-  setVerticalFields, 
-  setPossibleFields} from '../redux/slices/GameSlice';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getNewGameData } from '../redux/slices/GameSlice';
 
 function Game() {
-  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch()
-  
+
+  const { isLoadingGame } = useSelector(state => state.GameReducer)
+
   useEffect(() => {
-    const fetchData = async () => {
-      const {data: {data : {horizontal, vertical}, list}} = await axios(`${CHAMPION_API_URL}game-start`);
+    dispatch(getNewGameData())
+  }, [dispatch]);
 
-      list.map(async (gameOption, index) => {
-        const [category, othercategory] = gameOption
-        const {data: {champions}} = await axios(`${CHAMPION_API_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
-        dispatch(setPossibleFields({
-          champions,
-          fieldId: index
-        }))
-      });
-
-      dispatch(setHorizontalFields(horizontal))
-      dispatch(setVerticalFields(vertical))
-      dispatch(setGameFields(list))
-
-      setIsLoading(false)
-    };
-    fetchData();
-  }, []);
-
-  if (isLoading) {
-    return (
-        <div className="App">
-            <h1>loading new game</h1>
-        </div>
-    )
-  } else {
-    return (
-      <div className="App">
-        <GameInfo />
-        <Board />
-      </div>
-    );
+  const startNewGame = () => {
+    dispatch(getNewGameData())
   }
+
+  return (
+    <div className="App">
+      {
+        isLoadingGame ? (
+          <h1>loading new game</h1>
+        )
+        :
+        (
+          <>
+            <button onClick={startNewGame}> start new game </button>
+            <GameInfo />
+            <Board />
+          </>
+        )
+      }
+    </div>
+  )
 }
 
 export default Game;

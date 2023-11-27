@@ -1,11 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { WNNING_CONDITIONS } from '../../constants';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { WNNING_CONDITIONS, CHAMPION_API_URL } from '../../constants';
+import axios from 'axios';
+
+
 const compareArrays = (a, b) => {
     return a.length === b.length && a.every((element, index) => element === b[index]);
 }
 
 const initialState = {
     gameMode : 'Same screen',
+    isLoadingGame : true,
     player1: {
         name: "Player 1",
         fields: [],
@@ -28,6 +32,27 @@ const initialState = {
         vertical: []
     }
 }
+
+export const getNewGameData = createAsyncThunk(
+  'game/getNewGameData',
+  async (param, thunkAPI) => {
+    const {data: {data : {horizontal, vertical}, list}} = await axios(`${CHAMPION_API_URL}game-start`);
+  
+    const listOfPromises = Promise.all(list.map(async (combinedCategories) => {
+      const [category, othercategory] = combinedCategories
+      const {data: {champions}} = await axios(`${CHAMPION_API_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
+      return  champions
+    }))
+
+    const possibleFields = await listOfPromises
+    return {
+      possibleFields,
+      horizontal, 
+      vertical, 
+      list}
+  }
+)
+
 
 const GameSlice = createSlice({
     name: "Game",
@@ -84,10 +109,28 @@ const GameSlice = createSlice({
                 score: state.player2.score + 1
             }
             state.currentPlayer = initialState.currentPlayer
-        },
-    }
-}) 
+        }
+    }, 
+    extraReducers: (builder) => {
+      builder.addCase(getNewGameData.pending, (state) => {
+        state.isLoadingGame = true
+      })
+      builder.addCase(getNewGameData.fulfilled, (state, action) => {
+        state.isLoadingGame = false
 
+        const {possibleFields,horizontal, vertical, list} = action.payload
+        state.possibleFields = possibleFields
+        state.gameFields = list
+        state.categoryFields.vertical = vertical
+        state.categoryFields.horizontal = horizontal
+      })
+      builder.addCase(getNewGameData.rejected, (state, action) => {
+        state.isLoadingGame = false
+        state.error = action.error.message
+      })
+    },                                                                                                      
+}) 
+                                    
 export const {
     setCurrentPlayer, 
     setGameMode, 

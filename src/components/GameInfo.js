@@ -2,12 +2,18 @@ import '../styles/App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { 
   setCurrentPlayer,
-  endAsDraw } from '../redux/slices/GameSlice';
+  endAsDraw,
+  getNewGameData } from '../redux/slices/GameSlice';
 
 function GameInfo() {
   const dispatch = useDispatch()
   const {currentPlayer, gameMode, player1, player2} = useSelector(state => state.GameReducer)
 
+  const endDraw = () => {
+    dispatch(endAsDraw())
+    dispatch(getNewGameData())
+  }
+  
   return (
     <>
       <h1>
@@ -25,7 +31,7 @@ function GameInfo() {
       <h1>
         Current Player: {currentPlayer.name}
       </h1>
-      <button onClick={() => dispatch(endAsDraw())}> End as draw </button>
+      <button onClick={endDraw}> End as draw </button>
       <button onClick={() => dispatch(setCurrentPlayer())}> Skip turn </button>
     </>
   )
