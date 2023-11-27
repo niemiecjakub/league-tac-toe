@@ -6,10 +6,12 @@ const initialState = {
     championNamesList: [],
     player1: {
         fields: [],
+        steals:3,
         score: 0
     },
     player2 : {
         fields: [],
+        steals:3,
         score: 0
     },
     gameFields: [],
@@ -45,8 +47,18 @@ const GameSlice = createSlice({
         setPlayerField : (state, action) => {
             const {player, fieldId} = action.payload
             if (player === "Player 1") {
+                const index = state.player2.fields.indexOf(fieldId)
+                if (index > -1) { 
+                    state.player2.fields.splice(index, 1);
+                    state.player1.steals -= 1;
+                  }
                 state.player1.fields.push(fieldId)
             } else {
+                const index = state.player1.fields.indexOf(fieldId)
+                if (index > -1) { 
+                    state.player1.fields.splice(index, 1); 
+                    state.player2.steals -= 1;
+                  }
                 state.player2.fields.push(fieldId)
             }
         }

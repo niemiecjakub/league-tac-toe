@@ -40,6 +40,14 @@ function Game() {
     fetchData();
   }, []);
 
+  
+  useEffect(() => {
+    if (player1.fields.length > 0) {
+      console.log(player1.fields.sort())
+    }
+  },[player1, player2])
+
+
   if (isLoading) {
     return (
         <div className="App">
@@ -55,9 +63,11 @@ function Game() {
         <h1>Player 1 ({player1.score}) - ({player2.score}) Player 2</h1>
         <div>
           <h1>Player 1 ({player1.fields})</h1>
+          <h1>Player 2 ({player2.fields})</h1>
         </div>
         <div>
-          <h1>Player 2 ({player2.fields})</h1>
+          <h1>Player 1 remaining steams ({player1.steals})</h1>
+          <h1>Player 2 remaining steams ({player2.steals})</h1>
         </div>
         <h1>
           Current Player: {currentPlayer}

@@ -11,11 +11,11 @@ const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 function GameField({id, cat : [category, othercategory]}) {
   const [open, setOpen] = useState(false);
   const [currentChampion, setCurrentChampion] = useState('');
-  const [championHistory, setChampionHistory] = useState([]);
+  const [championHistory, setChampionHistory] = useState(['']);
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
 
-  const {championNamesList, currentPlayer} = useSelector(state => state.GameReducer)
+  const {championNamesList, currentPlayer, player1, player2} = useSelector(state => state.GameReducer)
 
   const getSelectedVal = async (value) => {
     console.log("fieldId", id)
@@ -34,13 +34,26 @@ function GameField({id, cat : [category, othercategory]}) {
     setOpen(o => !o)
   };
 
+  const isFieldDisabled = () => {
+    if (currentPlayer == "Player 1") {
+      if(player1.fields.includes(id)) {
+        return true
+      }
+    } else{
+      if(player2.fields.includes(id)) {
+        return true
+      }
+    }
+    return false
+  }
+
   return (
     <>
       <div className="square" 
         onClick={() => setOpen(o => !o)} 
         style={{backgroundImage: currentChampion ? `url(icons/${currentChampion}.png)` :`url(icons/default.png)` , backgroundSize: "cover" }}
       >
-        <button onClick={() => setOpen(o => !o)}>
+        <button onClick={() => setOpen(o => !o)} disabled={isFieldDisabled()}>
             <p>{category.category} : {category.name}</p>
             <p>{othercategory.category} : {othercategory.name}</p>
             <p>{currentChampion}</p>
