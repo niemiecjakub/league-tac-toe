@@ -40,14 +40,6 @@ function Game() {
     fetchData();
   }, []);
 
-  
-  useEffect(() => {
-    if (player1.fields.length > 0) {
-      console.log(player1.fields.sort())
-    }
-  },[player1, player2])
-
-
   if (isLoading) {
     return (
         <div className="App">
@@ -70,7 +62,7 @@ function Game() {
           <h1>Player 2 remaining steams ({player2.steals})</h1>
         </div>
         <h1>
-          Current Player: {currentPlayer}
+          Current Player: {currentPlayer.name}
         </h1>
         <div className='game-board'>
           <div className='game-row'>
@@ -81,21 +73,21 @@ function Game() {
           </div>
           <div className='game-row'>
             <CategoryField cat={vertical[0]}/>
-            <GameField id="0" cat={gameFields[0]} />
-            <GameField id="1" cat={gameFields[1]} />
-            <GameField id="2" cat={gameFields[2]} />
+            <GameField id={0} cat={gameFields[0]} />
+            <GameField id={1} cat={gameFields[1]} />
+            <GameField id={2} cat={gameFields[2]} />
           </div>
           <div className='game-row'>
             <CategoryField cat={vertical[1]}/>
-            <GameField id="3" cat={gameFields[3]} />
-            <GameField id="4" cat={gameFields[4]} />
-            <GameField id="5" cat={gameFields[5]} />
+            <GameField id={3} cat={gameFields[3]} />
+            <GameField id={4} cat={gameFields[4]} />
+            <GameField id={5} cat={gameFields[5]} />
           </div>
           <div className='game-row'>
             <CategoryField cat={vertical[2]}/>
-            <GameField id="6" cat={gameFields[6]} />
-            <GameField id="7" cat={gameFields[7]} />
-            <GameField id="8" cat={gameFields[8]} />
+            <GameField id={6} cat={gameFields[6]} />
+            <GameField id={7} cat={gameFields[7]} />
+            <GameField id={8} cat={gameFields[8]} />
           </div>
         </div>
       </div>

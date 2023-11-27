@@ -4,7 +4,7 @@ import Popup from 'reactjs-popup';
 import InputAutofill from './InputAutofill'
 import '../styles/App.css'
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayerField } from '../redux/slices/GameSlice';
+import { setCurrentPlayer, setPlayerField, checkWin } from '../redux/slices/GameSlice';
 
 const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 
@@ -18,31 +18,28 @@ function GameField({id, cat : [category, othercategory]}) {
   const {championNamesList, currentPlayer, player1, player2} = useSelector(state => state.GameReducer)
 
   const getSelectedVal = async (value) => {
-    console.log("fieldId", id)
     const {data: {name}} = await axios(`${BASE_URL}champion/name/${value}`);
     const {data: {champions}} = await axios(`${BASE_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
     console.log(name, champions)
     if (champions.includes(name) && !championHistory.includes(name)) {
       setCurrentChampion(name)
       setChampionHistory(history => [...history, name])
+
       dispatch(setPlayerField({
-        player: currentPlayer,
-        fieldId: id
+        fieldId: id,
       }))
+      dispatch(checkWin())
+
     }
+
     dispatch(setCurrentPlayer())
     setOpen(o => !o)
   };
 
   const isFieldDisabled = () => {
-    if (currentPlayer == "Player 1") {
-      if(player1.fields.includes(id)) {
-        return true
-      }
-    } else{
-      if(player2.fields.includes(id)) {
-        return true
-      }
+    const player = currentPlayer.name === "Player 1" ? player1 : player2
+    if (player.fields.includes(id)) {
+      return true
     }
     return false
   }
