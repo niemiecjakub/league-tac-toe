@@ -11,7 +11,7 @@ const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 function GameField({id, cat : [category, othercategory]}) {
   const [open, setOpen] = useState(false);
   const [currentChampion, setCurrentChampion] = useState('');
-  const [championHistory, setChampionHistory] = useState(['']);
+  const [championHistory, setChampionHistory] = useState([]);
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
 
