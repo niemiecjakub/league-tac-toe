@@ -15,21 +15,18 @@ function GameField({id, cat : [category, othercategory]}) {
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
 
-  const {championNamesList, currentPlayer, player1, player2} = useSelector(state => state.GameReducer)
+  const {championNamesList, currentPlayer, player1, player2, possibleFields} = useSelector(state => state.GameReducer)
 
   const getSelectedVal = async (value) => {
     const {data: {name}} = await axios(`${BASE_URL}champion/name/${value}`);
-    const {data: {champions}} = await axios(`${BASE_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
-    console.log(name, champions)
-    if (champions.includes(name) && !championHistory.includes(name)) {
+    console.log(name, possibleFields[id])
+    if (possibleFields[id].includes(name) && !championHistory.includes(name)) {
       setCurrentChampion(name)
       setChampionHistory(history => [...history, name])
-
       dispatch(setPlayerField({
         fieldId: id,
       }))
       dispatch(checkWin())
-
     }
 
     dispatch(setCurrentPlayer())

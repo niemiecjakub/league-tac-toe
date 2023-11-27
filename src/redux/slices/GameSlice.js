@@ -1,5 +1,171 @@
 import { createSlice, current } from "@reduxjs/toolkit";
-
+const championList = [
+    "Aatrox",
+    "Ahri",
+    "Akali",
+    "Akshan",
+    "Alistar",
+    "Amumu",
+    "Anivia",
+    "Annie",
+    "Aphelios",
+    "Ashe",
+    "Aurelion sol",
+    "Azir",
+    "Bard",
+    "Bel'veth",
+    "Blitzcrank",
+    "Brand",
+    "Braum",
+    "Briar",
+    "Caitlyn",
+    "Camille",
+    "Cassiopeia",
+    "Cho'gath",
+    "Corki",
+    "Darius",
+    "Diana",
+    "Draven",
+    "Dr. mundo",
+    "Ekko",
+    "Elise",
+    "Evelynn",
+    "Ezreal",
+    "Fiddlesticks",
+    "Fiora",
+    "Fizz",
+    "Galio",
+    "Gangplank",
+    "Garen",
+    "Gnar",
+    "Gragas",
+    "Graves",
+    "Gwen",
+    "Hecarim",
+    "Heimerdinger",
+    "Illaoi",
+    "Irelia",
+    "Ivern",
+    "Janna",
+    "Jarvan iv",
+    "Jax",
+    "Jayce",
+    "Jhin",
+    "Jinx",
+    "Kai'sa",
+    "Kalista",
+    "Karma",
+    "Karthus",
+    "Kassadin",
+    "Katarina",
+    "Kayle",
+    "Kayn",
+    "Kennen",
+    "Kha'zix",
+    "Kindred",
+    "Kled",
+    "Kog'maw",
+    "K'sante",
+    "Leblanc",
+    "Lee sin",
+    "Leona",
+    "Lillia",
+    "Lissandra",
+    "Lucian",
+    "Lulu",
+    "Lux",
+    "Malphite",
+    "Malzahar",
+    "Maokai",
+    "Master yi",
+    "Milio",
+    "Miss fortune",
+    "Wukong",
+    "Mordekaiser",
+    "Morgana",
+    "Naafiri",
+    "Nami",
+    "Nasus",
+    "Nautilus",
+    "Neeko",
+    "Nidalee",
+    "Nilah",
+    "Nocturne",
+    "Nunu & willump",
+    "Olaf",
+    "Orianna",
+    "Ornn",
+    "Pantheon",
+    "Poppy",
+    "Pyke",
+    "Qiyana",
+    "Quinn",
+    "Rakan",
+    "Rammus",
+    "Rek'sai",
+    "Rell",
+    "Renata glasc",
+    "Renekton",
+    "Rengar",
+    "Riven",
+    "Rumble",
+    "Ryze",
+    "Samira",
+    "Sejuani",
+    "Senna",
+    "Seraphine",
+    "Sett",
+    "Shaco",
+    "Shen",
+    "Shyvana",
+    "Singed",
+    "Sion",
+    "Sivir",
+    "Skarner",
+    "Sona",
+    "Soraka",
+    "Swain",
+    "Sylas",
+    "Syndra",
+    "Tahm kench",
+    "Taliyah",
+    "Talon",
+    "Taric",
+    "Teemo",
+    "Thresh",
+    "Tristana",
+    "Trundle",
+    "Tryndamere",
+    "Twisted fate",
+    "Twitch",
+    "Udyr",
+    "Urgot",
+    "Varus",
+    "Vayne",
+    "Veigar",
+    "Vel'koz",
+    "Vex",
+    "Vi",
+    "Viego",
+    "Viktor",
+    "Vladimir",
+    "Volibear",
+    "Warwick",
+    "Xayah",
+    "Xerath",
+    "Xin zhao",
+    "Yasuo",
+    "Yone",
+    "Yorick",
+    "Yuumi",
+    "Zac",
+    "Zed",
+    "Zeri",
+    "Ziggs",
+    "Zilean",
+    "Zoe",
+    "Zyra"
+    ]
 const winningConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -17,7 +183,7 @@ const compareArrays = (a, b) => {
 
 const initialState = {
     gameMode : 'Same screen',
-    championNamesList: [],
+    championNamesList: championList,
     player1: {
         name: "Player 1",
         fields: [],
@@ -34,6 +200,7 @@ const initialState = {
         name: "Player 1"
     },
     gameFields: [],
+    possibleFields: new Array(8),
     categoryFields: {
         horizontal: [],
         vertical: []
@@ -51,9 +218,6 @@ const GameSlice = createSlice({
         setGameMode : (state, action) => {
             state.gameMode = action.payload
         },
-        setChampionNamesList : (state, action) => {
-            state.championNamesList = action.payload
-        },
         setHorizontalFields : (state, action) => {
             state.categoryFields.horizontal = action.payload
         },
@@ -62,6 +226,10 @@ const GameSlice = createSlice({
         },
         setGameFields : (state, action) => {
             state.gameFields = action.payload
+        },
+        setPossibleFields : (state, action) => {
+            const {champions, fieldId} = action.payload
+            state.possibleFields[fieldId] = champions
         },
         setPlayerField : (state, action) => {
             const {fieldId} = action.payload
@@ -75,19 +243,38 @@ const GameSlice = createSlice({
             currentPlayer.fields.push(fieldId)
         },
         checkWin: (state, action) => {
-            const playerFields = state.currentPlayer.name == "Player 1" ? state.player1 : state.player2
-            const playerFieldsSorted = playerFields.fields.toSorted();
+            const player = state.currentPlayer.name == "Player 1" ? state.player1 : state.player2
+            const playerFieldsSorted = player.fields.toSorted();
 
             winningConditions.forEach(winningCondition => {
                 if (compareArrays(winningCondition, playerFieldsSorted)) {
-                    console.log("win")
+                    player.score += 1
                 }
             })
-
-        }
+        },
+        endAsDraw: (state, action) => {
+            state.player1 = {
+                ...initialState.player1,
+                score: state.player1.score + 1
+            }
+            state.player2 = {
+                ...initialState.player2,
+                score: state.player2.score + 1
+            }
+            state.currentPlayer = initialState.currentPlayer
+        },
     }
 }) 
 
-export const {setCurrentPlayer, setGameMode, setChampionNamesList, setHorizontalFields, setVerticalFields, setGameFields, setPlayerField, checkWin } = GameSlice.actions
+export const {
+    setCurrentPlayer, 
+    setGameMode, 
+    setHorizontalFields, 
+    setVerticalFields, 
+    setGameFields, 
+    setPossibleFields,
+    setPlayerField, 
+    checkWin,
+    endAsDraw } = GameSlice.actions
 
 export default GameSlice.reducer

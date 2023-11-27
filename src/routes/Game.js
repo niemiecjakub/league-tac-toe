@@ -4,18 +4,13 @@ import '../styles/App.css'
 import GameField from '../components/GameField';
 import CategoryField from '../components/CategoryField';
 import { useDispatch, useSelector } from 'react-redux'
-import { setChampionNamesList, setGameFields, setHorizontalFields, setVerticalFields } from '../redux/slices/GameSlice';
-
-const winningConditions = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
+import { 
+  setGameFields, 
+  setHorizontalFields, 
+  setVerticalFields, 
+  endAsDraw,
+  setCurrentPlayer,
+  setPossibleFields } from '../redux/slices/GameSlice';
 
 const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 
@@ -28,12 +23,19 @@ function Game() {
   useEffect(() => {
     const fetchData = async () => {
       const {data: {data : {horizontal, vertical}, list}} = await axios(`${BASE_URL}game-start`);
-      const {data: {champions}} = await axios(`${BASE_URL}champion/name-list`);
+
+      list.map(async (gameOption, index) => {
+        const [category, othercategory] = gameOption
+        const {data: {champions}} = await axios(`${BASE_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
+        dispatch(setPossibleFields({
+          champions,
+          fieldId: index
+        }))
+      });
 
       dispatch(setHorizontalFields(horizontal))
       dispatch(setVerticalFields(vertical))
       dispatch(setGameFields(list))
-      dispatch(setChampionNamesList(champions))
 
       setIsLoading(false)
     };
@@ -64,6 +66,8 @@ function Game() {
         <h1>
           Current Player: {currentPlayer.name}
         </h1>
+        <button onClick={() => dispatch(endAsDraw())}> End as draw </button>
+        <button onClick={() => dispatch(setCurrentPlayer())}> Skip turn </button>
         <div className='game-board'>
           <div className='game-row'>
             <div className="square"></div>
