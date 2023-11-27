@@ -3,10 +3,10 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 import InputAutofill from './InputAutofill'
 import '../styles/App.css'
+import { CHAMPION_API_URL, CHAMPION_NAME_LIST } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayer, setPlayerField, checkWin } from '../redux/slices/GameSlice';
 
-const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 
 function GameField({id, cat : [category, othercategory]}) {
   const [open, setOpen] = useState(false);
@@ -15,10 +15,10 @@ function GameField({id, cat : [category, othercategory]}) {
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
 
-  const {championNamesList, currentPlayer, player1, player2, possibleFields} = useSelector(state => state.GameReducer)
+  const { currentPlayer, player1, player2, possibleFields } = useSelector(state => state.GameReducer)
 
   const getSelectedVal = async (value) => {
-    const {data: {name}} = await axios(`${BASE_URL}champion/name/${value}`);
+    const {data: {name}} = await axios(`${CHAMPION_API_URL}champion/name/${value}`);
     console.log(name, possibleFields[id])
     if (possibleFields[id].includes(name) && !championHistory.includes(name)) {
       setCurrentChampion(name)
@@ -59,7 +59,7 @@ function GameField({id, cat : [category, othercategory]}) {
           <InputAutofill
             label="Champion"
             pholder="..."
-            data={championNamesList}
+            data={CHAMPION_NAME_LIST}
             onSelected={getSelectedVal}
           />
         </div>
