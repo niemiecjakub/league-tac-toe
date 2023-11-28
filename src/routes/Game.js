@@ -12,11 +12,7 @@ function Game() {
   useEffect(() => {
     dispatch(getNewGameData())
   }, [dispatch, isGameOver]);
-
-  const startNewGame = () => {
-    dispatch(getNewGameData())
-  }
-
+  
   return (
     <>
       {
@@ -26,7 +22,6 @@ function Game() {
         :
         (
           <>
-            <button onClick={startNewGame}> start new game </button>
             <GameInfo />
             <Board />
           </>

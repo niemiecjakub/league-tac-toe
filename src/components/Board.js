@@ -8,7 +8,6 @@ function Board() {
   const {categoryFields: {horizontal, vertical}} = useSelector(state => state.GameReducer)
   const { height, width } = useWindowDimensions();
 
-console.log(width)
   return (
   <div className='w-full flex flex-col' style={{height: `${width}px`}}>
     <div className='bg-green-300 flex h-full'>

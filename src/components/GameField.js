@@ -55,7 +55,7 @@ function GameField({fieldId}) {
   return (
     <>
       <div
-        className='w-1/4 flex flex-col bg-cover items-center justify-center'
+        className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-3 border-solid border-2'
         onClick={openPopupField} 
         disabled={isFieldDisabled()} 
         tabIndex='0'
@@ -64,8 +64,8 @@ function GameField({fieldId}) {
           backgroundImage: currentChampion ? `url(icons/${currentChampion}.png)` :`url(icons/default.png)` , 
         }}
       >
-        <h4 className='z-50 text-white text-6xl'>X{belongsTo}</h4>
-        <h4 className='z-50 text-white text-2xl'>Malzahar{currentChampion}</h4>
+        <h4 className='z-50 text-white text-xl'>{belongsTo}</h4>
+        <h4 className='z-50 text-white text-xl'>{currentChampion}</h4>
       </div>
 
       <Popup open={open} closeOnDocumentClick onClose={closeModal} {...{overlayStyle }}>
