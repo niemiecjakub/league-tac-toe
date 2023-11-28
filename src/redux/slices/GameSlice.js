@@ -24,7 +24,10 @@ const initialState = {
         score: 0
     },
     currentPlayer: {
-        name: "Player 1"
+        name: "Player 1",
+        fields: [],
+        steals:3,
+        score: 0
     },
     gameFields: [],
     possibleFields: new Array(8),

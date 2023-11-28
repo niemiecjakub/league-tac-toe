@@ -21,10 +21,10 @@ function Game() {
         )
         :
         (
-          <>
+          <div className='font-league h-full'>
             <GameInfo />
             <Board />
-          </>
+          </div>
         )
       }
     </>

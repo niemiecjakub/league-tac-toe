@@ -14,23 +14,23 @@ function GameInfo() {
   }
   
   return (
-    <div className='bg-orange-400 flex flex-col py-4'>
-      <div className='flex flex-row justify-between items-center bg-slate-300'>
-        <div className='bg-slate-200 p-2'>
+    <div className='bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md'>
+      <div className='flex flex-row justify-between items-center'>
+        <div className='bg-league-gold-400 py-2 px-3 rounded-r-xl'>
           P1({player1.score})-({player2.score})P2
         </div>
-        <div className='flex flex-row bg-gray-200 justify-between items-center'>
-          <h1>
+        <div className='flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl'>
+          <h1 className='px-2'>
             {currentPlayer.name} TURN
           </h1>
-          <button className='bg-red-600 p-2' onClick={() => dispatch(setCurrentPlayer())}> SKIP TURN</button>
+          <button className='bg-red-600 px-3 py-2' onClick={() => dispatch(setCurrentPlayer())}> SKIP TURN</button>
         </div>
       </div>
-      <div className='flex flex-row justify-between items-center bg-slate-00'>
-        <div className='bg-slate-200 p-2'>
-          <h1>{currentPlayer.steals} STEALS REMAINING  </h1>
+      <div className='flex flex-row justify-between items-center bg-slate-00 mt-4'>
+        <div className='bg-league-grey-200 p-2 rounded-r-xl'>
+          <h1>{currentPlayer.steals} STEALS REMAINING</h1>
         </div>
-        <button className='p-2' onClick={endDraw}> REQUEST DTAW </button>
+        <button className='bg-league-grey-150 p-2 rounded-l-xl' onClick={endDraw}> REQUEST DTAW </button>
       </div>
     </div>
   )
