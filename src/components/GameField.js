@@ -29,7 +29,7 @@ function GameField({fieldId}) {
       setCurrentChampion(key)
       setChampionHistory(history => [...history, key])
       dispatch(setPlayerField(fieldId))
-      currentPlayer === "Player1" ? setFieldMark("X") : setFieldMark("O")
+      currentPlayer.name === "Player 1" ? setFieldMark("X") : setFieldMark("O")
       dispatch(checkWin())
     }
     dispatch(setCurrentPlayer())
@@ -53,7 +53,7 @@ function GameField({fieldId}) {
   return (
     <>
       <div
-        className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-1 border-solid border-2 border-league-grey-200'
+        className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-1 border-solid border-2 border-league-grey-200 '
         onClick={openPopupField} 
         disabled={isFieldDisabled()} 
         tabIndex='0'
