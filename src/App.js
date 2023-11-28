@@ -4,7 +4,6 @@ import CategoryList from './routes/CategoryList';
 import Game from './routes/Game';
 import GameRoom from './routes/GameRoom';
 import Landing from './routes/Landing';
-import Loading from './components/Loading';
 
 function App() {
 
