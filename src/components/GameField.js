@@ -59,7 +59,7 @@ function GameField({fieldId}) {
         tabIndex='0'
         role='button'
         style={{
-          backgroundImage: currentChampion ? `url(icons/${currentChampion}.png)` :`url(icons/default.png)` , 
+          backgroundImage: currentChampion ? `url(icons/${currentChampion}.PNG)` :`url(icons/default.PNG)` , 
         }}
       >
         <h4 className='h-2/3 z-50 text-white text-6xl font-bold'>{fieldMark}</h4>

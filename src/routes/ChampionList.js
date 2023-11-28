@@ -29,7 +29,7 @@ function ChampionList() {
         <div className='h-full'>
             {data.map((champion, index) => (
               <div className="flex flex-row justify-start items-center h-20">
-                <img src={`/icons/${champion.key}.png`} className='h-full'/>
+                <img src={`/icons/${champion.key}.PNG`} className='h-full'/>
                 <p className='my-2 font-semibold'>{champion.name}, {champion.title}</p>
               </div>
             ))}
