@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ChampionList from './routes/ChampionList';
+import CategoryList from './routes/CategoryList';
 import Game from './routes/Game';
 import GameRoom from './routes/GameRoom';
 import Landing from './routes/Landing';
@@ -15,6 +16,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/champion-list' element={<ChampionList />} />
+
+          <Route path='/category-list' element={<CategoryList />} />
+          
           <Route path='/game' element={<Game />} />
           <Route path='/game/room/:roomCode' element={<GameRoom />} />
         </Routes>

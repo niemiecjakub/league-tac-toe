@@ -16,8 +16,18 @@ function GameInfo() {
   return (
     <div className='bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md'>
       <div className='flex flex-row justify-between items-center'>
-        <div className='bg-league-gold-400 py-2 px-3 rounded-r-xl'>
-          P1({player1.score})-({player2.score})P2
+        <div className='bg-league-gold-400  rounded-r-xl flex item'>
+          <div className='p-2 bg-league-blue-100'></div>
+          <div className='p-2'>
+            P1
+          </div>
+          <div className='p-2'>
+            {player1.score} - {player2.score}
+          </div>
+          <div className='p-2'>
+            P2
+          </div>
+          <div className='p-2 bg-green-500 rounded-r-xl'></div>
         </div>
         <div className='flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl'>
           <h1 className='px-2'>

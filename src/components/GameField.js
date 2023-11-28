@@ -55,7 +55,7 @@ function GameField({fieldId}) {
   return (
     <>
       <div
-        className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-3 border-solid border-2'
+        className=' w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-3 border-solid border-2 border-league-grey-200'
         onClick={openPopupField} 
         disabled={isFieldDisabled()} 
         tabIndex='0'

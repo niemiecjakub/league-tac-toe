@@ -31,6 +31,8 @@ function Landing() {
 
         <PageCard to="/champion-list" title="Champion list" subtext="Browse all champions"/>
 
+        <PageCard to={`/category-list`} title="See all categories" subtext="See all categories"/>
+
         <PageCard to="/game" title="Same screen game" subtext="Same screen game"/>
 
         <PageCard to={`/game/room/${roomCode}`} title="Play agains friend" subtext="Play agains friend"/>
