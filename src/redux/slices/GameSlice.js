@@ -13,18 +13,21 @@ const initialState = {
     isLoadingGame : true,
     player1: {
         name: "Player 1",
+        alias: "P 1",
         fields: [],
         steals:3,
         score: 0
     },
     player2 : {
         name: "Player 2",
+        alias: "P 2",
         fields: [],
         steals:3,
         score: 0
     },
     currentPlayer: {
         name: "Player 1",
+        alias: "P 1",
         fields: [],
         steals:3,
         score: 0
