@@ -1,6 +1,10 @@
-function Champion({champion: {name, key, legacy, position, rangetype, region, resource, title}}) {
+function Champion({champion, champion: {name, title}}) {
+  console.log(champion.key)
   return (
-    <p>{name}, {title}</p>
+    <div className="flex flex-row">
+      <img src={`/icons/${champion.key}.png`} />
+      <p> {name}, {title} </p>
+    </div>
   );
 }
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/App.css'
 import Champion from '../components/Champion'
 
 const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
@@ -22,15 +21,18 @@ function ChampionList() {
   
   if (isLoading) {
     return (
-        <div className="App">
-            <h1>loading champion list</h1>
-        </div>
+      <h1>loading champion list</h1>
     )
   } else {
     return (
-        <div className="App">
-            {data.map(champion => <Champion champion={champion} key={champion.key}/>)}
-        </div>
+        <>
+            {data.map((champion, index) => (
+              <div className="flex flex-row justify-start items-center h-20">
+                <img src={`/icons/${champion.key}.png`} className='h-full'/>
+                <p className='my-2 font-semibold'>{champion.name}, {champion.title}</p>
+              </div>
+            ))}
+        </>
     );
   }
 }

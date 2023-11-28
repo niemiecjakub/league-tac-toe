@@ -1,4 +1,3 @@
-import '../styles/App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { 
   setCurrentPlayer,

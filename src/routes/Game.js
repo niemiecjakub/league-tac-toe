@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import '../styles/App.css'
 import Board from '../components/Board';
 import GameInfo from '../components/GameInfo';
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +18,7 @@ function Game() {
   }
 
   return (
-    <div className="App">
+    <>
       {
         isLoadingGame ? (
           <h1>loading new game</h1>
@@ -33,7 +32,7 @@ function Game() {
           </>
         )
       }
-    </div>
+    </>
   )
 }
 

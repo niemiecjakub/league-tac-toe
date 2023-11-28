@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/App.css'
 import GameField from '../components/GameField';
 import CategoryField from '../components/CategoryField';
 import { useDispatch, useSelector } from 'react-redux'

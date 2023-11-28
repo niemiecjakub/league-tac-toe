@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './styles/App.css'
 import ChampionList from './routes/ChampionList';
 import Game from './routes/Game';
 import GameRoom from './routes/GameRoom';
@@ -9,6 +8,9 @@ function App() {
 
   return (
     <BrowserRouter>
+    <div className="bg-blue-500 flex items-center justify-center h-16 text-white text-2xl font-black sticky top-0 z-50">
+      LEAGUE TAC TOE
+    </div>
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='/champion-list' element={<ChampionList />} />
