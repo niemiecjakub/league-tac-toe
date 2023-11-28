@@ -14,7 +14,7 @@ function GameField({fieldId}) {
   const [open, setOpen] = useState(false);
   const [currentChampion, setCurrentChampion] = useState('');
   const [championHistory, setChampionHistory] = useState([]);
-  const [belongsTo, setBelongsTo] = useState()
+  const [fieldMark, setFieldMark] = useState()
 
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
@@ -26,12 +26,12 @@ function GameField({fieldId}) {
     console.log(name, possibleFields[fieldId])
 
     if (possibleFields[fieldId].includes(name) && !championHistory.includes(key)) {
-      setBelongsTo(currentPlayer.name)
       setCurrentChampion(key)
       setChampionHistory(history => [...history, key])
+      dispatch(setPlayerField(fieldId))
+      currentPlayer === "Player1" ? setFieldMark("X") : setFieldMark("O")
+      dispatch(checkWin())
     }
-    dispatch(setPlayerField(fieldId))
-    dispatch(checkWin())
     dispatch(setCurrentPlayer())
     setOpen(o => !o)
   };
@@ -50,12 +50,10 @@ function GameField({fieldId}) {
     }
   }
 
-
-
   return (
     <>
       <div
-        className=' w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-3 border-solid border-2 border-league-grey-200'
+        className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-1 border-solid border-2 border-league-grey-200'
         onClick={openPopupField} 
         disabled={isFieldDisabled()} 
         tabIndex='0'
@@ -64,8 +62,8 @@ function GameField({fieldId}) {
           backgroundImage: currentChampion ? `url(icons/${currentChampion}.png)` :`url(icons/default.png)` , 
         }}
       >
-        <h4 className='z-50 text-white text-xl'>{belongsTo}</h4>
-        <h4 className='z-50 text-white text-xl'>{currentChampion}</h4>
+        <h4 className='h-2/3 z-50 text-white text-6xl font-bold'>{fieldMark}</h4>
+        <h4 className='h-1/3 z-50 text-white text-xl uppercase font-bold'>{currentChampion}</h4>
       </div>
 
       <Popup open={open} closeOnDocumentClick onClose={closeModal} {...{overlayStyle }}>

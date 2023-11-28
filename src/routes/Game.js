@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Board from '../components/Board';
 import GameInfo from '../components/GameInfo';
+import Loading from '../components/Loading';
 import { useDispatch, useSelector } from 'react-redux'
 import { getNewGameData } from '../redux/slices/GameSlice';
 
@@ -17,7 +18,7 @@ function Game() {
     <>
       {
         isLoadingGame ? (
-          <h1>loading new game</h1>
+          <Loading />
         )
         :
         (

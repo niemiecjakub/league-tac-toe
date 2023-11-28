@@ -25,7 +25,7 @@ function GameInfo() {
     <div className='bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md'>
       <div className='flex flex-row justify-between items-center'>
         <div className='bg-league-gold-400  rounded-r-xl flex item'>
-          <div className='p-2 bg-league-blue-100'></div>
+          <div className='p-2 bg-blue-600'></div>
           <div className='p-2'>
             {player1.alias}
           </div>

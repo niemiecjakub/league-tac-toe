@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CategoryField from '../components/Champion'
+import Loading from '../components/Loading';
 
 const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
 
@@ -28,7 +29,7 @@ function CategoryList() {
   }, []);
 
   if (isLoading){
-    return <div>loading categories list</div>
+    return <Loading />
   }
     return (
     (

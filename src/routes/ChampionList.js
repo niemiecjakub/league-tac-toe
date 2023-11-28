@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Loading from '../components/Loading';
 import Champion from '../components/Champion'
 
 const BASE_URL = "https://kniemiec.pythonanywhere.com/api/"
@@ -21,7 +22,7 @@ function ChampionList() {
   
   if (isLoading) {
     return (
-      <div>loading champion list</div>
+      <Loading />
     )
   } else {
     return (
