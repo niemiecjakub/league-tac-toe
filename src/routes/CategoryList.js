@@ -35,7 +35,7 @@ function CategoryList() {
     (
         <div className='h-full'>
             {categories.map((categoryInfo, index) => (
-                <div className='bg-slate-50 text-xl flex'>
+                <div className='text-xl flex'>
                     <img src={`${categoryInfo.category}/${categoryInfo.name.trim()}.png`} className='h-16 w-16'/>
                     <h1>{categoryInfo.category} {categoryInfo.name}</h1>
                 </div>

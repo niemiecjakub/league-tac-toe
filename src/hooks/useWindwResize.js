@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
 
 function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
+  const gameContainer = document.getElementById("game-container")
+  if (gameContainer) {
+    return {
+      width: gameContainer.offsetWidth,
+      height: gameContainer.offsetHeight,
+    };
+  }
   return {
-    width,
-    height
+    width: 300,
+    height: 300
   };
 }
+
+
 
 export default function useWindowDimensions() {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());

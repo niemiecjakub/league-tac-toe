@@ -15,20 +15,20 @@ function Game() {
   }, [dispatch, isGameOver]);
   
   return (
-    <>
+    <div id="game-container" className='font-league max-h-fit w-screen lg:m-auto lg:w-1/3'>
       {
         isLoadingGame ? (
           <Loading />
         )
         :
         (
-          <div className='font-league h-full'>
+          <>
             <GameInfo />
             <Board />
-          </div>
+          </>
         )
       }
-    </>
+    </div>
   )
 }
 
