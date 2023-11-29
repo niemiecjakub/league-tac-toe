@@ -7,7 +7,7 @@ let socket
 function ChatRoom() {
     const {roomId} = useParams()
     const [chatInput, setChatInput] = useState('');
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState('');
 
     useEffect(() => {
       socket = io('http://127.0.0.1:8000/', {
@@ -22,7 +22,7 @@ function ChatRoom() {
       })
 
       socket.on('send_message',chat => {
-        setMessages(msg => [...msg, chat.data])
+        setMessages(chat.data)
       })
 
       console.log("socket set")
@@ -39,11 +39,14 @@ function ChatRoom() {
     return (
         <div className='bg-gray-700 w-full min-h-screen text-white text-xl'>
           <h1 className='text-center'>Room code: {roomId}</h1>
-          <ul>
+          {/* <ul>
             {messages.map((msg, index) => (
               <li className="h-32 w-96" key={index}>{msg}</li>
             ))}
-          </ul>
+          </ul> */}
+          {
+            messages
+          }
           <input
             className='bg-white text-black'
             type="text"
