@@ -1,63 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
-
-// const joinRoom = (roomId) => {
-//     console.log("Joining room: ", roomId)
-//     if (roomId && name) {
-//         navigate(`/chat/${roomId}`)
-//     } else {
-//         setError(true)
-//     }
-// }
-
-let socket
+import { socket } from '../socket';
 
 function ChatLobby() {
     const [name, setName] = useState('')
     const [roomId, setRoomId] = useState('')
     const [error, setError] = useState(false)
     const [joinedRoom, setJoinedRoom] = useState(false)
-
-    const joinRoom = () => {
-        if (name && roomId) {
-            socket.connect() 
-            setJoinedRoom(status => !status)
-            console.log("Joined room, ", roomId)
-        }
-    }
-
+    const [isConnected, setIsConnected] = useState(socket.connected);
     const [chatInput, setChatInput] = useState('');
     const [messages, setMessages] = useState([]);
 
-
     useEffect(() => {
-        socket = io('http://127.0.0.1:8000/', {
-            autoConnect: false,
-          transports: ["websocket"],
-                cors: {
-                  origin: "http://localhost:3000/",
-                },
-        });  // Replace with your server URL
-  
-        socket.on('connect', () => {
+        function onConnect() {
           console.log("User connected")
-        })
-  
-        socket.on('send_message',chat => {
-            console.log(chat)
-          setMessages(msg => [...msg, chat.data])
-        })
-  
+          setIsConnected(true);
+        }
+        function onDisconnect() {
+          setIsConnected(false);
+        }
+        function onSendMessage(messageData) {
+          setMessages(msg => [...msg, messageData])
+        }
+        function onRoomJoin(roomData) {
+          console.log("Joined room, ", roomData)
+        }
+        function onRoomLeave(roomData) {
+          console.log("Left room, ", roomData)
+        }
+    
+        socket.on('connect', onConnect);
+        socket.on('disconnect', onDisconnect);
+        socket.on('send_message', onSendMessage);
+        socket.on('room_join', onRoomJoin);
+        socket.on('room_leave', onRoomLeave);
+
         console.log("socket set")
+    
+        return () => {
+          socket.off('connect', onConnect);
+          socket.off('disconnect', onDisconnect);
+          socket.off('send_message', onSendMessage);
+          socket.off('room_join', onRoomJoin);
+          socket.off('room_leave', onRoomLeave);
+        };
+      }, []);
+    
 
-      }, [])
-
-
-      const sendMessage = (e) => {
+    const joinRoom = () => {
+      if (!joinedRoom){
+        if (name && roomId) {
+            socket.connect() 
+            setJoinedRoom(status => !status)
+            setIsConnected(true)
+            socket.emit('room_join', {name, roomId})
+        }
+      } else {
+        setJoinedRoom(false)
+        setIsConnected(false)
+        socket.emit('room_leave', {name, roomId})
+        socket.disconnect()
+      }
+    }
+    
+    const sendMessage = (e) => {
         e.preventDefault()
-        socket.emit("send_message", { data: chatInput });
         console.log("sending message")
+        socket.emit("send_message", { 
+            message: chatInput, 
+            username: name,
+            roomId, 
+        });
         setChatInput('')
       }
 
@@ -86,7 +99,7 @@ function ChatLobby() {
                 <>
                     <h1 className='text-center'>Room code: {roomId}</h1>
                     <div>
-                        {messages.length >0 && messages.map(message => <h2>{message}</h2>)}
+                        {messages.length >0 && messages.map((message, index) => <h2 key={index}>{message.username}: {message.message}</h2>)}
                     </div>
                     <div>
                         <input
