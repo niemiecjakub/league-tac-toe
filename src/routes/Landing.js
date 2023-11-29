@@ -28,6 +28,8 @@ function Landing() {
   return (
     <>
 
+      <PageCard to="/chat" title="Chat room socket io" subtext="Chat room"/>
+
       <PageCard to="/champion-list" title="Champion list" subtext="Browse all champions"/>
 
       <PageCard to={`/category-list`} title="See all categories" subtext="See all categories"/>

@@ -4,6 +4,8 @@ import CategoryList from './routes/CategoryList';
 import Game from './routes/Game';
 import GameRoom from './routes/GameRoom';
 import Landing from './routes/Landing';
+import ChatRoom from './routes/ChatRoom';
+import ChatLobby from './routes/ChatLobby';
 
 function App() {
 
@@ -18,6 +20,8 @@ function App() {
             <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full md:w-2/3 lg:w-1/4">
              <Routes>
               <Route path='/' element={<Landing />} />
+              <Route path='/chat' element={<ChatLobby />} />
+              <Route path='/chat/:roomId' element={<ChatRoom />} />
               <Route path='/champion-list' element={<ChampionList />} />
               <Route path='/category-list' element={<CategoryList />} />
             </Routes>
