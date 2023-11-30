@@ -5,6 +5,8 @@ import {
   endAsDraw,
   getNewGameData } from '../../redux/slices/GameSlice';
 
+import { skipTurnOnline} from '../../redux/slices/OnlineSlice'
+
 function GameInfoOnline() {
   const [skipTurn, setSkipTurn] = useState(false)
   const [drawRequest, setDrawRequest] = useState(false)
@@ -39,11 +41,11 @@ function GameInfoOnline() {
         </div>
         <div className='flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl'>
           <h1 className='px-2'>
-            {currentPlayer.alias}'s TURN
+            {currentPlayer.name == localStorage.getItem("player") ? "YOUR TURN" : "WAITING FOR OPPONENT MOVE"}
           </h1>
           {
             skipTurn? (
-              <button className='bg-red-500 px-3 py-2' onClick={() => dispatch(setCurrentPlayer())}>CONFIRM</button>
+              <button className='bg-red-500 px-3 py-2' onClick={() => dispatch(skipTurnOnline())}>CONFIRM</button>
             ) : (
               <button className='bg-red-700 px-3 py-2' onClick={() => setSkipTurn(s => !s)}>SKIP TURN</button>
             )

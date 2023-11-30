@@ -81,6 +81,31 @@ export const startOnlineGame = createAsyncThunk(
       }
 )
 
+export const skipTurnOnline = createAsyncThunk(
+  'online/skipTurnOnline',
+  async (param, {getState}) => {
+
+    const state = getState()
+    const docRef = doc(db, "rooms", state.online.roomId)
+    const docSnap = await getDoc(docRef);
+    const {currentPlayer} = docSnap.data()
+    console.log(currentPlayer)
+
+    // await setDoc(docRef, {
+    //   categoryFields: {
+    //     horizontal: horizontal,
+    //     vertical: vertical
+    //   },
+    //   possibleFields: possibleFields,
+    //   gameFields: gameFields,
+    //   isGameStarted: true,
+    //   isLoadingGame: false
+    //   }, {merge : true})
+
+
+    }
+)
+
 
 
 const OnlineSlice = createSlice({
