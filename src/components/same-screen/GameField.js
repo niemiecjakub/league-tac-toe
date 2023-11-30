@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
-import InputAutofill from './InputAutofill'
-import { CHAMPION_API_URL, CHAMPION_NAME_LIST } from '../constants';
+import InputAutofill from '../InputAutofill'
+import { CHAMPION_API_URL, CHAMPION_NAME_LIST } from '../../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayerField, checkWin, getNewGameData } from '../redux/slices/GameSlice';
+import { setCurrentPlayer, setPlayerField, checkWin } from '../../redux/slices/GameSlice';
 
 
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
@@ -19,7 +19,7 @@ function GameField({fieldId}) {
   const closeModal = () => setOpen(false);
   const dispatch = useDispatch()
 
-  const { currentPlayer, player1, player2, possibleFields, isGameOver } = useSelector(state => state.GameReducer)
+  const { currentPlayer, player1, player2, possibleFields } = useSelector(state => state.sameScreen)
 
   const getSelectedVal = async (value) => {
     const {data: {name, key}} = await axios(`${CHAMPION_API_URL}champion/name/${value}`);

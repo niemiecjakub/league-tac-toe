@@ -1,4 +1,4 @@
-import useWindowDimensions from "../hooks/useWindwResize";
+import useWindowDimensions from "../../hooks/useWindwResize";
 
 function CategoryField({categoryInfo: {category, name}}) {
   const { height, width } = useWindowDimensions();

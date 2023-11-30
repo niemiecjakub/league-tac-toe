@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
   setCurrentPlayer,
   endAsDraw,
-  getNewGameData } from '../redux/slices/GameSlice';
+  getNewGameData } from '../../redux/slices/GameSlice';
 
-function GameInfo() {
+function GameInfoOnline() {
   const [skipTurn, setSkipTurn] = useState(false)
   const [drawRequest, setDrawRequest] = useState(false)
   const dispatch = useDispatch()
-  const {currentPlayer, player1, player2} = useSelector(state => state.GameReducer)
+  const {currentPlayer, player1, player2} = useSelector(state => state.online)
 
   const endDraw = () => {
     dispatch(endAsDraw())
@@ -67,4 +67,4 @@ function GameInfo() {
   )
 }
 
-export default GameInfo;
+export default GameInfoOnline;

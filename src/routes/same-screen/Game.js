@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import Board from '../components/Board';
-import GameInfo from '../components/GameInfo';
-import Loading from '../components/Loading';
+import Board from '../../components/same-screen/Board';
+import GameInfo from '../../components/same-screen/GameInfo';
+import Loading from '../../components/Loading';
 import { useDispatch, useSelector } from 'react-redux'
-import { getNewGameData } from '../redux/slices/GameSlice';
+import { getNewGameData } from '../../redux/slices/GameSlice';
 
 function Game() {
   const dispatch = useDispatch()
 
-  const { isLoadingGame, isGameOver } = useSelector(state => state.GameReducer)
+  const { isLoadingGame, isGameOver } = useSelector(state => state.sameScreen)
 
   useEffect(() => {
     dispatch(getNewGameData())

@@ -2,13 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { WNNING_CONDITIONS, CHAMPION_API_URL } from '../../constants';
 import axios from 'axios';
 
-
 const compareArrays = (a, b) => {
     return a.length === b.length && a.every((element, index) => element === b[index]);
 }
 
 const initialState = {
-    gameMode : 'Same screen',
     isGameOver : false,
     isLoadingGame : true,
     player1: {
@@ -33,7 +31,7 @@ const initialState = {
         score: 0
     },
     gameFields: [],
-    possibleFields: new Array(8),
+    possibleFields: [1,2,3,4,5,6,7,8],
     categoryFields: {
         horizontal: [],
         vertical: []
@@ -65,25 +63,12 @@ const GameSlice = createSlice({
     name: "Game",
     initialState,
     reducers: {
-        setCurrentPlayer : (state, action) => {
-            const nextPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
-            state.currentPlayer = nextPlayer
-        },
         setGameMode : (state, action) => {
             state.gameMode = action.payload
         },
-        setHorizontalFields : (state, action) => {
-            state.categoryFields.horizontal = action.payload
-        },
-        setVerticalFields : (state, action) => {
-            state.categoryFields.vertical = action.payload
-        },
-        setGameFields : (state, action) => {
-            state.gameFields = action.payload
-        },
-        setPossibleFields : (state, action) => {
-            const {champions, fieldId} = action.payload
-            state.possibleFields[fieldId] = champions
+        setCurrentPlayer : (state, action) => {
+            const nextPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
+            state.currentPlayer = nextPlayer
         },
         setPlayerField : (state, action) => {
             const id = action.payload

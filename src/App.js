@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import ChampionList from './routes/ChampionList';
-import CategoryList from './routes/CategoryList';
-import Game from './routes/Game';
-import GameRoom from './routes/GameRoom';
-import Landing from './routes/Landing';
-import ChatRoom from './components/ChatRoom';
-import OnlineGameLobby from './routes/OnlineGameLobby'
+import Loading from './components/Loading';
+import OnlineGameLobby from './routes/online/OnlineGameLobby';
+import ChampionList from './routes/CategoryList'
+import CategoryList from './routes/CategoryList'
+import Game from './routes/same-screen/Game';
+import GameRoom from './routes/online/GameRoom';
+import Landing from './routes/Landing'
 
 function App() {
 
@@ -21,13 +21,12 @@ function App() {
              <Routes>
               <Route path='/' element={<Landing />} />
               <Route path='/chat' element={<OnlineGameLobby />} />
-              <Route path='/chat/:roomId' element={<ChatRoom />} />
               <Route path='/champion-list' element={<ChampionList />} />
               <Route path='/category-list' element={<CategoryList />} />
             </Routes>
             </div>
             <Routes>
-              <Route path='/game' element={<Game />} />
+              <Route path='/game' element={<Game gameMode="same screen"/>} />
               <Route path='/game/room/:roomId' element={<GameRoom />} />
             </Routes>
       </div>

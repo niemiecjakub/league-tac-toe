@@ -1,11 +1,11 @@
 import GameField from './GameField';
 import CategoryField from './CategoryField'
 import { useSelector } from 'react-redux'
-import useWindowDimensions from '../hooks/useWindwResize'
+import useWindowDimensions from '../../hooks/useWindwResize'
 
 function Board() {
 
-  const {categoryFields: {horizontal, vertical}} = useSelector(state => state.GameReducer)
+  const {categoryFields: {horizontal, vertical}} = useSelector(state => state.sameScreen)
   const { height, width } = useWindowDimensions();
 
   return (

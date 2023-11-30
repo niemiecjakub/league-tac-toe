@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDoc, doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db } from '../firebase-config';
-import {} from 'universal-cookie'
+import { getDoc, doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db } from '../../firebase-config';
 
 function generateRoomCode(length) {
   let result = '';
@@ -17,8 +16,9 @@ function generateRoomCode(length) {
 }
 
 const initialState = {
-  gameMode : 'Online',
-  isGameOver : false,
+  roomId: "",
+  isGameStarted: false,
+  playersJoined : [],
   isLoadingGame : true,
   player1: {
       name: "Player 1",
@@ -40,12 +40,6 @@ const initialState = {
       fields: [],
       steals:3,
       score: 0
-  },
-  gameFields: [],
-  possibleFields: [1,2,3,4,5,6,7,8,9],
-  categoryFields: {
-      horizontal: [],
-      vertical: []
   }
 }
 
