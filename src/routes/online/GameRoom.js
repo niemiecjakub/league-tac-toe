@@ -4,9 +4,6 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 import Loading from '../../components/Loading';
 import { useDispatch, useSelector } from 'react-redux'
-import { setRoomId, startOnlineGame, setDBstate } from '../../redux/slices/OnlineSlice';
-import BoardOnline from '../../components/online/BoardOnline';
-import GameInfoOnline from '../../components/online/GameInfoOnline';
 
 function GameRoom() {
   const dispatch = useDispatch()
@@ -20,18 +17,18 @@ function GameRoom() {
     const unsubscribe = onSnapshot(docRef, (snapshot) => {
       const currentData = snapshot.data()
       console.log("getting changes, current data ", currentData)
-      dispatch(setDBstate(currentData))
-      if (currentData.playersJoined.length == 2 && !currentData.isGameStarted) {
-        dispatch(startOnlineGame())
-      }
+      // dispatch(setDBstate(currentData))
+      // if (currentData.playersJoined.length == 2 && !currentData.isGameStarted) {
+      // dispatch(startOnlineGame())
+      // }
     })
 
-    dispatch(setRoomId(roomId))
+    // dispatch(setRoomId(roomId))
     return () => unsubscribe
   },[])
 
   const handleIncrement = async () =>{
-    dispatch(startOnlineGame())
+    // dispatch(startOnlineGame())
   }
 
 
@@ -55,8 +52,8 @@ function GameRoom() {
   else {
     return (
       <>
-        <GameInfoOnline />
-        <BoardOnline />
+        {/* <GameInfoOnline />
+        <BoardOnline /> */}
       </>
     )
   }

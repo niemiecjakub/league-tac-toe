@@ -1,5 +1,7 @@
 
 
+export const IMAGE_BASE_PATH = "http://localhost:3000/"
+
 export const CHAMPION_API_URL = "https://kniemiec.pythonanywhere.com/api/"
 
 // export const CHAMPION_API_URL = "http://127.0.0.1:8000/api/"
@@ -171,13 +173,14 @@ export const CHAMPION_NAME_LIST = [
     "Zoe",
     "Zyra"
     ]
+    
 export const WNNING_CONDITIONS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
     [1, 4, 7],
     [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
+    [3, 6, 9],
+    [1, 5, 9],
+    [3, 5, 7],
   ];

@@ -49,12 +49,35 @@ export const getNewGameData = createAsyncThunk(
       return  champions
     }))
 
-    const possibleFields = await listOfPromises
+    const possibleFieldsArray = await listOfPromises
+
+    const possibleFields = {}
+        possibleFieldsArray.forEach((champions, index) => {
+        possibleFields[`${index + 1}`] = champions
+    })
+
+    const gameFields = {}
+        list.forEach((combinedCategory, index) => {
+        gameFields[`${index + 1}`] = combinedCategory
+    })
+
+    const horizontalFields = {}
+        horizontal.forEach((category, index) => {
+        horizontalFields[`${index + 1}`] = category
+    })
+
+    const verticalFields = {}
+        vertical.forEach((category, index) => {
+        verticalFields[`${index + 1}`] = category
+    })
+    
+
     return {
-      possibleFields,
-      horizontal, 
-      vertical, 
-      list}
+        possibleFields,
+        horizontalFields, 
+        verticalFields, 
+        gameFields
+    }
   }
 )
 
@@ -120,11 +143,12 @@ const GameSlice = createSlice({
         state.isLoadingGame = false
         state.isGameOver = false
 
-        const {possibleFields,horizontal, vertical, list} = action.payload
+        const {possibleFields,horizontalFields, verticalFields, gameFields} = action.payload
         state.possibleFields = possibleFields
-        state.gameFields = list
-        state.categoryFields.vertical = vertical
-        state.categoryFields.horizontal = horizontal
+        state.gameFields = gameFields
+        state.categoryFields.vertical = verticalFields
+        state.categoryFields.horizontal = horizontalFields
+        
       })
       builder.addCase(getNewGameData.rejected, (state, action) => {
         state.isLoadingGame = false

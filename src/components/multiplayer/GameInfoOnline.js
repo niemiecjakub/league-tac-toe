@@ -22,7 +22,9 @@ function GameInfoOnline() {
     setSkipTurn(false)
     setDrawRequest(false)
   },[currentPlayer])
-  
+
+  const canClick = () => currentPlayer.name !== localStorage.getItem("player")
+
   return (
     <div className='bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md'>
       <div className='flex flex-row justify-between items-center'>
@@ -41,13 +43,13 @@ function GameInfoOnline() {
         </div>
         <div className='flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl'>
           <h1 className='px-2'>
-            {currentPlayer.name == localStorage.getItem("player") ? "YOUR TURN" : "WAITING FOR OPPONENT MOVE"}
+            {currentPlayer.name == localStorage.getItem("player") ? "YOUR TURN" : "OPPONENET"}
           </h1>
           {
             skipTurn? (
-              <button className='bg-red-500 px-3 py-2' onClick={() => dispatch(skipTurnOnline())}>CONFIRM</button>
+              <button className='bg-red-500 px-3 py-2' disabled={canClick()} onClick={() => dispatch(skipTurnOnline())}>CONFIRM</button>
             ) : (
-              <button className='bg-red-700 px-3 py-2' onClick={() => setSkipTurn(s => !s)}>SKIP TURN</button>
+              <button className='bg-red-700 px-3 py-2' disabled={canClick()} onClick={() => setSkipTurn(s => !s)}>SKIP TURN</button>
             )
           }
         </div>
@@ -59,9 +61,9 @@ function GameInfoOnline() {
         {
           drawRequest? 
           (
-            <button className='bg-league-blue-400 p-2 rounded-l-xl' onClick={endDraw}>SEND DRAW REQUEST</button>
+            <button className='bg-league-blue-400 p-2 rounded-l-xl' disabled={canClick()} onClick={endDraw}>SEND DRAW REQUEST</button>
           ) : (
-            <button className='bg-league-grey-150 p-2 rounded-l-xl' onClick={() => setDrawRequest(s => !s)}> REQUEST DTAW </button>
+            <button className='bg-league-grey-150 p-2 rounded-l-xl' disabled={canClick()} onClick={() => setDrawRequest(s => !s)}> REQUEST DTAW </button>
           )
         }
       </div>

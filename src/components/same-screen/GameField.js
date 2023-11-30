@@ -11,13 +11,15 @@ const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
 
 function GameField({fieldId}) {
+  const dispatch = useDispatch()
+
   const [open, setOpen] = useState(false);
+  const closeModal = () => setOpen(false);
+
   const [currentChampion, setCurrentChampion] = useState('');
   const [championHistory, setChampionHistory] = useState([]);
   const [fieldMark, setFieldMark] = useState()
 
-  const closeModal = () => setOpen(false);
-  const dispatch = useDispatch()
 
   const { currentPlayer, player1, player2, possibleFields } = useSelector(state => state.sameScreen)
 
@@ -59,7 +61,7 @@ function GameField({fieldId}) {
         tabIndex='0'
         role='button'
         style={{
-          backgroundImage: currentChampion ? `url(icons/${currentChampion}.PNG)` :`url(icons/default.PNG)` , 
+          backgroundImage: currentChampion ? `url(${window.location.origin}/icons/${currentChampion}.PNG)` :`url(${window.location.origin}/icons/default.PNG)` , 
         }}
       >
         <h4 className='h-2/3 z-50 text-white text-6xl font-bold'>{fieldMark}</h4>
