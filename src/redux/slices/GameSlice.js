@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { WNNING_CONDITIONS, CHAMPION_API_URL, COMPARE_ARRAYS } from '../../constants';
-import {db} from '../../firebase-config'
-import { doc, getDoc, updateDoc, setDoc, arrayRemove, arrayUnion, increment } from "firebase/firestore";
-import { GENERATE_CODE, INITIAL_STATE } from "../../constants";
+import { db } from '../../firebase-config'
+import { doc, getDoc, setDoc, arrayRemove, arrayUnion, increment } from "firebase/firestore";
+import { INITIAL_STATE } from "../../constants";
 import axios from 'axios';
 
 
