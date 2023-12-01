@@ -17,9 +17,9 @@ function generateRoomCode(length) {
 
 const initialState = {
   roomId: "",
-  isGameStarted: false,
-  playersJoined : [],
+  isGameOver : false,
   isLoadingGame : true,
+  playersJoined: [],
   player1: {
       name: "Player 1",
       alias: "P 1",
@@ -40,6 +40,12 @@ const initialState = {
       fields: [],
       steals:3,
       score: 0
+  },
+  gameFields: [],
+  possibleFields: [1,2,3,4,5,6,7,8],
+  categoryFields: {
+      horizontal: [],
+      vertical: []
   }
 }
 
@@ -48,32 +54,42 @@ function OnlineGameLobby() {
   const [roomId, setRoomId] = useState('')
   const [error, setError] = useState(false)
 
+
   const joinRoom = async () => {
+
     const docRef = doc(db, "rooms", roomId)
     const room = await getDoc(docRef)
+
     if(!room.exists()) return
-    console.log(room.data().playersJoined)
     if (room.data().playersJoined.length >= 2) return
+
     const playerId = generateRoomCode(12)
     localStorage.setItem("playerId", playerId)
     localStorage.setItem("player", "Player 2")
+
     await updateDoc(docRef, {
       playersJoined: arrayUnion(playerId)
     });
+
     navigate(`/game/room/${roomId}`)
   }
 
   const createNewRoom = async () => {
-    console.log("creating room")
     const roomCode = generateRoomCode(5)
-    // const roomCode = "123455"
+
     const docRef = doc(db, "rooms", roomCode)
     const room = await getDoc(docRef)
+
     if(room.exists()) return 
-    console.log("room cretaed with code: ", roomCode)
     const playerId = generateRoomCode(12)
     const playersJoined = [playerId]
-    await setDoc(docRef, {...initialState, playersJoined})
+
+    await setDoc(docRef, {
+      ...initialState, 
+      roomId: roomCode,
+      playersJoined, 
+    });
+
     localStorage.setItem("player", "Player 1")
     localStorage.setItem("playerId", playerId)
     navigate(`/game/room/${roomCode}`)

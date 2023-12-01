@@ -3,6 +3,6 @@ import GameReducer from './slices/GameSlice'
 
 export const Store = configureStore({
     reducer : {
-        sameScreen: GameReducer,
+        game: GameReducer,
     }
 })

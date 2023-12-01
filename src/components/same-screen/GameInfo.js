@@ -3,23 +3,55 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
   setCurrentPlayer,
   endAsDraw,
-  getNewGameData } from '../../redux/slices/GameSlice';
+  getNewGameData,
+  skipTurnOnline } from '../../redux/slices/GameSlice';
 
-function GameInfo() {
-  const [skipTurn, setSkipTurn] = useState(false)
-  const [drawRequest, setDrawRequest] = useState(false)
+  function GameInfo() {
   const dispatch = useDispatch()
-  const {currentPlayer, player1, player2} = useSelector(state => state.sameScreen)
-
-  const endDraw = () => {
-    dispatch(endAsDraw())
-    dispatch(getNewGameData())
-  }
+  const [openSkipTurn, setOpenSkipTurn] = useState(false)
+  const [openDrawRequest, setOpenDrawRequest] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [player,setPlayer] = useState(localStorage.getItem("player"))
+  const [turnIndicator,setTurnIndicator] = useState('')
+  const {currentPlayer, player1, player2, gameMode} = useSelector(state => state.game)
 
   useEffect(() => {
-    setSkipTurn(false)
-    setDrawRequest(false)
-  },[currentPlayer])
+    setOpenSkipTurn(false)
+    setOpenDrawRequest(false)
+    switch(gameMode){
+      case "same screen": 
+        setIsDisabled(false)
+        setTurnIndicator(`${currentPlayer.alias}'s`)
+        break
+      case "online": 
+        setIsDisabled(currentPlayer.name !== player)
+        currentPlayer.name === player ? setTurnIndicator("YOUR") : setTurnIndicator("OPPONENT")
+        break
+    }
+  },[currentPlayer, gameMode, player])
+
+  const requestDraw = () => {
+    switch(gameMode){
+      case "same screen": 
+        dispatch(endAsDraw())
+        dispatch(getNewGameData())
+        break
+      case "online": 
+    }
+  }
+  
+  const skipTurn = () => {
+    switch(gameMode){
+      case "same screen": 
+        dispatch(setCurrentPlayer())
+        break
+      case "online": 
+        console.log("dispatching")
+        dispatch(skipTurnOnline())
+        break
+    }
+  }
+
   
   return (
     <div className='bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md'>
@@ -39,13 +71,13 @@ function GameInfo() {
         </div>
         <div className='flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl'>
           <h1 className='px-2'>
-            {currentPlayer.alias}'s TURN
+            {turnIndicator} TURN
           </h1>
           {
-            skipTurn? (
-              <button className='bg-red-500 px-3 py-2' onClick={() => dispatch(setCurrentPlayer())}>CONFIRM</button>
+            openSkipTurn? (
+              <button className='bg-red-500 px-3 py-2' disabled={isDisabled} onClick={skipTurn}>CONFIRM</button>
             ) : (
-              <button className='bg-red-700 px-3 py-2' onClick={() => setSkipTurn(s => !s)}>SKIP TURN</button>
+              <button className='bg-red-700 px-3 py-2' disabled={isDisabled} onClick={() => setOpenSkipTurn(o => !o)}>SKIP TURN</button>
             )
           }
         </div>
@@ -55,11 +87,11 @@ function GameInfo() {
           <h1>{currentPlayer.steals} STEALS REMAINING</h1>
         </div>
         {
-          drawRequest? 
+          openDrawRequest? 
           (
-            <button className='bg-league-blue-400 p-2 rounded-l-xl' onClick={endDraw}>SEND DRAW REQUEST</button>
+            <button className='bg-league-blue-400 p-2 rounded-l-xl' disabled={isDisabled} onClick={requestDraw}>SEND DRAW REQUEST</button>
           ) : (
-            <button className='bg-league-grey-150 p-2 rounded-l-xl' onClick={() => setDrawRequest(s => !s)}> REQUEST DTAW </button>
+            <button className='bg-league-grey-150 p-2 rounded-l-xl' disabled={isDisabled} onClick={() => setOpenDrawRequest(o => !o)}> REQUEST DTAW </button>
           )
         }
       </div>

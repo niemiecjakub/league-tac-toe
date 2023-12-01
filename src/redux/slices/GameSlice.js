@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { WNNING_CONDITIONS, CHAMPION_API_URL } from '../../constants';
+import {db} from '../../firebase-config'
+import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 import axios from 'axios';
 
 const compareArrays = (a, b) => {
@@ -7,8 +9,10 @@ const compareArrays = (a, b) => {
 }
 
 const initialState = {
+    roomId: "",
     isGameOver : false,
     isLoadingGame : true,
+    playersJoined: [],
     player1: {
         name: "Player 1",
         alias: "P 1",
@@ -48,44 +52,84 @@ export const getNewGameData = createAsyncThunk(
       const {data: {champions}} = await axios(`${CHAMPION_API_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
       return  champions
     }))
-
     const possibleFieldsArray = await listOfPromises
-
     const possibleFields = {}
         possibleFieldsArray.forEach((champions, index) => {
-        possibleFields[`${index + 1}`] = champions
+        possibleFields[`${index+1}`] = champions
     })
-
     const gameFields = {}
         list.forEach((combinedCategory, index) => {
-        gameFields[`${index + 1}`] = combinedCategory
+        gameFields[`${index+1}`] = combinedCategory
     })
-
-    const horizontalFields = {}
-        horizontal.forEach((category, index) => {
-        horizontalFields[`${index + 1}`] = category
-    })
-
-    const verticalFields = {}
-        vertical.forEach((category, index) => {
-        verticalFields[`${index + 1}`] = category
-    })
-    
-
     return {
         possibleFields,
-        horizontalFields, 
-        verticalFields, 
+        horizontal, 
+        vertical, 
         gameFields
     }
   }
 )
 
+export const startOnlineGame = createAsyncThunk(
+    'online/startOnlineGame',
+    async (roomId, {getState}) => {
+      const {data: {data : {horizontal, vertical}, list}} = await axios(`${CHAMPION_API_URL}game-start`);
+      const listOfPromises = Promise.all(list.map(async (combinedCategories) => {
+        const [category, othercategory] = combinedCategories
+        const {data: {champions}} = await axios(`${CHAMPION_API_URL}champion/${category.category}/${category.name}/${othercategory.category}/${othercategory.name}`);
+        return  champions
+      }))
+
+      const possibleFieldsArray = await listOfPromises
+
+
+      const possibleFields = {}
+      possibleFieldsArray.forEach((champions, index) => {
+        possibleFields[`${index+1}`] = champions
+      })
+
+      const gameFields = {}
+      list.forEach((combinedCategory, index) => {
+        gameFields[`${index+1}`] = combinedCategory
+      })
+      const docRef = doc(db, "rooms", roomId)
+
+      await setDoc(docRef, {
+        categoryFields: {
+          horizontal: horizontal,
+          vertical: vertical
+        },
+        possibleFields: possibleFields,
+        gameFields: gameFields,
+        isGameStarted: true,
+        isLoadingGame: false
+        }, {merge : true})
+      }
+)
+
+export const skipTurnOnline = createAsyncThunk(
+    'online/skipTurnOnline',
+    async (params, {getState}) => {
+  
+        const state = getState()
+        const docRef = doc(db, "rooms", state.game.roomId)
+        const docSnap = await getDoc(docRef);
+        const {currentPlayer, player1, player2} = docSnap.data()
+        
+        const nextPlayer = currentPlayer.name === "Player 1" ? player2 : player1
+        await setDoc(docRef, {
+            currentPlayer: nextPlayer
+        }, {merge : true})
+      }
+  )
 
 const GameSlice = createSlice({
     name: "Game",
     initialState,
     reducers: {
+        setRoomId : (state, action) => {
+            state.roomId = action.payload
+        },
         setGameMode : (state, action) => {
             state.gameMode = action.payload
         },
@@ -133,7 +177,13 @@ const GameSlice = createSlice({
                 score: state.player2.score + 1
             }
             state.currentPlayer = initialState.currentPlayer
-        }
+        },
+        setDBstate: (state, action) => {
+            for (const [key, value] of Object.entries(action.payload)) {
+              if (key === "roomId") continue
+              state[`${key}`] =  value
+            }
+        }  
     }, 
     extraReducers: (builder) => {
       builder.addCase(getNewGameData.pending, (state) => {
@@ -143,16 +193,24 @@ const GameSlice = createSlice({
         state.isLoadingGame = false
         state.isGameOver = false
 
-        const {possibleFields,horizontalFields, verticalFields, gameFields} = action.payload
+        const {possibleFields,horizontal, vertical, gameFields} = action.payload
         state.possibleFields = possibleFields
         state.gameFields = gameFields
-        state.categoryFields.vertical = verticalFields
-        state.categoryFields.horizontal = horizontalFields
+        state.categoryFields.vertical = vertical
+        state.categoryFields.horizontal = horizontal
         
       })
       builder.addCase(getNewGameData.rejected, (state, action) => {
         state.isLoadingGame = false
         state.error = action.error.message
+      })
+      builder.addCase(startOnlineGame.pending, (state) => {
+        state.isLoadingGame = true
+      })
+      builder.addCase(startOnlineGame.fulfilled, (state, action) => {
+        state.isLoadingGame = false
+      })
+      builder.addCase(startOnlineGame.rejected, (state, action) => {
       })
     },                                                                                                      
 }) 
@@ -166,6 +224,8 @@ export const {
     setPossibleFields,
     setPlayerField, 
     checkWin,
-    endAsDraw } = GameSlice.actions
+    setRoomId,
+    endAsDraw,
+    setDBstate } = GameSlice.actions
 
 export default GameSlice.reducer

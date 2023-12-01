@@ -21,7 +21,7 @@ function GameField({fieldId}) {
   const [fieldMark, setFieldMark] = useState()
 
 
-  const { currentPlayer, player1, player2, possibleFields } = useSelector(state => state.sameScreen)
+  const { currentPlayer, player1, player2, possibleFields } = useSelector(state => state.game)
 
   const getSelectedVal = async (value) => {
     const {data: {name, key}} = await axios(`${CHAMPION_API_URL}champion/name/${value}`);
