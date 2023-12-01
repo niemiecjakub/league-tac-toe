@@ -1,0 +1,8 @@
+- cookies
+- score on request draw: same screen
+- request draw: online
+- reveal champions
+- find random opponent
+
+extra:
+- champion query search
