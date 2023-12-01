@@ -138,6 +138,9 @@ const GameSlice = createSlice({
     name: "Game",
     initialState: INITIAL_STATE,
     reducers: {
+      clearState : (state, action) => {
+        state = INITIAL_STATE
+      },
       setRoomId : (state, action) => {
         state.roomId = action.payload
       },
@@ -203,6 +206,10 @@ const GameSlice = createSlice({
       builder.addCase(getNewGameData.fulfilled, (state, action) => {
         state.isLoadingGame = false
         state.isGameOver = false
+        state.currentPlayer = INITIAL_STATE.currentPlayer
+        state.player1 = INITIAL_STATE.player1
+        state.player2 = INITIAL_STATE.player2
+        
 
         const {possibleFields,horizontal, vertical, gameFields} = action.payload
         state.possibleFields = possibleFields
@@ -234,6 +241,7 @@ const GameSlice = createSlice({
 }) 
                                     
 export const {
+  clearState,
   setCurrentPlayer, 
   setGameMode, 
   setHorizontalFields, 
