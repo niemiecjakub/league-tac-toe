@@ -43,46 +43,55 @@ export const INITIAL_STATE = {
     fields: {
         "1" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "2" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "3" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "4" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "5" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "6" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "7" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "8" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },
         "9" :{
             name: "",
+            key: "",
             player: "",
             history: []
         },

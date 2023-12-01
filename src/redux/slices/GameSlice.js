@@ -89,7 +89,7 @@ export const skipTurnOnline = createAsyncThunk(
 
 export const setPlayerFieldOnline = createAsyncThunk(
   'online/setPlayerFieldOnline',
-  async ({fieldId, name}, {getState}) => {
+  async ({fieldId, name, key}, {getState}) => {
 
     const state = getState()
     const docRef = doc(db, "rooms", state.game.roomId)
@@ -110,6 +110,7 @@ export const setPlayerFieldOnline = createAsyncThunk(
         },
         fields : {
           [fieldId] :{
+            key,
             name,
             player: player.key,
             history: arrayUnion(name),
@@ -123,6 +124,7 @@ export const setPlayerFieldOnline = createAsyncThunk(
         },
         fields : {
           [fieldId] :{
+            key,
             name,
             player: player.key,
             history: arrayUnion(name),
@@ -191,7 +193,7 @@ const GameSlice = createSlice({
         state.currentPlayer = nextPlayer
       },
       setPlayerField : (state, action) => {
-        const {name, fieldId} = action.payload
+        const {name, fieldId, key} = action.payload
         const player = state.currentPlayer.name === "Player 1" ? state.player1 : state.player2
         const otherPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
         const index = otherPlayer.fields.indexOf(fieldId)
@@ -203,6 +205,7 @@ const GameSlice = createSlice({
 
         state.fields[fieldId].name = name
         state.fields[fieldId].player = player.key
+        state.fields[fieldId].key = key
         state.fields[fieldId].history = [...state.fields[fieldId].history, name]
 
       },
@@ -255,6 +258,7 @@ const GameSlice = createSlice({
         state.currentPlayer = INITIAL_STATE.currentPlayer
         state.player1 = INITIAL_STATE.player1
         state.player2 = INITIAL_STATE.player2
+        state.fields = INITIAL_STATE.fields
         
 
         const {possibleFields,horizontal, vertical, gameFields} = action.payload

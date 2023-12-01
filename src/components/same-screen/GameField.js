@@ -19,7 +19,7 @@ function GameField({fieldId}) {
     console.log(name, possibleFields[fieldId])
 
     if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
-      dispatch(setPlayerField({fieldId, name}))
+      dispatch(setPlayerField({fieldId, name, key}))
       dispatch(checkWin())
     }
     dispatch(setCurrentPlayer())
@@ -48,7 +48,7 @@ function GameField({fieldId}) {
         tabIndex='0'
         role='button'
         style={{
-          backgroundImage: fields[fieldId].name ? `url(${window.location.origin}/icons/${fields[fieldId].name}.PNG)` :`url(${window.location.origin}/icons/default.PNG)` , 
+          backgroundImage: fields[fieldId].name ? `url(${window.location.origin}/icons/${fields[fieldId].key}.PNG)` :`url(${window.location.origin}/icons/default.PNG)` , 
         }}
       >
         {fields[fieldId].player === "" ? (
