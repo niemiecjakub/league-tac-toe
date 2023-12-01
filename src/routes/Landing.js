@@ -1,49 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import PageCard from '../components/PageCard'
 
-const generateCode = (length) => {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
 
 function Landing() {
-  const [roomCode, setRoomCode] = useState('')
-
-  useEffect(() => {
-    const userCode = localStorage.getItem("uid")
-    if (!userCode) {
-      const userCode = generateCode(20)
-      localStorage.setItem("uid", userCode)
-    }
-  },[])
 
   return (
     <>
-
-      <PageCard to="/chat" title="Chat room socket io" subtext="Chat room"/>
-
-      <PageCard to="/champion-list" title="Champion list" subtext="Browse all champions"/>
-
-      <PageCard to={`/category-list`} title="See all categories" subtext="See all categories"/>
-
+      <PageCard to="/chat" title="Play against friend" subtext="Create game room"/>
       <PageCard to="/game" title="Same screen game" subtext="Same screen game"/>
+      <PageCard to="/champion-list" title="Champion list" subtext="Browse all champions"/>
+      <PageCard to="/category-list" title="See all categories" subtext="See all categories"/>
 
-      <PageCard to={`/game/room/${roomCode}`} title="Play agains friend" subtext="Play agains friend"/>
 
-      <PageCard to={`/game/room/${roomCode}`} title="Find random opponent" subtext="Find random opponent"/>
-  
-      <div>
+      <div className=''>
         <h1 className='font-bold text-xl my-2'>How to play League-Tac-Toe</h1>
         <p>
-          Tiki-Taka-Toe is a game of tic tac toe or noughts and crosses with a football twist. 
+          Tiki-Taka-Toe is a game of tic tac toe or noughts and crossses with a football twist. 
           Play with your mates on the same device or challenge them to a game online. 
           If your mates are unavailable, don't worry, you can play against thousands of football fans around the world by finding an opponent or you can play against the clock to complete the football grid in our daily Box2Box game. 
           Choose to play Tiki-Taka-Toe using European leagues, featuring the continent’s biggest names or if you’re an aficionado of an individual league, you can choose to play within that division.

@@ -2,52 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDoc, doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../../firebase-config';
-
-function generateRoomCode(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
-
-const initialState = {
-  roomId: "",
-  isGameOver : false,
-  isLoadingGame : true,
-  playersJoined: [],
-  player1: {
-      name: "Player 1",
-      alias: "P 1",
-      fields: [],
-      steals:3,
-      score: 0
-  },
-  player2 : {
-      name: "Player 2",
-      alias: "P 2",
-      fields: [],
-      steals:3,
-      score: 0
-  },
-  currentPlayer: {
-      name: "Player 1",
-      alias: "P 1",
-      fields: [],
-      steals:3,
-      score: 0
-  },
-  gameFields: [],
-  possibleFields: [1,2,3,4,5,6,7,8],
-  categoryFields: {
-      horizontal: [],
-      vertical: []
-  }
-}
+import { INITIAL_STATE, GENERATE_CODE } from '../../constants';
 
 function OnlineGameLobby() {
   const navigate = useNavigate();
@@ -63,7 +18,7 @@ function OnlineGameLobby() {
     if(!room.exists()) return
     if (room.data().playersJoined.length >= 2) return
 
-    const playerId = generateRoomCode(12)
+    const playerId = GENERATE_CODE(12)
     localStorage.setItem("playerId", playerId)
     localStorage.setItem("player", "Player 2")
 
@@ -75,17 +30,17 @@ function OnlineGameLobby() {
   }
 
   const createNewRoom = async () => {
-    const roomCode = generateRoomCode(5)
+    const roomCode = GENERATE_CODE(5)
 
     const docRef = doc(db, "rooms", roomCode)
     const room = await getDoc(docRef)
 
     if(room.exists()) return 
-    const playerId = generateRoomCode(12)
+    const playerId = GENERATE_CODE(12)
     const playersJoined = [playerId]
 
     await setDoc(docRef, {
-      ...initialState, 
+      ...INITIAL_STATE, 
       roomId: roomCode,
       playersJoined, 
     });

@@ -14,6 +14,7 @@ function ChampionList() {
     const fetchData = async () => {
       const result = await axios(`${BASE_URL}champion/all`);
       setData(result.data);
+      console.log(result.data)
       setIsLoading(false)
     };
 

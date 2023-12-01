@@ -1,10 +1,106 @@
 
-
-export const IMAGE_BASE_PATH = "http://localhost:3000/"
-
 export const CHAMPION_API_URL = "https://kniemiec.pythonanywhere.com/api/"
 
 // export const CHAMPION_API_URL = "http://127.0.0.1:8000/api/"
+
+export const INITIAL_STATE = {
+    roomId: "",
+    isGameOver : false,
+    isLoadingGame : true,
+    playersJoined: [],
+    player1: {
+        key: "player1",
+        name: "Player 1",
+        alias: "P 1",
+        fields: [],
+        steals:3,
+        score: 0
+    },
+    player2 : {
+        key: "player2",
+        name: "Player 2",
+        alias: "P 2",
+        fields: [],
+        steals:3,
+        score: 0
+    },
+    currentPlayer: {
+        name: "Player 1",
+        alias: "P 1",
+        fields: [],
+        steals:3,
+        score: 0
+    },
+    gameFields: [],
+    possibleFields: [1,2,3,4,5,6,7,8],
+    categoryFields: {
+        horizontal: [],
+        vertical: []
+    },
+    fields: {
+        "1" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "2" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "3" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "4" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "5" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "6" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "7" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "8" :{
+            name: "",
+            player: "",
+            history: []
+        },
+        "9" :{
+            name: "",
+            player: "",
+            history: []
+        },
+    }
+};
+
+export const COMPARE_ARRAYS = (a, b) => {
+    return a.length === b.length && a.every((element, index) => element === b[index]);
+};
+
+export const GENERATE_CODE = (length) => {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        counter += 1;
+    }
+    return result;
+};
 
 export const CHAMPION_NAME_LIST = [
     "Aatrox",
@@ -172,7 +268,7 @@ export const CHAMPION_NAME_LIST = [
     "Zilean",
     "Zoe",
     "Zyra"
-    ]
+];
     
 export const WNNING_CONDITIONS = [
     [1, 2, 3],
@@ -183,4 +279,4 @@ export const WNNING_CONDITIONS = [
     [3, 6, 9],
     [1, 5, 9],
     [3, 5, 7],
-  ];
+];
