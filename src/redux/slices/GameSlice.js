@@ -152,24 +152,31 @@ const GameSlice = createSlice({
         state.currentPlayer = nextPlayer
       },
       setPlayerField : (state, action) => {
-        const id = action.payload
-        const currentPlayer = state.currentPlayer.name === "Player 1" ? state.player1 : state.player2
+        const {name, fieldId} = action.payload
+        const player = state.currentPlayer.name === "Player 1" ? state.player1 : state.player2
         const otherPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
-        const index = otherPlayer.fields.indexOf(id)
+        const index = otherPlayer.fields.indexOf(fieldId)
         if (index > -1) { 
             otherPlayer.fields.splice(index, 1);
-            currentPlayer.steals -= 1;
+            player.steals -= 1;
         }
-        currentPlayer.fields.push(id)
+        player.fields.push(fieldId)
+
+        state.fields[fieldId].name = name
+        state.fields[fieldId].player = player.key
+        state.fields[fieldId].history = [...state.fields[fieldId].history, name]
+
       },
       checkWin: (state, action) => {
         const player = state.currentPlayer.name === "Player 1" ? state.player1 : state.player2
+        const otherPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
+
         const playerFieldsSorted = player.fields.toSorted();
 
         WNNING_CONDITIONS.forEach(winningCondition => {
           if (COMPARE_ARRAYS(winningCondition, playerFieldsSorted)) {
-            const otherPlayer = state.currentPlayer.name === "Player 1" ? state.player2 : state.player1
 
+            state.winner = player.name
             player.score += 1;
             player.fields = []
             player.steals = 3

@@ -14,7 +14,6 @@ function CategoryFieldOnline({fieldId}) {
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);
-  const closeModal = () => setOpen(false);
   const [isDisabled, setIsDisabled] = useState(false)
   const [player,setPlayer] = useState(localStorage.getItem("player"))
 
@@ -27,8 +26,8 @@ function CategoryFieldOnline({fieldId}) {
 
     if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
       dispatch(setPlayerFieldOnline({fieldId, name}))
-      dispatch(skipTurnOnline())
     }
+    dispatch(skipTurnOnline())
     setOpen(o => !o)
   };
 
@@ -63,7 +62,7 @@ function CategoryFieldOnline({fieldId}) {
         )}
         <h4 className='h-1/3 z-50 text-white text-xl uppercase font-bold'>{fields[fieldId].name}</h4>
       </div>
-      <Popup open={open} closeOnDocumentClick onClose={closeModal} {...{overlayStyle }}>
+      <Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)} {...{overlayStyle }}>
           <InputAutofill
             label="Champion"
             pholder="..."
