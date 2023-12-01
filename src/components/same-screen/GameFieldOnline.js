@@ -4,7 +4,7 @@ import Popup from 'reactjs-popup';
 import InputAutofill from '../InputAutofill'
 import { CHAMPION_API_URL, CHAMPION_NAME_LIST } from '../../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayerField, checkWin, setPlayerFieldOnline , skipTurnOnline} from '../../redux/slices/GameSlice';
+import { setCurrentPlayer, setPlayerField, checkWinOnline, setPlayerFieldOnline , skipTurnOnline} from '../../redux/slices/GameSlice';
 
 
 const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
@@ -14,11 +14,9 @@ function CategoryFieldOnline({fieldId}) {
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false)
   const [player,setPlayer] = useState(localStorage.getItem("player"))
 
-
-  const { currentPlayer, player1, player2, possibleFields, gameMode, fields } = useSelector(state => state.game)
+  const { currentPlayer, possibleFields, fields } = useSelector(state => state.game)
 
   const getSelectedVal = async (value) => {
     const {data: {name, key}} = await axios(`${CHAMPION_API_URL}champion/name/${value}`);
@@ -26,6 +24,7 @@ function CategoryFieldOnline({fieldId}) {
 
     if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
       dispatch(setPlayerFieldOnline({fieldId, name}))
+      dispatch(checkWinOnline())
     }
     dispatch(skipTurnOnline())
     setOpen(o => !o)
@@ -48,7 +47,6 @@ function CategoryFieldOnline({fieldId}) {
       <div
         className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-1 border-solid border-2 border-league-grey-200 '
         onClick={openPopupField} 
-        disabled={isDisabled} 
         tabIndex='0'
         role='button'
         style={{

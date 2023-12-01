@@ -134,6 +134,45 @@ export const setPlayerFieldOnline = createAsyncThunk(
   }
 )
 
+export const checkWinOnline = createAsyncThunk(
+  'online/checkWinOnline',
+  async (params, {getState}) => {
+
+    const state = getState()
+    const docRef = doc(db, "rooms", state.game.roomId)
+    const docSnap = await getDoc(docRef);
+
+    const player = state.game.currentPlayer.name === "Player 1" ? state.game.player1 : state.game.player2
+    const otherPlayer = state.game.currentPlayer.name === "Player 1" ? state.game.player2 : state.game.player1
+    const playerFieldsSorted = player.fields.toSorted();
+
+    console.log("player ", player)
+    console.log("otherPlayer ", otherPlayer)
+    console.log("playerFieldsSorted ", playerFieldsSorted)
+
+    WNNING_CONDITIONS.forEach(async (winningCondition) => {
+      if (COMPARE_ARRAYS(winningCondition, playerFieldsSorted)) {
+        
+        await setDoc(docRef, {
+          winner: player.key,
+          [player.key] : {
+            score: increment(1),
+            fields: [],
+            steals: 3
+          },
+          [otherPlayer.key] : {
+            fields : [],
+            steals: 3
+          },
+          isGameOver: true
+        }, {merge : true})
+      }
+    })
+  }
+)
+
+
+
 const GameSlice = createSlice({
     name: "Game",
     initialState: INITIAL_STATE,
@@ -242,6 +281,12 @@ const GameSlice = createSlice({
       builder.addCase(setPlayerFieldOnline.fulfilled, (state, action) => {
       })
       builder.addCase(setPlayerFieldOnline.rejected, (state, action) => {
+      })
+      builder.addCase(checkWinOnline.pending, (state, action) => {
+      })
+      builder.addCase(checkWinOnline.fulfilled, (state, action) => {
+      })
+      builder.addCase(checkWinOnline.rejected, (state, action) => {
       })
 
     },                                                                                                      

@@ -12,9 +12,6 @@ function GameField({fieldId}) {
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false)
-
-
   const { currentPlayer, player1, player2, possibleFields, fields } = useSelector(state => state.game)
 
   const getSelectedVal = async (value) => {
@@ -48,7 +45,6 @@ function GameField({fieldId}) {
       <div
         className='w-1/4 flex flex-col bg-cover items-center justify-center h-full border-spacing-1 border-solid border-2 border-league-grey-200 '
         onClick={openPopupField} 
-        disabled={isDisabled} 
         tabIndex='0'
         role='button'
         style={{

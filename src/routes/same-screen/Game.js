@@ -33,7 +33,7 @@ function Game({gameMode}) {
           const currentData = snapshot.data()
           console.log(currentData)
           dispatch(setDBstate(currentData))
-          if (currentData.playersJoined.length == 2 && !currentData.isGameStarted) {
+          if (currentData.playersJoined.length == 2 && !currentData.isGameStarted && !currentData.isGameOver) {
             dispatch(startOnlineGame(roomId))
           }
         })
@@ -48,6 +48,10 @@ function Game({gameMode}) {
       setOpenEndGame(true)
     }
   },[isGameOver])
+
+  const endGame = () =>{
+    setOpenEndGame(true)
+  }
 
 
   if (gameMode === "online" && playersJoined.length < 2) {
@@ -74,6 +78,7 @@ function Game({gameMode}) {
     <div id="game-container" className='font-league max-h-fit w-screen lg:m-auto lg:w-1/3'>
       <GameInfo />
       <Board />
+      {/* <button className="w-full h-16 p-2 bg-slate-400 text-black" onClick={endGame}>END GAME</button> */}
       <Popup open={openEndGame} closeOnDocumentClick={false} onClose={() => setOpenEndGame(false)} {...{overlayStyle }}>
         <EndGamePop setOpenEndGame={setOpenEndGame}/>
       </Popup>
