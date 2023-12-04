@@ -102,9 +102,25 @@ function GameField({ fieldId }) {
         <h4 className="h-1/3 z-50 text-white text-xs uppercase font-bold">
           {fields[fieldId].name}
         </h4>
-        <StealIcon
-          className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
-        />
+
+        {gameMode === "online" &&
+        localStorage.getItem("player") === currentPlayer.name &&
+        fields[fieldId].player !== currentPlayer.name ? (
+          <StealIcon
+            className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
+          />
+        ) : (
+          <></>
+        )}
+        {gameMode === "same screen" &&
+        fields[fieldId].player !== currentPlayer.key &&
+        fields[fieldId].name !== "" ? (
+          <StealIcon
+            className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
+          />
+        ) : (
+          <></>
+        )}
         {!fields[fieldId].name && <PlusIcon className={"w-8 absolute top-5"} />}
       </div>
 
