@@ -76,7 +76,7 @@ function GameField({fieldId}) {
         ) : (
         <h4 className='h-2/3 z-50 text-white text-6xl font-bold'>{fields[fieldId].player === "player1" ? "X" : "O"}</h4>
         )}
-        <h4 className='h-1/3 z-50 text-white text-xl uppercase font-bold'>{fields[fieldId].name}</h4>
+        <h4 className='h-1/3 z-50 text-white text-xs uppercase font-bold'>{fields[fieldId].name}</h4>
       </div>
       <Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)} {...{overlayStyle }}>
           <InputAutofill
