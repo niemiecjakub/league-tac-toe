@@ -4,7 +4,9 @@ import {
   setCurrentPlayer,
   endAsDraw,
   getNewGameData,
-  skipTurnOnline } from '../../redux/slices/GameSlice';
+  skipTurnOnline,
+  checkWinOnline,
+  playAgainOnline } from '../../redux/slices/GameSlice';
 
   function GameInfo() {
   const dispatch = useDispatch()
@@ -46,13 +48,11 @@ import {
         dispatch(setCurrentPlayer())
         break
       case "online": 
-        console.log("dispatching")
         dispatch(skipTurnOnline())
         break
     }
   }
 
-  
   return (
     <div className='bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md'>
       <div className='flex flex-row justify-between items-center'>

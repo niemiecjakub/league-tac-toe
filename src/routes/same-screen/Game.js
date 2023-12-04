@@ -16,7 +16,8 @@ function Game({gameMode}) {
   const {roomId} = useParams()
   const [openEndGame, setOpenEndGame] = useState(false)
 
-  const { isLoadingGame, playersJoined, isGameOver } = useSelector(state => state.game)
+  const { isLoadingGame, playersJoined, isGameOver,isGameStarted } = useSelector(state => state.game)
+  const state = useSelector(state => state.game)
   
   useEffect(() => {
     dispatch(setGameMode(gameMode))
@@ -31,8 +32,9 @@ function Game({gameMode}) {
         const docRef = doc(db, "rooms", roomId)
         unsubscribe = onSnapshot(docRef, (snapshot) => {
           const currentData = snapshot.data()
-          console.log(currentData)
-          dispatch(setDBstate(currentData))
+          if (currentData !== state) {
+            dispatch(setDBstate(currentData))
+          }
           if (currentData.playersJoined.length == 2 && !currentData.isGameStarted && !currentData.isGameOver) {
             dispatch(startOnlineGame(roomId))
           }
@@ -44,15 +46,8 @@ function Game({gameMode}) {
 
 
   useEffect(() => {
-    if (isGameOver) {
-      setOpenEndGame(true)
-    }
+    isGameOver ? setOpenEndGame(true) : setOpenEndGame(false)
   },[isGameOver])
-
-  const endGame = () =>{
-    setOpenEndGame(true)
-  }
-
 
   if (gameMode === "online" && playersJoined.length < 2) {
     return (
@@ -78,7 +73,6 @@ function Game({gameMode}) {
     <div id="game-container" className='font-league max-h-fit w-screen lg:m-auto lg:w-1/3'>
       <GameInfo />
       <Board />
-      {/* <button className="w-full h-16 p-2 bg-slate-400 text-black" onClick={endGame}>END GAME</button> */}
       <Popup open={openEndGame} closeOnDocumentClick={false} onClose={() => setOpenEndGame(false)} {...{overlayStyle }}>
         <EndGamePop setOpenEndGame={setOpenEndGame}/>
       </Popup>

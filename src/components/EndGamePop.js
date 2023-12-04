@@ -1,7 +1,8 @@
 
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { getNewGameData, clearState } from "../redux/slices/GameSlice"
+import { getNewGameData, clearState, startOnlineGame, playAgainOnline } from "../redux/slices/GameSlice"
+import { useEffect } from "react"
 
 function EndGamePop ({setOpenEndGame}) {
 
@@ -9,6 +10,10 @@ function EndGamePop ({setOpenEndGame}) {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    useEffect(() => {
+      
+    },[winner])
 
     const handleLeaveGame = () => {
         switch (gameMode) {
@@ -28,7 +33,7 @@ function EndGamePop ({setOpenEndGame}) {
 
       switch (gameMode) {
         case "online":
-          navigate("/")
+          dispatch(playAgainOnline())
           setOpenEndGame(false)
           break
         case "same screen":

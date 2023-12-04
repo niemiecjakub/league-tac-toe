@@ -23,8 +23,8 @@ function CategoryFieldOnline({fieldId}) {
     console.log(name, possibleFields[fieldId])
 
     if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
-      dispatch(setPlayerFieldOnline({fieldId, name, key}))
-      dispatch(checkWinOnline())
+      await dispatch(setPlayerFieldOnline({fieldId, name, key}))
+      await dispatch(checkWinOnline())
     }
     dispatch(skipTurnOnline())
     setOpen(o => !o)

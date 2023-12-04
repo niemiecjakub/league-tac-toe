@@ -39,7 +39,7 @@ function GameField({fieldId}) {
       setOpen(o => !o)
     }
   }
-
+  
   return (
     <>
       <div

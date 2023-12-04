@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { WNNING_CONDITIONS, CHAMPION_API_URL, COMPARE_ARRAYS } from '../../constants';
 import { db } from '../../firebase-config'
-import { doc, getDoc, setDoc, arrayRemove, arrayUnion, increment } from "firebase/firestore";
+import { doc, getDoc, setDoc, arrayRemove, arrayUnion, increment, onz } from "firebase/firestore";
 import { INITIAL_STATE } from "../../constants";
 import axios from 'axios';
 
@@ -148,15 +148,11 @@ export const checkWinOnline = createAsyncThunk(
     const otherPlayer = state.game.currentPlayer.name === "Player 1" ? state.game.player2 : state.game.player1
     const playerFieldsSorted = player.fields.toSorted();
 
-    console.log("player ", player)
-    console.log("otherPlayer ", otherPlayer)
-    console.log("playerFieldsSorted ", playerFieldsSorted)
-
     WNNING_CONDITIONS.forEach(async (winningCondition) => {
       if (COMPARE_ARRAYS(winningCondition, playerFieldsSorted)) {
         
         await setDoc(docRef, {
-          winner: player.key,
+          winner: player.key, 
           [player.key] : {
             score: increment(1),
             fields: [],
@@ -166,10 +162,23 @@ export const checkWinOnline = createAsyncThunk(
             fields : [],
             steals: 3
           },
-          isGameOver: true
+          isGameOver: true,
         }, {merge : true})
       }
     })
+  }
+)
+
+export const playAgainOnline = createAsyncThunk(
+  'online/playAgainOnline',
+  async (roomId, {getState}) => {
+    const state = getState()
+    const docRef = doc(db, "rooms", state.game.roomId)
+    await setDoc(docRef, {
+      fields: INITIAL_STATE.fields,
+      isGameOver: false,
+      isGameStarted: false
+    }, {merge : true})
   }
 )
 
@@ -225,7 +234,8 @@ const GameSlice = createSlice({
 
             otherPlayer.fields = []
             otherPlayer.steals = 3
-
+            
+            state.currentPlayer = INITIAL_STATE.currentPlayer;
             state.isGameOver = true
           }
         })
@@ -246,6 +256,12 @@ const GameSlice = createSlice({
           if (key === "roomId") continue
             state[`${key}`] =  value
           }
+      },
+      setDBstate: (state, action) => {
+        for (const [key, value] of Object.entries(action.payload)) {
+          if (key === "roomId") continue
+            state[`${key}`] =  value
+          }
       }  
     }, 
     extraReducers: (builder) => {
@@ -253,19 +269,17 @@ const GameSlice = createSlice({
         state.isLoadingGame = true
       })
       builder.addCase(getNewGameData.fulfilled, (state, action) => {
-        state.isLoadingGame = false
-        state.isGameOver = false
         state.currentPlayer = INITIAL_STATE.currentPlayer
-        state.player1 = INITIAL_STATE.player1
-        state.player2 = INITIAL_STATE.player2
         state.fields = INITIAL_STATE.fields
         
-
         const {possibleFields,horizontal, vertical, gameFields} = action.payload
         state.possibleFields = possibleFields
         state.gameFields = gameFields
         state.categoryFields.vertical = vertical
         state.categoryFields.horizontal = horizontal
+
+        state.isLoadingGame = false
+        state.isGameOver = false
         
       })
       builder.addCase(getNewGameData.rejected, (state, action) => {
@@ -292,7 +306,6 @@ const GameSlice = createSlice({
       })
       builder.addCase(checkWinOnline.rejected, (state, action) => {
       })
-
     },                                                                                                      
 }) 
                                     
