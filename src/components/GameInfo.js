@@ -67,6 +67,7 @@ function GameInfo() {
   };
   return (
     <div className="bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md">
+      {gameMode === "online" && <h1>You are {localStorage.getItem("player")}</h1>}
       <div className="flex flex-row justify-between items-center">
         <ScoreBoard />
         <TurnIndicator

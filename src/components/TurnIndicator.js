@@ -6,13 +6,13 @@ function TurnIndicator({
   skipTurn,
   turnIndicator,
   handleOpenSkipTurn,
-  openSkipTurn
+  openSkipTurn,
 }) {
-  const {gameMode, currentPlayer} = useSelector(state => state.game)
+  const { gameMode, currentPlayer } = useSelector((state) => state.game);
 
   const skipButton = (
     <>
-    {openSkipTurn ? (
+      {openSkipTurn ? (
         <button
           className="bg-red-500 px-3 py-2"
           disabled={isDisabled}
@@ -30,12 +30,17 @@ function TurnIndicator({
         </button>
       )}
     </>
-  )
+  );
 
   return (
     <div className="flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl">
       <h1 className="px-2 py-2">{turnIndicator}</h1>
-      {gameMode === "online" && localStorage.getItem("player") === currentPlayer.name ? skipButton : (<></>)}
+      {gameMode === "online" &&
+      localStorage.getItem("player") === currentPlayer.name ? (
+        skipButton
+      ) : (
+        <></>
+      )}
       {gameMode === "same screen" && skipButton}
     </div>
   );

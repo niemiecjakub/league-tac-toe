@@ -2,6 +2,8 @@
 - request draw: online
 - reveal champions
 - find random opponent
+- styling game room
+- stylning champion input dialog
 
 extra:
 - champion query search 

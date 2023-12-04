@@ -1,7 +1,12 @@
 import { useSelector } from "react-redux";
 
-function DrawDialog({openDrawRequest, isDisabled, requestDraw, handleOpenDrawRequest}) {
-  const {gameMode, currentPlayer} = useSelector(state => state.game)
+function DrawDialog({
+  openDrawRequest,
+  isDisabled,
+  requestDraw,
+  handleOpenDrawRequest,
+}) {
+  const { gameMode, currentPlayer } = useSelector((state) => state.game);
   const drawButton = (
     <>
       {openDrawRequest ? (
@@ -22,11 +27,16 @@ function DrawDialog({openDrawRequest, isDisabled, requestDraw, handleOpenDrawReq
         </button>
       )}
     </>
-  )
+  );
 
   return (
     <>
-      {gameMode === "online" && localStorage.getItem("player") === currentPlayer.name ? drawButton : (<></>)}
+      {gameMode === "online" &&
+      localStorage.getItem("player") === currentPlayer.name ? (
+        drawButton
+      ) : (
+        <></>
+      )}
       {gameMode === "same screen" && drawButton}
     </>
   );
