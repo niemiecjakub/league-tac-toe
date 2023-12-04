@@ -1,39 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
-import InputAutofill from '../InputAutofill'
-import { CHAMPION_API_URL, CHAMPION_NAME_LIST } from '../../constants';
+import InputAutofill from './InputAutofill'
+import { CHAMPION_API_URL, CHAMPION_NAME_LIST, overlayStyle } from '../constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentPlayer, setPlayerField, checkWinOnline, setPlayerFieldOnline , skipTurnOnline} from '../../redux/slices/GameSlice';
+import { setCurrentPlayer, setPlayerField, checkWin, setPlayerFieldOnline , skipTurnOnline, checkWinOnline} from '../redux/slices/GameSlice';
 
 
-const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 
-
-function CategoryFieldOnline({fieldId}) {
+function GameField({fieldId}) {
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);
-  const [player,setPlayer] = useState(localStorage.getItem("player"))
-
-  const { currentPlayer, possibleFields, fields } = useSelector(state => state.game)
+  const { currentPlayer, player1, player2, possibleFields, fields, gameMode } = useSelector(state => state.game)
 
   const getSelectedVal = async (value) => {
     const {data: {name, key}} = await axios(`${CHAMPION_API_URL}champion/name/${value}`);
     console.log(name, possibleFields[fieldId])
 
-    if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
-      await dispatch(setPlayerFieldOnline({fieldId, name, key}))
-      await dispatch(checkWinOnline())
+    switch(gameMode) {
+      case "same screen":
+        if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
+          dispatch(setPlayerField({fieldId, name, key}))
+          dispatch(checkWin())
+        }
+        dispatch(setCurrentPlayer())
+        setOpen(o => !o)
+        break
+      case "online":
+        if (possibleFields[fieldId].includes(name) && !fields[fieldId].history.includes(name)) {
+          await dispatch(setPlayerFieldOnline({fieldId, name, key}))
+          await dispatch(checkWinOnline())
+        }
+        await dispatch(skipTurnOnline())
+        setOpen(o => !o)
+        break
     }
-    dispatch(skipTurnOnline())
-    setOpen(o => !o)
   };
 
   const isFieldDisabled = () => {
-    if (currentPlayer.name !== player) return true
-    if (fields[fieldId].player === currentPlayer.key) return true
-    return false
+    switch(gameMode){
+      case "same screen":
+        const player = currentPlayer.name === "Player 1" ? player1 : player2
+        if (player.fields.includes(fieldId)) {
+          return true
+        }
+        return false
+      case "online":
+        if (currentPlayer.name !== localStorage.getItem("player")) return true
+        if (fields[fieldId].player === currentPlayer.key) return true
+        return false
+    }
+
   }
 
   const openPopupField = () => {
@@ -41,7 +59,7 @@ function CategoryFieldOnline({fieldId}) {
       setOpen(o => !o)
     }
   }
-
+  
   return (
     <>
       <div
@@ -72,4 +90,4 @@ function CategoryFieldOnline({fieldId}) {
   )
 }
 
-export default CategoryFieldOnline;
+export default GameField;

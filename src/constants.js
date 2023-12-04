@@ -8,8 +8,10 @@ export const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
 export const INITIAL_STATE = {
     winner: "",
     roomId: "",
+    gameMode: "",
     isGameOver : false,
     isLoadingGame : true,
+    isGameStarted: false,
     playersJoined: [],
     player1: {
         key: "player1",

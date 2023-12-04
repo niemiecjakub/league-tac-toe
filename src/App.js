@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import OnlineGameLobby from './routes/online/OnlineGameLobby';
+import OnlineGameLobby from './routes/OnlineGameLobby';
 import ChampionList from './routes/CategoryList'
 import CategoryList from './routes/CategoryList'
-import Game from './routes/same-screen/Game';
+import Game from './routes/Game';
 import Landing from './routes/Landing'
 
 function App() {

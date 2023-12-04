@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import Board from '../../components/same-screen/Board';
-import GameInfo from '../../components/same-screen/GameInfo';
-import Loading from '../../components/Loading';
-import EndGamePop from '../../components/EndGamePop'
+import Board from '../components/Board';
+import GameInfo from '../components/GameInfo';
+import Loading from '../components/Loading';
+import EndGamePop from '../components/EndGamePop'
 import { useDispatch, useSelector } from 'react-redux'
-import { getNewGameData, setGameMode, setRoomId, setDBstate, startOnlineGame } from '../../redux/slices/GameSlice';
+import { getNewGameData, setGameMode, setRoomId, setDBstate, startOnlineGame } from '../redux/slices/GameSlice';
 import { useParams } from 'react-router-dom';
-import { db } from '../../firebase-config';
+import { db } from '../firebase-config';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { overlayStyle } from '../../constants';
+import { overlayStyle } from '../constants';
 import Popup from 'reactjs-popup';
 
 function Game({gameMode}) {

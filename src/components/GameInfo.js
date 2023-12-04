@@ -6,7 +6,7 @@ import {
   getNewGameData,
   skipTurnOnline,
   checkWinOnline,
-  playAgainOnline } from '../../redux/slices/GameSlice';
+  playAgainOnline } from '../redux/slices/GameSlice';
 
   function GameInfo() {
   const dispatch = useDispatch()

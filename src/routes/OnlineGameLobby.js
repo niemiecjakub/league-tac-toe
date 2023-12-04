@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDoc, doc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db } from '../../firebase-config';
-import { INITIAL_STATE, GENERATE_CODE } from '../../constants';
+import { db } from '../firebase-config';
+import { INITIAL_STATE, GENERATE_CODE } from '../constants';
 
 function OnlineGameLobby() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function OnlineGameLobby() {
     localStorage.setItem("player", "Player 2")
 
     await updateDoc(docRef, {
-      playersJoined: arrayUnion(playerId)
+      playersJoined: arrayUnion(playerId),
     });
 
     navigate(`/game/room/${roomId}`)
@@ -42,6 +42,7 @@ function OnlineGameLobby() {
     await setDoc(docRef, {
       ...INITIAL_STATE, 
       roomId: roomCode,
+      gameMode: "online",
       playersJoined, 
     });
 
