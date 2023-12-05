@@ -31,7 +31,7 @@ function OnlineGameLobby() {
             onChange={(e) => setRoomId(e.target.value)}
           />
           <button
-            className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 rounded-r-lg"
+            className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 rounded-r-lg w-1/3"
             onClick={handleJoinRoom}
           >
             CONNECT
