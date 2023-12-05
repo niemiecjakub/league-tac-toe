@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 function TurnIndicator({
   isDisabled,
@@ -36,7 +37,7 @@ function TurnIndicator({
     <div className="flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl">
       <h1 className="px-2 py-2">{turnIndicator}</h1>
       {gameMode === "online" &&
-      localStorage.getItem("player") === currentPlayer.name ? (
+      Cookies.get("player") === currentPlayer.name ? (
         skipButton
       ) : (
         <></>

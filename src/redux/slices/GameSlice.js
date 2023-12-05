@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { INITIAL_STATE } from "../../constants";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const getNewGameData = createAsyncThunk(
   "game/getNewGameData",
@@ -134,8 +135,7 @@ export const setPlayerFieldOnline = createAsyncThunk(
     const docSnap = await getDoc(docRef);
 
     const { player1, player2 } = docSnap.data();
-    const player =
-      localStorage.getItem("player") === "Player 1" ? player1 : player2;
+    const player = Cookies.get("player") === "Player 1" ? player1 : player2;
     const otherPlayer = player.name === "Player 1" ? player2 : player1;
 
     console.log(otherPlayer.fields);

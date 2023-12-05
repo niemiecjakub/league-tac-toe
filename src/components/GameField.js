@@ -20,6 +20,7 @@ import {
 } from "../redux/slices/GameSlice";
 import XMark from "./XMark";
 import OMark from "./OMark";
+import Cookies from "js-cookie";
 
 function GameField({ fieldId }) {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ function GameField({ fieldId }) {
         if (fields[fieldId].name && !currentPlayer.steals) return true;
         return false;
       case "online":
-        if (currentPlayer.name !== localStorage.getItem("player")) return true;
+        if (currentPlayer.name !== Cookies.get("player")) return true;
         if (fields[fieldId].player === currentPlayer.key) return true;
         if (fields[fieldId].name && !currentPlayer.steals) return true;
         return false;
@@ -107,7 +108,7 @@ function GameField({ fieldId }) {
         )}
 
         {gameMode === "online" &&
-        localStorage.getItem("player") === currentPlayer.name &&
+        Cookies.get("player") === currentPlayer.name &&
         fields[fieldId].player !== currentPlayer.key &&
         fields[fieldId].name !== "" &&
         currentPlayer.steals ? (
@@ -132,7 +133,7 @@ function GameField({ fieldId }) {
           <></>
         )}
         {gameMode === "online" &&
-          localStorage.getItem("player") === currentPlayer.name &&
+          Cookies.get("player") === currentPlayer.name &&
           !fields[fieldId].name && (
             <PlusIcon className={"absolute right-1 top-1 w-5 md:w-12"} />
           )}

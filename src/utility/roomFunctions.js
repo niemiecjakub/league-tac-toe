@@ -1,25 +1,27 @@
 import { db } from "../firebase-config";
 import { getDoc, doc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { GENERATE_CODE, INITIAL_STATE } from "../constants";
+import Cookies from "js-cookie";
 
 export const joinRoom = async (roomId, navigate) => {
   const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
 
   if (!room.exists()) return;
-  if (room.data().playersJoined.includes(localStorage.getItem("playerId"))) {
+  if (room.data().playersJoined.includes(Cookies.get("playerId"))) {
     navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
     return;
   }
   if (room.data().playersJoined.length >= 2) return;
 
-  if (!localStorage.getItem("playerId")) {
-    localStorage.setItem("playerId", GENERATE_CODE(12));
+  if (!Cookies.get("playerId")) {
+    Cookies.set('playerId', GENERATE_CODE(12), { expires: 7 })
+
   }
-  localStorage.setItem("player", "Player 2");
+  Cookies.set('player', "Player 2", { expires: 7 })
 
   await updateDoc(docRef, {
-    playersJoined: arrayUnion(localStorage.getItem("playerId")),
+    playersJoined: arrayUnion(Cookies.get("playerId")),
   });
 
   navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
@@ -33,12 +35,12 @@ export const createRoom = async (navigate) => {
 
   if (room.exists()) return;
 
-  if (!localStorage.getItem("playerId")) {
-    localStorage.setItem("playerId", GENERATE_CODE(12));
+  if (!Cookies.get("playerId")) {
+    Cookies.set('playerId', GENERATE_CODE(12), { expires: 7 })
   }
 
-  const playersJoined = [localStorage.getItem("playerId")];
-  localStorage.setItem("player", "Player 1");
+  const playersJoined = [Cookies.get("playerId")];
+  Cookies.set("player", "Player 1", { expires: 7 });
 
   await setDoc(docRef, {
     ...INITIAL_STATE,
@@ -55,17 +57,17 @@ export const joinFromLink = async (roomId) => {
   const room = await getDoc(docRef);
 
   if (!room.exists()) return;
-  if (room.data().playersJoined.includes(localStorage.getItem("playerId"))) {
+  if (room.data().playersJoined.includes(Cookies.get("playerId"))) {
     return;
   }
   if (room.data().playersJoined.length >= 2) return;
 
-  if (!localStorage.getItem("playerId")) {
-    localStorage.setItem("playerId", GENERATE_CODE(12));
+  if (!Cookies.get("playerId")) {
+    Cookies.set('playerId', GENERATE_CODE(12), { expires: 7 })
   }
-  localStorage.setItem("player", "Player 2");
+  Cookies.set("player", "Player 2", { expires: 7 });
 
   await updateDoc(docRef, {
-    playersJoined: arrayUnion(localStorage.getItem("playerId")),
+    playersJoined: arrayUnion(Cookies.get("playerId")),
   });
 };

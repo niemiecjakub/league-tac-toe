@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import StealIcon from "./StealIcon";
+import Cookies from "js-cookie";
 
 function StealInfo() {
   const { currentPlayer, gameMode, player1, player2 } = useSelector((state) => state.game);
@@ -11,7 +12,7 @@ function StealInfo() {
       steals = currentPlayer.steals
       break
     case "online":
-      const player = localStorage.getItem("player");
+      const player = Cookies.get("player");
       steals = player === "Player 1" ? player1.steals : player2.steals
   }
   

@@ -10,13 +10,13 @@ import ScoreBoard from "./ScoreBoard";
 import TurnIndicator from "./TurnIndicator";
 import DrawDialog from "./DrawDialog";
 import TimeInfo from "./TimeInfo";
+import Cookies from "js-cookie";
 
 function GameInfo() {
   const dispatch = useDispatch();
   const [openSkipTurn, setOpenSkipTurn] = useState(false);
   const [openDrawRequest, setOpenDrawRequest] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [player, setPlayer] = useState(localStorage.getItem("player"));
   const [turnIndicator, setTurnIndicator] = useState("");
   const { currentPlayer, gameMode } = useSelector((state) => state.game);
 
@@ -29,13 +29,13 @@ function GameInfo() {
         setTurnIndicator(`${currentPlayer.alias}'s TURN`);
         break;
       case "online":
-        setIsDisabled(currentPlayer.name !== player);
-        currentPlayer.name === player
+        setIsDisabled(currentPlayer.name !== Cookies.get("player"));
+        currentPlayer.name === Cookies.get("player")
           ? setTurnIndicator("YOUR TURN")
           : setTurnIndicator("OPPONENT's TURN");
         break;
     }
-  }, [currentPlayer, gameMode, player]);
+  }, [currentPlayer, gameMode, Cookies.get("player")]);
 
   const requestDraw = () => {
     switch (gameMode) {
@@ -67,7 +67,7 @@ function GameInfo() {
   };
   return (
     <div className="bg-league-blue-600 flex flex-col py-4 text-white font-leagueheavy text-md">
-      {gameMode === "online" && <h1>You are {localStorage.getItem("player")}</h1>}
+      {gameMode === "online" && <h1>You are {Cookies.get("player")}</h1>}
       <div className="flex flex-row justify-between items-center">
         <ScoreBoard />
         <TurnIndicator

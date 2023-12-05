@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 function DrawDialog({
   openDrawRequest,
@@ -32,7 +33,7 @@ function DrawDialog({
   return (
     <>
       {gameMode === "online" &&
-      localStorage.getItem("player") === currentPlayer.name ? (
+      Cookies.get("player") === currentPlayer.name ? (
         drawButton
       ) : (
         <></>
