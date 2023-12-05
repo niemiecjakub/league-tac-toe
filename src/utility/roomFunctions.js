@@ -49,3 +49,23 @@ export const createRoom = async (navigate) => {
 
   navigate(`/game/room/${roomCode}`, { state: { navigated: "code" } });
 };
+
+export const joinFromLink = async (roomId) => {
+  const docRef = doc(db, "rooms", roomId);
+  const room = await getDoc(docRef);
+
+  if (!room.exists()) return;
+  if (room.data().playersJoined.includes(localStorage.getItem("playerId"))) {
+    return;
+  }
+  if (room.data().playersJoined.length >= 2) return;
+
+  if (!localStorage.getItem("playerId")) {
+    localStorage.setItem("playerId", GENERATE_CODE(12));
+  }
+  localStorage.setItem("player", "Player 2");
+
+  await updateDoc(docRef, {
+    playersJoined: arrayUnion(localStorage.getItem("playerId")),
+  });
+};

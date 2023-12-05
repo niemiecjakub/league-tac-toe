@@ -18,7 +18,7 @@ import { overlayStyle, GENERATE_CODE } from "../constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";
-import { joinRoom } from "../utility/roomFunctions";
+import { joinFromLink } from "../utility/roomFunctions";
 
 function Game({ gameMode }) {
   const location = useLocation();
@@ -34,7 +34,7 @@ function Game({ gameMode }) {
 
   useEffect(() => {
     if (!location.state) {
-      joinRoom()
+      joinFromLink(roomId)
     }
   },[])
 
