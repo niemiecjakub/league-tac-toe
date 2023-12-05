@@ -2,7 +2,7 @@ export const CHAMPION_API_URL = "https://kniemiec.pythonanywhere.com/api/";
 
 // export const CHAMPION_API_URL = "http://127.0.0.1:8000/api/"
 
-export const overlayStyle = { background: "rgba(0,0,0,0.5)" };
+export const overlayStyle = { background: "rgba(0,0,0,0.65)" };
 
 export const INITIAL_STATE = {
   winner: "",

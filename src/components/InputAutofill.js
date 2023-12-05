@@ -24,16 +24,16 @@ function InputAutofill({ label, pholder, data, onSelected }) {
   };
 
   return (
-    <div className="block rounded-lg relative">
+    <div className="block rounded-lg relative font-leagueheavy">
       <div className="bg-gray-900 flex justify-center items-center rounded w-full">
         <label
           htmlFor="tag-input"
-          className="uppercase text-gray-600 p-5 text-xl font-bold"
+          className="uppercase text-league-gold-400 p-5 text-xl font-bold"
         >
           {label}
         </label>
         <input
-          className="rounded w-full border-none outline-none text-xl mx-2 p-2"
+          className="uppercase rounded w-full border-none outline-none text-xl mx-2 p-2"
           placeholder={pholder}
           type="search"
           value={selectedVal}
@@ -43,12 +43,11 @@ function InputAutofill({ label, pholder, data, onSelected }) {
       </div>
 
       <div
-        className="absolute left-0 cursor-pointer w-full overflow-auto top-16 z-50 max-h-48"
-        style={{ display: isHideSuggs ? "none" : "block" }}
+        className={`uppercase absolute left-0 cursor-pointer w-full overflow-auto top-16 z-50 max-h-48 ${isHideSuggs? "hidden" : "visible"}`}
       >
         {suggestions.map((item, idx) => (
           <div
-            className=" bg-gray-900 text-white p-3 text-xl border-b-2 border-solid border-cyan-800 hover:bg-gray-400 hover:text-black "
+            className=" bg-gray-900 text-white p-3 text-xl border-b-2 border-solid border-league-blue-300 hover:bg-league-gold-200 hover:text-black "
             key={"" + item + idx}
             onClick={() => {
               hideSuggs(item);

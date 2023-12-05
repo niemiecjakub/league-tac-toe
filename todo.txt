@@ -3,7 +3,9 @@
 - reveal champions
 - find random opponent
 - styling game room
-- stylning champion input dialog
+- inform on opponent left
+- joining from link
 
 extra:
 - champion query search 
+- add timing
