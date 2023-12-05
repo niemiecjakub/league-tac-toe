@@ -21,7 +21,7 @@ function App() {
           </Routes>
         </div>
         <Routes>
-          <Route path="/game" element={<Game gameMode="same screen" />} />
+          <Route path="/game/same-screen" element={<Game gameMode="same screen" />} />
           <Route
             path="/game/room/:roomId"
             element={<Game gameMode="online" />}

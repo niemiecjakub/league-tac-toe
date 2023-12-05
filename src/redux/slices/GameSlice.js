@@ -12,7 +12,6 @@ import {
   arrayRemove,
   arrayUnion,
   increment,
-  onz,
 } from "firebase/firestore";
 import { INITIAL_STATE } from "../../constants";
 import axios from "axios";
@@ -139,7 +138,11 @@ export const setPlayerFieldOnline = createAsyncThunk(
       localStorage.getItem("player") === "Player 1" ? player1 : player2;
     const otherPlayer = player.name === "Player 1" ? player2 : player1;
 
-    if (fieldId in otherPlayer.fields) {
+    console.log(otherPlayer.fields);
+    console.log(otherPlayer.fields.includes(fieldId));
+
+    if (otherPlayer.fields.includes(fieldId)) {
+      console.log("!!!!!!");
       await setDoc(
         docRef,
         {
@@ -162,6 +165,7 @@ export const setPlayerFieldOnline = createAsyncThunk(
         { merge: true }
       );
     } else {
+      console.log("!!!!!!FSDFSDF");
       await setDoc(
         docRef,
         {
@@ -208,12 +212,12 @@ export const checkWinOnline = createAsyncThunk(
             winner: player.key,
             [player.key]: {
               score: increment(1),
-              fields: [],
-              steals: 3,
+              fields: INITIAL_STATE.player1.fields,
+              steals: INITIAL_STATE.player1.steals,
             },
             [otherPlayer.key]: {
-              fields: [],
-              steals: 3,
+              fields: INITIAL_STATE.player1.fields,
+              steals: INITIAL_STATE.player1.steals,
             },
             isGameOver: true,
           },
@@ -289,11 +293,11 @@ const GameSlice = createSlice({
         if (COMPARE_ARRAYS(winningCondition, playerFieldsSorted)) {
           state.winner = player.name;
           player.score += 1;
-          player.fields = [];
-          player.steals = 3;
+          player.fields = INITIAL_STATE.player1.fields;
+          player.steals = INITIAL_STATE.player1.steals;
 
-          otherPlayer.fields = [];
-          otherPlayer.steals = 3;
+          otherPlayer.fields = INITIAL_STATE.player1.fields;
+          otherPlayer.steals = INITIAL_STATE.player1.steals;
 
           state.currentPlayer = INITIAL_STATE.currentPlayer;
           state.isGameOver = true;

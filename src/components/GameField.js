@@ -23,7 +23,7 @@ function GameField({ fieldId }) {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-  const { currentPlayer, player1, player2, possibleFields, fields, gameMode } =
+  const { currentPlayer, possibleFields, fields, gameMode } =
     useSelector((state) => state.game);
 
   const getSelectedVal = async (value) => {
@@ -61,14 +61,13 @@ function GameField({ fieldId }) {
   const isFieldDisabled = () => {
     switch (gameMode) {
       case "same screen":
-        const player = currentPlayer.name === "Player 1" ? player1 : player2;
-        if (player.fields.includes(fieldId)) {
-          return true;
-        }
+        if (fields[fieldId].player === currentPlayer.key) return true;
+        if (fields[fieldId].name && !currentPlayer.steals) return true;
         return false;
       case "online":
         if (currentPlayer.name !== localStorage.getItem("player")) return true;
         if (fields[fieldId].player === currentPlayer.key) return true;
+        if (fields[fieldId].name && !currentPlayer.steals) return true;
         return false;
     }
   };
@@ -105,7 +104,9 @@ function GameField({ fieldId }) {
 
         {gameMode === "online" &&
         localStorage.getItem("player") === currentPlayer.name &&
-        fields[fieldId].player !== currentPlayer.name ? (
+        fields[fieldId].player !== currentPlayer.key &&
+        fields[fieldId].name !== "" &&
+        currentPlayer.steals ?(
           <StealIcon
             className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
           />
@@ -114,14 +115,22 @@ function GameField({ fieldId }) {
         )}
         {gameMode === "same screen" &&
         fields[fieldId].player !== currentPlayer.key &&
-        fields[fieldId].name !== "" ? (
+        fields[fieldId].name !== "" &&
+        currentPlayer.steals ? (
           <StealIcon
             className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
           />
         ) : (
           <></>
         )}
-        {!fields[fieldId].name && <PlusIcon className={"w-8 absolute top-5"} />}
+        {gameMode === "online" &&
+          localStorage.getItem("player") === currentPlayer.name &&
+          !fields[fieldId].name && (
+            <PlusIcon className={"w-8 absolute top-5"} />
+          )}
+        {gameMode === "same screen" && !fields[fieldId].name && (
+          <PlusIcon className={"w-8 absolute top-5"} />
+        )}
       </div>
 
       <Popup
@@ -132,7 +141,7 @@ function GameField({ fieldId }) {
       >
         <InputAutofill
           label="Champion"
-          pholder="..."
+          pholder="search champion"
           data={CHAMPION_NAME_LIST}
           onSelected={getSelectedVal}
         />

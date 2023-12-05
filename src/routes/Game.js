@@ -11,14 +11,17 @@ import {
   setDBstate,
   startOnlineGame,
 } from "../redux/slices/GameSlice";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
-import { doc, onSnapshot } from "firebase/firestore";
-import { overlayStyle } from "../constants";
+import { doc, onSnapshot, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { overlayStyle, GENERATE_CODE } from "../constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
+import WaitingRoom from "../components/WaitingRoom";
+import { joinRoom } from "../utility/roomFunctions";
 
 function Game({ gameMode }) {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { roomId } = useParams();
   const [openEndGame, setOpenEndGame] = useState(false);
@@ -27,6 +30,13 @@ function Game({ gameMode }) {
     (state) => state.game
   );
   const state = useSelector((state) => state.game);
+
+
+  useEffect(() => {
+    if (!location.state) {
+      joinRoom()
+    }
+  },[])
 
   useEffect(() => {
     dispatch(setGameMode(gameMode));
@@ -67,10 +77,7 @@ function Game({ gameMode }) {
         id="game-container"
         className="font-league max-h-fit w-screen lg:m-auto lg:w-1/3"
       >
-        <div className="text-white h-96 text-xl flex flex-col justify-center items-center">
-          <h1>Waiting for others to join</h1>
-          <h1>Room code: {roomId}</h1>
-        </div>
+        <WaitingRoom roomId={roomId}/>
       </div>
     );
   }

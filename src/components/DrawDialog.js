@@ -11,7 +11,7 @@ function DrawDialog({
     <>
       {openDrawRequest ? (
         <button
-          className="bg-league-blue-400 p-2 rounded-l-xl"
+          className="bg-league-blue-400 p-2 rounded-l-xl pr-4"
           disabled={isDisabled}
           onClick={requestDraw}
         >
@@ -19,7 +19,7 @@ function DrawDialog({
         </button>
       ) : (
         <button
-          className="bg-league-grey-150 p-2 rounded-l-xl"
+          className="bg-league-grey-150 p-2 rounded-l-xl pr-4"
           disabled={isDisabled}
           onClick={handleOpenDrawRequest}
         >

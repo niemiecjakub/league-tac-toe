@@ -2,9 +2,7 @@
 - request draw: online
 - reveal champions
 - find random opponent
-- styling game room
 - inform on opponent left
-- joining from link
 
 extra:
 - champion query search 

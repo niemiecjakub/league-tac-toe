@@ -14,7 +14,7 @@ function TurnIndicator({
     <>
       {openSkipTurn ? (
         <button
-          className="bg-red-500 px-3 py-2"
+          className="bg-red-500 px-3 py-2 pr-4"
           disabled={isDisabled}
           onClick={skipTurn}
         >
@@ -22,7 +22,7 @@ function TurnIndicator({
         </button>
       ) : (
         <button
-          className="bg-red-700 px-3 py-2 "
+          className="bg-red-700 px-3 py-2 pr-4"
           disabled={isDisabled}
           onClick={handleOpenSkipTurn}
         >
