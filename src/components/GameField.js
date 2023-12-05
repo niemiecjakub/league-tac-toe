@@ -18,13 +18,16 @@ import {
   skipTurnOnline,
   checkWinOnline,
 } from "../redux/slices/GameSlice";
+import XMark from "./XMark";
+import OMark from "./OMark";
 
 function GameField({ fieldId }) {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-  const { currentPlayer, possibleFields, fields, gameMode } =
-    useSelector((state) => state.game);
+  const { currentPlayer, possibleFields, fields, gameMode } = useSelector(
+    (state) => state.game
+  );
 
   const getSelectedVal = async (value) => {
     const {
@@ -94,21 +97,24 @@ function GameField({ fieldId }) {
         {fields[fieldId].player === "" ? (
           <></>
         ) : (
-          <h4 className="h-2/3 z-50 text-white text-6xl font-bold">
-            {fields[fieldId].player === "player1" ? "X" : "O"}
-          </h4>
+          <>
+            {fields[fieldId].player === "player1" ? (
+              <XMark championName={fields[fieldId].name} />
+            ) : (
+              <OMark championName={fields[fieldId].name} />
+            )}
+          </>
         )}
-        <h4 className="h-1/3 z-50 text-white text-xs uppercase font-bold">
-          {fields[fieldId].name}
-        </h4>
 
         {gameMode === "online" &&
         localStorage.getItem("player") === currentPlayer.name &&
         fields[fieldId].player !== currentPlayer.key &&
         fields[fieldId].name !== "" &&
-        currentPlayer.steals ?(
+        currentPlayer.steals ? (
           <StealIcon
-            className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
+            className={
+              "w-3 md:w-6 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
+            }
           />
         ) : (
           <></>
@@ -118,7 +124,9 @@ function GameField({ fieldId }) {
         fields[fieldId].name !== "" &&
         currentPlayer.steals ? (
           <StealIcon
-            className={"w-4 bg-white rounded-full absolute right-1 top-1 "}
+            className={
+              "w-3 md:w-6 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
+            }
           />
         ) : (
           <></>
@@ -126,10 +134,10 @@ function GameField({ fieldId }) {
         {gameMode === "online" &&
           localStorage.getItem("player") === currentPlayer.name &&
           !fields[fieldId].name && (
-            <PlusIcon className={"w-8 absolute top-5"} />
+            <PlusIcon className={"absolute right-1 top-1 w-5 md:w-12"} />
           )}
         {gameMode === "same screen" && !fields[fieldId].name && (
-          <PlusIcon className={"w-8 absolute top-5"} />
+          <PlusIcon className={"absolute right-1 top-1 w-5 md:w-12"} />
         )}
       </div>
 

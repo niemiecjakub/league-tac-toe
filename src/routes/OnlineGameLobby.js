@@ -17,7 +17,7 @@ function OnlineGameLobby() {
 
   return (
     <>
-      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex justify-between">
+      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex justify-between md:rounded-xl">
         <div className="flex items-center">
           <h1 className="ml-3 uppercase text-xl">Room</h1>
         </div>
@@ -40,7 +40,7 @@ function OnlineGameLobby() {
         {error && <p>Name and room code cannot be empty</p>}
       </div>
 
-      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col">
+      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col md:rounded-xl">
         <div className="flex items-center text-xl">
           <h1 className="ml-3 uppercase">Compete against friend</h1>
         </div>

@@ -33,7 +33,7 @@ function Game({ gameMode }) {
 
 
   useEffect(() => {
-    if (!location.state) {
+    if (!location.state && gameMode === "online") {
       joinFromLink(roomId)
     }
   },[])

@@ -16,7 +16,7 @@ function WaitingRoom({ roomId }) {
   const nImage = Array(5).fill(0);
   return (
     <>
-      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col justify-center items-center text-xl">
+      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col justify-center items-center text-xl md:rounded-xl">
         <h1>ROOM CODE: {roomId}</h1>
         <h1 className="mt-4">Share room code or this link with your friend</h1>
         <div
