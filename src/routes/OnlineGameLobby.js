@@ -13,8 +13,8 @@ function OnlineGameLobby() {
       : setError("Room id has to be 5 character long");
   };
 
-  const handleCreateNewRoom = async () => {
-    createRoom(navigate);
+  const handleCreateNewRoom = async ({stealsEnabled}) => {
+    createRoom(navigate, stealsEnabled);
   };
 
   return (
@@ -51,14 +51,14 @@ function OnlineGameLobby() {
         <div className="flex mt-2 justify-end mx-3 C">
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 mr-4 rounded-lg"
-            onClick={handleCreateNewRoom}
+            onClick={() => handleCreateNewRoom({stealsEnabled : true})}
           >
             WITH STEALS
           </button>
 
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 rounded-lg"
-            onClick={handleCreateNewRoom}
+            onClick={() => handleCreateNewRoom({stealsEnabled : false})}
           >
             WITHOUT STEALS
           </button>

@@ -12,6 +12,7 @@ export const INITIAL_STATE = {
   isLoadingGame: true,
   isGameStarted: false,
   stealsEnabled: true,
+  isOpenForRandom: false,
   playersJoined: [],
   player1: {
     key: "player1",

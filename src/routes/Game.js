@@ -13,10 +13,7 @@ import {
 } from "../redux/slices/GameSlice";
 import { useParams, useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
-import {
-  doc,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { overlayStyle } from "../constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
