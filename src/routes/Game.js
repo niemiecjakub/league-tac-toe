@@ -13,7 +13,13 @@ import {
 } from "../redux/slices/GameSlice";
 import { useParams, useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
-import { doc, onSnapshot, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { overlayStyle, GENERATE_CODE } from "../constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
@@ -31,12 +37,11 @@ function Game({ gameMode }) {
   );
   const state = useSelector((state) => state.game);
 
-
   useEffect(() => {
     if (!location.state && gameMode === "online") {
-      joinFromLink(roomId)
+      joinFromLink(roomId);
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     dispatch(setGameMode(gameMode));
@@ -75,9 +80,9 @@ function Game({ gameMode }) {
     return (
       <div
         id="game-container"
-        className="font-league max-h-fit w-screen lg:m-auto lg:w-1/5"
+        className="font-league max-h-fit w-screen md:m-auto md::w-1/2 2xl:w-1/5"
       >
-        <WaitingRoom roomId={roomId}/>
+        <WaitingRoom roomId={roomId} />
       </div>
     );
   }
@@ -85,7 +90,7 @@ function Game({ gameMode }) {
     return (
       <div
         id="game-container"
-        className="font-league max-h-fit w-screen lg:m-auto lg:w-1/5"
+        className="font-league max-h-fit w-screen md:m-auto md:w-1/2 2xl:w-1/5"
       >
         <Loading />
       </div>
@@ -96,7 +101,7 @@ function Game({ gameMode }) {
     <>
       <div
         id="game-container"
-        className="font-league max-h-fit w-screen lg:m-auto lg:w-1/5"
+        className="font-league max-h-fit w-screen md:m-auto md:w-1/2 2xl:w-1/5"
       >
         <GameInfo />
         <Board />

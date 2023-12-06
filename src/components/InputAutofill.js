@@ -24,16 +24,16 @@ function InputAutofill({ label, pholder, data, onSelected }) {
   };
 
   return (
-    <div className="block rounded-lg relative font-leagueheavy">
+    <div className="block rounded-lg relative font-leagueheavy w-screen md:w-full">
       <div className="bg-gray-900 flex justify-center items-center rounded w-full">
         <label
           htmlFor="tag-input"
-          className="uppercase text-league-gold-400 p-5 text-xl font-bold"
+          className="uppercase text-league-gold-400 mx-5 py-5 text-xl font-bold"
         >
           {label}
         </label>
         <input
-          className="uppercase rounded w-full border-none outline-none mx-2 p-2"
+          className="uppercase rounded w-full border-none outline-none mr-2 p-2"
           placeholder={pholder}
           type="search"
           value={selectedVal}
@@ -43,7 +43,9 @@ function InputAutofill({ label, pholder, data, onSelected }) {
       </div>
 
       <div
-        className={`uppercase absolute left-0 cursor-pointer w-full overflow-auto top-16 z-50 max-h-48 ${isHideSuggs? "hidden" : "visible"}`}
+        className={`uppercase absolute left-0 cursor-pointer w-full overflow-auto top-16 z-50 max-h-48 ${
+          isHideSuggs ? "hidden" : "visible"
+        }`}
       >
         {suggestions.map((item, idx) => (
           <div

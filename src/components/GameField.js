@@ -114,7 +114,7 @@ function GameField({ fieldId }) {
         currentPlayer.steals ? (
           <StealIcon
             className={
-              "w-3 md:w-6 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
+              "w-3 md:w-4 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
             }
           />
         ) : (
@@ -126,7 +126,7 @@ function GameField({ fieldId }) {
         currentPlayer.steals ? (
           <StealIcon
             className={
-              "w-3 md:w-6 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
+              "w-3 md:w-4 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
             }
           />
         ) : (
@@ -135,10 +135,10 @@ function GameField({ fieldId }) {
         {gameMode === "online" &&
           Cookies.get("player") === currentPlayer.name &&
           !fields[fieldId].name && (
-            <PlusIcon className={"absolute right-1 top-1 w-5 md:w-12"} />
+            <PlusIcon className={"absolute right-0 top-0 w-5 md:w-8 "} />
           )}
         {gameMode === "same screen" && !fields[fieldId].name && (
-          <PlusIcon className={"absolute right-1 top-1 w-5 md:w-12"} />
+          <PlusIcon className={"absolute right-0 top-0 w-5 md:w-8"} />
         )}
       </div>
 

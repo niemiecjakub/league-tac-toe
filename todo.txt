@@ -1,4 +1,3 @@
-- cookies
 - request draw: online
 - reveal champions
 - find random opponent

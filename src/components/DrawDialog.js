@@ -16,7 +16,7 @@ function DrawDialog({
           disabled={isDisabled}
           onClick={requestDraw}
         >
-          SEND DRAW REQUEST
+          ARE YOU SURE?
         </button>
       ) : (
         <button
@@ -24,7 +24,7 @@ function DrawDialog({
           disabled={isDisabled}
           onClick={handleOpenDrawRequest}
         >
-          REQUEST DRAW{" "}
+          {gameMode==="online" ? "SEND DRAW REQUEST" : "END AS DRAW" }
         </button>
       )}
     </>
