@@ -20,7 +20,7 @@ function DrawDialog({
   }
 
   const handleDrawRequestOnline = async () => {
-    dispatch(playAgainOnline());
+    await dispatch(playAgainOnline());
   };
 
   const drawButton = (

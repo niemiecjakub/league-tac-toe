@@ -4,13 +4,7 @@ import GameInfo from "../components/GameInfo";
 import Loading from "../components/Loading";
 import EndGamePop from "../components/EndGamePop";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getNewGameData,
-  setGameMode,
-  setRoomId,
-  setDBstate,
-  startOnlineGame,
-} from "../redux/slices/GameSlice";
+import { getNewGameData, setDBstate } from "../redux/slices/GameSlice";
 import { useParams, useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -38,32 +32,24 @@ function Game({ gameMode }) {
   }, []);
 
   useEffect(() => {
-    dispatch(setGameMode(gameMode));
-    let unsubscribe;
-
-    switch (gameMode) {
-      case "same screen":
-        dispatch(getNewGameData());
-        break;
-      case "online":
-        dispatch(setRoomId(roomId));
-        const docRef = doc(db, "rooms", roomId);
-        unsubscribe = onSnapshot(docRef, (snapshot) => {
-          const currentData = snapshot.data();
-          if (currentData !== state) {
-            dispatch(setDBstate(currentData));
-          }
-          if (
-            currentData.playersJoined.length == 2 &&
-            !currentData.isGameStarted &&
-            !currentData.isGameOver
-          ) {
-            dispatch(startOnlineGame(roomId));
-          }
-        });
-        break;
-    }
-    return () => unsubscribe;
+    const startGame = async () => {
+      switch (gameMode) {
+        case "same screen":
+          dispatch(getNewGameData());
+          break;
+        case "online":
+          const docRef = doc(db, "rooms", roomId);
+          onSnapshot(docRef, (snapshot) => {
+            const currentData = snapshot.data();
+            if (currentData !== state) {
+              dispatch(setDBstate(currentData));
+            }
+          });
+          break;
+      }
+    };
+    startGame();
+    return () => startGame();
   }, [dispatch]);
 
   useEffect(() => {

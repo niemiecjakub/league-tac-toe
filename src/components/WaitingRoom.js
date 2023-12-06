@@ -25,6 +25,7 @@ function WaitingRoom({ roomId }) {
           <div className="flex">
             {nImage.map((element, index) => (
               <img
+                alt="loading"
                 className="animate-pulse"
                 key={index}
                 src="/other/ahri.png"
@@ -57,6 +58,7 @@ function WaitingRoom({ roomId }) {
           <div className="flex items-center justify-between m-5">
             {nImage.map((element, index) => (
               <img
+                alt="loading"
                 className="animate-pulse"
                 key={index}
                 src="/other/ahri.png"

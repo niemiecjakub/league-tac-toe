@@ -59,13 +59,9 @@ export const joinFromLink = async (roomId) => {
   });
 };
 
-export const createRoom = async (
-  navigate,
-  stealsEnabled,
-  isOpenForRandom = false
-) => {
-  const roomCode = GENERATE_CODE(5);
-  const docRef = doc(db, "rooms", roomCode);
+export const createRoom = async (stealsEnabled) => {
+  const roomId = GENERATE_CODE(5);
+  const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
   if (room.exists()) return;
   if (!Cookies.get("playerId"))
@@ -76,16 +72,15 @@ export const createRoom = async (
 
   await setDoc(docRef, {
     ...INITIAL_STATE,
-    stealsEnabled: stealsEnabled,
-    roomId: roomCode,
-    isOpenForRandom: isOpenForRandom,
-    gameMode: "online",
     createdAt: serverTimestamp(),
+    stealsEnabled: stealsEnabled,
+    roomId: roomId,
+    gameMode: "online",
     playerCount: 1,
     playersJoined,
   });
 
-  navigate(`/game/room/${roomCode}`, { state: { navigated: "code" } });
+  return roomId;
 };
 
 export const handleRandomGame = async (navigate) => {
@@ -105,8 +100,8 @@ export const handleRandomGame = async (navigate) => {
     joinRoom(roomId, navigate);
   } else {
     const randomInt = Math.floor(Math.random() * 2);
-    const stealsEnabled = randomInt == 0 ? false : true;
-    createRoom(navigate, stealsEnabled, true);
+    const stealsEnabled = randomInt === 0 ? false : true;
+    createRoom(stealsEnabled, true);
   }
   // }
 };

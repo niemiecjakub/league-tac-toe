@@ -1,4 +1,4 @@
-- usePlayers hook
+- fix turns in online games
 - request draw: online
 - reveal champions
 - find random opponent

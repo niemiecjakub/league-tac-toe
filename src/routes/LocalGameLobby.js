@@ -5,25 +5,16 @@ function LocalGameLobby() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleWithStealsClick = () => {
+  const handleGameOptions = ({stealsEnabled}) => {
     dispatch(
       setGameOptions({
         gameMode: "same screen",
-        stealsEnabled: true,
+        stealsEnabled: stealsEnabled,
       })
     );
     navigate("/game/same-screen");
   };
 
-  const handleWithoutStealsClick = () => {
-    dispatch(
-      setGameOptions({
-        gameMode: "same screen",
-        stealsEnabled: false,
-      })
-    );
-    navigate("/game/same-screen");
-  };
   return (
     <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full md:w-2/3 lg:w-1/5">
       <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col md:rounded-xl">
@@ -33,14 +24,14 @@ function LocalGameLobby() {
         <div className="flex mt-2 justify-end mx-3 C">
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 mr-4 rounded-lg"
-            onClick={handleWithStealsClick}
+            onClick={() => handleGameOptions({ stealsEnabled: true })}
           >
             WITH STEALS
           </button>
 
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 rounded-lg"
-            onClick={handleWithoutStealsClick}
+            onClick={() => handleGameOptions({ stealsEnabled: false })}
           >
             WITHOUT STEALS
           </button>

@@ -29,10 +29,10 @@ function EndGamePop({ setOpenEndGame }) {
     }
   };
 
-  const handlePlayAgain = () => {
+  const handlePlayAgain = async () => {
     switch (gameMode) {
       case "online":
-        dispatch(playAgainOnline());
+        await dispatch(playAgainOnline());
         setOpenEndGame(false);
         break;
       case "same screen":

@@ -38,26 +38,26 @@ function GameInfo() {
     }
   }, [currentPlayer, gameMode, Cookies.get("player")]);
 
-  const requestDraw = () => {
+  const requestDraw = async () => {
     switch (gameMode) {
       case "same screen":
         dispatch(endAsDraw());
         dispatch(getNewGameData());
         break;
       case "online":
-        dispatch(requestDrawOnline());
-        dispatch(skipTurnOnline());
+        await dispatch(requestDrawOnline());
+        await dispatch(skipTurnOnline());
         break;
     }
   };
 
-  const skipTurn = () => {
+  const skipTurn = async () => {
     switch (gameMode) {
       case "same screen":
         dispatch(setCurrentPlayer());
         break;
       case "online":
-        dispatch(skipTurnOnline());
+        await dispatch(skipTurnOnline());
         break;
     }
   };

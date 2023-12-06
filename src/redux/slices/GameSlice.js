@@ -90,7 +90,7 @@ export const startOnlineGame = createAsyncThunk(
     list.forEach((combinedCategory, index) => {
       gameFields[`${index + 1}`] = combinedCategory;
     });
-    
+
     const docRef = doc(db, "rooms", roomId);
 
     await setDoc(
@@ -102,6 +102,7 @@ export const startOnlineGame = createAsyncThunk(
         },
         possibleFields: possibleFields,
         gameFields: gameFields,
+        //move this to fulfiled?
         isGameStarted: true,
         isLoadingGame: false,
       },
@@ -110,6 +111,7 @@ export const startOnlineGame = createAsyncThunk(
   }
 );
 
+//CHANGE CURRENT PLAYER
 export const skipTurnOnline = createAsyncThunk(
   "online/skipTurnOnline",
   async (params, { getState }) => {
@@ -130,6 +132,7 @@ export const skipTurnOnline = createAsyncThunk(
   }
 );
 
+//SET PLAYER FIELD
 export const setPlayerFieldOnline = createAsyncThunk(
   "online/setPlayerFieldOnline",
   async ({ fieldId, name, key }, { getState }) => {
@@ -189,13 +192,12 @@ export const setPlayerFieldOnline = createAsyncThunk(
   }
 );
 
+
 export const checkWinOnline = createAsyncThunk(
   "online/checkWinOnline",
   async (params, { getState }) => {
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
-    const docSnap = await getDoc(docRef);
-
     const player =
       state.game.currentPlayer.name === "Player 1"
         ? state.game.player1
@@ -236,7 +238,7 @@ export const requestDrawOnline = createAsyncThunk(
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
     const docSnap = await getDoc(docRef);
-    const { currentPlayer, player1, player2 } = docSnap.data();
+    const { currentPlayer} = docSnap.data();
 
     const player = currentPlayer.name === "Player 1" ? "player1" : "player2";
 
@@ -274,16 +276,11 @@ const GameSlice = createSlice({
     clearState: (state, action) => {
       state = INITIAL_STATE;
     },
-    setRoomId: (state, action) => {
-      state.roomId = action.payload;
-    },
-    setGameMode: (state, action) => {
-      state.gameMode = action.payload;
-    },
     setGameOptions: (state, action) => {
-      const { gameMode, stealsEnabled } = action.payload;
+      const { gameMode, stealsEnabled, roomId } = action.payload;
       state.gameMode = gameMode;
       state.stealsEnabled = stealsEnabled;
+      state.roomId = roomId
     },
     setCurrentPlayer: (state, action) => {
       const nextPlayer =
@@ -341,12 +338,6 @@ const GameSlice = createSlice({
         score: state.player2.score + 1,
       };
       state.currentPlayer = INITIAL_STATE.currentPlayer;
-    },
-    setDBstate: (state, action) => {
-      for (const [key, value] of Object.entries(action.payload)) {
-        if (key === "roomId") continue;
-        state[`${key}`] = value;
-      }
     },
     setDBstate: (state, action) => {
       for (const [key, value] of Object.entries(action.payload)) {

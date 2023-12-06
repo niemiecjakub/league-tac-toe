@@ -1,20 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { joinRoom, createRoom } from "../utility/roomFunctions";
+import { useDispatch } from "react-redux";
+import {
+  setGameOptions,
+  startOnlineGame,
+} from "../redux/slices/GameSlice";
 
 function OnlineGameLobby() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [roomId, setRoomId] = useState("");
   const [error, setError] = useState(false);
 
   const handleJoinRoom = () => {
-    roomId.length == 5
+    roomId.length === 5
       ? joinRoom(roomId, navigate)
       : setError("Room id has to be 5 character long");
   };
 
   const handleCreateNewRoom = async ({ stealsEnabled }) => {
-    createRoom(navigate, stealsEnabled);
+    const roomId = await createRoom(stealsEnabled);
+    dispatch(
+      setGameOptions({
+        roomId,
+        stealsEnabled: stealsEnabled,
+        gameMode: "online",
+      })
+    );
+    navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
+    await dispatch(startOnlineGame(roomId));
   };
 
   return (
