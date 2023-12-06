@@ -18,9 +18,8 @@ import {
   skipTurnOnline,
   checkWinOnline,
 } from "../redux/slices/GameSlice";
-import XMark from "./XMark";
-import OMark from "./OMark";
 import Cookies from "js-cookie";
+import FieldMark from "./FieldMark";
 
 function GameField({ fieldId }) {
   const dispatch = useDispatch();
@@ -96,50 +95,42 @@ function GameField({ fieldId }) {
             : `url(${window.location.origin}/icons/default.PNG)`,
         }}
       >
-        {fields[fieldId].player === "" ? (
-          <></>
-        ) : (
-          <>
-            {fields[fieldId].player === "player1" ? (
-              <XMark championName={fields[fieldId].name} />
-            ) : (
-              <OMark championName={fields[fieldId].name} />
-            )}
-          </>
+        {fields[fieldId].player === "" ? null : (
+          <FieldMark
+            championName={fields[fieldId].name}
+            mark={fields[fieldId].player === "player1" ? "X" : "O"}
+          />
         )}
 
         {gameMode === "online" &&
-        stealsEnabled &&
-        Cookies.get("player") === currentPlayer.name &&
-        fields[fieldId].player !== currentPlayer.key &&
-        fields[fieldId].name !== "" &&
-        currentPlayer.steals ? (
-          <StealIcon
-            className={
-              "w-3 md:w-4 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
-            }
-          />
-        ) : (
-          <></>
-        )}
+          stealsEnabled &&
+          Cookies.get("player") === currentPlayer.name &&
+          fields[fieldId].player !== currentPlayer.key &&
+          fields[fieldId].name !== "" &&
+          currentPlayer.steals && (
+            <StealIcon
+              className={
+                "w-3 md:w-4 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
+              }
+            />
+          )}
         {gameMode === "same screen" &&
-        stealsEnabled &&
-        fields[fieldId].player !== currentPlayer.key &&
-        fields[fieldId].name !== "" &&
-        currentPlayer.steals ? (
-          <StealIcon
-            className={
-              "w-3 md:w-4 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
-            }
-          />
-        ) : (
-          <></>
-        )}
+          stealsEnabled &&
+          fields[fieldId].player !== currentPlayer.key &&
+          fields[fieldId].name !== "" &&
+          currentPlayer.steals && (
+            <StealIcon
+              className={
+                "w-3 md:w-4 bg-white rounded-full absolute right-1 top-1 md:right-2 md:top-2"
+              }
+            />
+          )}
         {gameMode === "online" &&
           Cookies.get("player") === currentPlayer.name &&
           !fields[fieldId].name && (
             <PlusIcon className={"absolute right-0 top-0 w-5 md:w-8 "} />
           )}
+
         {gameMode === "same screen" && !fields[fieldId].name && (
           <PlusIcon className={"absolute right-0 top-0 w-5 md:w-8"} />
         )}

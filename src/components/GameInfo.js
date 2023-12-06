@@ -5,6 +5,7 @@ import {
   endAsDraw,
   getNewGameData,
   skipTurnOnline,
+  requestDrawOnline,
 } from "../redux/slices/GameSlice";
 import ScoreBoard from "./ScoreBoard";
 import TurnIndicator from "./TurnIndicator";
@@ -44,6 +45,8 @@ function GameInfo() {
         dispatch(getNewGameData());
         break;
       case "online":
+        dispatch(requestDrawOnline())
+        dispatch(skipTurnOnline())
         break;
     }
   };
@@ -78,8 +81,8 @@ function GameInfo() {
           handleOpenSkipTurn={handleOpenSkipTurn}
         />
       </div>
-      <div className="flex flex-row justify-between items-center bg-slate-00 mt-4">
-        <TimeInfo />
+      <div className="flex flex-row justify-end items-center mt-4">
+        {/* <TimeInfo /> */}
         <DrawDialog
           requestDraw={requestDraw}
           isDisabled={isDisabled}

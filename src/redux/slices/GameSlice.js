@@ -165,7 +165,6 @@ export const setPlayerFieldOnline = createAsyncThunk(
         { merge: true }
       );
     } else {
-      console.log("!!!!!!FSDFSDF");
       await setDoc(
         docRef,
         {
@@ -228,6 +227,26 @@ export const checkWinOnline = createAsyncThunk(
   }
 );
 
+export const requestDrawOnline = createAsyncThunk(
+  "online/skipTurnOnline",
+  async (params, { getState }) => {
+    const state = getState();
+    const docRef = doc(db, "rooms", state.game.roomId);
+    const docSnap = await getDoc(docRef);
+    const { currentPlayer, player1, player2 } = docSnap.data();
+
+    const player = currentPlayer.name === "Player 1" ? "player1" : "player2";
+
+    await setDoc(
+      docRef,
+      {
+        [player]: { requestDraw: true },
+      },
+      { merge: true }
+    );
+  }
+);
+
 export const playAgainOnline = createAsyncThunk(
   "online/playAgainOnline",
   async (roomId, { getState }) => {
@@ -259,9 +278,9 @@ const GameSlice = createSlice({
       state.gameMode = action.payload;
     },
     setGameOptions: (state, action) => {
-      const {gameMode, stealsEnabled} = action.payload
+      const { gameMode, stealsEnabled } = action.payload;
       state.gameMode = gameMode;
-      state.stealsEnabled = stealsEnabled
+      state.stealsEnabled = stealsEnabled;
     },
     setCurrentPlayer: (state, action) => {
       const nextPlayer =
@@ -356,10 +375,10 @@ const GameSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(startOnlineGame.pending, (state, action) => {
-      state.isLoadingGame = true;
+      // state.isLoadingGame = true;
     });
     builder.addCase(startOnlineGame.fulfilled, (state, action) => {
-      state.isLoadingGame = false;
+      // state.isLoadingGame = false;
     });
     builder.addCase(startOnlineGame.rejected, (state, action) => {});
     builder.addCase(setPlayerFieldOnline.pending, (state, action) => {});
@@ -368,6 +387,9 @@ const GameSlice = createSlice({
     builder.addCase(checkWinOnline.pending, (state, action) => {});
     builder.addCase(checkWinOnline.fulfilled, (state, action) => {});
     builder.addCase(checkWinOnline.rejected, (state, action) => {});
+    builder.addCase(requestDrawOnline.pending, (state, action) => {});
+    builder.addCase(requestDrawOnline.fulfilled, (state, action) => {});
+    builder.addCase(requestDrawOnline.rejected, (state, action) => {});
   },
 });
 
@@ -384,7 +406,7 @@ export const {
   setRoomId,
   endAsDraw,
   setDBstate,
-  setGameOptions
+  setGameOptions,
 } = GameSlice.actions;
 
 export default GameSlice.reducer;
