@@ -13,7 +13,7 @@ function OnlineGameLobby() {
       : setError("Room id has to be 5 character long");
   };
 
-  const handleCreateNewRoom = async ({stealsEnabled}) => {
+  const handleCreateNewRoom = async ({ stealsEnabled }) => {
     createRoom(navigate, stealsEnabled);
   };
 
@@ -51,25 +51,25 @@ function OnlineGameLobby() {
         <div className="flex mt-2 justify-end mx-3 C">
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 mr-4 rounded-lg"
-            onClick={() => handleCreateNewRoom({stealsEnabled : true})}
+            onClick={() => handleCreateNewRoom({ stealsEnabled: true })}
           >
             WITH STEALS
           </button>
 
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 rounded-lg"
-            onClick={() => handleCreateNewRoom({stealsEnabled : false})}
+            onClick={() => handleCreateNewRoom({ stealsEnabled: false })}
           >
             WITHOUT STEALS
           </button>
         </div>
         {error && <p>Name and room code cannot be empty</p>}
       </div>
-      {error && 
-      <div className="bg-red-500 py-2 w-full">
-        <p className="uppercase font-bold text-center">{error}</p>
-      </div>
-      }
+      {error && (
+        <div className="bg-red-500 py-2 w-full">
+          <p className="uppercase font-bold text-center">{error}</p>
+        </div>
+      )}
     </div>
   );
 }

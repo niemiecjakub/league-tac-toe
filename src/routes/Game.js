@@ -80,6 +80,7 @@ function Game({ gameMode }) {
       </div>
     );
   }
+
   if (isLoadingGame) {
     return (
       <div

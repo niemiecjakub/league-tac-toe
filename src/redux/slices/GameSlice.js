@@ -17,6 +17,7 @@ import { INITIAL_STATE } from "../../constants";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+//GET DATA FOR SAME-SCREEN GAME
 export const getNewGameData = createAsyncThunk(
   "game/getNewGameData",
   async (param, thunkAPI) => {
@@ -56,6 +57,7 @@ export const getNewGameData = createAsyncThunk(
   }
 );
 
+//GET DATA AND START ONLINE GAME
 export const startOnlineGame = createAsyncThunk(
   "online/startOnlineGame",
   async (roomId, { getState }) => {
@@ -88,6 +90,7 @@ export const startOnlineGame = createAsyncThunk(
     list.forEach((combinedCategory, index) => {
       gameFields[`${index + 1}`] = combinedCategory;
     });
+    
     const docRef = doc(db, "rooms", roomId);
 
     await setDoc(

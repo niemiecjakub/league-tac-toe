@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const nImage = Array(5).fill(0);
 
-
 function WaitingRoom({ roomId }) {
   const [isCopied, setIsCopied] = useState(false);
   const { isOpenForRandom } = useSelector((state) => state.game);
@@ -32,7 +31,9 @@ function WaitingRoom({ roomId }) {
               />
             ))}
           </div>
-          <h1 className="text-white text-xl font-leagueheavy uppercase">searching for opponent</h1>
+          <h1 className="text-white text-xl font-leagueheavy uppercase">
+            searching for opponent
+          </h1>
         </div>
       ) : (
         <>

@@ -1,7 +1,6 @@
 function Loading() {
   return (
     <div className="flex flex-col items-center justify-end h-96">
-      {/* <img src="other/loading-poro.svg" /> */}
       <svg
         width="100"
         height="100"

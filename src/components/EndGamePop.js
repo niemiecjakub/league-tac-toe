@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getNewGameData,
   clearState,
-  startOnlineGame,
   playAgainOnline,
 } from "../redux/slices/GameSlice";
 import { useEffect } from "react";

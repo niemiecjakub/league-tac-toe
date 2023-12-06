@@ -21,7 +21,7 @@ function GameInfo() {
   const [turnIndicator, setTurnIndicator] = useState("");
   const { currentPlayer, gameMode } = useSelector((state) => state.game);
 
-  useEffect(() => {
+  useEffect(() => { 
     setOpenSkipTurn(false);
     setOpenDrawRequest(false);
     switch (gameMode) {
@@ -45,8 +45,8 @@ function GameInfo() {
         dispatch(getNewGameData());
         break;
       case "online":
-        dispatch(requestDrawOnline())
-        dispatch(skipTurnOnline())
+        dispatch(requestDrawOnline());
+        dispatch(skipTurnOnline());
         break;
     }
   };

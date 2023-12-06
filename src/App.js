@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import OnlineGameLobby from "./routes/OnlineGameLobby";
-import ChampionList from "./routes/CategoryList";
-import CategoryList from "./routes/CategoryList";
 import Game from "./routes/Game";
 import Landing from "./routes/Landing";
 import LocalGameLobby
@@ -17,8 +15,6 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/lobby" element={<OnlineGameLobby />} />
             <Route path="/lobby/local" element={<LocalGameLobby />} />
-            {/* <Route path="/champion-list" element={<ChampionList />} />
-            <Route path="/category-list" element={<CategoryList />} /> */}
           <Route path="/game/same-screen" element={<Game gameMode="same screen" />} />
           <Route
             path="/game/room/:roomId"
