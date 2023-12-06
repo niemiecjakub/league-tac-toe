@@ -11,6 +11,7 @@ export const INITIAL_STATE = {
   isGameOver: false,
   isLoadingGame: true,
   isGameStarted: false,
+  stealsEnabled: true,
   playersJoined: [],
   player1: {
     key: "player1",
@@ -19,6 +20,8 @@ export const INITIAL_STATE = {
     fields: [],
     steals: 3,
     score: 0,
+    requestDraw : false,
+    requestNewGame : false,
   },
   player2: {
     key: "player2",
@@ -27,6 +30,8 @@ export const INITIAL_STATE = {
     fields: [],
     steals: 3,
     score: 0,
+    requestDraw : false,
+    requestNewGame : false,
   },
   currentPlayer: {
     name: "Player 1",

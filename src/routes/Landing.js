@@ -9,7 +9,7 @@ function Landing() {
         subtext="Create game room"
       />
       <PageCard
-        to="/game/same-screen"
+        to="/lobby/local"
         title="Same screen game"
         subtext="Same screen game"
       />

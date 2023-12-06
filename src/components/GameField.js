@@ -26,9 +26,8 @@ function GameField({ fieldId }) {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
-  const { currentPlayer, possibleFields, fields, gameMode } = useSelector(
-    (state) => state.game
-  );
+  const { currentPlayer, possibleFields, fields, gameMode, stealsEnabled } =
+    useSelector((state) => state.game);
 
   const getSelectedVal = async (value) => {
     const {
@@ -63,15 +62,17 @@ function GameField({ fieldId }) {
   };
 
   const isFieldDisabled = () => {
+    if (fields[fieldId].player === currentPlayer.key) return true;
+    if (fields[fieldId].name && (!currentPlayer.steals || !stealsEnabled))
+      return true;
     switch (gameMode) {
       case "same screen":
-        if (fields[fieldId].player === currentPlayer.key) return true;
-        if (fields[fieldId].name && !currentPlayer.steals) return true;
         return false;
       case "online":
         if (currentPlayer.name !== Cookies.get("player")) return true;
         if (fields[fieldId].player === currentPlayer.key) return true;
-        if (fields[fieldId].name && !currentPlayer.steals) return true;
+        if (fields[fieldId].name && (!currentPlayer.steals || !stealsEnabled))
+          return true;
         return false;
     }
   };
@@ -108,6 +109,7 @@ function GameField({ fieldId }) {
         )}
 
         {gameMode === "online" &&
+        stealsEnabled &&
         Cookies.get("player") === currentPlayer.name &&
         fields[fieldId].player !== currentPlayer.key &&
         fields[fieldId].name !== "" &&
@@ -121,6 +123,7 @@ function GameField({ fieldId }) {
           <></>
         )}
         {gameMode === "same screen" &&
+        stealsEnabled &&
         fields[fieldId].player !== currentPlayer.key &&
         fields[fieldId].name !== "" &&
         currentPlayer.steals ? (

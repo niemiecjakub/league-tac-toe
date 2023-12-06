@@ -4,7 +4,8 @@ import ChampionList from "./routes/CategoryList";
 import CategoryList from "./routes/CategoryList";
 import Game from "./routes/Game";
 import Landing from "./routes/Landing";
-
+import LocalGameLobby
+ from "./routes/LocalGameLobby";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/lobby" element={<OnlineGameLobby />} />
+            <Route path="/lobby/local" element={<LocalGameLobby />} />
             {/* <Route path="/champion-list" element={<ChampionList />} />
             <Route path="/category-list" element={<CategoryList />} /> */}
           <Route path="/game/same-screen" element={<Game gameMode="same screen" />} />

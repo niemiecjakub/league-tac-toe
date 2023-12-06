@@ -16,11 +16,8 @@ import { db } from "../firebase-config";
 import {
   doc,
   onSnapshot,
-  getDoc,
-  updateDoc,
-  arrayUnion,
 } from "firebase/firestore";
-import { overlayStyle, GENERATE_CODE } from "../constants";
+import { overlayStyle } from "../constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";

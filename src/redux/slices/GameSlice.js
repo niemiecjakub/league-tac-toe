@@ -258,6 +258,11 @@ const GameSlice = createSlice({
     setGameMode: (state, action) => {
       state.gameMode = action.payload;
     },
+    setGameOptions: (state, action) => {
+      const {gameMode, stealsEnabled} = action.payload
+      state.gameMode = gameMode;
+      state.stealsEnabled = stealsEnabled
+    },
     setCurrentPlayer: (state, action) => {
       const nextPlayer =
         state.currentPlayer.name === "Player 1" ? state.player2 : state.player1;
@@ -379,6 +384,7 @@ export const {
   setRoomId,
   endAsDraw,
   setDBstate,
+  setGameOptions
 } = GameSlice.actions;
 
 export default GameSlice.reducer;
