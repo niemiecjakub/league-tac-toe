@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import StealIcon from "./StealIcon";
-import PlusIcon from "./PlusIcon";
+import StealIcon from "./svgIcons/StealIcon";
+import PlusIcon from "./svgIcons/PlusIcon";
 import InputAutofill from "./InputAutofill";
 import { useSelector, useDispatch } from "react-redux";
 import {

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function getWindowDimensions() {
-  const gameContainer = document.getElementById("game-container")
+  const gameContainer = document.getElementById("game-container");
   if (gameContainer) {
     return {
       width: gameContainer.offsetWidth,
@@ -10,23 +10,25 @@ function getWindowDimensions() {
   }
   return {
     width: 300,
-    height: 300
+    height: 300,
   };
 }
 
-
-
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
   useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return windowDimensions;
 }
+
+export default useWindowDimensions;

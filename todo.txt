@@ -1,3 +1,4 @@
+- usePlayers hook
 - request draw: online
 - reveal champions
 - find random opponent

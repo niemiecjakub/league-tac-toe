@@ -1,4 +1,4 @@
-import CopyIcon from "./CopyIcon";
+import CopyIcon from "./svgIcons/CopyIcon";
 import copy from "clipboard-copy";
 import { useState } from "react";
 import { useSelector } from "react-redux";

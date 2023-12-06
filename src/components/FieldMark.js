@@ -1,5 +1,5 @@
-import OIcon from "./OIcon";
-import XIcon from "./XIcon";
+import OIcon from "./svgIcons/OIcon";
+import XIcon from "./svgIcons/XIcon";
 
 function FieldMark({ championName, mark }) {
   return (

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import StealIcon from "./StealIcon";
+import StealIcon from "./svgIcons/StealIcon";
 import Cookies from "js-cookie";
 
 function StealInfo() {
