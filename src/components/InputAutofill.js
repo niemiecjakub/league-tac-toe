@@ -33,7 +33,7 @@ function InputAutofill({ label, pholder, data, onSelected }) {
           {label}
         </label>
         <input
-          className="uppercase rounded w-full border-none outline-none text-xl mx-2 p-2"
+          className="uppercase rounded w-full border-none outline-none mx-2 p-2"
           placeholder={pholder}
           type="search"
           value={selectedVal}
@@ -47,7 +47,7 @@ function InputAutofill({ label, pholder, data, onSelected }) {
       >
         {suggestions.map((item, idx) => (
           <div
-            className=" bg-gray-900 text-white p-3 text-xl border-b-2 border-solid border-league-blue-300 hover:bg-league-gold-200 hover:text-black "
+            className=" bg-gray-900 text-white p-3 border-b-2 border-solid border-league-blue-300 hover:bg-league-gold-200 hover:text-black"
             key={"" + item + idx}
             onClick={() => {
               hideSuggs(item);

@@ -2,7 +2,7 @@ import PageCard from "../components/PageCard";
 
 function Landing() {
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full md:w-2/3 lg:w-1/4">
       <PageCard
         to="/lobby"
         title="Play against friend"
@@ -32,7 +32,7 @@ function Landing() {
         <h2 className="font-bold text-xl my-2">Here's the rules:</h2> RULES TO BE ADDED
       </div>
 
-    </>
+    </div>
   );
 }
 

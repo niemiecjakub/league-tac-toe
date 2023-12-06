@@ -8,7 +8,9 @@ function OnlineGameLobby() {
   const [error, setError] = useState(false);
 
   const handleJoinRoom = () => {
-    joinRoom(roomId, navigate);
+    roomId.length == 5
+      ? joinRoom(roomId, navigate)
+      : setError("Room id has to be 5 character long");
   };
 
   const handleCreateNewRoom = async () => {
@@ -16,7 +18,7 @@ function OnlineGameLobby() {
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full md:w-2/3 lg:w-1/5">
       <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex justify-between md:rounded-xl">
         <div className="flex items-center">
           <h1 className="ml-3 uppercase text-xl">Room</h1>
@@ -28,7 +30,10 @@ function OnlineGameLobby() {
             value={roomId}
             name="code"
             placeholder="ENTER CODE"
-            onChange={(e) => setRoomId(e.target.value)}
+            onChange={(e) => {
+              setError("");
+              setRoomId(e.target.value);
+            }}
           />
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 rounded-r-lg w-1/3"
@@ -37,7 +42,6 @@ function OnlineGameLobby() {
             CONNECT
           </button>
         </div>
-        {error && <p>Name and room code cannot be empty</p>}
       </div>
 
       <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col md:rounded-xl">
@@ -61,7 +65,12 @@ function OnlineGameLobby() {
         </div>
         {error && <p>Name and room code cannot be empty</p>}
       </div>
-    </>
+      {error && 
+      <div className="bg-red-500 py-2 w-full">
+        <p className="uppercase font-bold text-center">{error}</p>
+      </div>
+      }
+    </div>
   );
 }
 
