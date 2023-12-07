@@ -4,7 +4,7 @@ import GameInfo from "../components/GameInfo";
 import Loading from "../components/Loading";
 import EndGamePop from "../components/EndGamePop";
 import { useDispatch, useSelector } from "react-redux";
-import { getNewGameData, setDBstate } from "../redux/slices/GameSlice";
+import {  setDBstate } from "../redux/slices/GameSlice";
 import { useParams, useLocation } from "react-router-dom";
 import { db } from "../firebase-config";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -67,7 +67,7 @@ function Game({gameMode}) {
         id="game-container"
         className="font-league max-h-fit w-screen md:m-auto md:w-1/2 2xl:w-1/5"
       >
-        <Loading />
+        <Loading text="Loading game" />
       </div>
     );
   }

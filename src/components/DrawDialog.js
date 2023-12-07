@@ -45,22 +45,15 @@ function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
       await dispatch(
         setFieldOnline({
           player1: {
-            requestDraw: false,
             score : player1.score + 1
           },
           player2: {
-            requestDraw: false,
             score: player2.score + 1
           },
           isLoadingGame: true,
         })
       );
       await dispatch(startOnlineGame(roomId));
-      await dispatch(
-        setFieldOnline({
-          isLoadingGame: false,
-        })
-      );
     }
   };
 

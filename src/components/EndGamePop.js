@@ -28,6 +28,7 @@ function EndGamePop({ setOpenEndGame }) {
         "player2" : {
           requestNewGame: false
         },
+        isLoadingGame: true
       }))
       await dispatch(startOnlineGame(roomId));
     }

@@ -106,6 +106,18 @@ export const startOnlineGame = createAsyncThunk(
         isLoadingGame: false,
         isGameOver: false,
         fields: INITIAL_STATE.fields,
+        player1: {
+          fields: INITIAL_STATE.player1.fields,
+          steals: INITIAL_STATE.player1.steals,
+          requestDraw: INITIAL_STATE.player1.requestDraw,
+          requestNewGame: INITIAL_STATE.player1.requestNewGame,
+        },
+        player2: {
+          fields: INITIAL_STATE.player2.fields,
+          steals: INITIAL_STATE.player2.steals,
+          requestDraw: INITIAL_STATE.player2.requestDraw,
+          requestNewGame: INITIAL_STATE.player2.requestNewGame,
+        },
       },
       { merge: true }
     );
@@ -220,12 +232,6 @@ export const checkWinOnline = createAsyncThunk(
             winner: player.key,
             [player.key]: {
               score: increment(1),
-              fields: INITIAL_STATE.player1.fields,
-              steals: INITIAL_STATE.player1.steals,
-            },
-            [otherPlayer.key]: {
-              fields: INITIAL_STATE.player1.fields,
-              steals: INITIAL_STATE.player1.steals,
             },
             isGameOver: true,
           },
@@ -409,22 +415,22 @@ const GameSlice = createSlice({
       state.isLoadingGame = false;
       state.error = action.error.message;
     });
-    builder.addCase(startOnlineGame.pending, (state, action) => {
-      state.isLoadingGame = true;
-    });
-    builder.addCase(startOnlineGame.fulfilled, (state, action) => {
-      state.isLoadingGame = false;
-    });
-    builder.addCase(startOnlineGame.rejected, (state, action) => {});
-    builder.addCase(setPlayerFieldOnline.pending, (state, action) => {});
-    builder.addCase(setPlayerFieldOnline.fulfilled, (state, action) => {});
-    builder.addCase(setPlayerFieldOnline.rejected, (state, action) => {});
-    builder.addCase(checkWinOnline.pending, (state, action) => {});
-    builder.addCase(checkWinOnline.fulfilled, (state, action) => {});
-    builder.addCase(checkWinOnline.rejected, (state, action) => {});
-    builder.addCase(requestDrawOnline.pending, (state, action) => {});
-    builder.addCase(requestDrawOnline.fulfilled, (state, action) => {});
-    builder.addCase(requestDrawOnline.rejected, (state, action) => {});
+    // builder.addCase(startOnlineGame.pending, (state, action) => {
+    //   state.isLoadingGame = true;
+    // });
+    // builder.addCase(startOnlineGame.fulfilled, (state, action) => {
+    //   state.isLoadingGame = false;
+    // });
+    // builder.addCase(startOnlineGame.rejected, (state, action) => {});
+    // builder.addCase(setPlayerFieldOnline.pending, (state, action) => {});
+    // builder.addCase(setPlayerFieldOnline.fulfilled, (state, action) => {});
+    // builder.addCase(setPlayerFieldOnline.rejected, (state, action) => {});
+    // builder.addCase(checkWinOnline.pending, (state, action) => {});
+    // builder.addCase(checkWinOnline.fulfilled, (state, action) => {});
+    // builder.addCase(checkWinOnline.rejected, (state, action) => {});
+    // builder.addCase(requestDrawOnline.pending, (state, action) => {});
+    // builder.addCase(requestDrawOnline.fulfilled, (state, action) => {});
+    // builder.addCase(requestDrawOnline.rejected, (state, action) => {});
   },
 });
 

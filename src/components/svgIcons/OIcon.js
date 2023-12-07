@@ -1,6 +1,7 @@
 function OIcon({ className }) {
   return (
     <svg
+      data-testid="o-icon"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
