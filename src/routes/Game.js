@@ -4,51 +4,71 @@ import GameInfo from "../components/GameInfo";
 import Loading from "../components/Loading";
 import EndGamePop from "../components/EndGamePop";
 import { useDispatch, useSelector } from "react-redux";
-import {  setDBstate } from "../redux/slices/GameSlice";
-import { useParams, useLocation } from "react-router-dom";
+import {
+  setDBstate,
+  setFieldOnline,
+  clearState,
+} from "../redux/slices/GameSlice";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, deleteDoc } from "firebase/firestore";
 import { overlayStyle } from "../constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";
 import { joinFromLink } from "../utility/roomFunctions";
 
-function Game({gameMode}) {
+function Game({ gameMode }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { roomId } = useParams();
   const [openEndGame, setOpenEndGame] = useState(false);
 
   const state = useSelector((state) => state.game);
-  const { isLoadingGame, playersJoined, isGameOver } = state;
+  const { isLoadingGame, playersJoined, isGameOver, opponentLeft } = state;
 
   useEffect(() => {
-    if (!location.state && gameMode === "online") {
-      joinFromLink(roomId);
-    }
-  }, []);
+    const handleBeforeUnload = (event) => {
+      console.log("User is leaving the page");
+      dispatch(
+        setFieldOnline({
+          opponentLeft: true,
+        })
+      );
+    };
 
-  useEffect(() => {
     const listenDB = async () => {
       if (gameMode === "online") {
         const docRef = doc(db, "rooms", roomId);
         onSnapshot(docRef, (snapshot) => {
           const currentData = snapshot.data();
-          console.log(currentData)
           if (currentData !== state) {
             dispatch(setDBstate(currentData));
           }
         });
       }
     };
-    listenDB();
-    return () => listenDB();
-  }, [dispatch]);
 
-  useEffect(() => {
+    if (!location.state && gameMode === "online") {
+      joinFromLink(roomId);
+    }
+    if (gameMode === "online" && opponentLeft) {
+      navigate("/");
+      dispatch(clearState());
+      return () => {
+        listenDB();
+      };
+    }
     isGameOver ? setOpenEndGame(true) : setOpenEndGame(false);
-  }, [isGameOver]);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    listenDB();
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      listenDB();
+    };
+  }, [opponentLeft, isGameOver, dispatch]);
 
   if (gameMode === "online" && playersJoined.length < 2) {
     return (
@@ -81,6 +101,7 @@ function Game({gameMode}) {
         <GameInfo />
         <Board />
         <StealInfo />
+        <div className="bg-green-300 w-full h-16 text-xl">{opponentLeft}</div>
         <Popup
           open={openEndGame}
           closeOnDocumentClick={false}

@@ -12,7 +12,6 @@ import {
   serverTimestamp,
   orderBy,
   limit,
-  increment,
 } from "firebase/firestore";
 import { GENERATE_CODE, INITIAL_STATE } from "../constants";
 import Cookies from "js-cookie";
@@ -20,21 +19,25 @@ import Cookies from "js-cookie";
 export const joinRoom = async (roomId, navigate) => {
   const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
+  const { playersJoined, playerCount } = room.data();
 
   if (!room.exists()) return;
-  if (room.data().playersJoined.includes(Cookies.get("playerId"))) {
+  if (playersJoined.includes(Cookies.get("playerId"))) {
     navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
     return;
   }
-  if (room.data().playerCount >= 2) return;
+  if (playerCount >= 2) return;
   if (!Cookies.get("playerId"))
     Cookies.set("playerId", GENERATE_CODE(12), { expires: 7 });
 
   Cookies.set("player", "Player 2", { expires: 7 });
 
+  const playerIds = [...playersJoined, Cookies.get("playerId")];
+  const nPlayers = playerIds.length;
+
   await updateDoc(docRef, {
-    playersJoined: arrayUnion(Cookies.get("playerId")),
-    playerCount: increment(1),
+    playersJoined: playerIds,
+    playerCount: nPlayers,
   });
 
   navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
@@ -43,19 +46,23 @@ export const joinRoom = async (roomId, navigate) => {
 export const joinFromLink = async (roomId) => {
   const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
+  const { playersJoined, playerCount } = room.data();
 
   if (!room.exists()) return;
-  if (room.data().playersJoined.includes(Cookies.get("playerId"))) return;
-  if (room.data().playerCount >= 2) return;
+  if (playersJoined.includes(Cookies.get("playerId"))) return;
+  if (playerCount >= 2) return;
 
   if (!Cookies.get("playerId"))
     Cookies.set("playerId", GENERATE_CODE(12), { expires: 7 });
 
   Cookies.set("player", "Player 2", { expires: 7 });
 
+  const playerIds = [...playersJoined, Cookies.get("playerId")];
+  const nPlayers = playerIds.length;
+
   await updateDoc(docRef, {
-    playersJoined: arrayUnion(Cookies.get("playerId")),
-    playerCount: increment(1),
+    playersJoined: playerIds,
+    playerCount: nPlayers,
   });
 };
 

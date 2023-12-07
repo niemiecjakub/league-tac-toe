@@ -312,6 +312,21 @@ export const setFieldOnline = createAsyncThunk(
   }
 );
 
+export const leaveRoomOnline = createAsyncThunk(
+  "online/leaveRoomOnline",
+  async ({ playerId }, { getState }) => {
+    const state = getState();
+    const docRef = doc(db, "rooms", state.game.roomId);
+    await setDoc(
+      docRef,
+      {
+        playersJoined: arrayRemove(),
+      },
+      { merge: true }
+    );
+  }
+);
+
 const GameSlice = createSlice({
   name: "Game",
   initialState: INITIAL_STATE,

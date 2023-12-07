@@ -1,5 +1,3 @@
-- fix play again 
-- request draw: online
 - reveal champions
 - find random opponent
 - inform on opponent left
