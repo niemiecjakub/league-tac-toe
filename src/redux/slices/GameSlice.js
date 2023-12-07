@@ -102,9 +102,10 @@ export const startOnlineGame = createAsyncThunk(
         },
         possibleFields: possibleFields,
         gameFields: gameFields,
-        //move this to fulfiled?
         isGameStarted: true,
         isLoadingGame: false,
+        isGameOver: false,
+        fields: INITIAL_STATE.fields,
       },
       { merge: true }
     );
@@ -121,11 +122,19 @@ export const skipTurnOnline = createAsyncThunk(
     const { currentPlayer, player1, player2 } = docSnap.data();
 
     const nextPlayer = currentPlayer.name === "Player 1" ? player2 : player1;
+    
+    if (nextPlayer.requestDraw) {
+      nextPlayer.requestDraw = false 
+    }
 
     await setDoc(
       docRef,
       {
         currentPlayer: nextPlayer,
+        [nextPlayer.key] : {
+          ...nextPlayer,
+          requestDraw : false
+        }
       },
       { merge: true }
     );
@@ -144,11 +153,7 @@ export const setPlayerFieldOnline = createAsyncThunk(
     const player = Cookies.get("player") === "Player 1" ? player1 : player2;
     const otherPlayer = player.name === "Player 1" ? player2 : player1;
 
-    console.log(otherPlayer.fields);
-    console.log(otherPlayer.fields.includes(fieldId));
-
     if (otherPlayer.fields.includes(fieldId)) {
-      console.log("!!!!!!");
       await setDoc(
         docRef,
         {
@@ -191,7 +196,6 @@ export const setPlayerFieldOnline = createAsyncThunk(
     }
   }
 );
-
 
 export const checkWinOnline = createAsyncThunk(
   "online/checkWinOnline",
@@ -238,7 +242,7 @@ export const requestDrawOnline = createAsyncThunk(
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
     const docSnap = await getDoc(docRef);
-    const { currentPlayer} = docSnap.data();
+    const { currentPlayer } = docSnap.data();
 
     const player = currentPlayer.name === "Player 1" ? "player1" : "player2";
 
@@ -254,7 +258,7 @@ export const requestDrawOnline = createAsyncThunk(
 
 export const playAgainOnline = createAsyncThunk(
   "online/playAgainOnline",
-  async (roomId, { getState }) => {
+  async (params, { getState }) => {
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
     await setDoc(
@@ -269,6 +273,23 @@ export const playAgainOnline = createAsyncThunk(
   }
 );
 
+export const setFieldOnline = createAsyncThunk(
+  "online/setFieldOnline",
+  async (params, { getState }) => {
+    const state = getState();
+    const docRef = doc(db, "rooms", state.game.roomId);
+    for (const [key, value] of Object.entries(params)) {
+      await setDoc(
+        docRef,
+        {
+          [`${key}`]: value,
+        },
+        { merge: true }
+      );
+    }
+  }
+);
+
 const GameSlice = createSlice({
   name: "Game",
   initialState: INITIAL_STATE,
@@ -280,7 +301,7 @@ const GameSlice = createSlice({
       const { gameMode, stealsEnabled, roomId } = action.payload;
       state.gameMode = gameMode;
       state.stealsEnabled = stealsEnabled;
-      state.roomId = roomId
+      state.roomId = roomId;
     },
     setCurrentPlayer: (state, action) => {
       const nextPlayer =
@@ -300,10 +321,13 @@ const GameSlice = createSlice({
       }
       player.fields.push(fieldId);
 
-      state.fields[fieldId].name = name;
-      state.fields[fieldId].player = player.key;
-      state.fields[fieldId].key = key;
-      state.fields[fieldId].history = [...state.fields[fieldId].history, name];
+      state.fields[fieldId] = {
+        ...state.fields[fieldId],
+        name,
+        player: player.key,
+        key,
+      };
+      state.fields[fieldId].history.push(name);
     },
     checkWin: (state, action) => {
       const player =
@@ -316,6 +340,7 @@ const GameSlice = createSlice({
       WNNING_CONDITIONS.forEach((winningCondition) => {
         if (COMPARE_ARRAYS(winningCondition, playerFieldsSorted)) {
           state.winner = player.name;
+
           player.score += 1;
           player.fields = INITIAL_STATE.player1.fields;
           player.steals = INITIAL_STATE.player1.steals;
@@ -341,7 +366,7 @@ const GameSlice = createSlice({
     },
     setDBstate: (state, action) => {
       for (const [key, value] of Object.entries(action.payload)) {
-        if (key === "roomId") continue;
+        // if (key === "roomId") continue;
         state[`${key}`] = value;
       }
     },
@@ -369,10 +394,10 @@ const GameSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(startOnlineGame.pending, (state, action) => {
-      // state.isLoadingGame = true;
+      state.isLoadingGame = true;
     });
     builder.addCase(startOnlineGame.fulfilled, (state, action) => {
-      // state.isLoadingGame = false;
+      state.isLoadingGame = false;
     });
     builder.addCase(startOnlineGame.rejected, (state, action) => {});
     builder.addCase(setPlayerFieldOnline.pending, (state, action) => {});

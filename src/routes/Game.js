@@ -14,16 +14,14 @@ import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";
 import { joinFromLink } from "../utility/roomFunctions";
 
-function Game({ gameMode }) {
+function Game({gameMode}) {
   const location = useLocation();
   const dispatch = useDispatch();
   const { roomId } = useParams();
   const [openEndGame, setOpenEndGame] = useState(false);
 
-  const { isLoadingGame, playersJoined, isGameOver } = useSelector(
-    (state) => state.game
-  );
   const state = useSelector((state) => state.game);
+  const { isLoadingGame, playersJoined, isGameOver } = state;
 
   useEffect(() => {
     if (!location.state && gameMode === "online") {
@@ -32,24 +30,19 @@ function Game({ gameMode }) {
   }, []);
 
   useEffect(() => {
-    const startGame = async () => {
-      switch (gameMode) {
-        case "same screen":
-          dispatch(getNewGameData());
-          break;
-        case "online":
-          const docRef = doc(db, "rooms", roomId);
-          onSnapshot(docRef, (snapshot) => {
-            const currentData = snapshot.data();
-            if (currentData !== state) {
-              dispatch(setDBstate(currentData));
-            }
-          });
-          break;
+    const listenDB = async () => {
+      if (gameMode === "online") {
+        const docRef = doc(db, "rooms", roomId);
+        onSnapshot(docRef, (snapshot) => {
+          const currentData = snapshot.data();
+          if (currentData !== state) {
+            dispatch(setDBstate(currentData));
+          }
+        });
       }
     };
-    startGame();
-    return () => startGame();
+    listenDB();
+    return () => listenDB();
   }, [dispatch]);
 
   useEffect(() => {

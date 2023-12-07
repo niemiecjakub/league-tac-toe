@@ -1,15 +1,27 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { setCurrentPlayer, skipTurnOnline } from "../redux/slices/GameSlice";
 
 function TurnIndicator({
   isDisabled,
-  skipTurn,
   turnIndicator,
   handleOpenSkipTurn,
   openSkipTurn,
 }) {
   const { gameMode, currentPlayer } = useSelector((state) => state.game);
+  const dispatch = useDispatch();
+
+  //handling skip turn
+  const skipTurn = async () => {
+    switch (gameMode) {
+      case "same screen":
+        dispatch(setCurrentPlayer());
+        break;
+      case "online":
+        await dispatch(skipTurnOnline());
+        break;
+    }
+  };
 
   const skipButton = (
     <>
@@ -36,8 +48,7 @@ function TurnIndicator({
   return (
     <div className="flex flex-row justify-between items-center bg-league-gold-300 rounded-l-xl">
       <h1 className="px-2 py-2">{turnIndicator}</h1>
-      {gameMode === "online" &&
-      Cookies.get("player") === currentPlayer.name ? (
+      {gameMode === "online" && Cookies.get("player") === currentPlayer.name ? (
         skipButton
       ) : (
         <></>

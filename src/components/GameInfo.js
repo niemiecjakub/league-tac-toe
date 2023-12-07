@@ -21,7 +21,8 @@ function GameInfo() {
   const [turnIndicator, setTurnIndicator] = useState("");
   const { currentPlayer, gameMode } = useSelector((state) => state.game);
 
-  useEffect(() => { 
+  //handling turns
+  useEffect(() => {
     setOpenSkipTurn(false);
     setOpenDrawRequest(false);
     switch (gameMode) {
@@ -38,30 +39,6 @@ function GameInfo() {
     }
   }, [currentPlayer, gameMode, Cookies.get("player")]);
 
-  const requestDraw = async () => {
-    switch (gameMode) {
-      case "same screen":
-        dispatch(endAsDraw());
-        dispatch(getNewGameData());
-        break;
-      case "online":
-        await dispatch(requestDrawOnline());
-        await dispatch(skipTurnOnline());
-        break;
-    }
-  };
-
-  const skipTurn = async () => {
-    switch (gameMode) {
-      case "same screen":
-        dispatch(setCurrentPlayer());
-        break;
-      case "online":
-        await dispatch(skipTurnOnline());
-        break;
-    }
-  };
-
   const handleOpenSkipTurn = () => {
     setOpenSkipTurn((o) => !o);
   };
@@ -75,7 +52,6 @@ function GameInfo() {
         <ScoreBoard />
         <TurnIndicator
           isDisabled={isDisabled}
-          skipTurn={skipTurn}
           turnIndicator={turnIndicator}
           openSkipTurn={openSkipTurn}
           handleOpenSkipTurn={handleOpenSkipTurn}
@@ -84,7 +60,6 @@ function GameInfo() {
       <div className="flex flex-row justify-end items-center mt-4">
         {/* <TimeInfo /> */}
         <DrawDialog
-          requestDraw={requestDraw}
           isDisabled={isDisabled}
           openDrawRequest={openDrawRequest}
           handleOpenDrawRequest={handleOpenDrawRequest}

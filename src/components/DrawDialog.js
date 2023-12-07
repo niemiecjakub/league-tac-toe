@@ -1,26 +1,47 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { playAgainOnline } from "../redux/slices/GameSlice";
+import { useState } from "react";
+import { playAgainOnline, startOnlineGame } from "../redux/slices/GameSlice";
+import {
+  endAsDraw,
+  getNewGameData,
+  requestDrawOnline,
+  skipTurnOnline,
+} from "../redux/slices/GameSlice";
+import { useEffect } from "react";
 
-function DrawDialog({
-  openDrawRequest,
-  isDisabled,
-  requestDraw,
-  handleOpenDrawRequest,
-}) {
+function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
+  const [isDrawRequested, setIsDrawRequested] = useState(false)
   const { gameMode, currentPlayer, player1, player2 } = useSelector(
     (state) => state.game
   );
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  let opponent;
-  if (gameMode === "online") {
-    const player = Cookies.get("player");
-    opponent = player === "Player 1" ? player2 : player1;
-  }
+  useEffect(() => {
+    if (gameMode === "online") {
+      const player = Cookies.get("player");
+      const {requestDraw} = player === "Player 1" ? player2 : player1;
+      setIsDrawRequested(requestDraw)
+    }
+  }, [currentPlayer]);
+
+  //handling draw request
+  const requestDraw = async () => {
+    switch (gameMode) {
+      case "same screen":
+        dispatch(endAsDraw());
+        dispatch(getNewGameData());
+        break;
+      case "online":
+        await dispatch(requestDrawOnline());
+        await dispatch(skipTurnOnline());
+        break;
+    }
+  };
 
   const handleDrawRequestOnline = async () => {
     await dispatch(playAgainOnline());
+    await dispatch(startOnlineGame());
   };
 
   const drawButton = (
@@ -49,7 +70,7 @@ function DrawDialog({
     <>
       {gameMode === "online" && Cookies.get("player") === currentPlayer.name ? (
         <>
-          {opponent.requestDraw ? (
+          {isDrawRequested ? (
             <div className="flex justify-end items-center bg-slate-50 w-full">
               <h1 className="text-black uppercase text-sm">
                 Your opponent requested to draw

@@ -4,11 +4,12 @@ import {
   getNewGameData,
   clearState,
   playAgainOnline,
+  startOnlineGame
 } from "../redux/slices/GameSlice";
 import { useEffect } from "react";
 
 function EndGamePop({ setOpenEndGame }) {
-  const { winner, gameMode } = useSelector((state) => state.game);
+  const { winner, gameMode, roomId } = useSelector((state) => state.game);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function EndGamePop({ setOpenEndGame }) {
   const handlePlayAgain = async () => {
     switch (gameMode) {
       case "online":
-        await dispatch(playAgainOnline());
+        await dispatch(startOnlineGame(roomId));
         setOpenEndGame(false);
         break;
       case "same screen":

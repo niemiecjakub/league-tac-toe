@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setGameOptions } from "../redux/slices/GameSlice";
+import { setGameOptions, getNewGameData } from "../redux/slices/GameSlice";
 function LocalGameLobby() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleGameOptions = ({stealsEnabled}) => {
+  const handleGameOptions = async ({ stealsEnabled }) => {
     dispatch(
       setGameOptions({
         gameMode: "same screen",
@@ -13,6 +13,7 @@ function LocalGameLobby() {
       })
     );
     navigate("/game/same-screen");
+    await dispatch(getNewGameData());
   };
 
   return (

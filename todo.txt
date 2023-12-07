@@ -1,4 +1,4 @@
-- fix turns in online games
+- fix play again 
 - request draw: online
 - reveal champions
 - find random opponent
