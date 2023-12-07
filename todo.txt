@@ -1,6 +1,6 @@
 - reveal champions
 - find random opponent
-- inform on opponent left
+- add toast on user left game
 
 extra:
 - champion query search 
