@@ -122,19 +122,19 @@ export const skipTurnOnline = createAsyncThunk(
     const { currentPlayer, player1, player2 } = docSnap.data();
 
     const nextPlayer = currentPlayer.name === "Player 1" ? player2 : player1;
-    
+
     if (nextPlayer.requestDraw) {
-      nextPlayer.requestDraw = false 
+      nextPlayer.requestDraw = false;
     }
 
     await setDoc(
       docRef,
       {
         currentPlayer: nextPlayer,
-        [nextPlayer.key] : {
+        [nextPlayer.key]: {
           ...nextPlayer,
-          requestDraw : false
-        }
+          requestDraw: false,
+        },
       },
       { merge: true }
     );
@@ -237,19 +237,35 @@ export const checkWinOnline = createAsyncThunk(
 );
 
 export const requestDrawOnline = createAsyncThunk(
-  "online/skipTurnOnline",
+  "online/requestDrawOnline",
   async (params, { getState }) => {
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
-    const docSnap = await getDoc(docRef);
-    const { currentPlayer } = docSnap.data();
-
-    const player = currentPlayer.name === "Player 1" ? "player1" : "player2";
+    const storedPlayer = Cookies.get("player");
+    const player = storedPlayer === "Player 1" ? "player1" : "player2";
 
     await setDoc(
       docRef,
       {
         [player]: { requestDraw: true },
+      },
+      { merge: true }
+    );
+  }
+);
+
+export const requestPlayAgainOnline = createAsyncThunk(
+  "online/requestPlayAgainOnline",
+  async (params, { getState }) => {
+    const state = getState();
+    const docRef = doc(db, "rooms", state.game.roomId);
+    const storedPlayer = Cookies.get("player");
+    const player = storedPlayer === "Player 1" ? "player1" : "player2";
+
+    await setDoc(
+      docRef,
+      {
+        [player]: { requestNewGame: true },
       },
       { merge: true }
     );

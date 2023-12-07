@@ -35,6 +35,7 @@ function Game({gameMode}) {
         const docRef = doc(db, "rooms", roomId);
         onSnapshot(docRef, (snapshot) => {
           const currentData = snapshot.data();
+          console.log(currentData)
           if (currentData !== state) {
             dispatch(setDBstate(currentData));
           }

@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { playAgainOnline, startOnlineGame } from "../redux/slices/GameSlice";
 import {
+  startOnlineGame,
+  setFieldOnline,
   endAsDraw,
   getNewGameData,
   requestDrawOnline,
@@ -11,8 +12,8 @@ import {
 import { useEffect } from "react";
 
 function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
-  const [isDrawRequested, setIsDrawRequested] = useState(false)
-  const { gameMode, currentPlayer, player1, player2 } = useSelector(
+  const [isDrawRequested, setIsDrawRequested] = useState(false);
+  const { gameMode, roomId, currentPlayer, player1, player2 } = useSelector(
     (state) => state.game
   );
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
   useEffect(() => {
     if (gameMode === "online") {
       const player = Cookies.get("player");
-      const {requestDraw} = player === "Player 1" ? player2 : player1;
-      setIsDrawRequested(requestDraw)
+      const { requestDraw } = player === "Player 1" ? player2 : player1;
+      setIsDrawRequested(requestDraw);
     }
   }, [currentPlayer]);
 
@@ -40,8 +41,27 @@ function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
   };
 
   const handleDrawRequestOnline = async () => {
-    await dispatch(playAgainOnline());
-    await dispatch(startOnlineGame());
+    if (Cookies.get("player") === currentPlayer.name) {
+      await dispatch(
+        setFieldOnline({
+          player1: {
+            requestDraw: false,
+            score : player1.score + 1
+          },
+          player2: {
+            requestDraw: false,
+            score: player2.score + 1
+          },
+          isLoadingGame: true,
+        })
+      );
+      await dispatch(startOnlineGame(roomId));
+      await dispatch(
+        setFieldOnline({
+          isLoadingGame: false,
+        })
+      );
+    }
   };
 
   const drawButton = (
