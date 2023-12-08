@@ -17,6 +17,11 @@ function Landing() {
         title="Same screen game"
         subtext="Same screen game"
       />
+      <PageCard
+        to="/champions"
+        title="Champion search"
+        subtext="See all champions"
+      />
       <button
         className="bg-red-400 w-20 h-14"
         onClick={() => handleRandomGame(navigate)}

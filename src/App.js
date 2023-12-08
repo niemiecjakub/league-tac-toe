@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import OnlineGameLobby from "./routes/OnlineGameLobby";
 import Game from "./routes/Game";
 import Landing from "./routes/Landing";
-import LocalGameLobby
- from "./routes/LocalGameLobby";
+import ChampionSearch from "./routes/ChampionSearch";
+import LocalGameLobby from "./routes/LocalGameLobby";
 function App() {
   return (
     <BrowserRouter>
@@ -12,10 +12,14 @@ function App() {
           <Link to="/">LEAGUE TAC TOE</Link>
         </div>
         <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/lobby" element={<OnlineGameLobby />} />
-            <Route path="/lobby/local" element={<LocalGameLobby />} />
-          <Route path="/game/same-screen" element={<Game gameMode="same screen" />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/lobby" element={<OnlineGameLobby />} />
+          <Route path="/lobby/local" element={<LocalGameLobby />} />
+          <Route path="/champions" element={<ChampionSearch />} />
+          <Route
+            path="/game/same-screen"
+            element={<Game gameMode="same screen" />}
+          />
           <Route
             path="/game/room/:roomId"
             element={<Game gameMode="online" />}
