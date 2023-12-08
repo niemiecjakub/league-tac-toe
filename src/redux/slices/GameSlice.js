@@ -12,6 +12,7 @@ import {
   arrayRemove,
   arrayUnion,
   increment,
+  deleteDoc,
 } from "firebase/firestore";
 import { INITIAL_STATE } from "../../constants";
 import axios from "axios";
@@ -317,13 +318,28 @@ export const leaveRoomOnline = createAsyncThunk(
   async ({ playerId }, { getState }) => {
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
+
+    const { playersJoined, playerCount } = state;
+    const playerIds = playersJoined.reamove(Cookies.get("playerId"));
+    const nPlayers = playerIds.length;
+
     await setDoc(
       docRef,
       {
-        playersJoined: arrayRemove(),
+        playersJoined: arrayRemove(Cookies.get(playerId)),
+        playerCount: nPlayers,
       },
       { merge: true }
     );
+  }
+);
+
+export const deleteRoom = createAsyncThunk(
+  "online/deleteRoom",
+  async (params, { getState }) => {
+    const state = getState();
+    const docRef = doc(db, "rooms", state.game.roomId);
+    await deleteDoc(docRef);
   }
 );
 
@@ -332,7 +348,8 @@ const GameSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     clearState: (state, action) => {
-      state = INITIAL_STATE;
+      return INITIAL_STATE;
+      // state = {...INITIAL_STATE};
     },
     setGameOptions: (state, action) => {
       const { gameMode, stealsEnabled, roomId } = action.payload;
@@ -402,9 +419,12 @@ const GameSlice = createSlice({
       state.currentPlayer = INITIAL_STATE.currentPlayer;
     },
     setDBstate: (state, action) => {
-      for (const [key, value] of Object.entries(action.payload)) {
-        // if (key === "roomId") continue;
-        state[`${key}`] = value;
+      console.log(action.payload === undefined);
+      if (action.payload !== undefined) {
+        for (const [key, value] of Object.entries(action.payload)) {
+          // if (key === "roomId") continue;
+          state[`${key}`] = value;
+        }
       }
     },
   },

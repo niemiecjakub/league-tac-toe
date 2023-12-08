@@ -5,7 +5,8 @@ import {
   clearState,
   startOnlineGame,
   requestPlayAgainOnline,
-  setFieldOnline
+  setFieldOnline,
+  leaveRoomOnline,
 } from "../redux/slices/GameSlice";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -20,35 +21,41 @@ function EndGamePop({ setOpenEndGame }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const playAgainOnline= async () => {
-      await dispatch(setFieldOnline({
-        "player1" : {
-          requestNewGame: false
-        },
-        "player2" : {
-          requestNewGame: false
-        },
-        isLoadingGame: true
-      }))
+    const playAgainOnline = async () => {
+      await dispatch(
+        setFieldOnline({
+          player1: {
+            requestNewGame: false,
+          },
+          player2: {
+            requestNewGame: false,
+          },
+          isLoadingGame: true,
+        })
+      );
       await dispatch(startOnlineGame(roomId));
-    }
+    };
 
-    const nPlayersAgreed = [player1.requestNewGame, player2.requestNewGame].filter(value => value === true).length
-    setNumberPlayersAgreed(nPlayersAgreed)
-    if (
-      gameMode === "online" &&
-      nPlayersAgreed == 2
-    ) {
+    const nPlayersAgreed = [
+      player1.requestNewGame,
+      player2.requestNewGame,
+    ].filter((value) => value === true).length;
+    setNumberPlayersAgreed(nPlayersAgreed);
+    if (gameMode === "online" && nPlayersAgreed == 2) {
       if (Cookies.get("player") === "Player 1") {
-        playAgainOnline()
+        playAgainOnline();
       }
       setOpenEndGame(false);
     }
   }, [winner, player1, player2]);
 
   const handleLeaveGame = () => {
-    dispatch(clearState());
     setOpenEndGame(false);
+    if (gameMode === "online") {
+      dispatch(leaveRoomOnline());
+    } else {
+      dispatch(clearState());
+    }
     navigate("/");
   };
 

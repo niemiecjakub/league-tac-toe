@@ -45,10 +45,10 @@ function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
       await dispatch(
         setFieldOnline({
           player1: {
-            score : player1.score + 1
+            score: player1.score + 1,
           },
           player2: {
-            score: player2.score + 1
+            score: player2.score + 1,
           },
           isLoadingGame: true,
         })

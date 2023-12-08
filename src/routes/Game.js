@@ -8,6 +8,7 @@ import {
   setDBstate,
   setFieldOnline,
   clearState,
+  deleteRoom,
 } from "../redux/slices/GameSlice";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
@@ -50,12 +51,24 @@ function Game({ gameMode }) {
       }
     };
 
+    const deleteDBRoom = async () => {
+      if (gameMode === "online" && opponentLeft) {
+        try {
+          await dispatch(deleteRoom());
+        } catch (e) {
+          console.log(e);
+        } finally {
+          dispatch(clearState());
+        }
+      }
+    };
+
     if (!location.state && gameMode === "online") {
       joinFromLink(roomId);
     }
     if (gameMode === "online" && opponentLeft) {
       navigate("/");
-      dispatch(clearState());
+      deleteDBRoom();
       return () => {
         listenDB();
       };
@@ -101,7 +114,6 @@ function Game({ gameMode }) {
         <GameInfo />
         <Board />
         <StealInfo />
-        <div className="bg-green-300 w-full h-16 text-xl">{opponentLeft}</div>
         <Popup
           open={openEndGame}
           closeOnDocumentClick={false}
