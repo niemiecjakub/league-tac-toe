@@ -349,7 +349,6 @@ const GameSlice = createSlice({
   reducers: {
     clearState: (state, action) => {
       return INITIAL_STATE;
-      // state = {...INITIAL_STATE};
     },
     setGameOptions: (state, action) => {
       const { gameMode, stealsEnabled, roomId } = action.payload;

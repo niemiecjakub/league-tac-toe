@@ -1,14 +1,17 @@
 import ChampionQueryField from "../components/ChampionQueryField";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
-import { addQuery, removeQuery } from "../redux/slices/QuerySlice";
+import { addQuery, removeQuery, resetQuery } from "../redux/slices/QuerySlice";
 
 function ChampionQueryList() {
   const dispatch = useDispatch();
   const { queries } = useSelector((state) => state.query);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-between w-full">
+      <h1 className="text-center text-white uppercase text-xl">
+        Explore champions by query
+      </h1>
       {queries.map((query, index) => {
         return (
           <div className="flex my-2" key={query.id}>
@@ -16,7 +19,7 @@ function ChampionQueryList() {
             {index === queries.length - 1 ? (
               <button
                 onClick={() => dispatch(addQuery())}
-                className="bg-green-200 w-10 px-5 mx-1 text-center"
+                className="bg-green-200 w-10 px-5 flex items-center justify-center rounded-xl"
               >
                 +
               </button>
@@ -26,7 +29,7 @@ function ChampionQueryList() {
                   console.log(queries);
                   dispatch(removeQuery(query.id));
                 }}
-                className="bg-red-200 w-10 px-5 mx-1 text-center"
+                className="bg-red-200 w-10 px-5 flex items-center justify-center rounded-xl"
               >
                 -
               </button>
@@ -34,6 +37,12 @@ function ChampionQueryList() {
           </div>
         );
       })}
+      <button
+        onClick={() => dispatch(resetQuery())}
+        className="bg-league-gold-400 p-2 muppercase rounded-xl"
+      >
+        Clear search
+      </button>
     </div>
   );
 }
