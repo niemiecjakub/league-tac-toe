@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
-import { CATEGORY_LIST, ALL_CHAMPION_DATA } from "../constants";
-import { useDispatch, useSelector } from "react-redux";
+import { CATEGORY_LIST } from "../constants";
+import { useDispatch } from "react-redux";
 import { updateQuery } from "../redux/slices/QuerySlice";
 
 function ChampionQueryField({ data }) {
   const dispatch = useDispatch();
-  const {id} = data
+  const { id } = data;
 
   const handleSelectChange = (e, field) => {
     const value = e.target.value;

@@ -1,19 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ALL_CHAMPION_DATA } from "../../constants";
 
 const QUERY_INITIAL_STATE = {
+  champions: ALL_CHAMPION_DATA,
   queries: [
     {
       id: 0,
-      categoryType: "all",
-      categoryName: "all",
-    },
-    {
-      id: 14,
-      categoryType: "all",
-      categoryName: "all",
-    },
-    {
-      id: 22,
       categoryType: "all",
       categoryName: "all",
     },
@@ -60,9 +52,13 @@ const QuerySlice = createSlice({
         }
       }
     },
+    setChampions: (state, action) => {
+      state.champions = action.payload;
+    },
   },
 });
 
-export const { addQuery, removeQuery, updateQuery } = QuerySlice.actions;
+export const { addQuery, removeQuery, updateQuery, setChampions } =
+  QuerySlice.actions;
 
 export default QuerySlice.reducer;
