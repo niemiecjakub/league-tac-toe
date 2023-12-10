@@ -319,7 +319,7 @@ export const leaveRoomOnline = createAsyncThunk(
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
 
-    const { playersJoined, playerCount } = state;
+    const { playersJoined} = state;
     const playerIds = playersJoined.reamove(Cookies.get("playerId"));
     const nPlayers = playerIds.length;
 
@@ -418,7 +418,6 @@ const GameSlice = createSlice({
       state.currentPlayer = INITIAL_STATE.currentPlayer;
     },
     setDBstate: (state, action) => {
-      console.log(action.payload === undefined);
       if (action.payload !== undefined) {
         for (const [key, value] of Object.entries(action.payload)) {
           // if (key === "roomId") continue;

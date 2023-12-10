@@ -4,9 +4,13 @@ import Game from "./routes/Game";
 import Landing from "./routes/Landing";
 import ChampionSearch from "./routes/ChampionSearch";
 import LocalGameLobby from "./routes/LocalGameLobby";
+import ScrollToTop from "./components/ScrollToTop";
+import ChampionInfo from "./routes/ChampionInfo";
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="bg-league-blue-600 font-league min-h-full">
         <div className="bg-league-blue-700 flex items-center justify-center h-16 text-league-gold-400 text-4xl font-black sticky z-50 font-league">
           <Link to="/">LEAGUE TAC TOE</Link>
@@ -16,6 +20,7 @@ function App() {
           <Route path="/lobby" element={<OnlineGameLobby />} />
           <Route path="/lobby/local" element={<LocalGameLobby />} />
           <Route path="/champions" element={<ChampionSearch />} />
+          <Route path="/champions/:championKey" element={<ChampionInfo />} />
           <Route
             path="/game/same-screen"
             element={<Game gameMode="same screen" />}

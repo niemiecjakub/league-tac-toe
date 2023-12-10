@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ALL_CHAMPION_DATA } from "../constants";
 import { setChampions } from "../redux/slices/QuerySlice";
+import { Link } from "react-router-dom";
 
 const filterChampionByQuery = (query) => {
   const { categoryType, categoryName } = query;
@@ -45,8 +46,8 @@ function ChampionList() {
   return (
     <div className=" w-full">
       {champions.map((champion) => (
-        // <Link to="/" key={champion.id}>
-        <div className="my-2 flex items-center h-10" key={champion.id}>
+        <Link to={`/champions/${champion.key}`} key={champion.id}>
+        <div className="my-2 flex items-center h-10 hover:bg-red-500" key={champion.id}>
           <img
             alt={champion.key}
             src={`${window.location.origin}/icons/${champion.key}.PNG`}
@@ -56,7 +57,7 @@ function ChampionList() {
             <span className="font-bold">{champion.name}</span>, {champion.title}
           </h1>
         </div>
-        // </Link>
+        </Link>
       ))}
     </div>
   );

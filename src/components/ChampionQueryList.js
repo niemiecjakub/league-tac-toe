@@ -26,7 +26,6 @@ function ChampionQueryList() {
             ) : (
               <button
                 onClick={() => {
-                  console.log(queries);
                   dispatch(removeQuery(query.id));
                 }}
                 className="bg-red-200 w-10 px-5 flex items-center justify-center rounded-xl"

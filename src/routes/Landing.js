@@ -10,17 +10,22 @@ function Landing() {
       <PageCard
         to="/lobby"
         title="Play against friend"
-        subtext="Create game room"
+        subtitle="Create game room"
+        showButton="true"
+        imageSrc={`${window.location.origin}/other/online.jpg`}
       />
       <PageCard
         to="/lobby/local"
         title="Same screen game"
-        subtext="Same screen game"
+        subtitle="Same screen game"
+        showButton="true"
+        imageSrc={`${window.location.origin}/other/samescreen.jpg`}
       />
       <PageCard
         to="/champions"
         title="Champion search"
-        subtext="See all champions"
+        subtitle="See all champions"
+        imageSrc={`${window.location.origin}/other/champions.jpg`}
       />
       <button
         className="bg-red-400 w-20 h-14"

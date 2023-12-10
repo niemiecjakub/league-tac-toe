@@ -21,7 +21,7 @@ function ChampionQueryField({ data }) {
       >
         <option value="all">ALL</option>
         {Object.entries(CATEGORY_LIST).map(([categoryType, categoryNames]) => (
-          <option className="uppercase" value={categoryType}>
+          <option className="uppercase" value={categoryType} key={categoryType}>
             {categoryType}
           </option>
         ))}
@@ -39,7 +39,7 @@ function ChampionQueryField({ data }) {
         {data.categoryType !== "all" &&
           Object.entries(CATEGORY_LIST[data.categoryType]).map(
             ([i, categoryName]) => (
-              <option className="uppercase" value={categoryName}>
+              <option className="uppercase" key={categoryName} value={categoryName}>
                 {categoryName}
               </option>
             )
