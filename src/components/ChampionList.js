@@ -47,16 +47,17 @@ function ChampionList() {
     <div className=" w-full">
       {champions.map((champion) => (
         <Link to={`/champions/${champion.key}`} key={champion.id}>
-        <div className="my-2 flex items-center h-10 hover:bg-red-500" key={champion.id}>
-          <img
-            alt={champion.key}
-            src={`${window.location.origin}/icons/${champion.key}.PNG`}
-            className="h-full mr-2"
-          />
-          <h1 className="text-white">
-            <span className="font-bold">{champion.name}</span>, {champion.title}
-          </h1>
-        </div>
+          <div className="my-2 flex items-center h-10" key={champion.id}>
+            <img
+              alt={champion.key}
+              src={`${window.location.origin}/icons/${champion.key}.PNG`}
+              className="h-full mr-2"
+            />
+            <h1 className="text-white">
+              <span className="font-bold">{champion.name}</span>,{" "}
+              {champion.title}
+            </h1>
+          </div>
         </Link>
       ))}
     </div>

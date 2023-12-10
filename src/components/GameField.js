@@ -32,8 +32,6 @@ function GameField({ fieldId }) {
     const {
       data: { name, key },
     } = await axios(`${CHAMPION_API_URL}champion/name/${value}`);
-    console.log(name, possibleFields[fieldId]);
-
     switch (gameMode) {
       case "same screen":
         if (

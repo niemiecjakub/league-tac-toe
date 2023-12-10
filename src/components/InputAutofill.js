@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function InputAutofill({ label, pholder, data, onSelected }) {
   const [suggestions, setSugesstions] = useState([]);
-  const [isHideSuggs, setIsHideSuggs] = useState(false);
   const [selectedVal, setSelectedVal] = useState("");
 
-  const handler = (e) => {
+  const handleSuggestions = (e) => {
     setSugesstions(data.filter((i) => i.startsWith(e.target.value)));
   };
 
@@ -13,14 +12,12 @@ function InputAutofill({ label, pholder, data, onSelected }) {
     const input =
       e.target.value.charAt(0).toUpperCase() +
       e.target.value.slice(1).toLowerCase();
-    setIsHideSuggs(false);
     setSelectedVal(input);
   };
 
   const hideSuggs = (value) => {
     onSelected(value);
     setSelectedVal(value);
-    setIsHideSuggs(true);
   };
 
   return (
@@ -38,19 +35,19 @@ function InputAutofill({ label, pholder, data, onSelected }) {
           type="search"
           value={selectedVal}
           onChange={handleChange}
-          onKeyUp={handler}
+          onKeyUp={handleSuggestions}
         />
       </div>
 
       <div
         className={`uppercase absolute left-0 cursor-pointer w-full overflow-auto top-16 z-50 max-h-48 ${
-          isHideSuggs ? "hidden" : "visible"
+          suggestions.length ? "visible" : "hidden"
         }`}
       >
-        {suggestions.map((item, idx) => (
+        {suggestions.map((item, index) => (
           <div
             className=" bg-gray-900 text-white p-3 border-b-2 border-solid border-league-blue-300 hover:bg-league-gold-200 hover:text-black"
-            key={"" + item + idx}
+            key={index}
             onClick={() => {
               hideSuggs(item);
             }}

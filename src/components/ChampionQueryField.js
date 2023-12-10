@@ -27,11 +27,10 @@ function ChampionQueryField({ data }) {
         ))}
       </select>
 
-      <label for="category-name-select-1" className="text-white">
-      </label>
+      <label for="category-name-select-1" className="text-white"></label>
       <select
         id="category-name-select-1"
-        className="uppercase p-2 w-full rounded-xl mx-1" 
+        className="uppercase p-2 w-full rounded-xl mx-1"
         value={data.categoryName}
         onChange={(e) => handleSelectChange(e, "categoryName")}
       >
@@ -39,7 +38,11 @@ function ChampionQueryField({ data }) {
         {data.categoryType !== "all" &&
           Object.entries(CATEGORY_LIST[data.categoryType]).map(
             ([i, categoryName]) => (
-              <option className="uppercase" key={categoryName} value={categoryName}>
+              <option
+                className="uppercase"
+                key={categoryName}
+                value={categoryName}
+              >
                 {categoryName}
               </option>
             )
