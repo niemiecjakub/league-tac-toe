@@ -3,5 +3,4 @@
 - add toast on user left game
 
 extra:
-- champion query search 
 - add timing
