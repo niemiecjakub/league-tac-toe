@@ -55,8 +55,6 @@ function Game({ gameMode }) {
       if (gameMode === "online" && opponentLeft) {
         try {
           await dispatch(deleteRoom());
-        } catch (e) {
-          console.log(e);
         } finally {
           dispatch(clearState());
         }

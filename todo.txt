@@ -1,6 +1,4 @@
-- reveal champions
-- find random opponent
-- add toast on user left game
-
-extra:
-- add timing
+- Champion reveal
+- Find random opponent
+- Add toast on user left game
+- Add timing
