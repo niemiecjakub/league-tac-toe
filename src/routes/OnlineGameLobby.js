@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { joinRoom, createRoom } from "../utility/roomFunctions";
 import { useDispatch } from "react-redux";
-import {
-  setGameOptions,
-  startOnlineGame,
-} from "../redux/slices/GameSlice";
+import { setGameOptions, startOnlineGame } from "../redux/slices/GameSlice";
 
 function OnlineGameLobby() {
   const navigate = useNavigate();
@@ -33,7 +30,7 @@ function OnlineGameLobby() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full md:w-2/3 lg:w-1/5">
+    <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full">
       <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex justify-between md:rounded-xl">
         <div className="flex items-center">
           <h1 className="ml-3 uppercase text-xl">Room</h1>

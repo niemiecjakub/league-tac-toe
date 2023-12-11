@@ -87,7 +87,8 @@ function Game({ gameMode }) {
     return (
       <div
         id="game-container"
-        className="font-league max-h-fit w-screen md:m-auto md::w-1/2 2xl:w-1/5"
+        className="font-league max-h-fit w-full md:m-auto"
+        // w-full md:w-2/3 2xl:w-1/3 3xl:1/4
       >
         <WaitingRoom roomId={roomId} />
       </div>
@@ -98,7 +99,7 @@ function Game({ gameMode }) {
     return (
       <div
         id="game-container"
-        className="font-league max-h-fit w-screen md:m-auto md:w-1/2 2xl:w-1/5"
+        className="font-league max-h-fit w-full md:m-auto"
       >
         <Loading text="Loading game" />
       </div>
@@ -109,7 +110,7 @@ function Game({ gameMode }) {
     <>
       <div
         id="game-container"
-        className="font-league max-h-fit w-screen md:m-auto md:w-1/2 2xl:w-1/5"
+        className="font-league max-h-fit w-full md:m-auto"
       >
         <GameInfo />
         <Board />
