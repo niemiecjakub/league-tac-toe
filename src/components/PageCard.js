@@ -14,13 +14,13 @@ function PageCard({ to, title, subtitle, showButton, imageSrc }) {
           />
         )}
       </div>
-      <div className="w-full flex h-1/3 items-center justify-between p-2 md:p5">
+      <div className="w-full flex h-1/3 py-3 items-center justify-between p-2 md:p5">
         <div className="flex flex-col">
           <p className="text-xl font-bold">{title}</p>
           <p>{subtitle}</p>
         </div>
         {showButton && (
-          <button className="bg-league-gold-400 hover:bg-league-blue-200 p-3 rounded-lg font-bold text-xl">
+          <button className="bg-league-gold-400 hover:bg-league-blue-200 rounded-lg p-2 md:p-3 font-bold text-xl">
             Play now
           </button>
         )}

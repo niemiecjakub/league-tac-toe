@@ -3,16 +3,24 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {
-      screens: {
-        "3xl": "1600px",
-      },
-    },
     fontFamily: {
       league: ["BeaufortforLOL", '"Beaufort for LOL"'],
       leagueheavy: ["BeaufortforLOL-Heavy", '"Beaufort for LOL Heavy"'],
     },
     extend: {
+      keyframes: {
+        zoom: {
+          "0%": { transform: "scale(1.0)" },
+          "100%": { transform: "scale(1.06)" },
+        },
+      },
+      animation: {
+        zoom: "zoom 0.2s forwards",
+      },
+      screens: {
+        "3xl": "1600px",
+        md: "768px",
+      },
       colors: {
         "league-blue": {
           100: "#CDFAFA",

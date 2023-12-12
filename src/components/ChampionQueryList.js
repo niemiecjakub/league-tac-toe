@@ -8,13 +8,10 @@ function ChampionQueryList() {
   const { queries } = useSelector((state) => state.query);
 
   return (
-    <div className="flex flex-col justify-between w-full">
-      <h1 className="text-center text-white uppercase text-xl">
-        Explore champions by query
-      </h1>
+    <div className="flex flex-col w-full">
       {queries.map((query, index) => {
         return (
-          <div className="flex my-2" key={query.id}>
+          <div className="flex mb-2" key={query.id}>
             <ChampionQueryField key={query.id} data={query} />
             {index === queries.length - 1 ? (
               <button
@@ -38,7 +35,7 @@ function ChampionQueryList() {
       })}
       <button
         onClick={() => dispatch(resetQuery())}
-        className="bg-league-gold-400 p-2 muppercase rounded-xl"
+        className="bg-league-gold-400 p-2 muppercase rounded-xl uppercase font-bold"
       >
         Clear search
       </button>

@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrentPlayer,
-  endAsDraw,
-  getNewGameData,
-  skipTurnOnline,
-  requestDrawOnline,
-} from "../redux/slices/GameSlice";
 import ScoreBoard from "./ScoreBoard";
 import TurnIndicator from "./TurnIndicator";
 import DrawDialog from "./DrawDialog";
