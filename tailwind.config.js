@@ -13,9 +13,14 @@ module.exports = {
           "0%": { transform: "scale(1.0)" },
           "100%": { transform: "scale(1.06)" },
         },
+        fadein: {
+          "0%": { opacity: "0.5" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         zoom: "zoom 0.2s forwards",
+        fadein: "fadein 1s forwards",
       },
       screens: {
         "3xl": "1600px",
