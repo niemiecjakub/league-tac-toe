@@ -1,4 +1,2 @@
-- Champion reveal
-- Find random opponent
 - Add toast on user left game
 - Add timing

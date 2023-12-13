@@ -37,7 +37,7 @@ function Game({ gameMode }) {
           opponentLeft: true,
         })
       );
-    };
+    }; 
 
     const listenDB = async () => {
       if (gameMode === "online") {

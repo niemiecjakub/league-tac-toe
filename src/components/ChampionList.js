@@ -44,7 +44,7 @@ function ChampionList() {
   }, [queries, dispatch]);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-3 animate-fadein">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-3">
       {champions.map((champion) => (
         <Link to={`/champions/${champion.key}`} key={champion.id}>
           <div
