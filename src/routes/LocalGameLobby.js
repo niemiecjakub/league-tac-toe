@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const turnTimeOptions = [
   { display: "unlimited", value: "unlimited" },
+  { display: "5 sec", value: 5 },
   { display: "30 sec", value: 30 },
   { display: "45 sec", value: 45 },
   { display: "60 sec", value: 60 },
@@ -20,7 +21,7 @@ function LocalGameLobby() {
       setGameOptions({
         gameMode: "same screen",
         stealsEnabled: stealsEnabled,
-        turnTime: turnTime.value,
+        turnTime: turnTime,
       })
     );
     navigate("/game/same-screen");

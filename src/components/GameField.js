@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import StealIcon from "./svgIcons/StealIcon";
@@ -79,6 +79,10 @@ function GameField({ fieldId }) {
       setOpen((o) => !o);
     }
   };
+
+  useEffect(() => {
+    setOpen(false);
+  }, [currentPlayer]);
 
   return (
     <>

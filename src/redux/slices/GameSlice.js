@@ -352,6 +352,7 @@ const GameSlice = createSlice({
     },
     setGameOptions: (state, action) => {
       const { gameMode, stealsEnabled, roomId, turnTime } = action.payload;
+      console.log(turnTime);
       state.gameMode = gameMode;
       state.stealsEnabled = stealsEnabled;
       state.roomId = roomId;
