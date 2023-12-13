@@ -6,10 +6,12 @@ import ChampionSearch from "./routes/ChampionSearch";
 import LocalGameLobby from "./routes/LocalGameLobby";
 import ScrollToTop from "./components/ScrollToTop";
 import ChampionInfo from "./routes/ChampionInfo";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster />
       <ScrollToTop />
       <div className="bg-league-blue-600 font-league min-h-full flex justify-start items-center flex-col">
         <div className="bg-league-blue-700 flex items-center justify-center h-16 text-league-gold-400 text-4xl font-black sticky z-50 font-league">

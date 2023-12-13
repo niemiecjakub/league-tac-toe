@@ -4,7 +4,7 @@ import GameInfo from "../components/GameInfo";
 import Loading from "../components/Loading";
 import EndGamePop from "../components/EndGamePop";
 import { useDispatch, useSelector } from "react-redux";
-import { createPortal } from 'react-dom';
+import { createPortal } from "react-dom";
 import {
   setDBstate,
   setFieldOnline,
@@ -19,6 +19,7 @@ import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";
 import { joinFromLink } from "../utility/roomFunctions";
+import toast, { Toaster } from "react-hot-toast";
 
 function Game({ gameMode }) {
   const location = useLocation();
@@ -67,6 +68,18 @@ function Game({ gameMode }) {
     }
     if (gameMode === "online" && opponentLeft) {
       navigate("/");
+      toast.custom(
+        (t) => (
+          <div
+            className={`bg-red-400 py-4 px-5 rounded-xl text-xl text-white font-leagueheavy`}
+          >
+            Your opponent left the game
+          </div>
+        ),
+        {
+          duration: 1200,
+        }
+      );
       deleteDBRoom();
 
       return () => {
