@@ -4,6 +4,7 @@ import GameInfo from "../components/GameInfo";
 import Loading from "../components/Loading";
 import EndGamePop from "../components/EndGamePop";
 import { useDispatch, useSelector } from "react-redux";
+import { createPortal } from 'react-dom';
 import {
   setDBstate,
   setFieldOnline,
@@ -37,7 +38,7 @@ function Game({ gameMode }) {
           opponentLeft: true,
         })
       );
-    }; 
+    };
 
     const listenDB = async () => {
       if (gameMode === "online") {
@@ -67,6 +68,7 @@ function Game({ gameMode }) {
     if (gameMode === "online" && opponentLeft) {
       navigate("/");
       deleteDBRoom();
+
       return () => {
         listenDB();
       };
@@ -86,7 +88,6 @@ function Game({ gameMode }) {
       <div
         id="game-container"
         className="font-league max-h-fit w-full md:m-auto"
-        // w-full md:w-2/3 2xl:w-1/3 3xl:1/4
       >
         <WaitingRoom roomId={roomId} />
       </div>
