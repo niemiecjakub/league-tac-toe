@@ -319,7 +319,7 @@ export const leaveRoomOnline = createAsyncThunk(
     const state = getState();
     const docRef = doc(db, "rooms", state.game.roomId);
 
-    const { playersJoined} = state;
+    const { playersJoined } = state;
     const playerIds = playersJoined.reamove(Cookies.get("playerId"));
     const nPlayers = playerIds.length;
 
@@ -351,10 +351,11 @@ const GameSlice = createSlice({
       return INITIAL_STATE;
     },
     setGameOptions: (state, action) => {
-      const { gameMode, stealsEnabled, roomId } = action.payload;
+      const { gameMode, stealsEnabled, roomId, turnTime } = action.payload;
       state.gameMode = gameMode;
       state.stealsEnabled = stealsEnabled;
       state.roomId = roomId;
+      state.turnTime = turnTime;
     },
     setCurrentPlayer: (state, action) => {
       const nextPlayer =

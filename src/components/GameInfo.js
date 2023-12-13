@@ -50,8 +50,8 @@ function GameInfo() {
           handleOpenSkipTurn={handleOpenSkipTurn}
         />
       </div>
-      <div className="flex flex-row justify-end items-center mt-4">
-        {/* <TimeInfo /> */}
+      <div className="flex flex-row justify-between items-center mt-4">
+        <TimeInfo />
         <DrawDialog
           isDisabled={isDisabled}
           openDrawRequest={openDrawRequest}

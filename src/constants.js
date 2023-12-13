@@ -3,6 +3,7 @@ export const CHAMPION_API_URL = "https://kniemiec.pythonanywhere.com/api/";
 export const overlayStyle = { background: "rgba(0,0,0,0.65)" };
 
 export const INITIAL_STATE = {
+  turnTime: "unlimited",
   opponentLeft: false,
   winner: "",
   roomId: "",

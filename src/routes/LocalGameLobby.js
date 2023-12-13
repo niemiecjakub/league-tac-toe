@@ -1,19 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setGameOptions, getNewGameData } from "../redux/slices/GameSlice";
+import { useState } from "react";
+
+const turnTimeOptions = [
+  { display: "unlimited", value: "unlimited" },
+  { display: "30 sec", value: 30 },
+  { display: "45 sec", value: 45 },
+  { display: "60 sec", value: 60 },
+];
+
 function LocalGameLobby() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [turnTime, setTurnTime] = useState(turnTimeOptions[0]);
 
   const handleGameOptions = async ({ stealsEnabled }) => {
     dispatch(
       setGameOptions({
         gameMode: "same screen",
         stealsEnabled: stealsEnabled,
+        turnTime: turnTime.value,
       })
     );
     navigate("/game/same-screen");
     await dispatch(getNewGameData());
+  };
+
+  const handleTurnTimeChange = (e) => {
+    const value = e.target.value;
+    setTurnTime(value);
   };
 
   return (
@@ -22,7 +38,21 @@ function LocalGameLobby() {
         <div className="flex items-center text-xl">
           <h1 className="ml-3 uppercase">Compete against friend</h1>
         </div>
-        <div className="flex mt-2 justify-end mx-3 C">
+        <div>
+          <select
+            id="category-type-select-1"
+            className="uppercase p-2 w-full rounded-xl mx-1"
+            value={turnTime}
+            onChange={handleTurnTimeChange}
+          >
+            {turnTimeOptions.map(({ value, display }, i) => (
+              <option value={value} key={i}>
+                {display}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex mt-2 justify-end mx-3 ">
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 mr-4 rounded-lg"
             onClick={() => handleGameOptions({ stealsEnabled: true })}
