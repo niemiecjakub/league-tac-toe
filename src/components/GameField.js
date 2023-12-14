@@ -81,7 +81,6 @@ function GameField({ fieldId }) {
   };
 
   useEffect(() => {
-    console.log("setting to false");
     setOpen(false);
   }, [currentPlayer]);
 
