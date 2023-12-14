@@ -34,13 +34,13 @@ function TimeInfo() {
     let timeout;
     setCount(0);
 
-    if (!isGameOver) {
+    if (!isGameOver && gameMode === "online") {
       interval = setInterval(() => {
         setCount((c) => c + 1);
       }, 1000);
 
-      timeout = setTimeout(() => {
-        dispatch(setCurrentPlayer());
+      timeout = setTimeout(async () => {
+        await dispatch(skipTurnOnline());
       }, turnTime * 1000);
     }
 
@@ -50,15 +50,19 @@ function TimeInfo() {
     };
   }, [currentPlayer, isGameOver, gameMode]);
 
+  if (gameMode === "same screen" || turnTime === "unlimited") {
+    return (
+      <div className="bg-league-grey-200 p-2 rounded-r-xl">
+        <h1 className="px-2">NO TIME LIMIT</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-league-grey-200 p-2 rounded-r-xl">
-      {turnTime === "unlimited" ? (
-        <h1>NO TIME LIMIT</h1>
-      ) : (
-        <div className="px-2">
-          {getMinutes()} : {getSeconds()}
-        </div>
-      )}
+      <div className="px-2">
+        {getMinutes()} : {getSeconds()}
+      </div>
     </div>
   );
 }

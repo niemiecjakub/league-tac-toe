@@ -66,7 +66,7 @@ export const joinFromLink = async (roomId) => {
   });
 };
 
-export const createRoom = async (stealsEnabled) => {
+export const createRoom = async (stealsEnabled, turnTime) => {
   const roomId = GENERATE_CODE(5);
   const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
@@ -79,6 +79,7 @@ export const createRoom = async (stealsEnabled) => {
 
   await setDoc(docRef, {
     ...INITIAL_STATE,
+    turnTime: turnTime,
     createdAt: serverTimestamp(),
     stealsEnabled: stealsEnabled,
     roomId: roomId,

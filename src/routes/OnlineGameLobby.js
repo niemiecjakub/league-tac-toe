@@ -4,11 +4,25 @@ import { joinRoom, createRoom } from "../utility/roomFunctions";
 import { useDispatch } from "react-redux";
 import { setGameOptions, startOnlineGame } from "../redux/slices/GameSlice";
 
+const turnTimeOptions = [
+  { display: "unlimited", value: "unlimited" },
+  { display: "5 sec", value: 5 },
+  { display: "30 sec", value: 30 },
+  { display: "45 sec", value: 45 },
+  { display: "60 sec", value: 60 },
+];
+
 function OnlineGameLobby() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [roomId, setRoomId] = useState("");
   const [error, setError] = useState(false);
+  const [turnTime, setTurnTime] = useState(turnTimeOptions[0]);
+
+  const handleTurnTimeChange = (e) => {
+    const value = e.target.value;
+    setTurnTime(value);
+  };
 
   const handleJoinRoom = () => {
     roomId.length === 5
@@ -17,12 +31,13 @@ function OnlineGameLobby() {
   };
 
   const handleCreateNewRoom = async ({ stealsEnabled }) => {
-    const roomId = await createRoom(stealsEnabled);
-    dispatch(
+    const roomId = await createRoom(stealsEnabled, turnTime);
+    await dispatch(
       setGameOptions({
         roomId,
         stealsEnabled: stealsEnabled,
         gameMode: "online",
+        turnTime: turnTime,
       })
     );
     navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
@@ -60,7 +75,23 @@ function OnlineGameLobby() {
         <div className="flex items-center text-xl">
           <h1 className="ml-3 uppercase">Compete against friend</h1>
         </div>
-        <div className="flex mt-2 justify-end mx-3 C">
+        <div className="mx-3 flex justify-end w-full">
+          <h1>Time per found</h1>
+          <select
+            id="category-type-select-1"
+            className="uppercase p-2 w-1/2 rounded-xl mx-1"
+            value={turnTime}
+            onChange={handleTurnTimeChange}
+          >
+            {turnTimeOptions.map(({ value, display }, i) => (
+              <option value={value} key={i}>
+                {display}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex mt-2 justify-end mx-3">
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 mr-4 rounded-lg"
             onClick={() => handleCreateNewRoom({ stealsEnabled: true })}

@@ -42,7 +42,7 @@ function GameField({ fieldId }) {
           dispatch(checkWin());
         }
         dispatch(setCurrentPlayer());
-        setOpen((o) => !o);
+        setOpen(false);
         break;
       case "online":
         if (
@@ -53,7 +53,7 @@ function GameField({ fieldId }) {
           await dispatch(checkWinOnline());
         }
         await dispatch(skipTurnOnline());
-        setOpen((o) => !o);
+        setOpen(false);
         break;
     }
   };
@@ -81,6 +81,7 @@ function GameField({ fieldId }) {
   };
 
   useEffect(() => {
+    console.log("setting to false");
     setOpen(false);
   }, [currentPlayer]);
 

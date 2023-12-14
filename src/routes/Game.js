@@ -33,7 +33,6 @@ function Game({ gameMode }) {
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      console.log("User is leaving the page");
       dispatch(
         setFieldOnline({
           opponentLeft: true,
