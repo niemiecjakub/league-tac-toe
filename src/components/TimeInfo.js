@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useCountdown } from "../hooks/useCountdown";
 import { useState, useEffect } from "react";
-import { setCurrentPlayer, skipTurnOnline } from "../redux/slices/GameSlice";
+import { skipTurnOnline } from "../redux/slices/GameSlice";
 
 const formatTime = (t) => {
   t = t.toString();

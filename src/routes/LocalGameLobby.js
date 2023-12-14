@@ -20,7 +20,7 @@ function LocalGameLobby() {
     <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full">
       <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col md:rounded-xl">
         <div className="flex items-center text-xl">
-          <h1 className="ml-3 uppercase">Compete against friend</h1>
+          <h1 className="ml-3 uppercase">Start same screen game</h1>
         </div>
 
         <div className="flex mt-2 justify-end mx-3 ">

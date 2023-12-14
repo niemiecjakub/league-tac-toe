@@ -2,6 +2,14 @@ export const CHAMPION_API_URL = "https://kniemiec.pythonanywhere.com/api/";
 
 export const overlayStyle = { background: "rgba(0,0,0,0.65)" };
 
+export const TURN_TIME_OPTIONS = [
+  { display: "unlimited", value: "unlimited" },
+  { display: "15 sec", value: 15 },
+  { display: "30 sec", value: 30 },
+  { display: "45 sec", value: 45 },
+  { display: "60 sec", value: 60 },
+];
+
 export const INITIAL_STATE = {
   turnTime: "unlimited",
   opponentLeft: false,

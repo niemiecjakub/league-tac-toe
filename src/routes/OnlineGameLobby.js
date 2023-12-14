@@ -3,21 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { joinRoom, createRoom } from "../utility/roomFunctions";
 import { useDispatch } from "react-redux";
 import { setGameOptions, startOnlineGame } from "../redux/slices/GameSlice";
-
-const turnTimeOptions = [
-  { display: "unlimited", value: "unlimited" },
-  { display: "5 sec", value: 5 },
-  { display: "30 sec", value: 30 },
-  { display: "45 sec", value: 45 },
-  { display: "60 sec", value: 60 },
-];
+import { TURN_TIME_OPTIONS } from "../constants";
 
 function OnlineGameLobby() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [roomId, setRoomId] = useState("");
   const [error, setError] = useState(false);
-  const [turnTime, setTurnTime] = useState(turnTimeOptions[0]);
+  const [turnTime, setTurnTime] = useState(TURN_TIME_OPTIONS[0]);
 
   const handleTurnTimeChange = (e) => {
     const value = e.target.value;
@@ -46,11 +39,11 @@ function OnlineGameLobby() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full m-auto space-y-4 my-4 w-full">
-      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex justify-between md:rounded-xl">
+      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex justify-between md:rounded-xl px-3 ">
         <div className="flex items-center">
-          <h1 className="ml-3 uppercase text-xl">Room</h1>
+          <h1 className="uppercase text-xl">join Room</h1>
         </div>
-        <div className="flex w-2/3 mx-3 border-2 border-league-gold-300 rounded-lg">
+        <div className="flex w-2/3 border-2 border-league-gold-300 rounded-lg">
           <input
             className="bg-white text-black w-2/3 py-3 rounded-l-lg px-3"
             type="text"
@@ -71,27 +64,29 @@ function OnlineGameLobby() {
         </div>
       </div>
 
-      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col md:rounded-xl">
-        <div className="flex items-center text-xl">
-          <h1 className="ml-3 uppercase">Compete against friend</h1>
-        </div>
-        <div className="mx-3 flex justify-end w-full">
-          <h1>Time per found</h1>
-          <select
-            id="category-type-select-1"
-            className="uppercase p-2 w-1/2 rounded-xl mx-1"
-            value={turnTime}
-            onChange={handleTurnTimeChange}
-          >
-            {turnTimeOptions.map(({ value, display }, i) => (
-              <option value={value} key={i}>
-                {display}
-              </option>
-            ))}
-          </select>
+      <div className="bg-slate-400 font-bold py-4 w-full shadow-xl drop-shadow-md flex flex-col md:rounded-xl px-3 ">
+        <h1 className="uppercase text-xl mb-2 divide-x-2 divide-slate-800">
+          Create room
+        </h1>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center justify-end w-full">
+            <h1 className="uppercase text-xl mr-2">time per turn</h1>
+            <select
+              id="category-type-select-1"
+              className="uppercase py-3 px-2 rounded-lg"
+              value={turnTime}
+              onChange={handleTurnTimeChange}
+            >
+              {TURN_TIME_OPTIONS.map(({ value, display }, i) => (
+                <option value={value} key={i}>
+                  {display}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div className="flex mt-2 justify-end mx-3">
+        <div className="flex mt-2 justify-end">
           <button
             className="bg-league-gold-300 hover:bg-league-gold-400 py-3 px-2 mr-4 rounded-lg"
             onClick={() => handleCreateNewRoom({ stealsEnabled: true })}
@@ -106,7 +101,6 @@ function OnlineGameLobby() {
             WITHOUT STEALS
           </button>
         </div>
-        {error && <p>Name and room code cannot be empty</p>}
       </div>
       {error && (
         <div className="bg-red-500 py-2 w-full">
