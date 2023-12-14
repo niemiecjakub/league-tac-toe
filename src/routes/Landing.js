@@ -9,20 +9,20 @@ function Landing() {
         title="Play against a friend"
         subtitle="Challenge a friend to an online game"
         showButton="true"
-        imageSrc={`${window.location.origin}/other/online.jpg`}
+        imageSrc={`${process.env.PUBLIC_URL}/other/online.jpg`}
       />
       <PageCard
         to="/lobby/local"
         title="Same screen"
         subtitle="Play League-Tac-Toe on the same device"
         showButton="true"
-        imageSrc={`${window.location.origin}/other/samescreen.jpg`}
+        imageSrc={`${process.env.PUBLIC_URL}/other/samescreen.jpg`}
       />
       <PageCard
         to="/champions"
         title="Champion search"
         subtitle="Explore all champions and their categories"
-        imageSrc={`${window.location.origin}/other/champions.jpg`}
+        imageSrc={`${process.env.PUBLIC_URL}/other/champions.jpg`}
       />
       {/* <button
         className="bg-red-400 w-20 h-14"

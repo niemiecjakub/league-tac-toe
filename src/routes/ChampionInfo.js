@@ -21,7 +21,7 @@ function ChampionInfo() {
     <div className="animate-fadein flex flex-col items-center justify-center h-full px-2 m-auto space-y-4 my-4 w-full text-white">
       <img
         alt={data.key}
-        src={`${window.location.origin}/champion/${data.key}.JPG`}
+        src={`${process.env.PUBLIC_URL}/champion/${data.key}.JPG`}
         className="w-full h-48 object-cover object-center "
       />
       <div className="flex flex-col items-center justify-center">
@@ -39,7 +39,7 @@ function ChampionInfo() {
               {selectedData[category].map((item, index) => (
                 <div className="flex justify-start  items-center" key={item}>
                   <img
-                    src={`${window.location.origin}/${category}/${item}.PNG`}
+                    src={`${process.env.PUBLIC_URL}/${category}/${item}.JPG`}
                     className="h-10"
                   />
                   <span className="ml-3 uppercase">{item}</span>

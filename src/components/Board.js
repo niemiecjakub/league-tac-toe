@@ -14,7 +14,7 @@ function Board() {
       <div className="bg-league-grey-200 flex">
         <div className="w-1/4">
           <img
-            src={`${window.location.origin}/images/lolIcon.svg`}
+            src={`${process.env.PUBLIC_URL}/images/lolIcon.svg`}
             className="h-full w-full"
           />
         </div>

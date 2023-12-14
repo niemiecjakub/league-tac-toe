@@ -53,7 +53,7 @@ function ChampionList() {
           >
             <img
               alt={champion.key}
-              src={`${window.location.origin}/champion/${champion.key}.JPG`}
+              src={`${process.env.PUBLIC_URL}/champion/${champion.key}.JPG`}
               className="object-cover h-full w-full rounded-t-xl"
             />
 

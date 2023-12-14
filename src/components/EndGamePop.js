@@ -140,7 +140,7 @@ function EndGamePop({ setOpenEndGame }) {
                     <img
                       className="h-full"
                       src={`${
-                        window.location.origin
+                        window.process.env.PUBLIC_URL
                       }/${category}/${name.replace(/\s/g, "")}.PNG`}
                     />
                     {category} {name}

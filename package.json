@@ -1,5 +1,6 @@
 {
   "name": "league-tac-toe",
+  "homepage": "https://league-tac-toe.web.app",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://kniemiec.pythonanywhere.com",

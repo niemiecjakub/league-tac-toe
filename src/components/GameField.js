@@ -93,8 +93,8 @@ function GameField({ fieldId }) {
         role="button"
         style={{
           backgroundImage: fields[fieldId].name
-            ? `url(${window.location.origin}/icons/${fields[fieldId].key}.PNG)`
-            : `url(${window.location.origin}/icons/default.PNG)`,
+            ? `url(${process.env.PUBLIC_URL}/icons/${fields[fieldId].key}.PNG)`
+            : `url(${process.env.PUBLIC_URL}/icons/default.PNG)`,
         }}
       >
         {fields[fieldId].player === "" ? null : (
