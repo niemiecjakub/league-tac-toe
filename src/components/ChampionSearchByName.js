@@ -8,10 +8,10 @@ function ChampionSearchByName() {
   const [suggestions, setSuggestions] = useState([]);
 
   const handleChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     setInputValue(value);
     const filteredChampions = ALL_CHAMPION_DATA.filter((champion) =>
-      champion.name.toLowerCase().startsWith(e.target.value)
+      champion.name.toLowerCase().startsWith(value)
     );
     value ? setSuggestions(filteredChampions) : setSuggestions([]);
   };
@@ -42,7 +42,7 @@ function ChampionSearchByName() {
         {suggestions.map((suggestion, index) => (
           <div
             key={index}
-            className="w-full px-2 hover:bg-league-gold-400"
+            className="w-full px-2 py-1 hover:bg-league-gold-400"
             onClick={() => handleSelect(suggestion)}
           >
             {suggestion.name}

@@ -10,7 +10,7 @@ function OnlineGameLobby() {
   const dispatch = useDispatch();
   const [roomId, setRoomId] = useState("");
   const [error, setError] = useState(false);
-  const [turnTime, setTurnTime] = useState(TURN_TIME_OPTIONS[0]);
+  const [turnTime, setTurnTime] = useState(TURN_TIME_OPTIONS[0].value);
 
   const handleTurnTimeChange = (e) => {
     const value = e.target.value;

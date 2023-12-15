@@ -33,7 +33,7 @@ function TimeInfo() {
     let timeout;
     setCount(0);
 
-    if (!isGameOver && gameMode === "online") {
+    if (!isGameOver && gameMode === "online" && turnTime !== "unlimited") {
       interval = setInterval(() => {
         setCount((c) => c + 1);
       }, 1000);
