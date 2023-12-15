@@ -54,17 +54,17 @@ function Landing() {
         imageSrc={`${process.env.PUBLIC_URL}/other/samescreen.jpg`}
       />
       <PageCard
+        title="Find random opponent"
+        showButton="true"
+        subtitle="Play with players around the world"
+        imageSrc={`${process.env.PUBLIC_URL}/other/random.jpg`}
+        onClick={findRandomGame}
+      />
+      <PageCard
         to="/champions"
         title="Champion search"
         subtitle="Explore all champions and their categories"
         imageSrc={`${process.env.PUBLIC_URL}/other/champions.jpg`}
-      />
-      <PageCard
-        title="Find random opponent"
-        showButton="true"
-        subtitle="Play with players around the world"
-        imageSrc={`${process.env.PUBLIC_URL}/other/champions.jpg`}
-        onClick={findRandomGame}
       />
       <Rules />
     </div>
