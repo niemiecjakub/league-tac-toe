@@ -4,7 +4,6 @@ import {
   doc,
   setDoc,
   updateDoc,
-  arrayUnion,
   query,
   where,
   collection,
@@ -16,17 +15,16 @@ import {
 import { GENERATE_CODE, INITIAL_STATE } from "../constants";
 import Cookies from "js-cookie";
 
-export const joinRoom = async (roomId, navigate) => {
+export const joinRoom = async (roomId) => {
   const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
   const { playersJoined, playerCount } = room.data();
 
-  if (!room.exists()) return;
+  if (!room.exists()) return { action: "join", status: false };
   if (playersJoined.includes(Cookies.get("playerId"))) {
-    navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
-    return;
+    return { action: "join", status: true };
   }
-  if (playerCount >= 2) return;
+  if (playerCount >= 2) return { action: "join", status: false };
   if (!Cookies.get("playerId"))
     Cookies.set("playerId", GENERATE_CODE(12), { expires: 7 });
 
@@ -40,7 +38,7 @@ export const joinRoom = async (roomId, navigate) => {
     playerCount: nPlayers,
   });
 
-  navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
+  return { action: "join", status: true, roomId };
 };
 
 export const joinFromLink = async (roomId) => {
@@ -66,11 +64,15 @@ export const joinFromLink = async (roomId) => {
   });
 };
 
-export const createRoom = async (stealsEnabled, turnTime) => {
+export const createRoom = async ({
+  stealsEnabled,
+  turnTime,
+  isOpenForRandom,
+}) => {
   const roomId = GENERATE_CODE(5);
   const docRef = doc(db, "rooms", roomId);
   const room = await getDoc(docRef);
-  if (room.exists()) return;
+  if (room.exists()) return { action: "create", status: false };
   if (!Cookies.get("playerId"))
     Cookies.set("playerId", GENERATE_CODE(12), { expires: 7 });
 
@@ -82,16 +84,18 @@ export const createRoom = async (stealsEnabled, turnTime) => {
     turnTime: turnTime,
     createdAt: serverTimestamp(),
     stealsEnabled: stealsEnabled,
+    isOpenForRandom: isOpenForRandom,
     roomId: roomId,
     gameMode: "online",
     playerCount: 1,
     playersJoined,
   });
 
-  return roomId;
+  return { action: "create", status: true, roomId: roomId };
 };
 
-export const handleRandomGame = async (navigate) => {
+//potential add
+export const handleRandomGame = async (options) => {
   const roomsRef = await collection(db, "rooms");
   // while (lookingForgame) {
   const q = await query(
@@ -105,11 +109,8 @@ export const handleRandomGame = async (navigate) => {
   if (querySnapshot.docs.length) {
     const [doc] = querySnapshot.docs;
     const { roomId } = doc.data();
-    joinRoom(roomId, navigate);
+    return await joinRoom(roomId);
   } else {
-    const randomInt = Math.floor(Math.random() * 2);
-    const stealsEnabled = randomInt === 0 ? false : true;
-    createRoom(stealsEnabled, true);
+    return await createRoom(options);
   }
-  // }
 };

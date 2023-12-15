@@ -2,7 +2,7 @@ import React from "react";
 import FieldMark from "./FieldMark";
 import { render, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { mockStore } from "../redux/mockStore"; // Import the mock store
+import { mockStore } from "../redux/mockStore";
 import "@testing-library/jest-dom/extend-expect";
 
 describe("YourComponent", () => {

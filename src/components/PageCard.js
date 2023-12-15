@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 
-function PageCard({ to, title, subtitle, showButton, imageSrc }) {
+function PageCard({ to, title, subtitle, showButton, imageSrc, onClick }) {
   return (
     <Link
       to={to}
+      onClick={onClick}
       className="bg-league-gold-300 flex flex-col place-items-center rounded-lg h-48 md:h-64 w-full hover:outline hover:outline-2 hover:outline-offset-4 hover:outline-league-blue-200"
     >
       <div className="bg-league-grey-150 w-full h-2/3 rounded-t-lg">

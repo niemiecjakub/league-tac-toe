@@ -17,14 +17,22 @@ function OnlineGameLobby() {
     setTurnTime(value);
   };
 
-  const handleJoinRoom = () => {
-    roomId.length === 5
-      ? joinRoom(roomId, navigate)
-      : setError("Room id has to be 5 character long");
+  const handleJoinRoom = async () => {
+    if (roomId.length === 5) {
+      const { status } = await joinRoom(roomId, navigate);
+      if (status) {
+        navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
+      }
+    }
+    setError("Room id has to be 5 character long");
   };
 
   const handleCreateNewRoom = async ({ stealsEnabled }) => {
-    const roomId = await createRoom(stealsEnabled, turnTime);
+    const { roomId } = await createRoom({
+      stealsEnabled,
+      turnTime,
+      isOpenForRandom: false,
+    });
     await dispatch(
       setGameOptions({
         roomId,

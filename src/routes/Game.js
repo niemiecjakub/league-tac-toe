@@ -4,7 +4,6 @@ import GameInfo from "../components/GameInfo";
 import Loading from "../components/Loading";
 import EndGamePop from "../components/EndGamePop";
 import { useDispatch, useSelector } from "react-redux";
-import { createPortal } from "react-dom";
 import {
   setDBstate,
   setFieldOnline,
@@ -19,9 +18,9 @@ import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";
 import { joinFromLink } from "../utility/roomFunctions";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
-function Game({ gameMode }) {
+function Game({ gameMode, random = false }) {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
