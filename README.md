@@ -26,11 +26,11 @@ Play at: [LEAGUE-TAC-TOE](https://league-tac-toe.web.app/) - https://league-tac-
 
 ## Features
 
-- Steal mode
 - Same screen game
 - Friendly online game
 - Random opponent online game
 - Champion search
+- Steal mode
 
 ## Credits
 
