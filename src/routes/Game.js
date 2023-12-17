@@ -13,7 +13,7 @@ import {
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
 import { doc, onSnapshot } from "firebase/firestore";
-import { OVERLAY_STYLE } from "../utility/constants";
+import { overlayStyle  } from "../utility/constants";
 import Popup from "reactjs-popup";
 import StealInfo from "../components/StealInfo";
 import WaitingRoom from "../components/WaitingRoom";
@@ -136,7 +136,7 @@ function Game({ gameMode, random = false }) {
           open={openEndGame}
           closeOnDocumentClick={false}
           onClose={() => setOpenEndGame(false)}
-          {...{ OVERLAY_STYLE }}
+          {...{ overlayStyle  }}
         >
           <EndGamePop setOpenEndGame={setOpenEndGame} />
         </Popup>
