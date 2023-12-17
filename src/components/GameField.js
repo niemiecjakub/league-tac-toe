@@ -5,7 +5,7 @@ import StealIcon from "./svgIcons/StealIcon";
 import PlusIcon from "./svgIcons/PlusIcon";
 import InputAutofill from "./InputAutofill";
 import { useSelector, useDispatch } from "react-redux";
-import { CHAMPION_API_URL, OVERLAY_STYLE } from "../utility/constants";
+import { CHAMPION_API_URL, overlayStyle  } from "../utility/constants";
 import { CHAMPION_NAME_LIST } from "../utility/jsonData";
 import {
   setCurrentPlayer,
@@ -139,7 +139,7 @@ function GameField({ fieldId }) {
         open={open}
         closeOnDocumentClick
         onClose={() => setOpen(false)}
-        {...{ OVERLAY_STYLE }}
+        {...{ overlayStyle  }}
       >
         <InputAutofill
           label="Champion"

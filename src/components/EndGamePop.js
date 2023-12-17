@@ -144,8 +144,8 @@ function EndGamePop({ setOpenEndGame }) {
                     <img
                       className="h-full"
                       src={`${
-                        window.process.env.PUBLIC_URL
-                      }/${category}/${name.replace(/\s/g, "")}.PNG`}
+                        process.env.PUBLIC_URL
+                      }/${category}/${name.replace(/\s/g, "")}.JPG`}
                     />
                     {category} {name}
                   </span>
