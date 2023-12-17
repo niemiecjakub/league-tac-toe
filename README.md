@@ -12,20 +12,17 @@ Provide instructions and examples for use. Include screenshots as needed.
 
 To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
 
-    ```md
-    ![alt text](assets/images/championinfo.png)
-    ```
-        ```md
-    ![alt text](assets/images/endgamepop.png)
-    ```
-        ```md
-    ![alt text](assets/images/landingpage.png)
-    ```
-        ```md
-    ![alt text](assets/images/samplegame.png)
-    ```        ```md
-    ![alt text](assets/images/samplequery.png)
-    ```
+
+    ![gdfg](assets/images/championinfo.png)
+
+    ![gdfg](assets/images/endgamepop.png)
+
+    ![gdfg](assets/images/landingpage.png)
+
+    ![gdfg](assets/images/samplegame.png)
+
+    ![gdfgdfg](assets/images/samplequery.png)
+
 
 ## Features
 
