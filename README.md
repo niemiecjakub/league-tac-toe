@@ -1,41 +1,43 @@
 # LEAGUE-TAC-TOE
+ 
+![samplescreens](https://github.com/niemiecjakub/league-tac-toe/assets/37275864/6a847f46-d026-4e72-9994-1e7c5ff37975)
 
 ## Description
 
 League-tac-toe is a game of tic tac toe for League of Legends fans. Play on the same device or challenge a friend to a game online or against random people around the world.
 
-## Usage
+Play at: [LEAGUE-TAC-TOE](https://league-tac-toe.web.app/) - https://league-tac-toe.web.app/
 
-https://league-tac-toe.web.app/
+## How to play League-Tac-Toe
 
-Provide instructions and examples for use. Include screenshots as needed.
+- A 3 x 3 square grid is lined up with criteria like legacy, position, resource, rangetype and region.
+- Place your marker, an X or O, in one of the squares if you can name League of Legends champion that matches the criteria across the top row and left hand side.
+- The first to get three in a row, vertically, horizontally or diagonally, is the winner.
+- With steal mode enabled, each player has 3 steals in total, where a square can be stolen that is occupied by the opposing player.
+- Infuriate your opponent and steal a square by naming a different champion to the champion already in the position on the grid.
+  
+## Built with
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-
-    ![gdfg](assets/images/championinfo.png)
-
-    ![gdfg](assets/images/endgamepop.png)
-
-    ![gdfg](assets/images/landingpage.png)
-
-    ![gdfg](assets/images/samplegame.png)
-
-    ![gdfgdfg](assets/images/samplequery.png)
+- React
+- Tailwind CSS
+- Firestore
+- [Champion API](https://github.com/niemiecjakub/championAPI) 
 
 
 ## Features
 
+- Steal mode
 - Same screen game
 - Friendly online game
 - Random opponent online game
-- Champion search and query
--
+- Champion search
 
 ## Credits
 
-Special credits to Tiki-Taka-Toe creators
-https://playfootball.games/footy-tic-tac-toe
+[League of Legends fandom wiki](https://leagueoflegends.fandom.com/wiki)
+
+[Tiki-Taka-Toe](https://playfootball.games/footy-tic-tac-toe)
+
 
 ## How to Contribute
 
