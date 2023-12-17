@@ -12,7 +12,7 @@ import {
   orderBy,
   limit,
 } from "firebase/firestore";
-import { GENERATE_CODE, INITIAL_STATE } from "../constants";
+import { GENERATE_CODE, GAME_INITIAL_STATE } from "../utility/constants";
 import Cookies from "js-cookie";
 
 export const joinRoom = async (roomId) => {
@@ -80,7 +80,7 @@ export const createRoom = async ({
   Cookies.set("player", "Player 1", { expires: 7 });
 
   await setDoc(docRef, {
-    ...INITIAL_STATE,
+    ...GAME_INITIAL_STATE,
     turnTime: turnTime,
     createdAt: serverTimestamp(),
     stealsEnabled: stealsEnabled,
@@ -96,21 +96,30 @@ export const createRoom = async ({
 
 //potential add
 export const handleRandomGame = async (options) => {
-  const roomsRef = await collection(db, "rooms");
-  // while (lookingForgame) {
-  const q = await query(
-    roomsRef,
-    where("isOpenForRandom", "==", true),
-    where("playerCount", "==", 1),
-    orderBy("createdAt"),
-    limit(1)
-  );
-  const querySnapshot = await getDocs(q);
-  if (querySnapshot.docs.length) {
-    const [doc] = querySnapshot.docs;
-    const { roomId } = doc.data();
-    return await joinRoom(roomId);
-  } else {
-    return await createRoom(options);
+  let status;
+  while (!status) {
+    const roomsRef = await collection(db, "rooms");
+    // while (lookingForgame) {
+    const q = await query(
+      roomsRef,
+      where("isOpenForRandom", "==", true),
+      where("playerCount", "==", 1),
+      orderBy("createdAt"),
+      limit(1)
+    );
+
+    let response;
+
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.docs.length) {
+      const [doc] = querySnapshot.docs;
+      const { roomId } = doc.data();
+      response = await joinRoom(roomId);
+    } else {
+      response = await createRoom(options);
+    }
+    status = response.status;
+
+    return response;
   }
 };

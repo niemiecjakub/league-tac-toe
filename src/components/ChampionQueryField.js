@@ -1,4 +1,4 @@
-import { CATEGORY_LIST } from "../constants";
+import { CATEGORY_LIST } from "../utility/jsonData";
 import { useDispatch } from "react-redux";
 import { updateQuery } from "../redux/slices/QuerySlice";
 

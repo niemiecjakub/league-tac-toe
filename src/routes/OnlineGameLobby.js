@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { joinRoom, createRoom } from "../utility/roomFunctions";
 import { useDispatch } from "react-redux";
-import { setGameOptions, startOnlineGame } from "../redux/slices/GameSlice";
-import { TURN_TIME_OPTIONS } from "../constants";
+import {
+  clearState,
+  setGameOptions,
+  startOnlineGame,
+} from "../redux/slices/GameSlice";
+import { TURN_TIME_OPTIONS } from "../utility/constants";
 
 function OnlineGameLobby() {
   const navigate = useNavigate();
@@ -18,6 +22,7 @@ function OnlineGameLobby() {
   };
 
   const handleJoinRoom = async () => {
+    dispatch(clearState());
     if (roomId.length === 5) {
       const { status } = await joinRoom(roomId, navigate);
       if (status) {
@@ -28,6 +33,7 @@ function OnlineGameLobby() {
   };
 
   const handleCreateNewRoom = async ({ stealsEnabled }) => {
+    dispatch(clearState());
     const { roomId } = await createRoom({
       stealsEnabled,
       turnTime,

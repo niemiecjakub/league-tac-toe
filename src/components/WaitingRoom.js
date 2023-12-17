@@ -1,6 +1,7 @@
 import CopyIcon from "./svgIcons/CopyIcon";
 import copy from "clipboard-copy";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const nImage = Array(5).fill(0);
@@ -13,6 +14,7 @@ function WaitingRoom({ roomId }) {
     try {
       await copy(window.location.href);
       setIsCopied(true);
+      toast.success("Link coppied!")
     } catch (error) {
       console.error("Failed to copy to clipboard", error);
     }

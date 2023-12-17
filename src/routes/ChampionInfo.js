@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { ALL_CHAMPION_DATA } from "../constants";
+import { ALL_CHAMPION_DATA } from "../utility/jsonData";
 import { useEffect, useState } from "react";
 
 function ChampionInfo() {
@@ -39,6 +39,7 @@ function ChampionInfo() {
               {selectedData[category].map((item, index) => (
                 <div className="flex justify-start  items-center" key={item}>
                   <img
+                    alt="category"
                     src={`${process.env.PUBLIC_URL}/${category}/${item}.JPG`}
                     className="h-10"
                   />

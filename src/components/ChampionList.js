@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ALL_CHAMPION_DATA } from "../constants";
+import { ALL_CHAMPION_DATA } from "../utility/jsonData";
 import { setChampions } from "../redux/slices/QuerySlice";
 import { Link } from "react-router-dom";
 

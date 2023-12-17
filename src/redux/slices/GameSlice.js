@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   WNNING_CONDITIONS,
   CHAMPION_API_URL,
-  COMPARE_ARRAYS,
-} from "../../constants";
+  GAME_INITIAL_STATE,
+} from "../../utility/constants";
 import { db } from "../../firebase-config";
 import {
   doc,
@@ -14,9 +14,14 @@ import {
   increment,
   deleteDoc,
 } from "firebase/firestore";
-import { INITIAL_STATE } from "../../constants";
 import axios from "axios";
 import Cookies from "js-cookie";
+
+export const COMPARE_ARRAYS = (a, b) => {
+  return (
+    a.length === b.length && a.every((element, index) => element === b[index])
+  );
+};
 
 //GET DATA FOR SAME-SCREEN GAME
 export const getNewGameData = createAsyncThunk(
@@ -106,18 +111,18 @@ export const startOnlineGame = createAsyncThunk(
         isGameStarted: true,
         isLoadingGame: false,
         isGameOver: false,
-        fields: INITIAL_STATE.fields,
+        fields: GAME_INITIAL_STATE.fields,
         player1: {
-          fields: INITIAL_STATE.player1.fields,
-          steals: INITIAL_STATE.player1.steals,
-          requestDraw: INITIAL_STATE.player1.requestDraw,
-          requestNewGame: INITIAL_STATE.player1.requestNewGame,
+          fields: GAME_INITIAL_STATE.player1.fields,
+          steals: GAME_INITIAL_STATE.player1.steals,
+          requestDraw: GAME_INITIAL_STATE.player1.requestDraw,
+          requestNewGame: GAME_INITIAL_STATE.player1.requestNewGame,
         },
         player2: {
-          fields: INITIAL_STATE.player2.fields,
-          steals: INITIAL_STATE.player2.steals,
-          requestDraw: INITIAL_STATE.player2.requestDraw,
-          requestNewGame: INITIAL_STATE.player2.requestNewGame,
+          fields: GAME_INITIAL_STATE.player2.fields,
+          steals: GAME_INITIAL_STATE.player2.steals,
+          requestDraw: GAME_INITIAL_STATE.player2.requestDraw,
+          requestNewGame: GAME_INITIAL_STATE.player2.requestNewGame,
         },
       },
       { merge: true }
@@ -219,10 +224,6 @@ export const checkWinOnline = createAsyncThunk(
       state.game.currentPlayer.name === "Player 1"
         ? state.game.player1
         : state.game.player2;
-    const otherPlayer =
-      state.game.currentPlayer.name === "Player 1"
-        ? state.game.player2
-        : state.game.player1;
     const playerFieldsSorted = player.fields.toSorted();
 
     WNNING_CONDITIONS.forEach(async (winningCondition) => {
@@ -287,7 +288,7 @@ export const playAgainOnline = createAsyncThunk(
     await setDoc(
       docRef,
       {
-        fields: INITIAL_STATE.fields,
+        fields: GAME_INITIAL_STATE.fields,
         isGameOver: false,
         isGameStarted: false,
       },
@@ -313,27 +314,6 @@ export const setFieldOnline = createAsyncThunk(
   }
 );
 
-export const leaveRoomOnline = createAsyncThunk(
-  "online/leaveRoomOnline",
-  async ({ playerId }, { getState }) => {
-    const state = getState();
-    const docRef = doc(db, "rooms", state.game.roomId);
-
-    const { playersJoined } = state;
-    const playerIds = playersJoined.reamove(Cookies.get("playerId"));
-    const nPlayers = playerIds.length;
-
-    await setDoc(
-      docRef,
-      {
-        playersJoined: arrayRemove(Cookies.get(playerId)),
-        playerCount: nPlayers,
-      },
-      { merge: true }
-    );
-  }
-);
-
 export const deleteRoom = createAsyncThunk(
   "online/deleteRoom",
   async (params, { getState }) => {
@@ -345,14 +325,13 @@ export const deleteRoom = createAsyncThunk(
 
 const GameSlice = createSlice({
   name: "Game",
-  initialState: INITIAL_STATE,
+  initialState: GAME_INITIAL_STATE,
   reducers: {
     clearState: (state, action) => {
-      return INITIAL_STATE;
+      return GAME_INITIAL_STATE;
     },
     setGameOptions: (state, action) => {
       const { gameMode, stealsEnabled, roomId, turnTime } = action.payload;
-      console.log(turnTime);
       state.gameMode = gameMode;
       state.stealsEnabled = stealsEnabled;
       state.roomId = roomId;
@@ -397,32 +376,31 @@ const GameSlice = createSlice({
           state.winner = player.name;
 
           player.score += 1;
-          player.fields = INITIAL_STATE.player1.fields;
-          player.steals = INITIAL_STATE.player1.steals;
+          player.fields = GAME_INITIAL_STATE.player1.fields;
+          player.steals = GAME_INITIAL_STATE.player1.steals;
 
-          otherPlayer.fields = INITIAL_STATE.player1.fields;
-          otherPlayer.steals = INITIAL_STATE.player1.steals;
+          otherPlayer.fields = GAME_INITIAL_STATE.player1.fields;
+          otherPlayer.steals = GAME_INITIAL_STATE.player1.steals;
 
-          state.currentPlayer = INITIAL_STATE.currentPlayer;
+          state.currentPlayer = GAME_INITIAL_STATE.currentPlayer;
           state.isGameOver = true;
         }
       });
     },
     endAsDraw: (state, action) => {
       state.player1 = {
-        ...INITIAL_STATE.player1,
+        ...GAME_INITIAL_STATE.player1,
         score: state.player1.score + 1,
       };
       state.player2 = {
-        ...INITIAL_STATE.player2,
+        ...GAME_INITIAL_STATE.player2,
         score: state.player2.score + 1,
       };
-      state.currentPlayer = INITIAL_STATE.currentPlayer;
+      state.currentPlayer = GAME_INITIAL_STATE.currentPlayer;
     },
     setDBstate: (state, action) => {
       if (action.payload !== undefined) {
         for (const [key, value] of Object.entries(action.payload)) {
-          // if (key === "roomId") continue;
           state[`${key}`] = value;
         }
       }
@@ -433,8 +411,8 @@ const GameSlice = createSlice({
       state.isLoadingGame = true;
     });
     builder.addCase(getNewGameData.fulfilled, (state, action) => {
-      state.currentPlayer = INITIAL_STATE.currentPlayer;
-      state.fields = INITIAL_STATE.fields;
+      state.currentPlayer = GAME_INITIAL_STATE.currentPlayer;
+      state.fields = GAME_INITIAL_STATE.fields;
 
       const { possibleFields, horizontal, vertical, gameFields } =
         action.payload;
@@ -450,22 +428,6 @@ const GameSlice = createSlice({
       state.isLoadingGame = false;
       state.error = action.error.message;
     });
-    // builder.addCase(startOnlineGame.pending, (state, action) => {
-    //   state.isLoadingGame = true;
-    // });
-    // builder.addCase(startOnlineGame.fulfilled, (state, action) => {
-    //   state.isLoadingGame = false;
-    // });
-    // builder.addCase(startOnlineGame.rejected, (state, action) => {});
-    // builder.addCase(setPlayerFieldOnline.pending, (state, action) => {});
-    // builder.addCase(setPlayerFieldOnline.fulfilled, (state, action) => {});
-    // builder.addCase(setPlayerFieldOnline.rejected, (state, action) => {});
-    // builder.addCase(checkWinOnline.pending, (state, action) => {});
-    // builder.addCase(checkWinOnline.fulfilled, (state, action) => {});
-    // builder.addCase(checkWinOnline.rejected, (state, action) => {});
-    // builder.addCase(requestDrawOnline.pending, (state, action) => {});
-    // builder.addCase(requestDrawOnline.fulfilled, (state, action) => {});
-    // builder.addCase(requestDrawOnline.rejected, (state, action) => {});
   },
 });
 

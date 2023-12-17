@@ -3,26 +3,34 @@ import PageCard from "../components/PageCard";
 import Rules from "../components/Rules";
 import { handleRandomGame } from "../utility/roomFunctions";
 import { useDispatch } from "react-redux";
-import { setGameOptions, startOnlineGame } from "../redux/slices/GameSlice";
+import {
+  clearState,
+  setGameOptions,
+  startOnlineGame,
+} from "../redux/slices/GameSlice";
+import toast from "react-hot-toast";
 
 function Landing() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const findRandomGame = async () => {
+    await dispatch(clearState());
     const { action, status, roomId } = await handleRandomGame({
       stealsEnabled: true,
       turnTime: 30,
       isOpenForRandom: true,
     });
+    if (status === false) {
+      toast.error("Something went wrong");
+      return;
+    }
 
-    console.log(action, status, roomId);
-
-    if (action === "join" && status === true) {
+    if (action === "join") {
       navigate(`/game/room/${roomId}`, { state: { navigated: "code" } });
     }
 
-    if (action === "create" && status === true) {
+    if (action === "create") {
       await dispatch(
         setGameOptions({
           roomId,

@@ -6,7 +6,6 @@ import {
   startOnlineGame,
   requestPlayAgainOnline,
   setFieldOnline,
-  leaveRoomOnline,
 } from "../redux/slices/GameSlice";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -56,13 +55,16 @@ function EndGamePop({ setOpenEndGame }) {
     }
   }, [winner, player1, player2]);
 
-  const handleLeaveGame = () => {
+  const handleLeaveGame = async () => {
     setOpenEndGame(false);
     if (gameMode === "online") {
-      dispatch(leaveRoomOnline());
-    } else {
-      dispatch(clearState());
+      await dispatch(
+        setFieldOnline({
+          opponentLeft: true,
+        })
+      );
     }
+    dispatch(clearState());
     navigate("/");
   };
 
@@ -91,7 +93,9 @@ function EndGamePop({ setOpenEndGame }) {
         }  font-league justify-center items-center`}
       >
         <div>
-          <h1 className="text-3xl uppercase font-bold italic">{winner} wins!</h1>
+          <h1 className="text-3xl uppercase font-bold italic">
+            {winner} wins!
+          </h1>
         </div>
         <div className="w-full flex my-1 uppercase">
           {gameMode === "same screen" ? (

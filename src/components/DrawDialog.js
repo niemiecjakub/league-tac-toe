@@ -84,9 +84,9 @@ function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
       {gameMode === "online" && Cookies.get("player") === currentPlayer.name ? (
         <>
           {isDrawRequested ? (
-            <div className="flex justify-end items-center bg-slate-50 w-full">
-              <h1 className="text-black uppercase text-sm">
-                Your opponent requested to draw
+            <div className="flex justify-end items-center bg-slate-50 rounded-l-lg">
+              <h1 className="text-black uppercase text-xs pl-2">
+                Opponent requested draw
               </h1>
               <button
                 onClick={handleDrawRequestOnline}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ALL_CHAMPION_DATA } from "../constants";
+import { ALL_CHAMPION_DATA } from "../utility/jsonData";
 
 function ChampionSearchByName() {
   const navigate = useNavigate();

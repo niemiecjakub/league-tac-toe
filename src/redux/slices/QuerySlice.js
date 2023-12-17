@@ -1,16 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ALL_CHAMPION_DATA, INITIAL_STATE } from "../../constants";
-
-const QUERY_INITIAL_STATE = {
-  champions: ALL_CHAMPION_DATA,
-  queries: [
-    {
-      id: 0,
-      categoryType: "all",
-      categoryName: "all",
-    },
-  ],
-};
+import { QUERY_INITIAL_STATE } from "../../utility/constants";
 
 const QuerySlice = createSlice({
   name: "Query",
@@ -56,7 +45,7 @@ const QuerySlice = createSlice({
       state.champions = action.payload;
     },
     resetQuery: (state, action) => {
-      return QUERY_INITIAL_STATE
+      return QUERY_INITIAL_STATE;
     },
   },
 });
