@@ -46,5 +46,3 @@ If you would like to contribute please send me a message!
 ## License
 
 MIT License
-
-Copyright (c) [2023] [Jakub Niemiec]
