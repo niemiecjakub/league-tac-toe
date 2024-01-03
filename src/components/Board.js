@@ -10,7 +10,7 @@ function Board() {
   const { height, width } = useWindowDimensions();
 
   return (
-    <div className={`w-full flex flex-col`} style={{ height: `${width}px` }}>
+    <div className="w-full flex flex-col h-[width]" style={{ height: `${width}px` }}>
       <div className="bg-league-grey-200 flex">
         <div className="w-1/4">
           <img
