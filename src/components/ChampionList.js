@@ -6,12 +6,9 @@ import { Link } from "react-router-dom";
 
 const filterChampionByQuery = (query) => {
   const { categoryType, categoryName } = query;
-  return ALL_CHAMPION_DATA.filter((champion) => {
-    if (categoryType === "all" || categoryName === "all") {
-      return champion;
-    }
-    return champion[categoryType].includes(`${categoryName}`);
-  });
+  return ALL_CHAMPION_DATA.filter((champion) => 
+    categoryType === "all" || categoryName === "all" ? champion : champion[categoryType].includes(categoryName)
+  );
 };
 
 const findChampionsMatchingAllQueries = (filteredChampions) => {

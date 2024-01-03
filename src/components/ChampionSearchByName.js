@@ -33,7 +33,6 @@ function ChampionSearchByName() {
           suggestions.length ? "rounded-t-xl" : "rounded-xl"
         } mx-1`}
       />
-
       <div
         className={`bg-league-gold-200 uppercase w-full mx-1 rounded-b-xl ${
           suggestions.length ? "visible" : "hidden"

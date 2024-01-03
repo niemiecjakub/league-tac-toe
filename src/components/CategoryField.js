@@ -3,6 +3,7 @@ import useWindowDimensions from "../hooks/useWindwResize";
 function CategoryField({ categoryInfo: { category, name } }) {
   const { height, width } = useWindowDimensions();
   const imgName = name.replace(/\s/g, "");
+  
   return (
     <div
       className="flex flex-col w-1/4 items-center justify-center text-white"
@@ -14,8 +15,8 @@ function CategoryField({ categoryInfo: { category, name } }) {
       />
 
       <div className="flex flex-col items-center justify-center font-league h-1/3 uppercase text-xs md:text-sm">
-        <p className="">{category}</p>
-        <p className="">{name}</p>
+        <p>{category}</p>
+        <p>{name}</p>
       </div>
     </div>
   );
