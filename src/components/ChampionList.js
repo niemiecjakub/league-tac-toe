@@ -4,8 +4,7 @@ import { ALL_CHAMPION_DATA } from "../utility/jsonData";
 import { setChampions } from "../redux/slices/QuerySlice";
 import { Link } from "react-router-dom";
 
-const filterChampionByQuery = (query) => {
-  const { categoryType, categoryName } = query;
+const filterChampionByQuery = ({ categoryType, categoryName }) => {
   return ALL_CHAMPION_DATA.filter((champion) => 
     categoryType === "all" || categoryName === "all" ? champion : champion[categoryType].includes(categoryName)
   );
@@ -18,13 +17,11 @@ const findChampionsMatchingAllQueries = (filteredChampions) => {
 
   const [firstQueryResult, ...restQueryResults] = filteredChampions;
 
-  const commonElements = firstQueryResult.filter((champion) =>
+  return firstQueryResult.filter(({id}) =>
     restQueryResults.every((queryResult) =>
-      queryResult.some((e) => e.id === champion.id)
+      queryResult.some(({id: resultId}) => resultId === id)
     )
   );
-
-  return commonElements;
 };
 
 function ChampionList() {
@@ -32,30 +29,28 @@ function ChampionList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const filteredChampions = queries.map((query) => {
-      return filterChampionByQuery(query);
-    });
     const matchingChampions =
-      findChampionsMatchingAllQueries(filteredChampions);
+      findChampionsMatchingAllQueries(queries.map((query) => {
+      return filterChampionByQuery(query);
+    }));
     dispatch(setChampions(matchingChampions));
   }, [queries, dispatch]);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-3">
-      {champions.map((champion) => (
-        <Link to={`/champions/${champion.key}`} key={champion.id}>
+      {champions.map(({key, id, name}) => (
+        <Link to={`/champions/${key}`} key={id}>
           <div
             className="my-2 h-64 w-full relative rounded-t-xl hover:animate-zoom"
-            key={champion.id}
+            key={id}
           >
             <img
-              alt={champion.key}
-              src={`${process.env.PUBLIC_URL}/champion/${champion.key}.JPG`}
+              alt={key}
+              src={`${process.env.PUBLIC_URL}/champion/${key}.JPG`}
               className="object-cover h-full w-full rounded-t-xl"
             />
-
             <h1 className="pl-2 text-black font-bold uppercase bg-league-gold-200 absolute bottom-0 w-full h-1/6 text-md border-t-league-blue-300 border-t-4">
-              {champion.name}
+              {name}
             </h1>
           </div>
         </Link>
