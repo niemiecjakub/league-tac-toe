@@ -9,12 +9,12 @@ function ChampionQueryList() {
 
   return (
     <div className="flex flex-col w-full">
-      {queries.map((query, index) => {
-        return (
+      {queries.map((query, index) => (
           <div className="flex mb-2" key={query.id}>
             <ChampionQueryField key={query.id} data={query} />
             {index === queries.length - 1 ? (
               <button
+              type="button"
                 onClick={() => dispatch(addQuery())}
                 className="bg-green-200 w-10 px-5 flex items-center justify-center rounded-xl"
               >
@@ -22,6 +22,7 @@ function ChampionQueryList() {
               </button>
             ) : (
               <button
+              type="button"
                 onClick={() => {
                   dispatch(removeQuery(query.id));
                 }}
@@ -31,8 +32,8 @@ function ChampionQueryList() {
               </button>
             )}
           </div>
-        );
-      })}
+        )
+      )}
       <button
         onClick={() => dispatch(resetQuery())}
         className="bg-league-gold-400 p-2 muppercase rounded-xl uppercase font-bold"

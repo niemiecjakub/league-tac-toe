@@ -26,7 +26,7 @@ function DrawDialog({ openDrawRequest, isDisabled, handleOpenDrawRequest }) {
     }
   }, [currentPlayer]);
 
-  //handling draw request
+
   const requestDraw = async () => {
     switch (gameMode) {
       case "same screen":

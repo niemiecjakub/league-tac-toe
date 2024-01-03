@@ -25,8 +25,7 @@ function ChampionQueryField({ data : {id, categoryName, categoryType } }) {
           </option>
         ))}
       </select>
-
-      <label for="category-name-select-1" className="text-white"></label>
+      
       <select
         id="category-name-select-1"
         className="uppercase p-2 w-full rounded-xl mx-1"
