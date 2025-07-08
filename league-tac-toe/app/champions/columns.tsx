@@ -1,6 +1,6 @@
 "use client";
 
-import { SortableHeader } from "@/components/ui/sortableHeader";
+import { SortableHeader } from "@/components/ui/sortable-table-header";
 import { Champion } from "@/models/Champion";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -31,6 +31,7 @@ export const columns: ColumnDef<Champion>[] = [
         },
     },
     {
+        id: "region",
         accessorKey: "region",
         header: ({ column }) => {
             return <SortableHeader column={column}>Region</SortableHeader>;
@@ -42,12 +43,18 @@ export const columns: ColumnDef<Champion>[] = [
         header: ({ column }) => {
             return <SortableHeader column={column}>Legacy</SortableHeader>;
         },
+        cell: ({ row }) => row.original.legacies.join(" / "),
     },
     {
         id: "position",
         accessorKey: "positions",
         header: ({ column }) => {
             return <SortableHeader column={column}>Position</SortableHeader>;
+        },
+        cell: ({ row }) => row.original.positions.join(" / "),
+        filterFn: (row, columnId, filterValue) => {
+            const values: string[] = row.getValue(columnId);
+            return (filterValue as string[]).some((val) => values.includes(val));
         },
     },
     {
@@ -56,5 +63,6 @@ export const columns: ColumnDef<Champion>[] = [
         header: ({ column }) => {
             return <SortableHeader column={column}>Range type</SortableHeader>;
         },
+        cell: ({ row }) => row.original.rangeTypes.join(" / "),
     },
 ];
