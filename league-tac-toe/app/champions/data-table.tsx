@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { MetaFilter } from "@/components/ui/meta-filter";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -32,15 +33,74 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         },
     });
 
+    console.log(table.getState().columnFilters);
+
     return (
         <div>
             <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter champions..."
-                    value={table.getColumn("champion")?.getFilterValue() as string}
-                    onChange={(event) => table.getColumn("champion")?.setFilterValue(event.target.value)}
-                    className="max-w-sm"
-                />
+                <div className="flex items-center space-x-2">
+                    <Input
+                        placeholder="Filter champions..."
+                        value={table.getColumn("champion")?.getFilterValue() as string}
+                        onChange={(event) => table.getColumn("champion")?.setFilterValue(event.target.value)}
+                        className="max-w-sm"
+                    />
+                    <MetaFilter
+                        title="Resource"
+                        column={table.getColumn("resource")!}
+                        items={[
+                            { id: "1", name: "Top" },
+                            { id: "2", name: "Jungle" },
+                            { id: "3", name: "Middle" },
+                            { id: "4", name: "Bot" },
+                            { id: "5", name: "Support" },
+                        ]}
+                    />
+                    <MetaFilter
+                        title="Region"
+                        column={table.getColumn("region")!}
+                        items={[
+                            { id: "1", name: "Top" },
+                            { id: "2", name: "Jungle" },
+                            { id: "3", name: "Middle" },
+                            { id: "4", name: "Bot" },
+                            { id: "5", name: "Support" },
+                        ]}
+                    />
+                    <MetaFilter
+                        title="Legacy"
+                        column={table.getColumn("legacy")!}
+                        items={[
+                            { id: "1", name: "Top" },
+                            { id: "2", name: "Jungle" },
+                            { id: "3", name: "Middle" },
+                            { id: "4", name: "Bot" },
+                            { id: "5", name: "Support" },
+                        ]}
+                    />
+                    <MetaFilter
+                        title="Position"
+                        column={table.getColumn("position")!}
+                        items={[
+                            { id: "1", name: "Top" },
+                            { id: "2", name: "Jungle" },
+                            { id: "3", name: "Middle" },
+                            { id: "4", name: "Bot" },
+                            { id: "5", name: "Support" },
+                        ]}
+                    />
+                    <MetaFilter
+                        title="Range type"
+                        column={table.getColumn("rangeType")!}
+                        items={[
+                            { id: "1", name: "Top" },
+                            { id: "2", name: "Jungle" },
+                            { id: "3", name: "Middle" },
+                            { id: "4", name: "Bot" },
+                            { id: "5", name: "Support" },
+                        ]}
+                    />
+                </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
