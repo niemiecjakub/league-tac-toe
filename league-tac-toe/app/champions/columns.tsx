@@ -1,13 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { SortableHeader } from "@/components/ui/sortableHeader";
 import { Champion } from "@/models/Champion";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<Champion>[] = [
     {
+        id: "champion",
         accessorKey: "name",
         header: ({ column }) => {
             return <SortableHeader column={column}>Champion</SortableHeader>;
@@ -25,6 +24,7 @@ export const columns: ColumnDef<Champion>[] = [
         },
     },
     {
+        id: "resource",
         accessorKey: "resource",
         header: ({ column }) => {
             return <SortableHeader column={column}>Resource</SortableHeader>;
@@ -37,18 +37,21 @@ export const columns: ColumnDef<Champion>[] = [
         },
     },
     {
+        id: "legacy",
         accessorKey: "legacies",
         header: ({ column }) => {
             return <SortableHeader column={column}>Legacy</SortableHeader>;
         },
     },
     {
+        id: "position",
         accessorKey: "positions",
         header: ({ column }) => {
             return <SortableHeader column={column}>Position</SortableHeader>;
         },
     },
     {
+        id: "rangeType",
         accessorKey: "rangeTypes",
         header: ({ column }) => {
             return <SortableHeader column={column}>Range type</SortableHeader>;
