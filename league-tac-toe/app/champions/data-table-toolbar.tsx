@@ -2,19 +2,18 @@
 
 import { Table } from "@tanstack/react-table";
 import { X } from "lucide-react";
-
 import { DataTableViewOptions } from "./data-table-view-options";
-
-import { priorities, statuses } from "@/constants/data";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { ChampionMetaFilter } from "@/models/MetaItem";
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;
+    filter: ChampionMetaFilter;
 }
 
-export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({ table, filter }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0;
 
     return (
@@ -22,22 +21,18 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
             <div className="flex flex-1 items-center gap-2">
                 <Input
                     placeholder="Filter tasks..."
-                    value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
+                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="h-8 w-[150px] lg:w-[250px]"
                 />
-                {table.getColumn("status") && <DataTableFacetedFilter column={table.getColumn("status")} title="Status" options={statuses} />}
-                {table.getColumn("priority") && <DataTableFacetedFilter column={table.getColumn("priority")} title="Priority" options={priorities} />}
+                {filter.filters.map((f) => table.getColumn(f.value) && <DataTableFacetedFilter column={table.getColumn(f.value)} title={f.name} options={f.options} />)}
+
                 {isFiltered && (
                     <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()}>
                         Reset
                         <X />
                     </Button>
                 )}
-            </div>
-            <div className="flex items-center gap-2">
-                <DataTableViewOptions table={table} />
-                <Button size="sm">Add Task</Button>
             </div>
         </div>
     );
