@@ -1,0 +1,175 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export function LobbyOptions() {
+    return (
+        <>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Join existing room</CardTitle>
+                    <CardDescription>Enter room code and join game</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <Input id="roomCode" type="text" placeholder="Room code" required />
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button type="submit" className="w-full" onClick={() => alert("Join room functionality not implemented yet")}>
+                        Join
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle>Create room</CardTitle>
+                    <CardDescription>Challenge a friend to an online game</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-col gap-4">
+                        <div className="flex gap-2 justify-between">
+                            <Label>Time per turn</Label>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Unlimtied" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Time per turn</SelectLabel>
+                                        <SelectItem value="-1">Unlimited</SelectItem>
+                                        <SelectItem value="15">15 Seconds</SelectItem>
+                                        <SelectItem value="30">30 Seconds</SelectItem>
+                                        <SelectItem value="45">45 Seconds</SelectItem>
+                                        <SelectItem value="60">60 Seconds</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex gap-2 justify-between">
+                            <Label>Enable steals</Label>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Yes" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Enable steals</SelectLabel>
+                                        <SelectItem value="True">Yes</SelectItem>
+                                        <SelectItem value="False">No</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button type="submit" className="w-full" onClick={() => alert("Create room functionality not implemented yet")}>
+                        Create
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle>Same screen game</CardTitle>
+                    <CardDescription>Play against a friend on the same device</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-col gap-4 ">
+                        <div className="flex gap-2 justify-between">
+                            <Label>Time per turn</Label>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Unlimtied" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Time per turn</SelectLabel>
+                                        <SelectItem value="-1">Unlimited</SelectItem>
+                                        <SelectItem value="15">15 Seconds</SelectItem>
+                                        <SelectItem value="30">30 Seconds</SelectItem>
+                                        <SelectItem value="45">45 Seconds</SelectItem>
+                                        <SelectItem value="60">60 Seconds</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex gap-2 justify-between">
+                            <Label>Enable steals</Label>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Yes" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Enable steals</SelectLabel>
+                                        <SelectItem value="True">Yes</SelectItem>
+                                        <SelectItem value="False">No</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button type="submit" className="w-full" onClick={() => alert("Same screen room functionality not implemented yet")}>
+                        Start
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle>Find an opponent</CardTitle>
+                    <CardDescription>Play against a random opponent</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-col gap-4 ">
+                        <div className="flex gap-2 justify-between">
+                            <Label>Time per turn</Label>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Unlimtied" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Time per turn</SelectLabel>
+                                        <SelectItem value="-1">Unlimited</SelectItem>
+                                        <SelectItem value="15">15 Seconds</SelectItem>
+                                        <SelectItem value="30">30 Seconds</SelectItem>
+                                        <SelectItem value="45">45 Seconds</SelectItem>
+                                        <SelectItem value="60">60 Seconds</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex gap-2 justify-between">
+                            <Label>Enable steals</Label>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Yes" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Enable steals</SelectLabel>
+                                        <SelectItem value="True">Yes</SelectItem>
+                                        <SelectItem value="False">No</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button type="submit" className="w-full" onClick={() => alert("Same screen room functionality not implemented yet")}>
+                        Start
+                    </Button>
+                </CardFooter>
+            </Card>
+        </>
+    );
+}

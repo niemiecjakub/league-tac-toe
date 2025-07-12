@@ -20,7 +20,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
-import { ChampionMetaFilter } from "@/models/MetaItem";
+import { ChampionMetaFilter } from "@/models/ChampionMeta";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({ columns, data, filter }: DataTablePro
 
     return (
         <div className="flex flex-col gap-4">
-            <DataTableToolbar table={table} filter={filter}/>
+            <DataTableToolbar table={table} filter={filter} />
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
