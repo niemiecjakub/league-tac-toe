@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { MetaFilterItem } from "@/models/MetaItem";
+import { MetaFilterItem } from "@/models/ChampionMeta";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
     column?: Column<TData, TValue>;
@@ -20,10 +20,8 @@ function normalizeFacetsMap(map: Map<any, number>): Map<string, number> {
 
     for (const [key, count] of map.entries()) {
         if (typeof key === "string") {
-            // Direct string key — add as-is
             result.set(key, (result.get(key) ?? 0) + count);
         } else if (Array.isArray(key)) {
-            // Array key — add count for each string
             for (const item of key) {
                 if (typeof item === "string") {
                     result.set(item, (result.get(item) ?? 0) + count);
@@ -38,8 +36,6 @@ function normalizeFacetsMap(map: Map<any, number>): Map<string, number> {
 export function DataTableFacetedFilter<TData, TValue>({ column, title, options }: DataTableFacetedFilterProps<TData, TValue>) {
     const rawFacets = column?.getFacetedUniqueValues();
     const facets = rawFacets ? normalizeFacetsMap(rawFacets) : new Map();
-
-    console.log("facets", facets);
     const selectedValues = new Set(column?.getFilterValue() as string[]);
 
     return (
