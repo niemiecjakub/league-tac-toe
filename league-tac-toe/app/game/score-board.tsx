@@ -1,5 +1,6 @@
 "use client";
 
+import { Label } from "@/components/ui/label";
 import React from "react";
 
 type ScoreBoardProps = {
@@ -9,8 +10,10 @@ type ScoreBoardProps = {
 
 export default function ScoreBoard({ scoreX, scoreO }: ScoreBoardProps) {
     return (
-        <div className="mb-4 text-center text-xl font-bold">
-            X {scoreX} - {scoreO} O
+        <div className="flex w-full justify-center">
+            <Label className="text-xl font-bold text-center">
+                X {scoreX} - {scoreO} O
+            </Label>
         </div>
     );
 }
