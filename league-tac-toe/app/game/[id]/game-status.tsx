@@ -1,12 +1,11 @@
 "use client";
 
+import { PlayerType } from "@/models/Game";
 import React from "react";
 
-type Player = "X" | "O" | null;
-
 type GameStatusProps = {
-    winner: Player | "Draw" | null;
-    currentPlayer: Player;
+    winner: PlayerType | "Draw" | null | undefined;
+    currentPlayer: PlayerType;
     timeLeft: number;
 };
 
