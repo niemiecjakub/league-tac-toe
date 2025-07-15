@@ -2,11 +2,10 @@
 
 import React from "react";
 import BoardField from "./board-field";
-
-type Player = "X" | "O" | null;
+import { Player } from "@/models/Game";
 
 type BoardProps = {
-    board: Player[];
+    board: Player[][];
     onCellClick: (index: number) => void;
 };
 
@@ -21,12 +20,12 @@ export default function Board({ board, onCellClick }: BoardProps) {
                     <BoardField key={label} value={label} isCategory={true} />
                 ))}
             </div>
-            {yLabels.map((yLabel, rowIndex) => (
-                <div key={yLabel} className="flex justify-between">
-                    <BoardField value={yLabel} isCategory={true} />
-                    {[0, 1, 2].map((colIndex) => {
+            {board.map((row, rowIndex) => (
+                <div key={rowIndex} className="flex justify-between">
+                    <BoardField value={yLabels[rowIndex]} isCategory={true} />
+                    {row.map((value, colIndex) => {
                         const cellIndex = rowIndex * 3 + colIndex;
-                        return <BoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={board[cellIndex]} />;
+                        return <BoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={value} />;
                     })}
                 </div>
             ))}
