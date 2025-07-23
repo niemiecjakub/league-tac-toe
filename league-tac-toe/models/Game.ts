@@ -11,14 +11,15 @@ export enum GameStateType {
 
 export type Player = "X" | "O" | null;
 
+export interface GameSlot {
+    playerType: PlayerType;
+}
+
 export interface Game {
     id: number;
-    roomUID: string;
+    roomUid: string;
     boardState: Player[][];
     categories: string;
-    currentTurnId: PlayerType;
-    statusId: GameStateType;
-    winnerId?: PlayerType | null;
-    createdAt: string;
-    updatedAt: string;
+    currentPlayerTurn: PlayerType;
+    gameStatus: GameStateType;
 }

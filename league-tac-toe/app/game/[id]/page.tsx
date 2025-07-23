@@ -2,23 +2,29 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { Game, Player } from "@/models/Game";
-import { joinRoom, move } from "@/services/gameService";
+import { Game, GameSlot, Player } from "@/models/Game";
+import { getCurrentGame, joinRoom, move, getRoom, skipMove } from "@/services/gameService";
 import ScoreBoard from "./score-board";
 import Board from "./board";
 import GameStatus from "./game-status";
 import DrawRequestPrompt from "./draw-request-pormpt";
 import Controls from "./controls";
 import { Card } from "@/components/ui/card";
+import { getUserUid } from "@/lib/utils";
+import { Room } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
+import { skip } from "node:test";
 
 const TURN_TIME = 10;
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
+    const playerGuid = getUserUid();
 
-    const [game, setGame] = useState<Game | null>(null);
+    const [room, setRoom] = useState<Room>();
+    const [game, setGame] = useState<Game>();
+    const [gameSlot, setGameSlot] = useState<GameSlot>();
     const [messages, setMessages] = useState<string[]>([]);
 
     const [timeLeft, setTimeLeft] = useState<number>(TURN_TIME);
@@ -27,37 +33,39 @@ export default function GameIdPage() {
     const [drawRequestedBy, setDrawRequestedBy] = useState<Player | null>(null);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const fetchGame = async () => {
-        if (!id) return;
-        try {
-            const gameData = await joinRoom(id);
-            setGame(gameData);
-        } catch (error) {
-            console.error("Failed to join game:", error);
-        }
-    };
+    const isYourTurn: boolean = gameSlot?.playerType === game?.currentPlayerTurn;
 
     useEffect(() => {
-        let hubConnection: signalR.HubConnection;
+        const fetchGame = async () => {
+            if (!id) return;
 
+            try {
+                const [roomData, gameSlot, gameData] = await Promise.all([getRoom(id), joinRoom(id), getCurrentGame(id)]);
+                setRoom(roomData);
+                setGameSlot(gameSlot);
+                setGame(gameData);
+                console.log("Game joined successfully:", gameData);
+            } catch (error) {
+                console.error("Failed to join game:", error);
+            }
+        };
         const setupSignalR = async () => {
             try {
-                hubConnection = await connectToGameHub();
-
-                // Register SignalR client listeners
+                hubConnection = await connectToGameHub(id);
                 hubConnection.on("SendMessage", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, message]);
                 });
-
                 hubConnection.on("JoinRoom", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, `🔵 ${message}`]);
                 });
-
                 hubConnection.on("LeaveRoom", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, `🔴 ${message}`]);
                 });
+                hubConnection.on("TurnSwitch", async () => {
+                    const gameData = await getCurrentGame(id);
+                    setGame(gameData);
+                });
 
-                // Join the room
                 if (id) {
                     await hubConnection.invoke("JoinRoom", id);
                 }
@@ -66,6 +74,8 @@ export default function GameIdPage() {
             }
         };
 
+        let hubConnection: signalR.HubConnection;
+        fetchGame();
         setupSignalR();
 
         return () => {
@@ -73,50 +83,52 @@ export default function GameIdPage() {
                 hubConnection.off("SendMessage");
                 hubConnection.off("JoinRoom");
                 hubConnection.off("LeaveRoom");
+                hubConnection.off("TurnSwitch");
                 hubConnection.stop();
-            }
-        };
-    }, [id]);
-
-    useEffect(() => {
-        fetchGame();
-    }, [id]);
-
-    useEffect(() => {
-        setTimeLeft(TURN_TIME);
-        if (timerRef.current) {
-            clearInterval(timerRef.current);
-        }
-        timerRef.current = setInterval(() => {
-            setTimeLeft((prev) => {
-                if (prev === 1) {
-                    // Time's up, switch player
-                    handleTimeout();
-                    return TURN_TIME;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-
-        return () => {
-            if (timerRef.current) {
-                clearInterval(timerRef.current);
             }
         };
     }, []);
 
+    // useEffect(() => {
+    //     setTimeLeft(TURN_TIME);
+    //     if (timerRef.current) {
+    //         clearInterval(timerRef.current);
+    //     }
+    //     timerRef.current = setInterval(() => {
+    //         setTimeLeft((prev) => {
+    //             if (prev === 1) {
+    //                 // Time's up, switch player
+    //                 handleTimeout();
+    //                 return TURN_TIME;
+    //             }
+    //             return prev - 1;
+    //         });
+    //     }, 1000);
+
+    //     return () => {
+    //         if (timerRef.current) {
+    //             clearInterval(timerRef.current);
+    //         }
+    //     };
+    // }, []);
+
+    async function handleClick(cellIndex: number) {
+        if (isYourTurn) {
+            const gameData = await move(game!.roomUid, cellIndex + 1);
+            setGame(gameData);
+        }
+    }
+
+    async function skipTurn() {
+        if (isYourTurn) {
+            const game = await skipMove(id);
+            setGame(game);
+        }
+    }
+
     function handleTimeout() {
         // setCurrentPlayer((prev) => (prev === "X" ? "O" : "X"));
         // setTimeLeft(TURN_TIME);
-    }
-
-    async function handleClick(cellIndex: number) {
-        if (game?.roomUID) {
-            const response = await move(game.roomUID, cellIndex + 1); // Adjusting for 1-based index in API
-            if (response) {
-                setGame(response);
-            }
-        }
     }
 
     function resetGame() {
@@ -131,11 +143,6 @@ export default function GameIdPage() {
         // const nextPlayer = currentPlayer === "X" ? "O" : "X";
         // setDrawRequestedBy(currentPlayer);
         // setCurrentPlayer(nextPlayer);
-        // setTimeLeft(TURN_TIME);
-    }
-
-    function skipTurn() {
-        // setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
         // setTimeLeft(TURN_TIME);
     }
 
@@ -165,7 +172,7 @@ export default function GameIdPage() {
                         <Card className="p-6 w-[320px]">
                             <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
                             <Board board={game.boardState} onCellClick={handleClick} />
-                            <GameStatus winner={game.winnerId} currentPlayer={game.currentTurnId} timeLeft={timeLeft} />
+                            <GameStatus winner={null} isYourTurn={isYourTurn} timeLeft={timeLeft} />
                             <Controls resetGame={resetGame} drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
                             <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
                         </Card>

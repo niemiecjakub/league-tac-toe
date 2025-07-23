@@ -1,12 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { createRoom } from "@/services/gameService";
+import { useRouter } from "next/navigation";
 
 export function LobbyOptions() {
+    const router = useRouter();
+
+    const handleRoomCreate = async () => {
+        console.log("Creating room...");
+        var room = await createRoom();
+        console.log("Room created:", room);
+        router.push(`/game/${room.roomGuid}`);
+    };
+
     return (
         <>
             <Card>
@@ -18,7 +29,7 @@ export function LobbyOptions() {
                     <Input id="roomCode" type="text" placeholder="Room code" required />
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" className="w-full" onClick={() => alert("Join room functionality not implemented yet")}>
+                    <Button type="submit" className="w-full" onClick={() => alert("Create room functionality not implemented yet")}>
                         Join
                     </Button>
                 </CardFooter>
@@ -67,7 +78,7 @@ export function LobbyOptions() {
                     </div>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" className="w-full" onClick={() => alert("Create room functionality not implemented yet")}>
+                    <Button type="submit" className="w-full" onClick={handleRoomCreate}>
                         Create
                     </Button>
                 </CardFooter>
