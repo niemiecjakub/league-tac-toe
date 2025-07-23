@@ -5,11 +5,11 @@ import React from "react";
 
 type GameStatusProps = {
     winner: PlayerType | "Draw" | null | undefined;
-    currentPlayer: PlayerType;
+    isYourTurn: boolean;
     timeLeft: number;
 };
 
-export default function GameStatus({ winner, currentPlayer, timeLeft }: GameStatusProps) {
+export default function GameStatus({ winner, isYourTurn, timeLeft }: GameStatusProps) {
     return (
         <div className="mt-4 text-center">
             {winner ? (
@@ -20,7 +20,7 @@ export default function GameStatus({ winner, currentPlayer, timeLeft }: GameStat
                 )
             ) : (
                 <>
-                    <p className="text-lg font-semibold">It's {currentPlayer}'s turn</p>
+                    <p className="text-lg font-semibold">{isYourTurn ? "Your turn" : "Opponent's turn"}</p>
                     <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>
                 </>
             )}
