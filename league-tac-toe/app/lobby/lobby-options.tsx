@@ -7,15 +7,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createRoom } from "@/services/gameService";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { RoomOptions } from "@/models/Room";
 
 export function LobbyOptions() {
     const router = useRouter();
+    const [roomCode, setRoomCode] = useState("");
+    const [newRoomOptions, setNewRoomOptions] = useState<RoomOptions>({
+        turnTime: -1,
+        stealsEnabled: true,
+    });
 
     const handleRoomCreate = async () => {
         console.log("Creating room...");
-        var room = await createRoom();
+        var room = await createRoom(newRoomOptions);
         console.log("Room created:", room);
         router.push(`/game/${room.roomGuid}`);
+    };
+
+    const handleRoomJoin = async (roomGuid: string) => {
+        console.log("Joining room...");
+        router.push(`/game/${roomGuid}`);
     };
 
     return (
@@ -26,10 +38,10 @@ export function LobbyOptions() {
                     <CardDescription>Enter room code and join game</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Input id="roomCode" type="text" placeholder="Room code" required />
+                    <Input id="roomCode" type="text" placeholder="Room code" required value={roomCode} onChange={(e) => setRoomCode(e.target.value)} />
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" className="w-full" onClick={() => alert("Create room functionality not implemented yet")}>
+                    <Button type="submit" className="w-full" onClick={() => handleRoomJoin(roomCode)} disabled={!roomCode.trim()}>
                         Join
                     </Button>
                 </CardFooter>
@@ -44,7 +56,15 @@ export function LobbyOptions() {
                     <div className="flex flex-col gap-4">
                         <div className="flex gap-2 justify-between">
                             <Label>Time per turn</Label>
-                            <Select>
+                            <Select
+                                value={newRoomOptions.turnTime.toString()}
+                                onValueChange={(value) =>
+                                    setNewRoomOptions((prev) => ({
+                                        ...prev!,
+                                        turnTime: parseInt(value),
+                                    }))
+                                }
+                            >
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Unlimtied" />
                                 </SelectTrigger>
@@ -62,15 +82,23 @@ export function LobbyOptions() {
                         </div>
                         <div className="flex gap-2 justify-between">
                             <Label>Enable steals</Label>
-                            <Select>
+                            <Select
+                                value={newRoomOptions.stealsEnabled.toString()}
+                                onValueChange={(value) =>
+                                    setNewRoomOptions((prev) => ({
+                                        ...prev!,
+                                        stealsEnabled: value === "true",
+                                    }))
+                                }
+                            >
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="Yes" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Enable steals</SelectLabel>
-                                        <SelectItem value="True">Yes</SelectItem>
-                                        <SelectItem value="False">No</SelectItem>
+                                        <SelectItem value="true">Yes</SelectItem>
+                                        <SelectItem value="false">No</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
@@ -118,8 +146,8 @@ export function LobbyOptions() {
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Enable steals</SelectLabel>
-                                        <SelectItem value="True">Yes</SelectItem>
-                                        <SelectItem value="False">No</SelectItem>
+                                        <SelectItem value="true">Yes</SelectItem>
+                                        <SelectItem value="false">No</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
@@ -167,8 +195,8 @@ export function LobbyOptions() {
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Enable steals</SelectLabel>
-                                        <SelectItem value="True">Yes</SelectItem>
-                                        <SelectItem value="False">No</SelectItem>
+                                        <SelectItem value="true">Yes</SelectItem>
+                                        <SelectItem value="false">No</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>

@@ -6,7 +6,7 @@ import React from "react";
 type GameStatusProps = {
     winner: PlayerType | "Draw" | null | undefined;
     isYourTurn: boolean;
-    timeLeft: number;
+    timeLeft: number | null;
 };
 
 export default function GameStatus({ winner, isYourTurn, timeLeft }: GameStatusProps) {
@@ -21,7 +21,7 @@ export default function GameStatus({ winner, isYourTurn, timeLeft }: GameStatusP
             ) : (
                 <>
                     <p className="text-lg font-semibold">{isYourTurn ? "Your turn" : "Opponent's turn"}</p>
-                    <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>
+                    {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
                 </>
             )}
         </div>
