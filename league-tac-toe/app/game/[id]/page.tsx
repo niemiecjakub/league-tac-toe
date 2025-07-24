@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { Game, GameSlot, Player } from "@/models/Game";
+import { Game, GameSlot, GameStateType, Player } from "@/models/Game";
 import { getCurrentGame, joinRoom, move, getRoom, skipMove } from "@/services/gameService";
 import ScoreBoard from "./score-board";
 import Board from "./board";
@@ -16,6 +16,7 @@ import { connectToGameHub } from "@/lib/signalr";
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
+
     const [room, setRoom] = useState<Room>();
     const [game, setGame] = useState<Game>();
     const [gameSlot, setGameSlot] = useState<GameSlot>();
@@ -65,7 +66,8 @@ export default function GameIdPage() {
                 setGameSlot(gameSlotData);
                 setGame(gameData);
 
-                console.log("Game joined successfully:", gameData);
+                console.log("Room:", roomData);
+                console.log("Game:", gameData);
 
                 if (roomData?.turnTime != null) {
                     setTimer(roomData.turnTime);
@@ -79,22 +81,31 @@ export default function GameIdPage() {
             try {
                 hubConnection = await connectToGameHub(id);
 
-                hubConnection.on("SendMessage", (message: string) => {
+                hubConnection.on("MesageReceived", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, message]);
                 });
 
-                hubConnection.on("JoinRoom", (message: string) => {
-                    setMessages((prevMessages) => [...prevMessages, `🔵 ${message}`]);
+                hubConnection.on("PlayerJoined", async () => {
+                    const updatedGame = await getCurrentGame(id);
+                    const updatedRoom = await getRoom(id);
+
+                    setGame(updatedGame);
+                    setRoom(updatedRoom);
+                    setMessages((prevMessages) => [...prevMessages, `🔵 User has joined`]);
+                    console.log("User Joined, fetching game data", updatedGame);
+                    if (updatedGame.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
+                        setTimer(updatedRoom.turnTime);
+                    }
                 });
 
-                hubConnection.on("LeaveRoom", (message: string) => {
-                    setMessages((prevMessages) => [...prevMessages, `🔴 ${message}`]);
+                hubConnection.on("PlayerLeft", () => {
+                    setMessages((prevMessages) => [...prevMessages, `🔴 User has left`]);
                 });
 
-                hubConnection.on("TurnSwitch", async () => {
+                hubConnection.on("TurnSwitch", async (message: string) => {
                     try {
                         const updatedGame = await getCurrentGame(id);
-                        const updatedRoom = await getRoom(id); // re-fetch room to get fresh turnTime
+                        const updatedRoom = await getRoom(id);
 
                         setGame(updatedGame);
                         setRoom(updatedRoom);
@@ -102,6 +113,8 @@ export default function GameIdPage() {
                         if (updatedRoom?.turnTime != null) {
                             setTimer(updatedRoom.turnTime);
                         }
+
+                        setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                     } catch (err) {
                         console.error("Error during TurnSwitch update:", err);
                     }
@@ -117,8 +130,6 @@ export default function GameIdPage() {
 
         fetchGame();
         setupSignalR();
-        console.log(room);
-        // setTimer(room!.turnTime); // Default to 30 seconds if turnTime is not set
 
         return () => {
             if (hubConnection) {
@@ -132,29 +143,31 @@ export default function GameIdPage() {
                 clearInterval(timerRef.current);
             }
         };
-    }, []);
+    }, [id]);
 
+    //TURN LOGIC
     async function handleClick(cellIndex: number) {
-        if (isYourTurn) {
+        if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
             const gameData = await move(game!.roomUid, cellIndex + 1);
             setGame(gameData);
         }
     }
 
     async function skipTurn() {
-        if (isYourTurn) {
+        if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
             const game = await skipMove(id);
             setGame(game);
         }
     }
 
     async function handleTimeout() {
-        if (isYourTurn) {
+        if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
             const updatedGame = await skipMove(id);
             setGame(updatedGame);
         }
     }
 
+    // DRAW LOGIC
     function requestDraw() {
         // const nextPlayer = currentPlayer === "X" ? "O" : "X";
         // setDrawRequestedBy(currentPlayer);
@@ -174,6 +187,7 @@ export default function GameIdPage() {
     return (
         <div>
             <h1>Game Room: {id}</h1>
+
             <div className="mt-4">
                 <p>Messages:</p>
                 <ul>
@@ -182,13 +196,14 @@ export default function GameIdPage() {
                     ))}
                 </ul>
             </div>
+
             <div className="mt-6">
                 {game ? (
                     <div className="flex flex-col items-center justify-center min-h-screen p-4">
                         <Card className="p-6 w-[320px]">
                             <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
                             <Board board={game.boardState} onCellClick={handleClick} />
-                            <GameStatus winner={null} isYourTurn={isYourTurn} timeLeft={timeLeft} />
+                            <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} />
                             <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
                             <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
                         </Card>

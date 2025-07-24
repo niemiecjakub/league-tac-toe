@@ -57,7 +57,7 @@ export function LobbyOptions() {
                         <div className="flex gap-2 justify-between">
                             <Label>Time per turn</Label>
                             <Select
-                                value={newRoomOptions.turnTime.toString()}
+                                value={newRoomOptions?.turnTime?.toString() ?? "-1"}
                                 onValueChange={(value) =>
                                     setNewRoomOptions((prev) => ({
                                         ...prev!,
