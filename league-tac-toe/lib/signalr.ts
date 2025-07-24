@@ -4,7 +4,12 @@ import { getUserUid } from "./utils";
 let connection: signalR.HubConnection | null = null;
 
 export const connectToGameHub = async (roomUID: string) => {
-    if (connection) return connection;
+    if (connection) {
+        if (connection.state === signalR.HubConnectionState.Disconnected) {
+            await connection.start();
+        }
+        return connection;
+    }
 
     connection = new signalR.HubConnectionBuilder()
         .withUrl(`${process.env.NEXT_PUBLIC_API_BASE_URL}/gamehub`, {

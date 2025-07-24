@@ -22,4 +22,5 @@ export interface Game {
     categories: string;
     currentPlayerTurn: PlayerType;
     gameStatus: GameStateType;
+    winner: PlayerType | null;
 }
