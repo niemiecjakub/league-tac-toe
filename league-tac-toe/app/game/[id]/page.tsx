@@ -10,24 +10,18 @@ import GameStatus from "./game-status";
 import DrawRequestPrompt from "./draw-request-pormpt";
 import Controls from "./controls";
 import { Card } from "@/components/ui/card";
-import { getUserUid } from "@/lib/utils";
 import { Room } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
-import { skip } from "node:test";
-
-const TURN_TIME = 10;
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
-    const playerGuid = getUserUid();
-
     const [room, setRoom] = useState<Room>();
     const [game, setGame] = useState<Game>();
     const [gameSlot, setGameSlot] = useState<GameSlot>();
     const [messages, setMessages] = useState<string[]>([]);
 
-    const [timeLeft, setTimeLeft] = useState<number>(TURN_TIME);
+    const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [scoreX, setScoreX] = useState<number>(0);
     const [scoreO, setScoreO] = useState<number>(0);
     const [drawRequestedBy, setDrawRequestedBy] = useState<Player | null>(null);
@@ -36,34 +30,81 @@ export default function GameIdPage() {
     const isYourTurn: boolean = gameSlot?.playerType === game?.currentPlayerTurn;
 
     useEffect(() => {
+        let hubConnection: signalR.HubConnection;
+
+        const setTimer = (turnTime: number | null) => {
+            setTimeLeft(turnTime);
+
+            if (turnTime === null) {
+                return;
+            }
+
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+            }
+
+            timerRef.current = setInterval(() => {
+                setTimeLeft((prev) => {
+                    if (!prev || prev <= 1) {
+                        clearInterval(timerRef.current!);
+                        handleTimeout();
+                        return turnTime;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        };
+
         const fetchGame = async () => {
             if (!id) return;
 
             try {
-                const [roomData, gameSlot, gameData] = await Promise.all([getRoom(id), joinRoom(id), getCurrentGame(id)]);
+                const [roomData, gameSlotData, gameData] = await Promise.all([getRoom(id), joinRoom(id), getCurrentGame(id)]);
+
                 setRoom(roomData);
-                setGameSlot(gameSlot);
+                setGameSlot(gameSlotData);
                 setGame(gameData);
+
                 console.log("Game joined successfully:", gameData);
+
+                if (roomData?.turnTime != null) {
+                    setTimer(roomData.turnTime);
+                }
             } catch (error) {
                 console.error("Failed to join game:", error);
             }
         };
+
         const setupSignalR = async () => {
             try {
                 hubConnection = await connectToGameHub(id);
+
                 hubConnection.on("SendMessage", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, message]);
                 });
+
                 hubConnection.on("JoinRoom", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, `🔵 ${message}`]);
                 });
+
                 hubConnection.on("LeaveRoom", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, `🔴 ${message}`]);
                 });
+
                 hubConnection.on("TurnSwitch", async () => {
-                    const gameData = await getCurrentGame(id);
-                    setGame(gameData);
+                    try {
+                        const updatedGame = await getCurrentGame(id);
+                        const updatedRoom = await getRoom(id); // re-fetch room to get fresh turnTime
+
+                        setGame(updatedGame);
+                        setRoom(updatedRoom);
+
+                        if (updatedRoom?.turnTime != null) {
+                            setTimer(updatedRoom.turnTime);
+                        }
+                    } catch (err) {
+                        console.error("Error during TurnSwitch update:", err);
+                    }
                 });
 
                 if (id) {
@@ -74,9 +115,10 @@ export default function GameIdPage() {
             }
         };
 
-        let hubConnection: signalR.HubConnection;
         fetchGame();
         setupSignalR();
+        console.log(room);
+        // setTimer(room!.turnTime); // Default to 30 seconds if turnTime is not set
 
         return () => {
             if (hubConnection) {
@@ -86,31 +128,11 @@ export default function GameIdPage() {
                 hubConnection.off("TurnSwitch");
                 hubConnection.stop();
             }
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+            }
         };
     }, []);
-
-    // useEffect(() => {
-    //     setTimeLeft(TURN_TIME);
-    //     if (timerRef.current) {
-    //         clearInterval(timerRef.current);
-    //     }
-    //     timerRef.current = setInterval(() => {
-    //         setTimeLeft((prev) => {
-    //             if (prev === 1) {
-    //                 // Time's up, switch player
-    //                 handleTimeout();
-    //                 return TURN_TIME;
-    //             }
-    //             return prev - 1;
-    //         });
-    //     }, 1000);
-
-    //     return () => {
-    //         if (timerRef.current) {
-    //             clearInterval(timerRef.current);
-    //         }
-    //     };
-    // }, []);
 
     async function handleClick(cellIndex: number) {
         if (isYourTurn) {
@@ -126,17 +148,11 @@ export default function GameIdPage() {
         }
     }
 
-    function handleTimeout() {
-        // setCurrentPlayer((prev) => (prev === "X" ? "O" : "X"));
-        // setTimeLeft(TURN_TIME);
-    }
-
-    function resetGame() {
-        // setBoard(Array(9).fill(null));
-        // setCurrentPlayer("X");
-        // setWinner(null);
-        // setTimeLeft(TURN_TIME);
-        // Do not reset scores on game reset, keep the state
+    async function handleTimeout() {
+        if (isYourTurn) {
+            const updatedGame = await skipMove(id);
+            setGame(updatedGame);
+        }
     }
 
     function requestDraw() {
@@ -173,7 +189,7 @@ export default function GameIdPage() {
                             <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
                             <Board board={game.boardState} onCellClick={handleClick} />
                             <GameStatus winner={null} isYourTurn={isYourTurn} timeLeft={timeLeft} />
-                            <Controls resetGame={resetGame} drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
+                            <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
                             <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
                         </Card>
                     </div>

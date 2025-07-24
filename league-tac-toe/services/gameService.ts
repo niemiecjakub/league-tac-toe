@@ -1,9 +1,14 @@
 import axios from "@/lib/axios";
 import { Game, GameSlot, Player } from "@/models/Game";
-import { Room } from "@/models/Room";
+import { Room, RoomOptions } from "@/models/Room";
 
-export const createRoom = async (): Promise<Room> => {
-    const { data } = await axios.post(`Game/CreateRoom`);
+export const createRoom = async (roomOptions: RoomOptions): Promise<Room> => {
+    const params = new URLSearchParams({
+        turnTime: roomOptions.turnTime.toString(),
+        stealsEnabled: roomOptions.stealsEnabled.toString(),
+    });
+
+    const { data } = await axios.post(`Game/CreateRoom?${params.toString()}`);
     return data;
 };
 
