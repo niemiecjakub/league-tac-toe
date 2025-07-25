@@ -15,11 +15,21 @@ export interface GameSlot {
     playerType: PlayerType;
 }
 
+export interface CategoryItem {
+    Category: string;
+    Name: string;
+}
+
+export interface Categories {
+    Vertical: CategoryItem[];
+    Horizontal: CategoryItem[];
+}
+
 export interface Game {
     id: number;
     roomUid: string;
     boardState: Player[][];
-    categories: string;
+    categories: Categories;
     currentPlayerTurn: PlayerType;
     gameStatus: GameStateType;
     winner: PlayerType | null;
