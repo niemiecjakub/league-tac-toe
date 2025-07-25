@@ -22,6 +22,12 @@ export const joinRoom = async (roomGuid: string): Promise<GameSlot> => {
     return data;
 };
 
+export const findRandomOpponent = async (): Promise<Room> => {
+    const { data } = await axios.get("Game/FindRandomOpponent");
+    console.log(data);
+    return data;
+};
+
 export const getCurrentGame = async (roomGuid: string): Promise<Game> => {
     const { data } = await axios.get(`Game/GetGame/${roomGuid}`);
 
