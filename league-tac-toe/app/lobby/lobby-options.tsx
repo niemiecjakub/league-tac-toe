@@ -20,14 +20,11 @@ export function LobbyOptions() {
     });
 
     const handleRoomCreate = async () => {
-        console.log("Creating room...");
         var room = await createRoom(newRoomOptions);
-        console.log("Room created:", room);
         router.push(`/game/${room.roomGuid}`);
     };
 
     const handleRoomJoin = async (roomGuid: string) => {
-        console.log("Joining room...");
         router.push(`/game/${roomGuid}`);
     };
 

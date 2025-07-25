@@ -19,7 +19,7 @@ export default function GameIdPage() {
 
     const [room, setRoom] = useState<Room>();
     const [game, setGame] = useState<Game>();
-    const [gameSlot, setGameSlot] = useState<GameSlot>();
+    const [gameSlot, setGameSlot] = useState<GameSlot | null>(null);
     const [messages, setMessages] = useState<string[]>([]);
 
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
@@ -202,8 +202,8 @@ export default function GameIdPage() {
                     <div className="flex flex-col items-center justify-center min-h-screen p-4">
                         <Card className="p-6 w-[320px]">
                             <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
-                            <Board board={game.boardState} onCellClick={handleClick} />
-                            <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} />
+                            <Board board={game.boardState} categories={game.categories} onCellClick={handleClick} />
+                            <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} gameSlot={gameSlot} />
                             <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
                             <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
                         </Card>

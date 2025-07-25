@@ -1,31 +1,39 @@
 "use client";
 
 import React from "react";
-import BoardField from "./board-field";
-import { Player } from "@/models/Game";
+import { Categories, Player } from "@/models/Game";
+import CategoryBoardField from "./category-board-field";
+import GuessBoardField from "./guess-board-field";
 
 type BoardProps = {
     board: Player[][];
+    categories: Categories;
     onCellClick: (index: number) => void;
 };
 
-export default function Board({ board, onCellClick }: BoardProps) {
-    const xLabels = ["-", "X1", "X2", "X3"];
-    const yLabels = ["Y1", "Y2", "Y3"];
+export default function Board({ board, categories, onCellClick }: BoardProps) {
+    const xLabels = [null, ...categories.Horizontal];
+
+    const yLabels = categories.Vertical;
 
     return (
         <div className="grid gap-2">
             <div className="flex justify-between">
-                {xLabels.map((label) => (
-                    <BoardField key={label} value={label} isCategory={true} />
-                ))}
+                {xLabels.map((label, index) => {
+                    if (label == null) {
+                        return <CategoryBoardField key={`null-${index}`} value={null} />;
+                    } else {
+                        return <CategoryBoardField key={label.Name} value={label} />;
+                    }
+                })}
             </div>
+
             {board.map((row, rowIndex) => (
                 <div key={rowIndex} className="flex justify-between">
-                    <BoardField value={yLabels[rowIndex]} isCategory={true} />
+                    <CategoryBoardField value={yLabels[rowIndex]} />
                     {row.map((value, colIndex) => {
                         const cellIndex = rowIndex * 3 + colIndex;
-                        return <BoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={value} />;
+                        return <GuessBoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={value} />;
                     })}
                 </div>
             ))}
