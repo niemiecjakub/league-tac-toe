@@ -8,12 +8,12 @@ import GuessBoardField from "./guess-board-field";
 type BoardProps = {
     board: Player[][];
     categories: Categories;
+    championNames: string[];
     onCellClick: (index: number) => void;
 };
 
-export default function Board({ board, categories, onCellClick }: BoardProps) {
+export default function Board({ board, categories, championNames, onCellClick }: BoardProps) {
     const xLabels = [null, ...categories.Horizontal];
-
     const yLabels = categories.Vertical;
 
     return (
@@ -33,7 +33,7 @@ export default function Board({ board, categories, onCellClick }: BoardProps) {
                     <CategoryBoardField value={yLabels[rowIndex]} />
                     {row.map((value, colIndex) => {
                         const cellIndex = rowIndex * 3 + colIndex;
-                        return <GuessBoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={value} />;
+                        return <GuessBoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={value} championNames={championNames} />;
                     })}
                 </div>
             ))}
