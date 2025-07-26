@@ -12,6 +12,7 @@ import Controls from "./controls";
 import { Card } from "@/components/ui/card";
 import { Room } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
+import { getChampionNames } from "@/services/championService";
 
 export default function GameIdPage() {
     const params = useParams();
@@ -21,6 +22,7 @@ export default function GameIdPage() {
     const [game, setGame] = useState<Game>();
     const [gameSlot, setGameSlot] = useState<GameSlot | null>(null);
     const [messages, setMessages] = useState<string[]>([]);
+    const [champions, setChampions] = useState<string[]>([]);
 
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [scoreX, setScoreX] = useState<number>(0);
@@ -60,12 +62,12 @@ export default function GameIdPage() {
             if (!id) return;
 
             try {
-                const [roomData, gameSlotData, gameData] = await Promise.all([getRoom(id), joinRoom(id), getCurrentGame(id)]);
+                const [roomData, gameSlotData, gameData, championNames] = await Promise.all([getRoom(id), joinRoom(id), getCurrentGame(id), getChampionNames()]);
 
                 setRoom(roomData);
                 setGameSlot(gameSlotData);
                 setGame(gameData);
-
+                setChampions(championNames);
                 console.log("Room:", roomData);
                 console.log("Game:", gameData);
 
@@ -202,7 +204,7 @@ export default function GameIdPage() {
                     <div className="flex flex-col items-center justify-center min-h-screen p-4">
                         <Card className="p-6 w-[320px]">
                             <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
-                            <Board board={game.boardState} categories={game.categories} onCellClick={handleClick} />
+                            <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
                             <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} gameSlot={gameSlot} />
                             <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
                             <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
