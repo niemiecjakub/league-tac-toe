@@ -18,6 +18,7 @@ export interface GameSlot {
 export interface CategoryItem {
     Category: string;
     Name: string;
+    ResourceKey: string;
 }
 
 export interface Categories {

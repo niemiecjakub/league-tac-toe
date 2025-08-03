@@ -7,10 +7,18 @@ export interface CategoryFieldProps {
 }
 
 export default function CategoryBoardField({ onCellClick, value }: CategoryFieldProps) {
+    console.log(`url('/${value?.ResourceKey}.JPG')`);
     return (
-        <Button variant="destructive" className="h-16 w-16 font-bold" onClick={onCellClick}>
+        <Button
+            variant="destructive"
+            className="h-16 w-16 font-bold bg-cover bg-center"
+            onClick={onCellClick}
+            style={{
+                backgroundImage: value?.ResourceKey ? `url('/category/${value.ResourceKey}.JPG')` : `url('/lolIcon.svg')`,
+            }}
+        >
             {value && (
-                <div>
+                <div className="flex flex-col text-sm text-white rounded">
                     <p>{value?.Category}</p>
                     <span>{value?.Name}</span>
                 </div>

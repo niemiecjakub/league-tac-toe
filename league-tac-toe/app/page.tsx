@@ -1,4 +1,3 @@
-import { getChampions } from "@/services/championService";
 import Link from "next/link";
 
 export default async function Home() {
