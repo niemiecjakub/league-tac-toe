@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { CategoryItem } from "@/models/Game";
 
 export interface CategoryFieldProps {
@@ -7,22 +6,13 @@ export interface CategoryFieldProps {
 }
 
 export default function CategoryBoardField({ onCellClick, value }: CategoryFieldProps) {
-    console.log(`url('/${value?.ResourceKey}.JPG')`);
     return (
-        <Button
-            variant="destructive"
-            className="h-16 w-16 font-bold bg-cover bg-center"
-            onClick={onCellClick}
-            style={{
-                backgroundImage: value?.ResourceKey ? `url('/category/${value.ResourceKey}.JPG')` : `url('/lolIcon.svg')`,
-            }}
-        >
-            {value && (
-                <div className="flex flex-col text-sm text-white rounded">
-                    <p>{value?.Category}</p>
-                    <span>{value?.Name}</span>
-                </div>
-            )}
-        </Button>
+        <div className="w-full h-full aspect-square bg-league-grey-200 flex flex-col items-center justify-center text-white">
+            <img src={value?.ResourceKey ? `/category/${value.ResourceKey}.JPG` : "/lolIcon.svg"} className="w-3/4 h-3/4 object-contain opacity-90" alt={value?.Name || "default"} />
+            <div className="text-center text-xs md:text-sm uppercase font-league">
+                <p>{value?.Category}</p>
+                <p>{value?.Name}</p>
+            </div>
+        </div>
     );
 }

@@ -13,30 +13,32 @@ type BoardProps = {
 };
 
 export default function Board({ board, categories, championNames, onCellClick }: BoardProps) {
-    const horizontal = [null, ...categories.Horizontal];
-    const vertical = categories.Vertical;
-
     return (
-        <div className="grid gap-2">
-            <div className="flex justify-between">
-                {horizontal.map((label, index) => {
-                    if (label == null) {
-                        return <CategoryBoardField key={`null-${index}`} value={null} />;
-                    } else {
-                        return <CategoryBoardField key={label.Name} value={label} />;
-                    }
-                })}
-            </div>
+        <div
+            id="game-board"
+            className="grid grid-cols-4 grid-rows-4 gap-[1px] bg-black
+             w-full sm:w-96 md:w-[28rem] lg:w-[32rem]
+             aspect-square"
+        >
+            <CategoryBoardField value={null} />
+            <CategoryBoardField value={categories.Horizontal[0]} />
+            <CategoryBoardField value={categories.Horizontal[1]} />
+            <CategoryBoardField value={categories.Horizontal[2]} />
 
-            {board.map((row, rowIndex) => (
-                <div key={rowIndex} className="flex justify-between">
-                    <CategoryBoardField value={vertical[rowIndex]} />
-                    {row.map((value, colIndex) => {
-                        const cellIndex = rowIndex * 3 + colIndex;
-                        return <GuessBoardField key={cellIndex} cellIndex={cellIndex} value={value} championNames={championNames} onCellClick={onCellClick} />;
-                    })}
-                </div>
-            ))}
+            <CategoryBoardField value={categories.Vertical[0]} />
+            <GuessBoardField cellIndex={9} value={board[0][0]} championNames={championNames} onCellClick={onCellClick} />
+            <GuessBoardField cellIndex={9} value={board[0][1]} championNames={championNames} onCellClick={onCellClick} />
+            <GuessBoardField cellIndex={9} value={board[0][2]} championNames={championNames} onCellClick={onCellClick} />
+
+            <CategoryBoardField value={categories.Vertical[1]} />
+            <GuessBoardField cellIndex={9} value={board[1][0]} championNames={championNames} onCellClick={onCellClick} />
+            <GuessBoardField cellIndex={9} value={board[1][1]} championNames={championNames} onCellClick={onCellClick} />
+            <GuessBoardField cellIndex={9} value={board[1][2]} championNames={championNames} onCellClick={onCellClick} />
+
+            <CategoryBoardField value={categories.Vertical[2]} />
+            <GuessBoardField cellIndex={9} value={board[2][0]} championNames={championNames} onCellClick={onCellClick} />
+            <GuessBoardField cellIndex={9} value={board[2][1]} championNames={championNames} onCellClick={onCellClick} />
+            <GuessBoardField cellIndex={9} value={board[2][2]} championNames={championNames} onCellClick={onCellClick} />
         </div>
     );
 }

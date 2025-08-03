@@ -20,7 +20,6 @@ export default function GuessBoardField({ value, championNames, cellIndex, onCel
     const [inputValue, setInputValue] = useState("");
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
-
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -53,18 +52,17 @@ export default function GuessBoardField({ value, championNames, cellIndex, onCel
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
                 <Button
-                    variant="outline"
-                    className="h-16 w-16 text-3xl font-bold bg-cover bg-center"
+                    className="w-full h-full aspect-square bg-cover bg-center text-white text-xs sm:text-sm md:text-base"
                     style={{
                         backgroundImage: value?.Value?.championName ? `url('/champion/${value.Value.championName}.png')` : `url('/default.png')`,
                     }}
                 >
-                    {value?.Value ? (
-                        <div className="flex flex-col text-sm text-white rounded">
+                    {value?.Value && (
+                        <div className="bg-black/60 p-1 rounded text-center">
                             <p>{PlayerType[value.Value?.playerType]}</p>
-                            <p>{value?.Value.championName}</p>
+                            <p>{value.Value.championName}</p>
                         </div>
-                    ) : null}
+                    )}
                 </Button>
             </DialogTrigger>
 

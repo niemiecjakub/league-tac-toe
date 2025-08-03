@@ -190,34 +190,19 @@ export default function GameIdPage() {
     }
 
     return (
-        <div>
-            <h1>Game Room: {id}</h1>
-
-            <div className="mt-4">
-                <p>Messages:</p>
-                <ul>
-                    {messages.map((msg, index) => (
-                        <li key={index}>{msg}</li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="mt-6">
-                {game ? (
-                    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-                        <Card className="p-6 w-[320px]">
-                            <h1>Game status: {GameStateType[game.gameStatus]}</h1>
-                            <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
-                            <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
-                            <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} gameSlot={gameSlot} />
-                            <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
-                            <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
-                        </Card>
-                    </div>
-                ) : (
-                    <p>Loading game</p>
-                )}
-            </div>
-        </div>
+        <>
+            {game ? (
+                <Card className="flex flex-col items-center justify-center h-full w-full">
+                    <h1>Game status: {GameStateType[game.gameStatus]}</h1>
+                    <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
+                    <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
+                    <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} gameSlot={gameSlot} />
+                    <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
+                    <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
+                </Card>
+            ) : (
+                <p>Loading game</p>
+            )}
+        </>
     );
 }
