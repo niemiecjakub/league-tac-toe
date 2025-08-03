@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import { Game, GameSlot, Player } from "@/models/Game";
+import { BoardField, Categories, Game, GameSlot, Player } from "@/models/Game";
 import { Room, RoomOptions } from "@/models/Room";
 
 export const createRoom = async (roomOptions: RoomOptions): Promise<Room> => {
@@ -31,8 +31,8 @@ export const findRandomOpponent = async (): Promise<Room> => {
 export const getCurrentGame = async (roomGuid: string): Promise<Game> => {
     const { data } = await axios.get(`Game/GetGame/${roomGuid}`);
 
-    const parsedBoardState: Player[][] = typeof data.boardState === "string" ? JSON.parse(data.boardState) : data.boardState;
-    const parsedCategories = typeof data.categories === "string" ? JSON.parse(data.categories) : data.categories;
+    const parsedBoardState: BoardField[][] = typeof data.boardState === "string" ? JSON.parse(data.boardState) : data.boardState;
+    const parsedCategories: Categories = typeof data.categories === "string" ? JSON.parse(data.categories) : data.categories;
     return {
         ...data,
         boardState: parsedBoardState,
@@ -40,13 +40,13 @@ export const getCurrentGame = async (roomGuid: string): Promise<Game> => {
     };
 };
 
-export const move = async (roomGuid: string, fieldId: number): Promise<Game> => {
+export const move = async (roomGuid: string, fieldId: number, championName: string): Promise<Game> => {
     const { data } = await axios.post(`Game/Move/${roomGuid}`, null, {
-        params: { fieldId },
+        params: { fieldId, championName },
     });
 
-    const parsedBoardState: Player[][] = typeof data.boardState === "string" ? JSON.parse(data.boardState) : data.boardState;
-    const parsedCategories = typeof data.categories === "string" ? JSON.parse(data.categories) : data.categories;
+    const parsedBoardState: BoardField[][] = typeof data.boardState === "string" ? JSON.parse(data.boardState) : data.boardState;
+    const parsedCategories: Categories = typeof data.categories === "string" ? JSON.parse(data.categories) : data.categories;
     return {
         ...data,
         boardState: parsedBoardState,
@@ -57,8 +57,8 @@ export const move = async (roomGuid: string, fieldId: number): Promise<Game> => 
 export const skipMove = async (roomGuid: string): Promise<Game> => {
     const { data } = await axios.post(`Game/Move/Skip/${roomGuid}`);
 
-    const parsedBoardState: Player[][] = typeof data.boardState === "string" ? JSON.parse(data.boardState) : data.boardState;
-    const parsedCategories = typeof data.categories === "string" ? JSON.parse(data.categories) : data.categories;
+    const parsedBoardState: BoardField[][] = typeof data.boardState === "string" ? JSON.parse(data.boardState) : data.boardState;
+    const parsedCategories: Categories = typeof data.categories === "string" ? JSON.parse(data.categories) : data.categories;
     return {
         ...data,
         boardState: parsedBoardState,

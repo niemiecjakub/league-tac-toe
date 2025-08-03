@@ -1,25 +1,25 @@
 "use client";
 
 import React from "react";
-import { Categories, Player } from "@/models/Game";
+import { BoardField, Categories } from "@/models/Game";
 import CategoryBoardField from "./category-board-field";
 import GuessBoardField from "./guess-board-field";
 
 type BoardProps = {
-    board: Player[][];
+    board: BoardField[][];
     categories: Categories;
     championNames: string[];
-    onCellClick: (index: number) => void;
+    onCellClick: (index: number, champion: string) => void;
 };
 
 export default function Board({ board, categories, championNames, onCellClick }: BoardProps) {
-    const xLabels = [null, ...categories.Horizontal];
-    const yLabels = categories.Vertical;
+    const horizontal = [null, ...categories.Horizontal];
+    const vertical = categories.Vertical;
 
     return (
         <div className="grid gap-2">
             <div className="flex justify-between">
-                {xLabels.map((label, index) => {
+                {horizontal.map((label, index) => {
                     if (label == null) {
                         return <CategoryBoardField key={`null-${index}`} value={null} />;
                     } else {
@@ -30,10 +30,10 @@ export default function Board({ board, categories, championNames, onCellClick }:
 
             {board.map((row, rowIndex) => (
                 <div key={rowIndex} className="flex justify-between">
-                    <CategoryBoardField value={yLabels[rowIndex]} />
+                    <CategoryBoardField value={vertical[rowIndex]} />
                     {row.map((value, colIndex) => {
                         const cellIndex = rowIndex * 3 + colIndex;
-                        return <GuessBoardField key={cellIndex} onCellClick={() => onCellClick(cellIndex)} value={value} championNames={championNames} />;
+                        return <GuessBoardField key={cellIndex} cellIndex={cellIndex} value={value} championNames={championNames} onCellClick={onCellClick} />;
                     })}
                 </div>
             ))}

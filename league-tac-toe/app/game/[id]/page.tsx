@@ -112,6 +112,7 @@ export default function GameIdPage() {
                         setGame(updatedGame);
                         setRoom(updatedRoom);
 
+                        console.log("updatedGame", updatedGame);
                         if (updatedRoom?.turnTime != null) {
                             setTimer(updatedRoom.turnTime);
                         }
@@ -148,11 +149,13 @@ export default function GameIdPage() {
     }, [id]);
 
     //TURN LOGIC
-    async function handleClick(cellIndex: number) {
-        if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
-            const gameData = await move(game!.roomUid, cellIndex + 1);
-            setGame(gameData);
-        }
+    async function handleClick(cellIndex: number, champion: string) {
+        const gameData = await move(game!.roomUid, cellIndex + 1, champion);
+        setGame(gameData);
+        // if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
+        //     const gameData = await move(game!.roomUid, cellIndex + 1);
+        //     setGame(gameData);
+        // }
     }
 
     async function skipTurn() {
@@ -203,6 +206,7 @@ export default function GameIdPage() {
                 {game ? (
                     <div className="flex flex-col items-center justify-center min-h-screen p-4">
                         <Card className="p-6 w-[320px]">
+                            <h1>Game status: {GameStateType[game.gameStatus]}</h1>
                             <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
                             <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
                             <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} gameSlot={gameSlot} />
@@ -211,7 +215,7 @@ export default function GameIdPage() {
                         </Card>
                     </div>
                 ) : (
-                    <p>Loading game board...</p>
+                    <p>Loading game</p>
                 )}
             </div>
         </div>
