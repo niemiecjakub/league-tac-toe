@@ -25,10 +25,20 @@ export interface Categories {
     Horizontal: CategoryItem[];
 }
 
+export interface FieldValue {
+    championName: string;
+    playerType: PlayerType;
+}
+
+export interface BoardField {
+    Value: FieldValue | null;
+    History: FieldValue[];
+}
+
 export interface Game {
     id: number;
     roomUid: string;
-    boardState: Player[][];
+    boardState: BoardField[][];
     categories: Categories;
     currentPlayerTurn: PlayerType;
     gameStatus: GameStateType;

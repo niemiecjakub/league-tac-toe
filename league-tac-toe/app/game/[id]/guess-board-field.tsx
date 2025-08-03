@@ -2,21 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Player } from "@/models/Game";
+import { BoardField, PlayerType } from "@/models/Game";
 import { cn } from "@/lib/utils";
 
 export interface GuessBoardField {
-    onCellClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    value?: Player | null;
+    value?: BoardField;
     championNames: string[];
+    cellIndex: number;
+    onCellClick: (index: number, champion: string) => void;
 }
 
-export default function GuessBoardField({ onCellClick, value, championNames }: GuessBoardField) {
+export default function GuessBoardField({ value, championNames, cellIndex, onCellClick }: GuessBoardField) {
+    const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [selectedChampion, setSelectedChampion] = useState("");
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -34,24 +35,36 @@ export default function GuessBoardField({ onCellClick, value, championNames }: G
         setShowSuggestions(true);
     }, [inputValue, championNames]);
 
-    const handleSuggestionClick = (name: string) => {
-        setInputValue(name);
-        setSelectedChampion(name);
+    const handleChampionSubmit = (championName: string) => {
+        setInputValue(championName);
         setShowSuggestions(false);
+        onCellClick(cellIndex, championName);
+        setOpen(false);
     };
 
-    const onOpenChange = () => {
+    const onOpenChange = (isOpen: boolean) => {
+        setOpen(isOpen);
         setInputValue("");
         setFilteredChampions([]);
-        setSelectedChampion("");
         setShowSuggestions(false);
     };
 
     return (
-        <Dialog onOpenChange={onOpenChange}>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
-                <Button variant="outline" className="h-16 w-16 text-3xl font-bold" onClick={onCellClick}>
-                    {value ? <div>{value}</div> : null}
+                <Button
+                    variant="outline"
+                    className="h-16 w-16 text-3xl font-bold bg-cover bg-center"
+                    style={{
+                        backgroundImage: value?.Value?.championName ? `url('/champion/${value.Value.championName}.png')` : `url('/default.png')`,
+                    }}
+                >
+                    {value?.Value ? (
+                        <div className="flex flex-col text-sm text-white rounded">
+                            <p>{PlayerType[value.Value?.playerType]}</p>
+                            <p>{value?.Value.championName}</p>
+                        </div>
+                    ) : null}
                 </Button>
             </DialogTrigger>
 
@@ -82,32 +95,13 @@ export default function GuessBoardField({ onCellClick, value, championNames }: G
                     {showSuggestions && filteredChampions.length > 0 && (
                         <ul className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md border bg-white p-1 text-sm shadow">
                             {filteredChampions.map((name) => (
-                                <li key={name} className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100")} onMouseDown={() => handleSuggestionClick(name)}>
+                                <li key={name} className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100")} onMouseDown={() => handleChampionSubmit(name)}>
                                     {name}
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-
-                <DialogFooter className="sm:justify-start mt-4">
-                    <DialogClose asChild>
-                        <div className="flex w-full justify-between">
-                            <Button
-                                type="button"
-                                variant="default"
-                                onClick={() => {
-                                    console.log("Selected Champion:", selectedChampion || inputValue);
-                                }}
-                            >
-                                Submit
-                            </Button>
-                            <Button type="button" variant="secondary">
-                                Close
-                            </Button>
-                        </div>
-                    </DialogClose>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
