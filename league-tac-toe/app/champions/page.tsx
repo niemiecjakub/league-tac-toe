@@ -15,8 +15,7 @@ export default async function ChampionsPage() {
     const filter: ChampionMetaFilter = await getMetaFilters();
 
     return (
-        <div className="hidden h-full flex-1 flex-col gap-8 p-8 md:flex w-2/3">
-            <h2 className="text-2xl font-semibold tracking-tight">List of all champions</h2>
+        <div className="lg:w-2/3 sm:w-screen w-full h-full flex-1 flex-col p-4 flex">
             <DataTable data={champions} columns={columns} filter={filter} />
         </div>
     );

@@ -16,20 +16,20 @@ export function DataTableToolbar<TData>({ table, filter }: DataTableToolbarProps
     const isFiltered = table.getState().columnFilters.length > 0;
 
     return (
-        <div className="flex items-center justify-between">
-            <div className="flex flex-1 items-center gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:flex-wrap w-full">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                 <Input
                     placeholder="Filter champions..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-                    className="h-8 w-[150px] lg:w-[250px]"
+                    className="h-8 w-full sm:w-[150px] lg:w-[250px]"
                 />
                 {filter.filters.map((f) => table.getColumn(f.value) && <DataTableFacetedFilter key={f.value} column={table.getColumn(f.value)} title={f.name} options={f.options} />)}
 
                 {isFiltered && (
-                    <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()}>
+                    <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()} className="flex items-center gap-1">
                         Reset
-                        <X />
+                        <X className="h-4 w-4" />
                     </Button>
                 )}
             </div>
