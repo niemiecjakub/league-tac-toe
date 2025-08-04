@@ -13,6 +13,6 @@ export const getChampionNames = async (): Promise<string[]> => {
 };
 
 export const getMetaFilters = async (): Promise<ChampionMetaFilter> => {
-    const { data } = await axios.get("/Meta");
+    const { data } = await axios.get("/MetaFilter");
     return data;
 };

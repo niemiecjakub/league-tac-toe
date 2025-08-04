@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
     title: "League Tac Toe",
@@ -24,8 +13,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <div className="flex h-screen flex-col items-center">{children}</div>
+            <body className="antialiased">
+                <div className="w-full h-screen flex flex-col items-center">
+                    <div className="w-full bg-league-black-200  flex justify-center items-center py-2 sticky top-0 z-50 border-b-league-gold-200 border-b">
+                        <img src="/lolicon.svg" alt="League of Legends Icon" className="h-[48px]" />
+                        <h1 className="text-4xl font-semibold uppercase">League Tac Toe</h1>
+                    </div>
+                    <div className="flex h-screen flex-col items-center w-full">{children}</div>
+                </div>
             </body>
         </html>
     );

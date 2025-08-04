@@ -28,7 +28,7 @@ export const columns: ColumnDef<Champion>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="Resource" />,
         cell: ({ row }) => {
             return (
-                <div className="flex w-[100px] items-center gap-2">
+                <div className="flex items-center gap-2">
                     <Badge variant="outline">{row.getValue("resource")}</Badge>
                 </div>
             );
@@ -42,7 +42,7 @@ export const columns: ColumnDef<Champion>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="region" />,
         cell: ({ row }) => {
             return (
-                <div className="flex w-[100px] items-center gap-2">
+                <div className="flex items-center gap-2">
                     <Badge variant="outline">{row.getValue("region")}</Badge>
                 </div>
             );
@@ -58,7 +58,7 @@ export const columns: ColumnDef<Champion>[] = [
             const legacies: string[] = row.getValue("legacies");
 
             return (
-                <div className="flex w-[100px] items-center gap-2">
+                <div className="flex items-center gap-2">
                     {legacies.map((legacy) => (
                         <Badge variant="outline">{legacy}</Badge>
                     ))}
@@ -78,7 +78,7 @@ export const columns: ColumnDef<Champion>[] = [
             const positions: string[] = row.getValue("positions");
 
             return (
-                <div className="flex w-[100px] items-center gap-2">
+                <div className="flex items-center gap-2">
                     {positions.map((position) => (
                         <Badge variant="outline">{position}</Badge>
                     ))}
@@ -98,7 +98,7 @@ export const columns: ColumnDef<Champion>[] = [
             const rangeTypes: string[] = row.getValue("rangeTypes");
 
             return (
-                <div className="flex w-[100px] items-center gap-2">
+                <div className="flex  items-center gap-2">
                     {rangeTypes.map((rangeType) => (
                         <Badge variant="outline">{rangeType}</Badge>
                     ))}
