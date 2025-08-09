@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 
 export default function LobbyLocal() {
     return (
-        <Card className="w-full max-w-sm">
+        <Card className="w-full">
             <CardHeader>
                 <CardTitle>Same screen game</CardTitle>
                 <CardDescription>Play against a friend on the same device</CardDescription>
