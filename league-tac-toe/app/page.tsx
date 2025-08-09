@@ -1,20 +1,41 @@
-import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import LobbyOnline from "@/components/custom/lobby-online";
+import LobbyRandom from "@/components/custom/lobby-random";
+import LobbyLocal from "@/components/custom/lobby-local";
+import RuleList from "@/components/custom/rule-list";
 
 export default async function Home() {
     return (
-        <>
-            <Link href="/champions" className="text-blue-600 underline">
-                Champions
-            </Link>
-            <Link href="/lobby/local" className="text-blue-600 underline">
-                local
-            </Link>
-            <Link href="/lobby/online" className="text-blue-600 underline">
-                online
-            </Link>
-            <Link href="/lobby/random" className="text-blue-600 underline">
-                random
-            </Link>
-        </>
+        <div className="w-full md:w-2/3 2xl:w-2/5 h-full flex items-center flex-col gap-0.5">
+            <div className="flex gap-4 items-center justify-center py-4">
+                <img src="/images/poro.png" alt="Poro Icon" className="h-[64px] inline-block mb-2" />
+                <h1 className="text-center text-6xl font-extrabold tracking-tight text-balance">League Tac Toe</h1>
+                <img src="/images/poro.png" alt="Poro Icon" className="h-[64px] inline-block mb-2" />
+            </div>
+            <p className="text-xs">League of Legends Quiz meets Tic-Tac-Toe.</p>
+            <div className="flex flex-col items-center justify-center">
+                <p>Name champions matching categories to claim squares in a 3x3 grid.</p>
+                <p>Enable Steal Mode to swipe your opponent's square.</p>
+            </div>
+            <div className="flex w-full flex-col gap-6 my-4">
+                <Tabs defaultValue="online">
+                    <TabsList className="w-full">
+                        <TabsTrigger value="online">Online</TabsTrigger>
+                        <TabsTrigger value="random">Random</TabsTrigger>
+                        <TabsTrigger value="local">Local</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="online">
+                        <LobbyOnline />
+                    </TabsContent>
+                    <TabsContent value="random">
+                        <LobbyRandom />
+                    </TabsContent>
+                    <TabsContent value="local">
+                        <LobbyLocal />
+                    </TabsContent>
+                </Tabs>
+            </div>
+            <RuleList />
+        </div>
     );
 }
