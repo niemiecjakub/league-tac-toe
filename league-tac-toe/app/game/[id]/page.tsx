@@ -2,17 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { Game, GameSlot, GameStateType, Player } from "@/models/Game";
+import { Game, GameSlot, GameStateType, Player, PlayerType } from "@/models/Game";
 import { getCurrentGame, joinRoom, move, getRoom, skipMove } from "@/services/gameService";
-import ScoreBoard from "./score-board";
 import Board from "./board";
-import GameStatus from "./game-status";
 import DrawRequestPrompt from "./draw-request-pormpt";
-import Controls from "./controls";
 import { Card } from "@/components/ui/card";
 import { Room } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
 import { getChampionNames } from "@/services/championService";
+import { StealIcon } from "@/components/svg/svg-icons";
+import { Button } from "@/components/ui/button";
+import React from "react";
+import Loading from "@/components/custom/loading";
 
 export default function GameIdPage() {
     const params = useParams();
@@ -189,19 +190,57 @@ export default function GameIdPage() {
         // setDrawRequestedBy(null);
     }
 
+    const isDraw = game?.gameStatus === GameStateType.Finished && game?.winner === null;
+    const playerWon = game?.gameStatus === GameStateType.Finished && game?.winner !== null;
+
     return (
         <>
             {game ? (
-                <Card className="flex flex-col items-center justify-center h-full w-full">
-                    <h1>Game status: {GameStateType[game.gameStatus]}</h1>
-                    <ScoreBoard scoreX={scoreX} scoreO={scoreO} />
-                    <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
-                    <GameStatus gameState={game.gameStatus} winner={game.winner} isYourTurn={isYourTurn} timeLeft={timeLeft} gameSlot={gameSlot} />
-                    <Controls drawRequestedBy={drawRequestedBy} onRequestDraw={requestDraw} onSkipTurn={skipTurn} />
+                <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none">
+                    <div className="flex flex-col items-center justify-center w-full">
+                        <h1>Game status: {GameStateType[game.gameStatus]}</h1>
+                        <div className="flex w-full justify-center">
+                            <p className="text-xl font-bold text-center">
+                                X {scoreX} - {scoreO} O
+                            </p>
+                        </div>
+                        <div className="mt-4 flex justify-center space-x-4">
+                            {!drawRequestedBy && (
+                                <Button variant="secondary" onClick={requestDraw}>
+                                    Request Draw
+                                </Button>
+                            )}
+                            <Button variant="secondary" onClick={skipTurn}>
+                                Skip Turn
+                            </Button>
+                        </div>
+                        <div className="mt-4 text-center">
+                            {playerWon && <p className="text-lg font-semibold">Winner: {PlayerType[game?.winner!]}</p>}
+                            {isDraw && <p className="text-lg font-semibold">It's a draw!</p>}
+                            {game.gameStatus === GameStateType.InProgress && (
+                                <>
+                                    {gameSlot && <p className="text-lg font-semibold"> You are: {PlayerType[gameSlot.playerType]}</p>}
+                                    <p className="text-lg font-semibold">{isYourTurn ? "Your turn" : "Opponent's turn"}</p>
+                                    {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <div className="flex flex-col items-center justify-center sm:w-96 md:w-[28rem] lg:w-[32rem]">
+                        <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
+                        {room?.stealsEnabled && (
+                            <div className="flex items-center py-1 px-2">
+                                <StealIcon className="h-4 w-4 mr-1" />
+                                <p className="text-xs">Means that you can steal your opponent's square. You have 3 steals remaining</p>
+                            </div>
+                        )}
+                    </div>
                     <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
                 </Card>
             ) : (
-                <p>Loading game</p>
+                <div className="flex items-center justify-center h-full w-full">
+                    <Loading text="Loading game" />
+                </div>
             )}
         </>
     );
