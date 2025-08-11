@@ -59,8 +59,10 @@ export const columns: ColumnDef<Champion>[] = [
 
             return (
                 <div className="flex items-center gap-2">
-                    {legacies.map((legacy) => (
-                        <Badge variant="outline">{legacy}</Badge>
+                    {legacies.map((legacy, index) => (
+                        <Badge variant="outline" key={index}>
+                            {legacy}
+                        </Badge>
                     ))}
                 </div>
             );
@@ -79,8 +81,10 @@ export const columns: ColumnDef<Champion>[] = [
 
             return (
                 <div className="flex items-center gap-2">
-                    {positions.map((position) => (
-                        <Badge variant="outline">{position}</Badge>
+                    {positions.map((position, index) => (
+                        <Badge variant="outline" key={index}>
+                            {position}
+                        </Badge>
                     ))}
                 </div>
             );
@@ -99,8 +103,10 @@ export const columns: ColumnDef<Champion>[] = [
 
             return (
                 <div className="flex  items-center gap-2">
-                    {rangeTypes.map((rangeType) => (
-                        <Badge variant="outline">{rangeType}</Badge>
+                    {rangeTypes.map((rangeType, index) => (
+                        <Badge variant="outline" key={index}>
+                            {rangeType}
+                        </Badge>
                     ))}
                 </div>
             );
