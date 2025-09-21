@@ -7,16 +7,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BoardField, CategoryItem, PlayerType } from "@/models/Game";
 import { cn } from "@/lib/utils";
+import { PlusIcon } from "@/components/svg/svg-icons";
 
 export interface GuessBoardField {
     value?: BoardField;
     championNames: string[];
     categories: CategoryItem[];
     cellIndex: number;
+    isYourTurn: boolean;
     onCellClick: (index: number, champion: string) => void;
 }
 
-export default function GuessBoardField({ value, championNames, cellIndex, categories, onCellClick }: GuessBoardField) {
+export default function GuessBoardField({ value, championNames, cellIndex, categories, isYourTurn, onCellClick }: GuessBoardField) {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
@@ -43,6 +45,9 @@ export default function GuessBoardField({ value, championNames, cellIndex, categ
     };
 
     const onOpenChange = (isOpen: boolean) => {
+        if (!isYourTurn) {
+            return;
+        }
         setOpen(isOpen);
         setInputValue("");
         setFilteredChampions([]);
@@ -53,11 +58,12 @@ export default function GuessBoardField({ value, championNames, cellIndex, categ
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
                 <Button
-                    className="w-full h-full aspect-square bg-cover bg-center text-white text-xs sm:text-sm md:text-base cursor-pointer rounded-none"
+                    className="relative w-full h-full aspect-square bg-cover bg-center text-white text-xs sm:text-sm md:text-base cursor-pointer rounded-none"
                     style={{
                         backgroundImage: value?.Value?.championName ? `url('/champion/${value.Value.championName}.png')` : `url('/default.png')`,
                     }}
                 >
+                    <PlusIcon className="absolute top-1 right-1" />
                     {value?.Value && (
                         <div className="bg-black/60 p-1 rounded text-center">
                             <p>{PlayerType[value.Value?.playerType]}</p>
