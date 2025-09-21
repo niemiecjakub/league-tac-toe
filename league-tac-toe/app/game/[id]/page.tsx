@@ -2,12 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { Game, GameSlot, GameStateType, Player, PlayerType } from "@/models/Game";
-import { getCurrentGame, joinRoom, move, getRoom, skipMove } from "@/services/gameService";
+import { GameStateType, Player, PlayerType } from "@/models/Game";
+import { joinRoom, move, skipMove, getRoom } from "@/services/gameService";
 import Board from "./board";
 import DrawRequestPrompt from "./draw-request-pormpt";
 import { Card } from "@/components/ui/card";
-import { Room } from "@/models/Room";
+import { Room, RoomInfo } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
 import { getChampionNames } from "@/services/championService";
 import { StealIcon } from "@/components/svg/svg-icons";
@@ -20,10 +20,8 @@ export default function GameIdPage() {
     const id = params?.id as string;
 
     const [room, setRoom] = useState<Room>();
-    const [game, setGame] = useState<Game>();
-    const [gameSlot, setGameSlot] = useState<GameSlot | null>(null);
-    const [messages, setMessages] = useState<string[]>([]);
     const [champions, setChampions] = useState<string[]>([]);
+    const [messages, setMessages] = useState<string[]>([]);
 
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [scoreX, setScoreX] = useState<number>(0);
@@ -31,7 +29,9 @@ export default function GameIdPage() {
     const [drawRequestedBy, setDrawRequestedBy] = useState<Player | null>(null);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const isYourTurn: boolean = gameSlot?.playerType === game?.currentPlayerTurn;
+    const isYourTurn: boolean = room?.slot?.playerType === room?.game?.currentPlayerTurn;
+    const isDraw = room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner === null;
+    const playerWon = room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner !== null;
 
     useEffect(() => {
         let hubConnection: signalR.HubConnection;
@@ -62,15 +62,13 @@ export default function GameIdPage() {
         const fetchGame = async () => {
             if (!id) return;
 
+            console.log(id);
             try {
-                const [roomData, gameSlotData, gameData, championNames] = await Promise.all([getRoom(id), joinRoom(id), getCurrentGame(id), getChampionNames()]);
+                const [roomData, championNames] = await Promise.all([joinRoom(id), getChampionNames()]);
 
                 setRoom(roomData);
-                setGameSlot(gameSlotData);
-                setGame(gameData);
                 setChampions(championNames);
                 console.log("Room:", roomData);
-                console.log("Game:", gameData);
 
                 if (roomData?.turnTime != null) {
                     setTimer(roomData.turnTime);
@@ -89,14 +87,12 @@ export default function GameIdPage() {
                 });
 
                 hubConnection.on("PlayerJoined", async () => {
-                    const updatedGame = await getCurrentGame(id);
                     const updatedRoom = await getRoom(id);
 
-                    setGame(updatedGame);
                     setRoom(updatedRoom);
                     setMessages((prevMessages) => [...prevMessages, `🔵 User has joined`]);
-                    console.log("User Joined, fetching game data", updatedGame);
-                    if (updatedGame.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
+                    console.log("User Joined, fetching game data", updatedRoom.game);
+                    if (updatedRoom.game.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
                         setTimer(updatedRoom.turnTime);
                     }
                 });
@@ -107,13 +103,10 @@ export default function GameIdPage() {
 
                 hubConnection.on("TurnSwitch", async (message: string) => {
                     try {
-                        const updatedGame = await getCurrentGame(id);
                         const updatedRoom = await getRoom(id);
-
-                        setGame(updatedGame);
                         setRoom(updatedRoom);
+                        console.log("updatedGame", updatedRoom);
 
-                        console.log("updatedGame", updatedGame);
                         if (updatedRoom?.turnTime != null) {
                             setTimer(updatedRoom.turnTime);
                         }
@@ -151,29 +144,26 @@ export default function GameIdPage() {
 
     //TURN LOGIC
     async function handleClick(cellIndex: number, champion: string) {
-        const gameData = await move(game!.roomUid, cellIndex + 1, champion);
-        setGame(gameData);
-        // if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
-        //     const gameData = await move(game!.roomUid, cellIndex + 1);
-        //     setGame(gameData);
-        // }
+        if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
+            const roomData = await move(room?.roomGuid!, cellIndex, champion);
+            setRoom(roomData);
+        }
     }
 
     async function skipTurn() {
-        if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
-            const game = await skipMove(id);
-            setGame(game);
+        if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
+            const roomData = await skipMove(id);
+            setRoom(roomData);
         }
     }
 
     async function handleTimeout() {
-        if (isYourTurn && game?.gameStatus === GameStateType.InProgress) {
-            const updatedGame = await skipMove(id);
-            setGame(updatedGame);
+        if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
+            const roomData = await skipMove(id);
+            setRoom(roomData);
         }
     }
 
-    // DRAW LOGIC
     function requestDraw() {
         // const nextPlayer = currentPlayer === "X" ? "O" : "X";
         // setDrawRequestedBy(currentPlayer);
@@ -190,15 +180,12 @@ export default function GameIdPage() {
         // setDrawRequestedBy(null);
     }
 
-    const isDraw = game?.gameStatus === GameStateType.Finished && game?.winner === null;
-    const playerWon = game?.gameStatus === GameStateType.Finished && game?.winner !== null;
-
     return (
         <>
-            {game ? (
+            {room?.game.gameStatus === GameStateType.InProgress ? (
                 <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none">
                     <div className="flex flex-col items-center justify-center w-full">
-                        <h1>Game status: {GameStateType[game.gameStatus]}</h1>
+                        <h1>Game status: {GameStateType[room?.game.gameStatus]}</h1>
                         <div className="flex w-full justify-center">
                             <p className="text-xl font-bold text-center">
                                 X {scoreX} - {scoreO} O
@@ -215,19 +202,15 @@ export default function GameIdPage() {
                             </Button>
                         </div>
                         <div className="mt-4 text-center">
-                            {playerWon && <p className="text-lg font-semibold">Winner: {PlayerType[game?.winner!]}</p>}
+                            {playerWon && <p className="text-lg font-semibold">Winner: {PlayerType[room?.game?.winner!]}</p>}
                             {isDraw && <p className="text-lg font-semibold">It's a draw!</p>}
-                            {game.gameStatus === GameStateType.InProgress && (
-                                <>
-                                    {gameSlot && <p className="text-lg font-semibold"> You are: {PlayerType[gameSlot.playerType]}</p>}
-                                    <p className="text-lg font-semibold">{isYourTurn ? "Your turn" : "Opponent's turn"}</p>
-                                    {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
-                                </>
-                            )}
+                            {room?.slot && <p className="text-lg font-semibold"> You are: {PlayerType[room?.slot.playerType]}</p>}
+                            <p className="text-lg font-semibold">{isYourTurn ? "Your turn" : "Opponent's turn"}</p>
+                            {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center sm:w-96 md:w-[28rem] lg:w-[32rem]">
-                        <Board board={game.boardState} categories={game.categories} championNames={champions} onCellClick={handleClick} />
+                        <Board board={room?.game.boardState} categories={room?.game.categories} championNames={champions} onCellClick={handleClick} isYourTurn={isYourTurn} />
                         {room?.stealsEnabled && (
                             <div className="flex items-center py-1 px-2">
                                 <StealIcon className="h-4 w-4 mr-1" />
