@@ -8,23 +8,25 @@ import { Label } from "@/components/ui/label";
 import { BoardField, CategoryItem, PlayerType } from "@/models/Game";
 import { cn } from "@/lib/utils";
 import { PlusIcon } from "@/components/svg/svg-icons";
+import { useChampionStore } from "@/store/championStore";
+import { useRoomStore } from "@/store/roomStore";
 
 export interface GuessBoardField {
     value?: BoardField;
-    championNames: string[];
     categories: CategoryItem[];
     cellIndex: number;
-    isYourTurn: boolean;
-    onCellClick: (index: number, champion: string) => void;
 }
 
-export default function GuessBoardField({ value, championNames, cellIndex, categories, isYourTurn, onCellClick }: GuessBoardField) {
+export default function GuessBoardField({ value, cellIndex, categories }: GuessBoardField) {
+    const { championNames } = useChampionStore((state) => state);
+    const { isYourTurn, handleChampionSelect: handleClick } = useRoomStore((state) => state);
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    console.log(championNames);
     useEffect(() => {
         if (inputValue.trim() === "") {
             setFilteredChampions([]);
@@ -40,12 +42,12 @@ export default function GuessBoardField({ value, championNames, cellIndex, categ
     const handleChampionSubmit = (championName: string) => {
         setInputValue(championName);
         setShowSuggestions(false);
-        onCellClick(cellIndex, championName);
+        handleClick(cellIndex, championName);
         setOpen(false);
     };
 
     const onOpenChange = (isOpen: boolean) => {
-        if (!isYourTurn) {
+        if (!isYourTurn()) {
             return;
         }
         setOpen(isOpen);
