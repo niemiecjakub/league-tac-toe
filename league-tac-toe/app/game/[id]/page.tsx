@@ -7,76 +7,53 @@ import { joinRoom, move, skipMove, getRoom } from "@/services/gameService";
 import Board from "./board";
 import DrawRequestPrompt from "./draw-request-pormpt";
 import { Card } from "@/components/ui/card";
-import { Room, RoomInfo } from "@/models/Room";
+import { Room } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
-import { getChampionNames } from "@/services/championService";
 import { StealIcon } from "@/components/svg/svg-icons";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import Loading from "@/components/custom/loading";
+import { useChampionStore } from "@/store/championStore";
+import { useRoomStore } from "@/store/roomStore";
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
-
-    const [room, setRoom] = useState<Room>();
-    const [champions, setChampions] = useState<string[]>([]);
+    const { setChampionNames } = useChampionStore((state) => state);
+    const { room, joinRoom, updateRoom, handleTurnSkip: skipTurn, isDraw, isYourTurn, playerWon } = useRoomStore((state) => state);
     const [messages, setMessages] = useState<string[]>([]);
 
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [scoreX, setScoreX] = useState<number>(0);
     const [scoreO, setScoreO] = useState<number>(0);
     const [drawRequestedBy, setDrawRequestedBy] = useState<Player | null>(null);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-    const isYourTurn: boolean = room?.slot?.playerType === room?.game?.currentPlayerTurn;
-    const isDraw = room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner === null;
-    const playerWon = room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner !== null;
+    // const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         let hubConnection: signalR.HubConnection;
 
-        const setTimer = (turnTime: number | null) => {
-            setTimeLeft(turnTime);
+        // const setTimer = (turnTime: number | null) => {
+        //     setTimeLeft(turnTime);
 
-            if (turnTime === null) {
-                return;
-            }
+        //     if (turnTime === null) {
+        //         return;
+        //     }
 
-            if (timerRef.current) {
-                clearInterval(timerRef.current);
-            }
+        //     if (timerRef.current) {
+        //         clearInterval(timerRef.current);
+        //     }
 
-            timerRef.current = setInterval(() => {
-                setTimeLeft((prev) => {
-                    if (!prev || prev <= 1) {
-                        clearInterval(timerRef.current!);
-                        handleTimeout();
-                        return turnTime;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
-        };
-
-        const fetchGame = async () => {
-            if (!id) return;
-
-            console.log(id);
-            try {
-                const [roomData, championNames] = await Promise.all([joinRoom(id), getChampionNames()]);
-
-                setRoom(roomData);
-                setChampions(championNames);
-                console.log("Room:", roomData);
-
-                if (roomData?.turnTime != null) {
-                    setTimer(roomData.turnTime);
-                }
-            } catch (error) {
-                console.error("Failed to join game:", error);
-            }
-        };
+        //     timerRef.current = setInterval(() => {
+        //         setTimeLeft((prev) => {
+        //             if (!prev || prev <= 1) {
+        //                 clearInterval(timerRef.current!);
+        //                 handleTimeout();
+        //                 return turnTime;
+        //             }
+        //             return prev - 1;
+        //         });
+        //     }, 1000);
+        // };
 
         const setupSignalR = async () => {
             try {
@@ -87,14 +64,12 @@ export default function GameIdPage() {
                 });
 
                 hubConnection.on("PlayerJoined", async () => {
-                    const updatedRoom = await getRoom(id);
-
-                    setRoom(updatedRoom);
+                    updateRoom(id);
                     setMessages((prevMessages) => [...prevMessages, `🔵 User has joined`]);
-                    console.log("User Joined, fetching game data", updatedRoom.game);
-                    if (updatedRoom.game.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
-                        setTimer(updatedRoom.turnTime);
-                    }
+                    // console.log("User Joined, fetching game data", updatedRoom.game);
+                    // if (updatedRoom.game.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
+                    //     // setTimer(updatedRoom.turnTime);
+                    // }
                 });
 
                 hubConnection.on("PlayerLeft", () => {
@@ -102,19 +77,8 @@ export default function GameIdPage() {
                 });
 
                 hubConnection.on("TurnSwitch", async (message: string) => {
-                    try {
-                        const updatedRoom = await getRoom(id);
-                        setRoom(updatedRoom);
-                        console.log("updatedGame", updatedRoom);
-
-                        if (updatedRoom?.turnTime != null) {
-                            setTimer(updatedRoom.turnTime);
-                        }
-
-                        setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
-                    } catch (err) {
-                        console.error("Error during TurnSwitch update:", err);
-                    }
+                    updateRoom(id);
+                    setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
                 if (id) {
@@ -125,8 +89,9 @@ export default function GameIdPage() {
             }
         };
 
-        fetchGame();
+        joinRoom(id);
         setupSignalR();
+        setChampionNames();
 
         return () => {
             if (hubConnection) {
@@ -136,33 +101,18 @@ export default function GameIdPage() {
                 hubConnection.off("TurnSwitch");
                 hubConnection.stop();
             }
-            if (timerRef.current) {
-                clearInterval(timerRef.current);
-            }
+            // if (timerRef.current) {
+            //     clearInterval(timerRef.current);
+            // }
         };
     }, [id]);
 
-    //TURN LOGIC
-    async function handleClick(cellIndex: number, champion: string) {
-        if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
-            const roomData = await move(room?.roomGuid!, cellIndex, champion);
-            setRoom(roomData);
-        }
-    }
-
-    async function skipTurn() {
-        if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
-            const roomData = await skipMove(id);
-            setRoom(roomData);
-        }
-    }
-
-    async function handleTimeout() {
-        if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
-            const roomData = await skipMove(id);
-            setRoom(roomData);
-        }
-    }
+    // async function handleTimeout() {
+    //     if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
+    //         const roomData = await skipMove(id);
+    //         setRoom(roomData);
+    //     }
+    // }
 
     function requestDraw() {
         // const nextPlayer = currentPlayer === "X" ? "O" : "X";
@@ -197,24 +147,24 @@ export default function GameIdPage() {
                                     Request Draw
                                 </Button>
                             )}
-                            <Button variant="secondary" onClick={skipTurn}>
+                            <Button variant="secondary" onClick={() => skipTurn(id)}>
                                 Skip Turn
                             </Button>
                         </div>
                         <div className="mt-4 text-center">
-                            {playerWon && <p className="text-lg font-semibold">Winner: {PlayerType[room?.game?.winner!]}</p>}
-                            {isDraw && <p className="text-lg font-semibold">It's a draw!</p>}
+                            {playerWon() && <p className="text-lg font-semibold">Winner: {PlayerType[room?.game?.winner!]}</p>}
+                            {isDraw() && <p className="text-lg font-semibold">It's a draw!</p>}
                             {room?.slot && <p className="text-lg font-semibold"> You are: {PlayerType[room?.slot.playerType]}</p>}
-                            <p className="text-lg font-semibold">{isYourTurn ? "Your turn" : "Opponent's turn"}</p>
+                            <p className="text-lg font-semibold">{isYourTurn() ? "Your turn" : "Opponent's turn"}</p>
                             {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center sm:w-96 md:w-[28rem] lg:w-[32rem]">
-                        <Board board={room?.game.boardState} categories={room?.game.categories} championNames={champions} onCellClick={handleClick} isYourTurn={isYourTurn} />
+                        <Board board={room?.game.boardState} categories={room?.game.categories} />
                         {room?.stealsEnabled && (
                             <div className="flex items-center py-1 px-2">
                                 <StealIcon className="h-4 w-4 mr-1" />
-                                <p className="text-xs">Means that you can steal your opponent's square. You have 3 steals remaining</p>
+                                <p className="text-xs">Means that you can steal your opponent's square. You have {room.slot.steals} steals remaining</p>
                             </div>
                         )}
                     </div>

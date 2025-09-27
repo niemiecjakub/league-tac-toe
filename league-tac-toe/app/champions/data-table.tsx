@@ -25,7 +25,7 @@ import { ChampionMetaFilter } from "@/models/ChampionMeta";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    filter: ChampionMetaFilter;
+    filter: ChampionMetaFilter | null;
 }
 
 export function DataTable<TData, TValue>({ columns, data, filter }: DataTableProps<TData, TValue>) {

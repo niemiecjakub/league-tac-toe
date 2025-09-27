@@ -1,22 +1,22 @@
-import { Metadata } from "next";
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
+import { useEffect } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { getChampions, getMetaFilters } from "@/services/championService";
-import { Champion } from "@/models/Champion";
-import { ChampionMetaFilter } from "@/models/ChampionMeta";
+import { useChampionStore } from "@/store/championStore";
 
-export const metadata: Metadata = {
-    title: "League Of Legends Champions",
-    description: "A list of all League of Legends champions.",
-};
+export default function ChampionsPage() {
+    const { champions, championFilter, setChampions, setChampionFilters } = useChampionStore();
 
-export default async function ChampionsPage() {
-    const champions: Champion[] = await getChampions();
-    const filter: ChampionMetaFilter = await getMetaFilters();
+    useEffect(() => {
+        setChampions();
+        setChampionFilters();
+    }, []);
 
     return (
         <div className="lg:w-2/3 sm:w-screen w-full h-full flex-1 flex-col p-4 flex">
-            <DataTable data={champions} columns={columns} filter={filter} />
+            <DataTable data={champions} columns={columns} filter={championFilter} />
         </div>
     );
 }

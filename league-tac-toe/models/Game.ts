@@ -13,6 +13,7 @@ export type Player = "X" | "O" | null;
 
 export interface GameSlot {
     playerType: PlayerType;
+    steals: number | null;
 }
 
 export interface CategoryItem {
