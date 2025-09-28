@@ -2,31 +2,25 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { GameStateType, Player, PlayerType } from "@/models/Game";
-import { joinRoom, move, skipMove, getRoom } from "@/services/gameService";
 import Board from "./board";
-import DrawRequestPrompt from "./draw-request-pormpt";
 import { Card } from "@/components/ui/card";
-import { Room } from "@/models/Room";
 import { connectToGameHub } from "@/lib/signalr";
 import { StealIcon } from "@/components/svg/svg-icons";
-import { Button } from "@/components/ui/button";
 import React from "react";
 import Loading from "@/components/custom/loading";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
+import Dashboard from "./dashboard";
+import PostGameControls from "./post-game-controls";
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
     const { setChampionNames } = useChampionStore((state) => state);
-    const { room, joinRoom, updateRoom, handleTurnSkip: skipTurn, isDraw, isYourTurn, playerWon } = useRoomStore((state) => state);
-    const [messages, setMessages] = useState<string[]>([]);
+    const { room, joinRoom, updateRoom } = useRoomStore((state) => state);
 
+    const [messages, setMessages] = useState<string[]>([]);
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
-    const [scoreX, setScoreX] = useState<number>(0);
-    const [scoreO, setScoreO] = useState<number>(0);
-    const [drawRequestedBy, setDrawRequestedBy] = useState<Player | null>(null);
     // const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -81,6 +75,11 @@ export default function GameIdPage() {
                     setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
+                hubConnection.on("DrawRequested", async (message: string) => {
+                    updateRoom(id);
+                    setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
+                });
+
                 if (id) {
                     await hubConnection.invoke("JoinRoom", id);
                 }
@@ -114,51 +113,13 @@ export default function GameIdPage() {
     //     }
     // }
 
-    function requestDraw() {
-        // const nextPlayer = currentPlayer === "X" ? "O" : "X";
-        // setDrawRequestedBy(currentPlayer);
-        // setCurrentPlayer(nextPlayer);
-        // setTimeLeft(TURN_TIME);
-    }
-
-    function acceptDraw() {
-        // setWinner("Draw");
-        // setDrawRequestedBy(null);
-    }
-
-    function rejectDraw() {
-        // setDrawRequestedBy(null);
-    }
-
     return (
         <>
-            {room?.game.gameStatus === GameStateType.InProgress ? (
+            {/* {room?.game.gameStatus === GameStateType.InProgress ? ( */}
+            {room?.game != null ? (
                 <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none">
-                    <div className="flex flex-col items-center justify-center w-full">
-                        <h1>Game status: {GameStateType[room?.game.gameStatus]}</h1>
-                        <div className="flex w-full justify-center">
-                            <p className="text-xl font-bold text-center">
-                                X {scoreX} - {scoreO} O
-                            </p>
-                        </div>
-                        <div className="mt-4 flex justify-center space-x-4">
-                            {!drawRequestedBy && (
-                                <Button variant="secondary" onClick={requestDraw}>
-                                    Request Draw
-                                </Button>
-                            )}
-                            <Button variant="secondary" onClick={() => skipTurn(id)}>
-                                Skip Turn
-                            </Button>
-                        </div>
-                        <div className="mt-4 text-center">
-                            {playerWon() && <p className="text-lg font-semibold">Winner: {PlayerType[room?.game?.winner!]}</p>}
-                            {isDraw() && <p className="text-lg font-semibold">It's a draw!</p>}
-                            {room?.slot && <p className="text-lg font-semibold"> You are: {PlayerType[room?.slot.playerType]}</p>}
-                            <p className="text-lg font-semibold">{isYourTurn() ? "Your turn" : "Opponent's turn"}</p>
-                            {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
-                        </div>
-                    </div>
+                    <Dashboard />
+                    {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
                     <div className="flex flex-col items-center justify-center sm:w-96 md:w-[28rem] lg:w-[32rem]">
                         <Board board={room?.game.boardState} categories={room?.game.categories} />
                         {room?.stealsEnabled && (
@@ -168,7 +129,7 @@ export default function GameIdPage() {
                             </div>
                         )}
                     </div>
-                    <DrawRequestPrompt drawRequestedBy={drawRequestedBy} onAccept={acceptDraw} onReject={rejectDraw} />
+                    <PostGameControls />
                 </Card>
             ) : (
                 <div className="flex items-center justify-center h-full w-full">
