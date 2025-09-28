@@ -11,7 +11,6 @@ type BoardProps = {
 };
 
 export default function Board({ board, categories }: BoardProps) {
-    console.log(board);
     return (
         <div id="game-board" className="w-full grid grid-cols-4 grid-rows-4 aspect-square">
             <CategoryBoardField value={null} />

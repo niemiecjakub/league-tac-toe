@@ -12,13 +12,14 @@ type RoomStore = {
     handleTurnSkip: () => Promise<void>;
     handleSendDrawRequest: () => Promise<void>;
     handleRespondDrawRequest: () => Promise<void>;
+    handleRoomLeave: () => Promise<void>;
 
     // Derived
     isYourTurn: () => boolean;
-    isDraw: () => boolean;
-    playerWon: () => boolean;
+    gameFinishedWithDraw: () => boolean;
+    gameFinishedWithPlayerWin: () => boolean;
+    youWon: () => boolean;
     opponentDrawRequested: () => boolean;
-
 };
 export const useRoomStore = create<RoomStore>((set, get) => ({
     room: undefined,
@@ -84,23 +85,30 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
             set({ room: roomData });
         }
     },
+    handleRoomLeave: async () => {
+        set({ room: undefined });
+    },
 
     // Derived
     isYourTurn: () => {
         const room = get().room;
         return room?.slot?.playerType === room?.game?.currentPlayerTurn;
     },
-    isDraw: () => {
+    gameFinishedWithDraw: () => {
         const room = get().room;
         return room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner === null;
     },
-    playerWon: () => {
+    gameFinishedWithPlayerWin: () => {
         const room = get().room;
         return room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner !== null;
+    },
+    youWon: () => {
+        const room = get().room;
+        return room?.game?.winner === room?.slot?.playerType;
     },
     opponentDrawRequested: () => {
         const room = get().room;
         const slot = room?.slot;
         return room?.game?.drawRequestedId != null && room?.game?.drawRequestedId !== slot?.playerType;
-    }
+    },
 }));
