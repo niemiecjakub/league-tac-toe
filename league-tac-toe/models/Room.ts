@@ -1,4 +1,5 @@
 import { Game, GameSlot } from "./Game";
+import { Score } from "./Score";
 
 export interface Room extends RoomInfo {
     game: Game;
@@ -10,6 +11,7 @@ export interface RoomInfo {
     turnTime: number | null;
     stealsEnabled: boolean;
     isPublic: boolean;
+    score: Score;
 }
 
 export interface RoomOptions {

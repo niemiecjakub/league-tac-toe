@@ -79,3 +79,33 @@ export const skipMove = async (roomGuid: string): Promise<Room> => {
     data.game = gameData;
     return data;
 };
+
+export const sendDrawRequest = async (roomGuid: string): Promise<Room> => {
+    const { data } = await axios.post(`Game/Move/RequestDraw/${roomGuid}`);
+
+    const parsedBoardState: BoardField[][] = typeof data.game.boardState === "string" ? JSON.parse(data.game.boardState) : data.game.boardState;
+    const parsedCategories: Categories = typeof data.game.categories === "string" ? JSON.parse(data.game.categories) : data.game.categories;
+    const gameData = {
+        ...data.game,
+        boardState: parsedBoardState,
+        categories: parsedCategories,
+    };
+
+    data.game = gameData;
+    return data;
+};
+
+export const respondDrawRequest = async (roomGuid: string): Promise<Room> => {
+    const { data } = await axios.post(`Game/Move/RespondDrawRequest/${roomGuid}`);
+
+    const parsedBoardState: BoardField[][] = typeof data.game.boardState === "string" ? JSON.parse(data.game.boardState) : data.game.boardState;
+    const parsedCategories: Categories = typeof data.game.categories === "string" ? JSON.parse(data.game.categories) : data.game.categories;
+    const gameData = {
+        ...data.game,
+        boardState: parsedBoardState,
+        categories: parsedCategories,
+    };
+
+    data.game = gameData;
+    return data;
+};

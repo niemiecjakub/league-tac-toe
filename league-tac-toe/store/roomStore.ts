@@ -1,6 +1,6 @@
 import { GameStateType } from "@/models/Game";
 import { Room } from "@/models/Room";
-import { getRoom, joinRoom, move, skipMove } from "@/services/gameService";
+import { getRoom, joinRoom, move, respondDrawRequest, sendDrawRequest, skipMove } from "@/services/gameService";
 import { create } from "zustand";
 
 type RoomStore = {
@@ -9,12 +9,16 @@ type RoomStore = {
     joinRoom: (roomGuid: string) => Promise<void>;
     updateRoom: (roomGuid: string) => Promise<void>;
     handleChampionSelect: (cellIndex: number, champion: string) => Promise<void>;
-    handleTurnSkip: (roomGuid: string) => Promise<void>;
+    handleTurnSkip: () => Promise<void>;
+    handleSendDrawRequest: () => Promise<void>;
+    handleRespondDrawRequest: () => Promise<void>;
 
     // Derived
     isYourTurn: () => boolean;
     isDraw: () => boolean;
     playerWon: () => boolean;
+    opponentDrawRequested: () => boolean;
+
 };
 export const useRoomStore = create<RoomStore>((set, get) => ({
     room: undefined,
@@ -50,17 +54,33 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
     },
 
     handleChampionSelect: async (cellIndex, champion) => {
-        const { room } = get();
-        if (room && room.game.gameStatus === GameStateType.InProgress) {
+        const { room, isYourTurn } = get();
+        if (isYourTurn() && room?.game.gameStatus === GameStateType.InProgress) {
             const roomData = await move(room.roomGuid, cellIndex, champion);
             set({ room: roomData });
         }
     },
 
-    handleTurnSkip: async (roomGuid) => {
+    handleTurnSkip: async () => {
+        const { room, isYourTurn } = get();
+        if (isYourTurn() && room?.game.gameStatus === GameStateType.InProgress) {
+            const roomData = await skipMove(room.roomGuid);
+            set({ room: roomData });
+        }
+    },
+
+    handleSendDrawRequest: async () => {
+        const { room, isYourTurn } = get();
+        if (isYourTurn() && room?.game.gameStatus === GameStateType.InProgress) {
+            const roomData = await sendDrawRequest(room.roomGuid);
+            set({ room: roomData });
+        }
+    },
+
+    handleRespondDrawRequest: async () => {
         const { room } = get();
-        if (room && room.game.gameStatus === GameStateType.InProgress) {
-            const roomData = await skipMove(roomGuid);
+        if (room?.game.gameStatus === GameStateType.InProgress) {
+            const roomData = await respondDrawRequest(room.roomGuid);
             set({ room: roomData });
         }
     },
@@ -78,4 +98,9 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
         const room = get().room;
         return room?.game?.gameStatus === GameStateType.Finished && room?.game?.winner !== null;
     },
+    opponentDrawRequested: () => {
+        const room = get().room;
+        const slot = room?.slot;
+        return room?.game?.drawRequestedId != null && room?.game?.drawRequestedId !== slot?.playerType;
+    }
 }));

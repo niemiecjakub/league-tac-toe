@@ -19,14 +19,13 @@ export interface GuessBoardField {
 
 export default function GuessBoardField({ value, cellIndex, categories }: GuessBoardField) {
     const { championNames } = useChampionStore((state) => state);
-    const { isYourTurn, handleChampionSelect: handleClick } = useRoomStore((state) => state);
+    const { isYourTurn, handleChampionSelect } = useRoomStore((state) => state);
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    console.log(championNames);
     useEffect(() => {
         if (inputValue.trim() === "") {
             setFilteredChampions([]);
@@ -42,7 +41,7 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
     const handleChampionSubmit = (championName: string) => {
         setInputValue(championName);
         setShowSuggestions(false);
-        handleClick(cellIndex, championName);
+        handleChampionSelect(cellIndex, championName);
         setOpen(false);
     };
 

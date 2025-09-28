@@ -45,4 +45,5 @@ export interface Game {
     currentPlayerTurn: PlayerType;
     gameStatus: GameStateType;
     winner: PlayerType | null;
+    drawRequestedId: PlayerType | null;
 }
