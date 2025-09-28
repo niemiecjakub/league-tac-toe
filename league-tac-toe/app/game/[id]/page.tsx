@@ -117,10 +117,10 @@ export default function GameIdPage() {
         <>
             {/* {room?.game.gameStatus === GameStateType.InProgress ? ( */}
             {room?.game != null ? (
-                <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none">
+                <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem]">
                     <Dashboard />
                     {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
-                    <div className="flex flex-col items-center justify-center sm:w-96 md:w-[28rem] lg:w-[32rem]">
+                    <div className="flex flex-col items-center justify-center">
                         <Board board={room?.game.boardState} categories={room?.game.categories} />
                         {room?.stealsEnabled && (
                             <div className="flex items-center py-1 px-2">
