@@ -6,7 +6,7 @@ export default function RuleItem({ rule }: RuleItemProps) {
     return (
         <div className="flex items-start">
             <img src="/images/ezreal.png" alt="Poro Icon" className="h-[16px] inline-block mr-2" />
-            <p className="text-sm">{rule}</p>
+            <p className="text-xs md:text-sm">{rule}</p>
         </div>
     );
 }

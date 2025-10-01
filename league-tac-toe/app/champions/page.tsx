@@ -14,7 +14,7 @@ export default function ChampionsPage() {
     }, []);
 
     return (
-        <div className="lg:w-2/3 sm:w-screen w-full h-full flex-1 flex-col p-4 flex">
+        <div className="w-screen lg:w-2/3 h-full flex-1 flex-col p-4 flex">
             <DataTable data={champions} columns={columns} filter={championFilter} />
         </div>
     );

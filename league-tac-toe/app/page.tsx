@@ -9,13 +9,13 @@ export default async function Home() {
         <div className="w-full md:w-2/3 2xl:w-2/5 h-full flex items-center flex-col gap-0.5">
             <div className="flex gap-4 items-baseline justify-center py-4">
                 <img src="/images/poro.png" alt="Poro Icon" className="h-[32px]" />
-                <h1 className="text-center text-6xl font-extrabold tracking-tight text-balance">League Tac Toe</h1>
+                <h1 className="text-center text-4xl lg:text-6xl font-extrabold tracking-tight text-balance">League Tac Toe</h1>
                 <img src="/images/poro.png" alt="Poro Icon" className="h-[32px]" />
             </div>
             <p className="text-xs">League of Legends Quiz meets Tic-Tac-Toe.</p>
             <div className="flex flex-col items-center justify-center">
-                <p>Name champions matching categories to claim squares in a 3x3 grid.</p>
-                <p>Enable Steal Mode to swipe your opponent's square.</p>
+                <p className="text-xs lg:text-lg">Name champions matching categories to claim squares in a 3x3 grid.</p>
+                <p className="text-xs lg:text-lg">Enable Steal Mode to swipe your opponent's square.</p>
             </div>
             <div className="flex w-full flex-col gap-6 my-4">
                 <Tabs defaultValue="online">
