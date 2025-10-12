@@ -1,0 +1,117 @@
+{
+    "navbar": {
+        "champions": "Campeões",
+        "selectLanguage": "Selecionar idioma"
+    },
+    "home": {
+        "subtitle": "Quiz de League of Legends encontra Jogo da Velha.",
+        "description1": "Nomeie campeões que correspondam às categorias para conquistar quadrados em uma grade 3x3.",
+        "description2": "Ative o Modo Roubo para tomar o quadrado do seu oponente.",
+        "online": "Online",
+        "randomOpponent": "Oponente aleatório",
+        "sameScreen": "Mesma tela",
+        "timePerTurn": "Tempo por turno",
+        "unlimited": "ilimitado",
+        "limited": "{number} segundos",
+        "enableSteals": "Ativar roubos",
+        "yes": "Sim",
+        "no": "Não",
+        "create": "Criar",
+        "start": "Iniciar",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Entrar em sala existente",
+                    "description": "Digite o código da sala e entre no jogo",
+                    "join": "Entrar"
+                },
+                "createRoom": {
+                    "title": "Criar sala",
+                    "description": "Desafie um amigo para um jogo online"
+                }
+            },
+            "random": {
+                "title": "Encontrar oponente aleatório",
+                "description": "Jogue contra um oponente aleatório"
+            },
+            "local": {
+                "title": "Jogo na mesma tela",
+                "description": "Jogue contra um amigo no mesmo dispositivo"
+            }
+        },
+        "howToPlay": "Como jogar?",
+        "rules": [
+            "Uma grade de 3 x 3 é preenchida com critérios como legado, posição, recurso, tipo de alcance e região.",
+            "Coloque seu marcador, um X ou O, em um dos quadrados se você conseguir nomear um campeão de League of Legends que atenda aos critérios da linha superior e do lado esquerdo.",
+            "O primeiro a fazer três em linha, vertical, horizontal ou diagonalmente, vence.",
+            "Com o modo roubo ativado, cada jogador tem 3 roubos no total, onde é possível roubar um quadrado ocupado pelo jogador adversário.",
+            "Irrite seu oponente e roube um quadrado nomeando um campeão diferente do que já está na posição da grade."
+        ]
+    },
+    "champions": {
+        "noResults": "Nenhum resultado.",
+        "sorting": {
+            "asc": "Ascendente",
+            "desc": "Descendente",
+            "hide": "Ocultar"
+        },
+        "filter": {
+            "noResults": "Nenhum resultado encontrado.",
+            "clear": "Limpar filtros",
+            "selected": "{number} selecionado(s)"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "{selected} de {total} linha(s) selecionada(s).",
+            "pageSelected": "Página {current} de {total}",
+            "rowsPerPage": "Linhas por página",
+            "firstPage": "Ir para a primeira página",
+            "previousPage": "Ir para a página anterior",
+            "nextPage": "Ir para a próxima página",
+            "lastPage": "Ir para a última página"
+        },
+        "toolbar": {
+            "reset": "Redefinir",
+            "filterChampions": "Filtrar campeões..."
+        },
+        "options": {
+            "view": "Visualizar",
+            "toggleColumns": "Alternar colunas"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "Jogo finalizado",
+            "draw": "Empate!",
+            "youWon": "Você venceu!",
+            "youLost": "Você perdeu!",
+            "leave": "Sair",
+            "playAgain": "Jogar novamente"
+        },
+        "field": {
+            "champion": "Campeão",
+            "enterChampion": "Digite o campeão"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Seu oponente sugeriu um empate",
+                "acceptDraw": "Aceitar empate",
+                "drawRequestSent": "Pedido de empate enviado",
+                "requestDraw": "Pedir empate"
+            },
+            "youAre": "Você é '{player}'",
+            "you": "Você",
+            "opponent": "Oponente",
+            "skipTurn": "Pular turno",
+            "noTimeLimit": "Sem limite de tempo"
+        },
+        "waitingRoom": {
+            "roomCode": "Código da sala",
+            "shareCode": "Compartilhe o código ou link da sala",
+            "waitingForPlayer": "Aguardando outro jogador entrar..."
+        },
+        "info": {
+            "timeLeft": "Tempo restante: {timeLeft}s",
+            "remainingSteals": "Significa que você pode roubar o quadrado do seu oponente. Você ainda tem {steals} roubos restantes"
+        }
+    }
+}

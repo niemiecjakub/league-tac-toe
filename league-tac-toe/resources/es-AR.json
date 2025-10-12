@@ -1,0 +1,117 @@
+{
+    "navbar": {
+        "champions": "Campeones",
+        "selectLanguage": "Seleccionar idioma"
+    },
+    "home": {
+        "subtitle": "El Quiz de League of Legends se cruza con el Ta-Te-Tí.",
+        "description1": "Nombrá campeones que cumplan con las categorías para ganar casillas en una cuadrícula de 3x3.",
+        "description2": "Activá el Modo Robo para sacarle una casilla a tu oponente.",
+        "online": "En línea",
+        "randomOpponent": "Oponente aleatorio",
+        "sameScreen": "Misma pantalla",
+        "timePerTurn": "Tiempo por turno",
+        "unlimited": "ilimitado",
+        "limited": "{number} segundos",
+        "enableSteals": "Activar robos",
+        "yes": "Sí",
+        "no": "No",
+        "create": "Crear",
+        "start": "Empezar",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Unirse a una sala existente",
+                    "description": "Ingresá el código de la sala y unite al juego",
+                    "join": "Unirse"
+                },
+                "createRoom": {
+                    "title": "Crear sala",
+                    "description": "Desafiá a un amigo a una partida en línea"
+                }
+            },
+            "random": {
+                "title": "Encontrar oponente aleatorio",
+                "description": "Jugá contra un oponente al azar"
+            },
+            "local": {
+                "title": "Juego en la misma pantalla",
+                "description": "Jugá contra un amigo en el mismo dispositivo"
+            }
+        },
+        "howToPlay": "¿Cómo se juega?",
+        "rules": [
+            "Una cuadrícula de 3 x 3 se completa con criterios como legado, posición, recurso, tipo de alcance y región.",
+            "Colocá tu marca, una X u O, en una de las casillas si podés nombrar un campeón de League of Legends que cumpla los criterios de la fila superior y el costado izquierdo.",
+            "El primero en hacer tres en línea —ya sea vertical, horizontal o diagonal— gana.",
+            "Con el modo robo activado, cada jugador tiene 3 robos en total, donde se puede robar una casilla ocupada por el jugador rival.",
+            "Enojá a tu oponente y robale una casilla nombrando un campeón distinto al que ya está en esa posición de la cuadrícula."
+        ]
+    },
+    "champions": {
+        "noResults": "No hay resultados.",
+        "sorting": {
+            "asc": "Ascendente",
+            "desc": "Descendente",
+            "hide": "Ocultar"
+        },
+        "filter": {
+            "noResults": "No se encontraron resultados.",
+            "clear": "Limpiar filtros",
+            "selected": "{number} seleccionado(s)"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "{selected} de {total} fila(s) seleccionada(s).",
+            "pageSelected": "Página {current} de {total}",
+            "rowsPerPage": "Filas por página",
+            "firstPage": "Ir a la primera página",
+            "previousPage": "Ir a la página anterior",
+            "nextPage": "Ir a la página siguiente",
+            "lastPage": "Ir a la última página"
+        },
+        "toolbar": {
+            "reset": "Reiniciar",
+            "filterChampions": "Filtrar campeones..."
+        },
+        "options": {
+            "view": "Ver",
+            "toggleColumns": "Mostrar/ocultar columnas"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "Partida terminada",
+            "draw": "¡Empate!",
+            "youWon": "¡Ganaste!",
+            "youLost": "Perdiste",
+            "leave": "Salir",
+            "playAgain": "Jugar de nuevo"
+        },
+        "field": {
+            "champion": "Campeón",
+            "enterChampion": "Ingresá el campeón"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Tu oponente propuso un empate",
+                "acceptDraw": "Aceptar empate",
+                "drawRequestSent": "Solicitud de empate enviada",
+                "requestDraw": "Pedir empate"
+            },
+            "youAre": "Sos '{player}'",
+            "you": "Vos",
+            "opponent": "Oponente",
+            "skipTurn": "Saltar turno",
+            "noTimeLimit": "Sin límite de tiempo"
+        },
+        "waitingRoom": {
+            "roomCode": "Código de sala",
+            "shareCode": "Compartí el código o el enlace de la sala",
+            "waitingForPlayer": "Esperando que otro jugador se una..."
+        },
+        "info": {
+            "timeLeft": "Tiempo restante: {timeLeft}s",
+            "remainingSteals": "Significa que podés robarle la casilla a tu oponente. Te quedan {steals} robos"
+        }
+    }
+}

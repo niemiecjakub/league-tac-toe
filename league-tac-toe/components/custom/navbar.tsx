@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { DarkMode, LightMode } from "../svg/svg-icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MODE_KEY, SUPPORTED_CULTURES, UiMode, useUiStore } from "@/store/uiStore";
+import { MODE_KEY, UiMode, useUiStore } from "@/store/uiStore";
 import CountryFlag from "./country-flag";
 import { Locale, useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { SUPPORTED_CULTURES, DEFAULT_LANG } from "@/i18n/routing";
 
 export default function Navbar() {
     const { mode, setMode } = useUiStore((state) => state);
@@ -37,7 +38,7 @@ export default function Navbar() {
 
     const getFlagCode = (locale: string) => {
         const culture = SUPPORTED_CULTURES.find((c) => c.langCode === locale);
-        return culture ? culture.flagCode : "US";
+        return culture ? culture.flagCode : DEFAULT_LANG.flagCode;
     };
 
     return (

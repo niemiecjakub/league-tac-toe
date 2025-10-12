@@ -39,6 +39,7 @@
                 "description": "Play against a friend on the same device"
             }
         },
+        "howToPlay": "How to play?",
         "rules": [
             "A 3 x 3 square grid is lined up with criteria like legacy, position, resource, rangetype and region.",
             "Place your marker, an X or O, in one of the squares if you can name League of Legends champion that matches the criteria across the top row and left hand side.",
@@ -69,7 +70,8 @@
             "lastPage": "Go to last page"
         },
         "toolbar": {
-            "reset": "Reset"
+            "reset": "Reset",
+            "filterChampions": "Filter champions..."
         },
         "options": {
             "view": "View",
@@ -77,13 +79,14 @@
         }
     },
     "game": {
-        "timeLeft": "Time left",
-        "gameFinished": "Game finished",
-        "draw": "It's a draw!",
-        "youWon": "You won!",
-        "youLost": "You lost!",
-        "leave": "Leave",
-        "playAgain": "Play again",
+        "postGame": {
+            "gameFinished": "Game finished",
+            "draw": "It's a draw!",
+            "youWon": "You won!",
+            "youLost": "You lost!",
+            "leave": "Leave",
+            "playAgain": "Play again"
+        },
         "field": {
             "champion": "Champion",
             "enterChampion": "Enter champion"
@@ -95,18 +98,20 @@
                 "drawRequestSent": "Draw request sent",
                 "requestDraw": "Request Draw"
             },
-            "general": {
-                "youAre": "You are",
-                "you": "You",
-                "opponent": "Opponent",
-                "skipTurn": "Skip Turn",
-                "noTimeLimit": "No time limit"
-            }
+            "youAre": "You are '{player}'",
+            "you": "You",
+            "opponent": "Opponent",
+            "skipTurn": "Skip Turn",
+            "noTimeLimit": "No time limit"
         },
         "waitingRoom": {
             "roomCode": "Room code",
             "shareCode": "Share room code or link",
             "waitingForPlayer": "Waiting for another player to join..."
+        },
+        "info": {
+            "timeLeft": "Time left: {timeLeft}s",
+            "remainingSteals": "Means that you can steal your opponent's square. You have {steals} steals remaining"
         }
     }
 }

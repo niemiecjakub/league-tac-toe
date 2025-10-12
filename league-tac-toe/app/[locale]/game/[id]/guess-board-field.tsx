@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { PlusIcon } from "@/components/svg/svg-icons";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
+import { useTranslations } from "next-intl";
 
 export interface GuessBoardField {
     value?: BoardField;
@@ -25,6 +26,7 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    const t = useTranslations("game.field");
 
     useEffect(() => {
         if (inputValue.trim() === "") {
@@ -76,13 +78,13 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
 
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Enter champion</DialogTitle>
+                    <DialogTitle>{t("enterChampion")}</DialogTitle>
                     <DialogDescription>{`${categories[0].Category} ${categories[0].Name} & ${categories[1].Category} ${categories[1].Name}`}</DialogDescription>
                 </DialogHeader>
 
                 <div className="relative">
                     <Label htmlFor="champion" className="sr-only">
-                        Champion
+                        {t("champion")}
                     </Label>
                     <Input
                         ref={inputRef}

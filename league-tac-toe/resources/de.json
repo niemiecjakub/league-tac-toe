@@ -21,8 +21,8 @@
         "lobby": {
             "online": {
                 "joinRoom": {
-                    "title": "Bestehendem Raum beitreten",
-                    "description": "Gib den Raumcode ein und trete dem Spiel bei",
+                    "title": "Einem bestehenden Raum beitreten",
+                    "description": "Gib den Raumcode ein und tritt dem Spiel bei",
                     "join": "Beitreten"
                 },
                 "createRoom": {
@@ -39,12 +39,13 @@
                 "description": "Spiele gegen einen Freund auf demselben Gerät"
             }
         },
+        "howToPlay": "Wie wird gespielt?",
         "rules": [
-            "Ein 3x3-Raster wird mit Kriterien wie Vermächtnis, Position, Ressource, Angriffsart und Region erstellt.",
-            "Setze dein Zeichen, ein X oder O, in eines der Felder, wenn du einen League of Legends Champion nennen kannst, der den Kriterien in der oberen Reihe und linken Spalte entspricht.",
-            "Der Erste, der drei in einer Reihe – vertikal, horizontal oder diagonal – hat, gewinnt.",
-            "Im Stehlmodus hat jeder Spieler insgesamt 3 Stehlversuche, mit denen er ein vom Gegner besetztes Feld übernehmen kann.",
-            "Ärgere deinen Gegner und stiehl ein Feld, indem du einen anderen Champion nennst als den, der sich bereits auf diesem Feld befindet."
+            "Ein 3 x 3-Raster wird mit Kriterien wie Vermächtnis, Position, Ressource, Reichweitenart und Region gefüllt.",
+            "Setze dein Zeichen, ein X oder O, auf ein Feld, wenn du einen League of Legends Champion nennen kannst, der zu den Kriterien der oberen Reihe und der linken Spalte passt.",
+            "Der erste Spieler mit drei in einer Reihe – vertikal, horizontal oder diagonal – gewinnt.",
+            "Im Stehlmodus hat jeder Spieler insgesamt 3 Stehlversuche, mit denen ein vom Gegner besetztes Feld übernommen werden kann.",
+            "Ärgere deinen Gegner und stiehl ein Feld, indem du einen anderen Champion nennst als den, der bereits auf diesem Feld steht."
         ]
     },
     "champions": {
@@ -69,21 +70,23 @@
             "lastPage": "Zur letzten Seite"
         },
         "toolbar": {
-            "reset": "Zurücksetzen"
+            "reset": "Zurücksetzen",
+            "filterChampions": "Champions filtern..."
         },
         "options": {
             "view": "Anzeigen",
-            "toggleColumns": "Spalten ein-/ausblenden"
+            "toggleColumns": "Spalten umschalten"
         }
     },
     "game": {
-        "timeLeft": "Verbleibende Zeit",
-        "gameFinished": "Spiel beendet",
-        "draw": "Unentschieden!",
-        "youWon": "Du hast gewonnen!",
-        "youLost": "Du hast verloren!",
-        "leave": "Verlassen",
-        "playAgain": "Nochmal spielen",
+        "postGame": {
+            "gameFinished": "Spiel beendet",
+            "draw": "Unentschieden!",
+            "youWon": "Du hast gewonnen!",
+            "youLost": "Du hast verloren!",
+            "leave": "Verlassen",
+            "playAgain": "Noch einmal spielen"
+        },
         "field": {
             "champion": "Champion",
             "enterChampion": "Champion eingeben"
@@ -93,20 +96,22 @@
                 "drawSuggested": "Dein Gegner schlägt ein Unentschieden vor",
                 "acceptDraw": "Unentschieden annehmen",
                 "drawRequestSent": "Anfrage zum Unentschieden gesendet",
-                "requestDraw": "Unentschieden anfragen"
+                "requestDraw": "Unentschieden vorschlagen"
             },
-            "general": {
-                "youAre": "Du bist",
-                "you": "Du",
-                "opponent": "Gegner",
-                "skipTurn": "Zug überspringen",
-                "noTimeLimit": "Kein Zeitlimit"
-            }
+            "youAre": "Du bist '{player}'",
+            "you": "Du",
+            "opponent": "Gegner",
+            "skipTurn": "Zug überspringen",
+            "noTimeLimit": "Kein Zeitlimit"
         },
         "waitingRoom": {
             "roomCode": "Raumcode",
             "shareCode": "Raumcode oder Link teilen",
-            "waitingForPlayer": "Warte auf einen weiteren Spieler..."
+            "waitingForPlayer": "Warten auf einen weiteren Spieler..."
+        },
+        "info": {
+            "timeLeft": "Verbleibende Zeit: {timeLeft}s",
+            "remainingSteals": "Bedeutet, dass du das Feld deines Gegners stehlen kannst. Du hast noch {steals} Stehlversuche"
         }
     }
 }

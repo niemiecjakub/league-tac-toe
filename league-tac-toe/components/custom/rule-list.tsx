@@ -7,7 +7,7 @@ export default function RuleList() {
 
     return (
         <div className="w-full">
-            <h2 className="font-bold text-xl my-2">How to play?</h2>
+            <h2 className="font-bold text-xl my-2">{t("howToPlay")}</h2>
             <ul>
                 {rules.map((rule, index) => (
                     <li key={index}>
