@@ -98,11 +98,13 @@
                 "drawRequestSent": "Anfrage zum Unentschieden gesendet",
                 "requestDraw": "Unentschieden vorschlagen"
             },
-            "youAre": "Du bist '{player}'",
+            "youAre": "Du bist {player}",
             "you": "Du",
             "opponent": "Gegner",
             "skipTurn": "Zug überspringen",
-            "noTimeLimit": "Kein Zeitlimit"
+            "noTimeLimit": "Kein Zeitlimit",
+            "yourTurn": "Du bist dran",
+            "opponentsTurn": "Am Zug des Gegners"
         },
         "waitingRoom": {
             "roomCode": "Raumcode",

@@ -98,11 +98,13 @@
                 "drawRequestSent": "Richiesta di pareggio inviata",
                 "requestDraw": "Richiedi pareggio"
             },
-            "youAre": "Sei '{player}'",
+            "youAre": "Sei {player}",
             "you": "Tu",
             "opponent": "Avversario",
             "skipTurn": "Salta turno",
-            "noTimeLimit": "Nessun limite di tempo"
+            "noTimeLimit": "Nessun limite di tempo",
+            "yourTurn": "Il tuo turno",
+            "opponentsTurn": "Turno dell’avversario"
         },
         "waitingRoom": {
             "roomCode": "Codice stanza",

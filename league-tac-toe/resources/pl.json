@@ -98,11 +98,13 @@
                 "drawRequestSent": "Prośba o remis wysłana",
                 "requestDraw": "Zaproponuj remis"
             },
-            "youAre": "Jesteś '{player}'",
+            "youAre": "Jesteś {player}",
             "you": "Ty",
             "opponent": "Przeciwnik",
             "skipTurn": "Pomiń turę",
-            "noTimeLimit": "Bez limitu czasu"
+            "noTimeLimit": "Bez limitu czasu",
+            "yourTurn": "Twój ruch",
+            "opponentsTurn": "Ruch przeciwnika"
         },
         "waitingRoom": {
             "roomCode": "Kod pokoju",

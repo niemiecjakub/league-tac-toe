@@ -98,11 +98,13 @@
                 "drawRequestSent": "Pedido de empate enviado",
                 "requestDraw": "Pedir empate"
             },
-            "youAre": "Você é '{player}'",
+            "youAre": "Você é {player}",
             "you": "Você",
             "opponent": "Oponente",
             "skipTurn": "Pular turno",
-            "noTimeLimit": "Sem limite de tempo"
+            "noTimeLimit": "Sem limite de tempo",
+            "yourTurn": "Sua vez",
+            "opponentsTurn": "Vez do oponente"
         },
         "waitingRoom": {
             "roomCode": "Código da sala",

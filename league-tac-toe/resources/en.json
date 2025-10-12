@@ -98,11 +98,13 @@
                 "drawRequestSent": "Draw request sent",
                 "requestDraw": "Request Draw"
             },
-            "youAre": "You are '{player}'",
+            "youAre": "You are {player}",
             "you": "You",
             "opponent": "Opponent",
             "skipTurn": "Skip Turn",
-            "noTimeLimit": "No time limit"
+            "noTimeLimit": "No time limit",
+            "yourTurn": "Your turn",
+            "opponentsTurn": "Opponent's turn"
         },
         "waitingRoom": {
             "roomCode": "Room code",
