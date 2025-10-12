@@ -1,0 +1,117 @@
+{
+    "navbar": {
+        "champions": "Campioni",
+        "selectLanguage": "Seleziona lingua"
+    },
+    "home": {
+        "subtitle": "Il quiz di League of Legends incontra il Tris.",
+        "description1": "Nomina i campioni che corrispondono alle categorie per conquistare le caselle in una griglia 3x3.",
+        "description2": "Attiva la modalità Furto per rubare la casella del tuo avversario.",
+        "online": "Online",
+        "randomOpponent": "Avversario casuale",
+        "sameScreen": "Stesso schermo",
+        "timePerTurn": "Tempo per turno",
+        "unlimited": "illimitato",
+        "limited": "{number} secondi",
+        "enableSteals": "Abilita furti",
+        "yes": "Sì",
+        "no": "No",
+        "create": "Crea",
+        "start": "Avvia",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Entra in una stanza esistente",
+                    "description": "Inserisci il codice della stanza e unisciti alla partita",
+                    "join": "Unisciti"
+                },
+                "createRoom": {
+                    "title": "Crea stanza",
+                    "description": "Sfida un amico in una partita online"
+                }
+            },
+            "random": {
+                "title": "Trova un avversario casuale",
+                "description": "Gioca contro un avversario a caso"
+            },
+            "local": {
+                "title": "Partita sullo stesso schermo",
+                "description": "Gioca contro un amico sullo stesso dispositivo"
+            }
+        },
+        "howToPlay": "Come giocare?",
+        "rules": [
+            "Una griglia 3 x 3 è allineata con criteri come eredità, posizione, risorsa, tipo di raggio e regione.",
+            "Posiziona il tuo segno, una X o O, in una delle caselle se puoi nominare un campione di League of Legends che corrisponda ai criteri della riga superiore e del lato sinistro.",
+            "Il primo che ottiene tre in fila, verticalmente, orizzontalmente o diagonalmente, vince.",
+            "Con la modalità furto attivata, ogni giocatore ha 3 furti totali, dove una casella può essere rubata se occupata dall’avversario.",
+            "Fai arrabbiare il tuo avversario e ruba una casella nominando un campione diverso da quello già presente nella posizione sulla griglia."
+        ]
+    },
+    "champions": {
+        "noResults": "Nessun risultato.",
+        "sorting": {
+            "asc": "Crescente",
+            "desc": "Decrescente",
+            "hide": "Nascondi"
+        },
+        "filter": {
+            "noResults": "Nessun risultato trovato.",
+            "clear": "Cancella filtri",
+            "selected": "{number} selezionato/i"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "{selected} di {total} riga/e selezionata/e.",
+            "pageSelected": "Pagina {current} di {total}",
+            "rowsPerPage": "Righe per pagina",
+            "firstPage": "Vai alla prima pagina",
+            "previousPage": "Pagina precedente",
+            "nextPage": "Pagina successiva",
+            "lastPage": "Vai all’ultima pagina"
+        },
+        "toolbar": {
+            "reset": "Reimposta",
+            "filterChampions": "Filtra i campioni..."
+        },
+        "options": {
+            "view": "Visualizza",
+            "toggleColumns": "Mostra/nascondi colonne"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "Partita terminata",
+            "draw": "Pareggio!",
+            "youWon": "Hai vinto!",
+            "youLost": "Hai perso!",
+            "leave": "Esci",
+            "playAgain": "Rigioca"
+        },
+        "field": {
+            "champion": "Campione",
+            "enterChampion": "Inserisci il campione"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Il tuo avversario propone un pareggio",
+                "acceptDraw": "Accetta pareggio",
+                "drawRequestSent": "Richiesta di pareggio inviata",
+                "requestDraw": "Richiedi pareggio"
+            },
+            "youAre": "Sei '{player}'",
+            "you": "Tu",
+            "opponent": "Avversario",
+            "skipTurn": "Salta turno",
+            "noTimeLimit": "Nessun limite di tempo"
+        },
+        "waitingRoom": {
+            "roomCode": "Codice stanza",
+            "shareCode": "Condividi il codice o il link della stanza",
+            "waitingForPlayer": "In attesa che un altro giocatore si unisca..."
+        },
+        "info": {
+            "timeLeft": "Tempo rimasto: {timeLeft}s",
+            "remainingSteals": "Significa che puoi rubare la casella del tuo avversario. Ti rimangono {steals} furti"
+        }
+    }
+}

@@ -1,0 +1,117 @@
+{
+    "navbar": {
+        "champions": "Şampiyonlar",
+        "selectLanguage": "Dil seç"
+    },
+    "home": {
+        "subtitle": "League of Legends Quiz, X-Oyunu ile buluşuyor.",
+        "description1": "3x3’lük bir ızgarada kareleri kazanmak için kategorilere uygun şampiyonların adını söyleyin.",
+        "description2": "Rakibinizin karesini çalmak için Çalma Modunu etkinleştirin.",
+        "online": "Çevrimiçi",
+        "randomOpponent": "Rastgele rakip",
+        "sameScreen": "Aynı ekran",
+        "timePerTurn": "Tur başına süre",
+        "unlimited": "sınırsız",
+        "limited": "{number} saniye",
+        "enableSteals": "Çalmaları etkinleştir",
+        "yes": "Evet",
+        "no": "Hayır",
+        "create": "Oluştur",
+        "start": "Başlat",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Mevcut odaya katıl",
+                    "description": "Oda kodunu gir ve oyuna katıl",
+                    "join": "Katıl"
+                },
+                "createRoom": {
+                    "title": "Oda oluştur",
+                    "description": "Bir arkadaşını çevrimiçi oyuna davet et"
+                }
+            },
+            "random": {
+                "title": "Rastgele rakip bul",
+                "description": "Rastgele bir rakibe karşı oyna"
+            },
+            "local": {
+                "title": "Aynı ekranda oyun",
+                "description": "Aynı cihazda bir arkadaşına karşı oyna"
+            }
+        },
+        "howToPlay": "Nasıl oynanır?",
+        "rules": [
+            "3 x 3’lük bir kare ızgarası, miras, pozisyon, kaynak, menzil türü ve bölge gibi kriterlerle doldurulur.",
+            "X veya O işaretinizi, üst sıradaki ve sol taraftaki kriterlere uyan bir League of Legends şampiyonu söyleyebiliyorsanız karelerden birine yerleştirin.",
+            "Dikey, yatay veya çapraz olarak üçlü yapan ilk oyuncu kazanır.",
+            "Çalma modu etkinleştirildiğinde, her oyuncunun toplamda 3 çalması vardır; bir kare, rakip oyuncuya ait olsa bile çalınabilir.",
+            "Rakibinizi sinirlendirin ve ızgaradaki pozisyonda zaten bulunan şampiyondan farklı bir şampiyon söyleyerek kareyi çalın."
+        ]
+    },
+    "champions": {
+        "noResults": "Sonuç bulunamadı.",
+        "sorting": {
+            "asc": "Artan",
+            "desc": "Azalan",
+            "hide": "Gizle"
+        },
+        "filter": {
+            "noResults": "Sonuç bulunamadı.",
+            "clear": "Filtreleri temizle",
+            "selected": "{number} seçildi"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "{selected} / {total} satır seçildi.",
+            "pageSelected": "Sayfa {current} / {total}",
+            "rowsPerPage": "Sayfa başına satır",
+            "firstPage": "İlk sayfaya git",
+            "previousPage": "Önceki sayfaya git",
+            "nextPage": "Sonraki sayfaya git",
+            "lastPage": "Son sayfaya git"
+        },
+        "toolbar": {
+            "reset": "Sıfırla",
+            "filterChampions": "Şampiyonları filtrele..."
+        },
+        "options": {
+            "view": "Görüntüle",
+            "toggleColumns": "Sütunları değiştir"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "Oyun bitti",
+            "draw": "Berabere!",
+            "youWon": "Kazandın!",
+            "youLost": "Kaybettin!",
+            "leave": "Ayrıl",
+            "playAgain": "Tekrar oyna"
+        },
+        "field": {
+            "champion": "Şampiyon",
+            "enterChampion": "Şampiyon gir"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Rakibin oyunun berabere bitmesini önerdi",
+                "acceptDraw": "Beraberliği kabul et",
+                "drawRequestSent": "Beraberlik isteği gönderildi",
+                "requestDraw": "Beraberlik iste"
+            },
+            "youAre": "Sen '{player}'sin",
+            "you": "Sen",
+            "opponent": "Rakip",
+            "skipTurn": "Turu geç",
+            "noTimeLimit": "Zaman sınırı yok"
+        },
+        "waitingRoom": {
+            "roomCode": "Oda kodu",
+            "shareCode": "Oda kodunu veya bağlantıyı paylaş",
+            "waitingForPlayer": "Bir oyuncunun katılması bekleniyor..."
+        },
+        "info": {
+            "timeLeft": "Kalan süre: {timeLeft}s",
+            "remainingSteals": "Rakibinin karesini çalabileceğin anlamına gelir. Kalan {steals} çalman var"
+        }
+    }
+}

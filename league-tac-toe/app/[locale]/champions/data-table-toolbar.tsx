@@ -21,7 +21,7 @@ export function DataTableToolbar<TData>({ table, filter }: DataTableToolbarProps
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:flex-wrap w-full">
             <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                 <Input
-                    placeholder="Filter champions..."
+                    placeholder={t("filterChampions")}
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="h-8 w-full sm:w-[150px] lg:w-[250px]"

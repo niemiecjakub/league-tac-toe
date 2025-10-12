@@ -13,10 +13,12 @@ import { useRoomStore } from "@/store/roomStore";
 import Dashboard from "./dashboard";
 import PostGameControls from "./post-game-controls";
 import { GameStateType } from "@/models/Game";
+import { useTranslations } from "next-intl";
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
+    const t = useTranslations("game");
     const { setChampionNames } = useChampionStore((state) => state);
     const { room, joinRoom, updateRoom } = useRoomStore((state) => state);
 
@@ -119,13 +121,13 @@ export default function GameIdPage() {
         return (
             <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem]">
                 <Dashboard />
-                {timeLeft && <p className="text-sm text-gray-500">Time left: {timeLeft}s</p>}
+                {timeLeft && <p className="text-sm text-gray-500">{t("info.timeLeft", { timeLeft: timeLeft })}</p>}
                 <div className="flex flex-col items-center justify-center">
                     <Board board={room?.game.boardState} categories={room?.game.categories} />
                     {room?.stealsEnabled && (
                         <div className="flex items-center py-1 px-2">
                             <StealIcon className="h-4 w-4 mr-1" />
-                            <p className="text-xs">Means that you can steal your opponent's square. You have {room.slot.steals} steals remaining</p>
+                            <p className="text-xs">{t("info.remainingSteals", { steals: room.slot.steals + "" })}</p>
                         </div>
                     )}
                 </div>
@@ -138,11 +140,11 @@ export default function GameIdPage() {
         return (
             <div className="h-full w-full flex flex-col items-center justify-center">
                 <Card className="flex flex-col items-center justify-between gap-0 border-league-grey-200 p-2 space-y-4">
-                    <p className="text-lg">Share room code or link</p>
+                    <p className="text-lg">{t("waitingRoom.shareCode")}</p>
                     <div className="flex flex-col w-full  bg-league-gold-100 space">
                         <div className="flex p-2 rounded-t-xl space-x-2 justify-between items-center">
                             <div className="flex space-x-2 justify-center items-center">
-                                <p className="text-sm lg:text-md">Room code:</p>
+                                <p className="text-sm lg:text-md">{t("waitingRoom.roomCode")}:</p>
                                 <p className="text-sm lg:text-md">{room?.roomGuid}</p>
                             </div>
                             <CopyIcon className="h-4 w-4 cursor-pointer" onClick={() => navigator.clipboard.writeText(room?.roomGuid)} />
@@ -152,7 +154,7 @@ export default function GameIdPage() {
                             <CopyIcon className="h-4 w-4 cursor-pointer" onClick={() => navigator.clipboard.writeText(window.location.href)} />
                         </div>
                     </div>
-                    <p>The game will start once other player joins</p>
+                    <p>{t("waitingRoom.waitingForPlayer")}</p>
                 </Card>
             </div>
         );

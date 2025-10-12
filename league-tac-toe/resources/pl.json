@@ -1,0 +1,117 @@
+{
+    "navbar": {
+        "champions": "Bohaterowie",
+        "selectLanguage": "Wybierz język"
+    },
+    "home": {
+        "subtitle": "Quiz League of Legends spotyka Kółko i Krzyżyk.",
+        "description1": "Nazwij bohaterów pasujących do kategorii, aby zdobywać pola w siatce 3x3.",
+        "description2": "Włącz tryb kradzieży, aby przejąć pole przeciwnika.",
+        "online": "Online",
+        "randomOpponent": "Losowy przeciwnik",
+        "sameScreen": "Ten sam ekran",
+        "timePerTurn": "Czas na turę",
+        "unlimited": "bez limitu",
+        "limited": "{number} sekund",
+        "enableSteals": "Włącz kradzieże",
+        "yes": "Tak",
+        "no": "Nie",
+        "create": "Utwórz",
+        "start": "Start",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Dołącz do istniejącego pokoju",
+                    "description": "Wpisz kod pokoju i dołącz do gry",
+                    "join": "Dołącz"
+                },
+                "createRoom": {
+                    "title": "Utwórz pokój",
+                    "description": "Wyzwiń znajomego na mecz online"
+                }
+            },
+            "random": {
+                "title": "Znajdź losowego przeciwnika",
+                "description": "Zagraj przeciwko losowemu przeciwnikowi"
+            },
+            "local": {
+                "title": "Gra na tym samym ekranie",
+                "description": "Zagraj ze znajomym na tym samym urządzeniu"
+            }
+        },
+        "howToPlay": "Jak grać?",
+        "rules": [
+            "Plansza 3 x 3 jest wypełniona kryteriami, takimi jak dziedzictwo, pozycja, zasób, zasięg i region.",
+            "Umieść swój znacznik, X lub O, w jednym z pól, jeśli potrafisz wymienić bohatera League of Legends, który pasuje do kryteriów w górnym wierszu i po lewej stronie.",
+            "Pierwszy gracz, który ułoży trzy w rzędzie — pionowo, poziomo lub po przekątnej — wygrywa.",
+            "Po włączeniu trybu kradzieży każdy gracz ma łącznie 3 kradzieże, dzięki którym można przejąć pole zajęte przez przeciwnika.",
+            "Zdenerwuj przeciwnika i ukradnij mu pole, podając innego bohatera niż ten już użyty na tej pozycji na planszy."
+        ]
+    },
+    "champions": {
+        "noResults": "Brak wyników.",
+        "sorting": {
+            "asc": "Rosnąco",
+            "desc": "Malejąco",
+            "hide": "Ukryj"
+        },
+        "filter": {
+            "noResults": "Nie znaleziono wyników.",
+            "clear": "Wyczyść filtry",
+            "selected": "Wybrano: {number}"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "Wybrano {selected} z {total} wierszy.",
+            "pageSelected": "Strona {current} z {total}",
+            "rowsPerPage": "Wierszy na stronę",
+            "firstPage": "Przejdź do pierwszej strony",
+            "previousPage": "Przejdź do poprzedniej strony",
+            "nextPage": "Przejdź do następnej strony",
+            "lastPage": "Przejdź do ostatniej strony"
+        },
+        "toolbar": {
+            "reset": "Resetuj",
+            "filterChampions": "Filtruj bohaterów..."
+        },
+        "options": {
+            "view": "Podgląd",
+            "toggleColumns": "Przełącz kolumny"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "Gra zakończona",
+            "draw": "Remis!",
+            "youWon": "Wygrałeś!",
+            "youLost": "Przegrałeś!",
+            "leave": "Opuść",
+            "playAgain": "Zagraj ponownie"
+        },
+        "field": {
+            "champion": "Bohater",
+            "enterChampion": "Wpisz bohatera"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Twój przeciwnik zaproponował remis",
+                "acceptDraw": "Akceptuj remis",
+                "drawRequestSent": "Prośba o remis wysłana",
+                "requestDraw": "Zaproponuj remis"
+            },
+            "youAre": "Jesteś '{player}'",
+            "you": "Ty",
+            "opponent": "Przeciwnik",
+            "skipTurn": "Pomiń turę",
+            "noTimeLimit": "Bez limitu czasu"
+        },
+        "waitingRoom": {
+            "roomCode": "Kod pokoju",
+            "shareCode": "Udostępnij kod lub link do pokoju",
+            "waitingForPlayer": "Oczekiwanie na dołączenie drugiego gracza..."
+        },
+        "info": {
+            "timeLeft": "Pozostały czas: {timeLeft}s",
+            "remainingSteals": "Oznacza, że możesz przejąć pole przeciwnika. Pozostało ci {steals} kradzieży"
+        }
+    }
+}

@@ -1,0 +1,117 @@
+{
+    "navbar": {
+        "champions": "Champions",
+        "selectLanguage": "Choisir la langue"
+    },
+    "home": {
+        "subtitle": "Le quiz League of Legends rencontre le jeu du morpion.",
+        "description1": "Nomme des champions correspondant aux catégories pour conquérir des cases dans une grille 3x3.",
+        "description2": "Active le mode Vol pour prendre la case de ton adversaire.",
+        "online": "En ligne",
+        "randomOpponent": "Adversaire aléatoire",
+        "sameScreen": "Même écran",
+        "timePerTurn": "Temps par tour",
+        "unlimited": "illimité",
+        "limited": "{number} secondes",
+        "enableSteals": "Activer les vols",
+        "yes": "Oui",
+        "no": "Non",
+        "create": "Créer",
+        "start": "Démarrer",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Rejoindre une salle existante",
+                    "description": "Entre le code de la salle et rejoins la partie",
+                    "join": "Rejoindre"
+                },
+                "createRoom": {
+                    "title": "Créer une salle",
+                    "description": "Défie un ami dans une partie en ligne"
+                }
+            },
+            "random": {
+                "title": "Trouver un adversaire aléatoire",
+                "description": "Joue contre un adversaire aléatoire"
+            },
+            "local": {
+                "title": "Jeu sur le même écran",
+                "description": "Joue contre un ami sur le même appareil"
+            }
+        },
+        "howToPlay": "Comment jouer ?",
+        "rules": [
+            "Une grille de 3 x 3 est remplie avec des critères comme héritage, position, ressource, type de portée et région.",
+            "Place ton marqueur, un X ou un O, sur une case si tu peux nommer un champion de League of Legends correspondant aux critères de la ligne du haut et de la colonne de gauche.",
+            "Le premier à aligner trois cases — verticalement, horizontalement ou en diagonale — gagne.",
+            "Avec le mode vol activé, chaque joueur dispose de 3 vols au total, permettant de prendre une case occupée par l’adversaire.",
+            "Énerve ton adversaire et vole une case en nommant un champion différent de celui déjà placé sur la grille."
+        ]
+    },
+    "champions": {
+        "noResults": "Aucun résultat.",
+        "sorting": {
+            "asc": "Croissant",
+            "desc": "Décroissant",
+            "hide": "Masquer"
+        },
+        "filter": {
+            "noResults": "Aucun résultat trouvé.",
+            "clear": "Effacer les filtres",
+            "selected": "{number} sélectionné(s)"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "{selected} sur {total} ligne(s) sélectionnée(s).",
+            "pageSelected": "Page {current} sur {total}",
+            "rowsPerPage": "Lignes par page",
+            "firstPage": "Aller à la première page",
+            "previousPage": "Page précédente",
+            "nextPage": "Page suivante",
+            "lastPage": "Aller à la dernière page"
+        },
+        "toolbar": {
+            "reset": "Réinitialiser",
+            "filterChampions": "Filtrer les champions..."
+        },
+        "options": {
+            "view": "Afficher",
+            "toggleColumns": "Afficher/masquer les colonnes"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "Partie terminée",
+            "draw": "Égalité !",
+            "youWon": "Tu as gagné !",
+            "youLost": "Tu as perdu !",
+            "leave": "Quitter",
+            "playAgain": "Rejouer"
+        },
+        "field": {
+            "champion": "Champion",
+            "enterChampion": "Entre le nom du champion"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Ton adversaire propose une égalité",
+                "acceptDraw": "Accepter l’égalité",
+                "drawRequestSent": "Demande d’égalité envoyée",
+                "requestDraw": "Proposer une égalité"
+            },
+            "youAre": "Tu es '{player}'",
+            "you": "Toi",
+            "opponent": "Adversaire",
+            "skipTurn": "Passer le tour",
+            "noTimeLimit": "Pas de limite de temps"
+        },
+        "waitingRoom": {
+            "roomCode": "Code de la salle",
+            "shareCode": "Partage le code ou le lien de la salle",
+            "waitingForPlayer": "En attente d’un autre joueur..."
+        },
+        "info": {
+            "timeLeft": "Temps restant : {timeLeft}s",
+            "remainingSteals": "Cela signifie que tu peux voler la case de ton adversaire. Il te reste {steals} vol(s)"
+        }
+    }
+}
