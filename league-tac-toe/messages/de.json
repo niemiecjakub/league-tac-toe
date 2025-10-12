@@ -1,0 +1,112 @@
+{
+    "navbar": {
+        "champions": "Champions",
+        "selectLanguage": "Sprache auswählen"
+    },
+    "home": {
+        "subtitle": "League of Legends Quiz trifft Tic-Tac-Toe.",
+        "description1": "Nenne Champions, die zu den Kategorien passen, um Felder in einem 3x3-Raster zu erobern.",
+        "description2": "Aktiviere den Stehlmodus, um das Feld deines Gegners zu übernehmen.",
+        "online": "Online",
+        "randomOpponent": "Zufälliger Gegner",
+        "sameScreen": "Gleicher Bildschirm",
+        "timePerTurn": "Zeit pro Zug",
+        "unlimited": "unbegrenzt",
+        "limited": "{number} Sekunden",
+        "enableSteals": "Stehlmodus aktivieren",
+        "yes": "Ja",
+        "no": "Nein",
+        "create": "Erstellen",
+        "start": "Starten",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "Bestehendem Raum beitreten",
+                    "description": "Gib den Raumcode ein und trete dem Spiel bei",
+                    "join": "Beitreten"
+                },
+                "createRoom": {
+                    "title": "Raum erstellen",
+                    "description": "Fordere einen Freund zu einem Online-Spiel heraus"
+                }
+            },
+            "random": {
+                "title": "Zufälligen Gegner finden",
+                "description": "Spiele gegen einen zufälligen Gegner"
+            },
+            "local": {
+                "title": "Spiel auf demselben Bildschirm",
+                "description": "Spiele gegen einen Freund auf demselben Gerät"
+            }
+        },
+        "rules": [
+            "Ein 3x3-Raster wird mit Kriterien wie Vermächtnis, Position, Ressource, Angriffsart und Region erstellt.",
+            "Setze dein Zeichen, ein X oder O, in eines der Felder, wenn du einen League of Legends Champion nennen kannst, der den Kriterien in der oberen Reihe und linken Spalte entspricht.",
+            "Der Erste, der drei in einer Reihe – vertikal, horizontal oder diagonal – hat, gewinnt.",
+            "Im Stehlmodus hat jeder Spieler insgesamt 3 Stehlversuche, mit denen er ein vom Gegner besetztes Feld übernehmen kann.",
+            "Ärgere deinen Gegner und stiehl ein Feld, indem du einen anderen Champion nennst als den, der sich bereits auf diesem Feld befindet."
+        ]
+    },
+    "champions": {
+        "noResults": "Keine Ergebnisse.",
+        "sorting": {
+            "asc": "Aufsteigend",
+            "desc": "Absteigend",
+            "hide": "Ausblenden"
+        },
+        "filter": {
+            "noResults": "Keine Ergebnisse gefunden.",
+            "clear": "Filter löschen",
+            "selected": "{number} ausgewählt"
+        },
+        "pagination": {
+            "numberOfRowsSelected": "{selected} von {total} Zeile(n) ausgewählt.",
+            "pageSelected": "Seite {current} von {total}",
+            "rowsPerPage": "Zeilen pro Seite",
+            "firstPage": "Zur ersten Seite",
+            "previousPage": "Zur vorherigen Seite",
+            "nextPage": "Zur nächsten Seite",
+            "lastPage": "Zur letzten Seite"
+        },
+        "toolbar": {
+            "reset": "Zurücksetzen"
+        },
+        "options": {
+            "view": "Anzeigen",
+            "toggleColumns": "Spalten ein-/ausblenden"
+        }
+    },
+    "game": {
+        "timeLeft": "Verbleibende Zeit",
+        "gameFinished": "Spiel beendet",
+        "draw": "Unentschieden!",
+        "youWon": "Du hast gewonnen!",
+        "youLost": "Du hast verloren!",
+        "leave": "Verlassen",
+        "playAgain": "Nochmal spielen",
+        "field": {
+            "champion": "Champion",
+            "enterChampion": "Champion eingeben"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Dein Gegner schlägt ein Unentschieden vor",
+                "acceptDraw": "Unentschieden annehmen",
+                "drawRequestSent": "Anfrage zum Unentschieden gesendet",
+                "requestDraw": "Unentschieden anfragen"
+            },
+            "general": {
+                "youAre": "Du bist",
+                "you": "Du",
+                "opponent": "Gegner",
+                "skipTurn": "Zug überspringen",
+                "noTimeLimit": "Kein Zeitlimit"
+            }
+        },
+        "waitingRoom": {
+            "roomCode": "Raumcode",
+            "shareCode": "Raumcode oder Link teilen",
+            "waitingForPlayer": "Warte auf einen weiteren Spieler..."
+        }
+    }
+}

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { ChampionMetaFilter } from "@/models/ChampionMeta";
+import { useTranslations } from "next-intl";
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;
@@ -14,6 +15,7 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({ table, filter }: DataTableToolbarProps<TData>) {
     const isFiltered = table.getState().columnFilters.length > 0;
+    const t = useTranslations("champions.toolbar");
 
     return (
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:flex-wrap w-full">
@@ -28,7 +30,7 @@ export function DataTableToolbar<TData>({ table, filter }: DataTableToolbarProps
 
                 {isFiltered && (
                     <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()} className="flex items-center gap-1">
-                        Reset
+                        {t("reset")}
                         <X className="h-4 w-4" />
                     </Button>
                 )}

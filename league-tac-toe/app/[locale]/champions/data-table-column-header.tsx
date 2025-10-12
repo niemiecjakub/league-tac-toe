@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useTranslations } from "next-intl";
 
 interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
     column: Column<TData, TValue>;
@@ -10,6 +11,8 @@ interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes
 }
 
 export function DataTableColumnHeader<TData, TValue>({ column, title, className }: DataTableColumnHeaderProps<TData, TValue>) {
+    const t = useTranslations("champions.sorting");
+
     if (!column.getCanSort()) {
         return <div className={cn(className)}>{title}</div>;
     }
@@ -26,16 +29,16 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
                 <DropdownMenuContent align="start">
                     <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
                         <ArrowUp />
-                        Asc
+                        {t("asc")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
                         <ArrowDown />
-                        Desc
+                        {t("desc")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
                         <EyeOff />
-                        Hide
+                        {t("hide")}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

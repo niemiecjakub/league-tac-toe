@@ -8,6 +8,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { MetaFilterItem } from "@/models/ChampionMeta";
+import { useTranslations } from "next-intl";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
     column?: Column<TData, TValue>;
@@ -37,6 +38,7 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
     const rawFacets = column?.getFacetedUniqueValues();
     const facets = rawFacets ? normalizeFacetsMap(rawFacets) : new Map();
     const selectedValues = new Set(column?.getFilterValue() as string[]);
+    const t = useTranslations("champions.filter");
 
     return (
         <Popover>
@@ -53,7 +55,7 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                             <div className="hidden gap-1 lg:flex">
                                 {selectedValues.size > 2 ? (
                                     <Badge variant="secondary" className="rounded-sm px-1 font-normal">
-                                        {selectedValues.size} selected
+                                        {t("selected", { number: selectedValues.size })}
                                     </Badge>
                                 ) : (
                                     options
@@ -73,7 +75,7 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                 <Command>
                     <CommandInput placeholder={title} />
                     <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandEmpty>{t("noResults")}</CommandEmpty>
                         <CommandGroup>
                             {options.map((option) => {
                                 const isSelected = selectedValues.has(option.name);
@@ -112,7 +114,7 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                                 <CommandSeparator />
                                 <CommandGroup>
                                     <CommandItem onSelect={() => column?.setFilterValue(undefined)} className="justify-center text-center">
-                                        Clear filters
+                                        {t("clear")}
                                     </CommandItem>
                                 </CommandGroup>
                             </>

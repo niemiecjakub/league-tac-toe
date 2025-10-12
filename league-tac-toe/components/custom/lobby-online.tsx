@@ -7,10 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createRoom } from "@/services/gameService";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { use, useState } from "react";
 import { RoomOptions } from "@/models/Room";
+import { useTranslations } from "next-intl";
 
 export default function LobbyOnline() {
+    const t = useTranslations("home");
     const router = useRouter();
     const [roomCode, setRoomCode] = useState("");
     const [newRoomOptions, setNewRoomOptions] = useState<RoomOptions>({
@@ -30,25 +32,25 @@ export default function LobbyOnline() {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle>Join existing room</CardTitle>
-                <CardDescription>Enter room code and join game</CardDescription>
+                <CardTitle>{t("lobby.online.joinRoom.title")}</CardTitle>
+                <CardDescription>{t("lobby.online.joinRoom.description")}</CardDescription>
             </CardHeader>
             <CardContent>
                 <Input id="roomCode" type="text" placeholder="Room code" required value={roomCode} onChange={(e) => setRoomCode(e.target.value)} />
             </CardContent>
             <CardFooter className="flex-col gap-2">
                 <Button type="submit" className="w-full" onClick={() => handleRoomJoin(roomCode)} disabled={!roomCode.trim()}>
-                    Join
+                    {t("lobby.online.joinRoom.join")}
                 </Button>
             </CardFooter>
             <CardHeader>
-                <CardTitle>Create room</CardTitle>
-                <CardDescription>Challenge a friend to an online game</CardDescription>
+                <CardTitle>{t("lobby.online.createRoom.title")}</CardTitle>
+                <CardDescription>{t("lobby.online.createRoom.description")}</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col gap-4">
                     <div className="flex gap-2 justify-between">
-                        <Label>Time per turn</Label>
+                        <Label>{t("timePerTurn")}</Label>
                         <Select
                             value={newRoomOptions?.turnTime?.toString() ?? "-1"}
                             onValueChange={(value) =>
@@ -63,18 +65,18 @@ export default function LobbyOnline() {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    <SelectLabel>Time per turn</SelectLabel>
-                                    <SelectItem value="-1">Unlimited</SelectItem>
-                                    <SelectItem value="15">15 Seconds</SelectItem>
-                                    <SelectItem value="30">30 Seconds</SelectItem>
-                                    <SelectItem value="45">45 Seconds</SelectItem>
-                                    <SelectItem value="60">60 Seconds</SelectItem>
+                                    <SelectLabel>{t("timePerTurn")}</SelectLabel>
+                                    <SelectItem value="-1">{t("unlimited")}</SelectItem>
+                                    <SelectItem value="15">{t("limited", { number: 15 })}</SelectItem>
+                                    <SelectItem value="30">{t("limited", { number: 30 })}</SelectItem>
+                                    <SelectItem value="45">{t("limited", { number: 45 })}</SelectItem>
+                                    <SelectItem value="60">{t("limited", { number: 60 })}</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
                     </div>
                     <div className="flex gap-2 justify-between">
-                        <Label>Enable steals</Label>
+                        <Label>{t("enableSteals")}</Label>
                         <Select
                             value={newRoomOptions.stealsEnabled.toString()}
                             onValueChange={(value) =>
@@ -89,9 +91,9 @@ export default function LobbyOnline() {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    <SelectLabel>Enable steals</SelectLabel>
-                                    <SelectItem value="true">Yes</SelectItem>
-                                    <SelectItem value="false">No</SelectItem>
+                                    <SelectLabel>{t("enableSteals")}</SelectLabel>
+                                    <SelectItem value="true">{t("yes")}</SelectItem>
+                                    <SelectItem value="false">{t("no")}</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -100,7 +102,7 @@ export default function LobbyOnline() {
             </CardContent>
             <CardFooter className="flex-col gap-2">
                 <Button type="submit" className="w-full" onClick={handleRoomCreate}>
-                    Create
+                    {t("create")}
                 </Button>
             </CardFooter>
         </Card>
