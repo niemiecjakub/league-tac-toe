@@ -61,7 +61,7 @@ export default function LobbyOnline() {
                             }
                         >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Unlimtied" />
+                                <SelectValue placeholder={t("unlimited")} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -87,7 +87,7 @@ export default function LobbyOnline() {
                             }
                         >
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Yes" />
+                                <SelectValue placeholder={t("yes")} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
