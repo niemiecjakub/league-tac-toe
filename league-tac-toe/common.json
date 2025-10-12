@@ -1,0 +1,73 @@
+{
+    "navbar": {
+        "champions": "Champions",
+        "selectLanguage": "Select language"
+    },
+    "home": {
+        "subtitle": "League of Legends Quiz meets Tic-Tac-Toe.",
+        "description1": "Name champions matching categories to claim squares in a 3x3 grid.",
+        "description2": "Enable Steal Mode to swipe your opponent's square.",
+        "online": "Online",
+        "randomOpponent": "Random opponent",
+        "sameScreen": "Same screen"
+    },
+    "champions": {
+        "noResults": "No results.",
+        "sorting": {
+            "asc": "Asc",
+            "desc": "Desc",
+            "hide": "Hide"
+        },
+        "filter": {
+            "noResults": "No results found.",
+            "clear": "Clear filters"
+        },
+        "pagination": {
+            "rowsPerPage": "Rows per page",
+            "firstPage": "Go to first page",
+            "previousPage": "Go to previous page",
+            "nextPage": "Go to next page",
+            "lastPage": "Go to last page"
+        },
+        "toolbar": {
+            "reset": "Reset"
+        },
+        "options": {
+            "view": "View",
+            "toggleColumns": "Toggle columns"
+        }
+    },
+    "game": {
+        "timeLeft": "Time left",
+        "gameFinished": "Game finished",
+        "draw": "It's a draw!",
+        "youWon": "You won!",
+        "youLost": "You lost!",
+        "leave": "Leave",
+        "playAgain": "Play again",
+        "field": {
+            "champion": "Champion",
+            "enterChampion": "Enter champion"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "Your opponent suggests to draw the game",
+                "acceptDraw": "Accept draw",
+                "drawRequestSent": "Draw request sent",
+                "requestDraw": "Request Draw"
+            },
+            "general": {
+                "youAre": "You are",
+                "you": "You",
+                "opponent": "Opponent",
+                "skipTurn": "Skip Turn",
+                "noTimeLimit": "No time limit"
+            }
+        },
+        "waitingRoom": {
+            "roomCode": "Room code",
+            "shareCode": "Share room code or link",
+            "waitingForPlayer": "Waiting for another player to join..."
+        }
+    }
+}

@@ -3,8 +3,11 @@ import LobbyOnline from "@/components/custom/lobby-online";
 import LobbyRandom from "@/components/custom/lobby-random";
 import LobbyLocal from "@/components/custom/lobby-local";
 import RuleList from "@/components/custom/rule-list";
+import { getTranslations } from "next-intl/server";
 
 export default async function Home() {
+    const t = await getTranslations("HomePage");
+
     return (
         <div className="w-full md:w-2/3 2xl:w-2/5 h-full flex items-center flex-col gap-0.5">
             <div className="flex gap-4 items-baseline justify-center py-4">
@@ -20,6 +23,7 @@ export default async function Home() {
             <div className="flex w-full flex-col gap-6 my-4">
                 <Tabs defaultValue="online">
                     <TabsList className="w-full">
+                        <h1>{t("game.title")}</h1>
                         <TabsTrigger value="online">Online</TabsTrigger>
                         <TabsTrigger value="random">Random opponent</TabsTrigger>
                         <TabsTrigger value="local">Same screen</TabsTrigger>

@@ -1,0 +1,8 @@
+{
+    "HomePage": {
+        "title": "Hello world!",
+        "game": {
+            "title": "League Tac Toe"
+        }
+    }
+}
