@@ -2,24 +2,43 @@
 
 import Link from "next/link";
 import { DarkMode, LightMode } from "../svg/svg-icons";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LANG_KEY, MODE_KEY, SUPPORTED_CULTURES, UiMode, useUiStore } from "@/store/uiStore";
+import { MODE_KEY, SUPPORTED_CULTURES, UiMode, useUiStore } from "@/store/uiStore";
 import CountryFlag from "./country-flag";
-import { useEffect } from "react";
+import { Locale, useLocale, useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
+import { useEffect, useTransition } from "react";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 export default function Navbar() {
-    const { mode, lang, setMode, setLang } = useUiStore((state) => state);
+    const { mode, setMode } = useUiStore((state) => state);
+    const router = useRouter();
+    const [isPending, startTransition] = useTransition();
+    const pathname = usePathname();
+    const params = useParams();
+
+    const t = useTranslations("navbar");
+    const locale = useLocale();
 
     useEffect(() => {
-        const storedLang = localStorage.getItem(LANG_KEY);
         const storedMode = localStorage.getItem(MODE_KEY) as UiMode | null;
 
-        if (storedLang) setLang(storedLang);
         if (storedMode && Object.values(UiMode).includes(storedMode)) {
             setMode(storedMode);
         }
-    }, [setLang, setMode]);
+    }, [setMode]);
+
+    const handleLocaleChange = (nextLocale: Locale) => {
+        startTransition(() => {
+            router.replace({ pathname, params }, { locale: nextLocale });
+            localStorage.setItem(nextLocale, nextLocale);
+        });
+    };
+
+    const getFlagCode = (locale: string) => {
+        const culture = SUPPORTED_CULTURES.find((c) => c.langCode === locale);
+        return culture ? culture.flagCode : "US";
+    };
 
     return (
         <div className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 bg-amber-50 text-sm md:text-xl">
@@ -32,22 +51,22 @@ export default function Navbar() {
                         </Link>
                     </div>
                     <Link href="/champions" className="font-medium">
-                        Champions
+                        {t("champions")}
                     </Link>
                 </div>
 
                 <div className="flex items-center gap-4">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="cursor-pointer">
-                            <CountryFlag countryCode={lang} alt={lang} className="h-6" />
+                            <CountryFlag countryCode={getFlagCode(locale)} alt={locale} className="h-6" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuLabel>Select language</DropdownMenuLabel>
+                            <DropdownMenuLabel>{t("selectLanguage")}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            {SUPPORTED_CULTURES.map(({ code, name }) => (
-                                <DropdownMenuItem key={code} onClick={() => setLang(code)} className="cursor-pointer">
+                            {SUPPORTED_CULTURES.map(({ langCode, name, flagCode }) => (
+                                <DropdownMenuItem key={langCode} disabled={isPending} onSelect={() => handleLocaleChange(langCode as Locale)} className="cursor-pointer">
                                     <div className="flex items-center gap-2">
-                                        <CountryFlag countryCode={code} alt={name} className="h-6 w-6" />
+                                        <CountryFlag countryCode={flagCode} alt={name} className="h-6 w-6" />
                                         {name}
                                     </div>
                                 </DropdownMenuItem>
