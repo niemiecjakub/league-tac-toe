@@ -61,13 +61,8 @@
             "selected": "Wybrano: {number}"
         },
         "pagination": {
-            "numberOfRowsSelected": "Wybrano {selected} z {total} wierszy.",
             "pageSelected": "Strona {current} z {total}",
-            "rowsPerPage": "Wierszy na stronę",
-            "firstPage": "Przejdź do pierwszej strony",
-            "previousPage": "Przejdź do poprzedniej strony",
-            "nextPage": "Przejdź do następnej strony",
-            "lastPage": "Przejdź do ostatniej strony"
+            "rowsPerPage": "Wierszy na stronę"
         },
         "toolbar": {
             "reset": "Resetuj",

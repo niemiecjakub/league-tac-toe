@@ -61,13 +61,8 @@
             "selected": "{number} sélectionné(s)"
         },
         "pagination": {
-            "numberOfRowsSelected": "{selected} sur {total} ligne(s) sélectionnée(s).",
             "pageSelected": "Page {current} sur {total}",
-            "rowsPerPage": "Lignes par page",
-            "firstPage": "Aller à la première page",
-            "previousPage": "Page précédente",
-            "nextPage": "Page suivante",
-            "lastPage": "Aller à la dernière page"
+            "rowsPerPage": "Lignes par page"
         },
         "toolbar": {
             "reset": "Réinitialiser",

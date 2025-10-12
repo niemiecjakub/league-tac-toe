@@ -19,7 +19,7 @@ export default function LobbyLocal() {
                         <Label>{t("timePerTurn")}</Label>
                         <Select>
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Unlimtied" />
+                                <SelectValue placeholder={t("unlimited")} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
@@ -37,7 +37,7 @@ export default function LobbyLocal() {
                         <Label>{t("enableSteals")}</Label>
                         <Select>
                             <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Yes" />
+                                <SelectValue placeholder={t("yes")} />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>

@@ -61,13 +61,8 @@
             "selected": "{number} selectat(e)"
         },
         "pagination": {
-            "numberOfRowsSelected": "{selected} din {total} rând(uri) selectat(e).",
             "pageSelected": "Pagina {current} din {total}",
-            "rowsPerPage": "Rânduri pe pagină",
-            "firstPage": "Mergi la prima pagină",
-            "previousPage": "Mergi la pagina anterioară",
-            "nextPage": "Mergi la pagina următoare",
-            "lastPage": "Mergi la ultima pagină"
+            "rowsPerPage": "Rânduri pe pagină"
         },
         "toolbar": {
             "reset": "Resetează",

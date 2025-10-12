@@ -61,13 +61,8 @@
             "selected": "{number} seçildi"
         },
         "pagination": {
-            "numberOfRowsSelected": "{selected} / {total} satır seçildi.",
             "pageSelected": "Sayfa {current} / {total}",
-            "rowsPerPage": "Sayfa başına satır",
-            "firstPage": "İlk sayfaya git",
-            "previousPage": "Önceki sayfaya git",
-            "nextPage": "Sonraki sayfaya git",
-            "lastPage": "Son sayfaya git"
+            "rowsPerPage": "Sayfa başına satır"
         },
         "toolbar": {
             "reset": "Sıfırla",
