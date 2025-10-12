@@ -98,11 +98,13 @@
                 "drawRequestSent": "Beraberlik isteği gönderildi",
                 "requestDraw": "Beraberlik iste"
             },
-            "youAre": "Sen '{player}'sin",
+            "youAre": "Sen {player} sin",
             "you": "Sen",
             "opponent": "Rakip",
             "skipTurn": "Turu geç",
-            "noTimeLimit": "Zaman sınırı yok"
+            "noTimeLimit": "Zaman sınırı yok",
+            "yourTurn": "Sıra sende",
+            "opponentsTurn": "Rakibin sırası"
         },
         "waitingRoom": {
             "roomCode": "Oda kodu",

@@ -51,7 +51,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="flex space-x-2 items-center">
-                    <p className="text-lg font-semibold">{isYourTurn() ? "Your turn" : "Opponent's turn"}</p>
+                    <p className="text-lg font-semibold">{isYourTurn() ? `${t("yourTurn")}` : `${t("opponentsTurn")}`}</p>
                     <Button variant={isYourTurn() ? `destructive` : `secondary`} onClick={handleTurnSkip}>
                         {t("skipTurn")}
                     </Button>

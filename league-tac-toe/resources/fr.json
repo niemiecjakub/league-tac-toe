@@ -98,11 +98,13 @@
                 "drawRequestSent": "Demande d’égalité envoyée",
                 "requestDraw": "Proposer une égalité"
             },
-            "youAre": "Tu es '{player}'",
+            "youAre": "Tu es {player}",
             "you": "Toi",
             "opponent": "Adversaire",
             "skipTurn": "Passer le tour",
-            "noTimeLimit": "Pas de limite de temps"
+            "noTimeLimit": "Pas de limite de temps",
+            "yourTurn": "Ton tour",
+            "opponentsTurn": "Tour de l’adversaire"
         },
         "waitingRoom": {
             "roomCode": "Code de la salle",

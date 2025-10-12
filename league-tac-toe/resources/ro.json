@@ -98,11 +98,13 @@
                 "drawRequestSent": "Cererea de egal a fost trimisă",
                 "requestDraw": "Propune egal"
             },
-            "youAre": "Ești '{player}'",
+            "youAre": "Ești {player}",
             "you": "Tu",
             "opponent": "Adversar",
             "skipTurn": "Sari peste tură",
-            "noTimeLimit": "Fără limită de timp"
+            "noTimeLimit": "Fără limită de timp",
+            "yourTurn": "Rândul tău",
+            "opponentsTurn": "Rândul adversarului"
         },
         "waitingRoom": {
             "roomCode": "Codul sălii",
