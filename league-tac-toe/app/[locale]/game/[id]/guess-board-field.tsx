@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BoardField, CategoryItem, PlayerType } from "@/models/Game";
 import { cn } from "@/lib/utils";
-import { PlusIcon } from "@/components/svg/svg-icons";
+import { PlusIcon, StealIcon } from "@/components/svg/svg-icons";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
 import { useTranslations } from "next-intl";
@@ -20,7 +20,7 @@ export interface GuessBoardField {
 
 export default function GuessBoardField({ value, cellIndex, categories }: GuessBoardField) {
     const { championNames } = useChampionStore((state) => state);
-    const { isYourTurn, handleChampionSelect } = useRoomStore((state) => state);
+    const { isYourTurn, handleChampionSelect, room } = useRoomStore((state) => state);
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
@@ -57,6 +57,17 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
         setShowSuggestions(false);
     };
 
+    const resolveIcons = () => {
+        if (!isYourTurn()) {
+            return;
+        }
+
+        const stealsEnabled = room?.stealsEnabled ?? false;
+        const fieldHasValue: boolean = value?.Value !== undefined && value?.Value !== null;
+        const hasSteals: boolean = (room?.slot?.steals ?? 0) > 0;
+        return stealsEnabled && fieldHasValue && hasSteals ? <StealIcon className="absolute top-1 right-1 bg-white rounded-b-full" /> : <PlusIcon className="absolute top-1 right-1" />;
+    };
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
@@ -66,11 +77,11 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
                         backgroundImage: value?.Value?.championName ? `url('/champion/${value.Value.championName}.png')` : `url('/default.png')`,
                     }}
                 >
-                    <PlusIcon className="absolute top-1 right-1" />
+                    {resolveIcons()}
                     {value?.Value && (
-                        <div className="bg-black/60 p-1 rounded text-center">
-                            <p>{PlayerType[value.Value?.playerType]}</p>
-                            <p>{value.Value.championName}</p>
+                        <div className="bg-black/60 p-1 rounded text-center h-full w-full">
+                            <p className="text-7xl opacity-85">{PlayerType[value.Value?.playerType]}</p>
+                            <p className="text-xs">{value.Value.championName}</p>
                         </div>
                     )}
                 </Button>

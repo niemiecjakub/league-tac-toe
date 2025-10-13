@@ -28,6 +28,7 @@ export const joinRoom = async (roomGuid: string): Promise<Room> => {
 };
 
 export const getRoom = async (roomGuid: string): Promise<Room> => {
+    console.log("Fetching room data for roomGuid:", roomGuid);
     const { data } = await axios.get(`Game`, { params: { roomGuid } });
 
     const parsedBoardState: BoardField[][] = typeof data.game.boardState === "string" ? JSON.parse(data.game.boardState) : data.game.boardState;
