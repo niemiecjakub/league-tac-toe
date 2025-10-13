@@ -2,18 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import Board from "./board";
 import { Card } from "@/components/ui/card";
 import { connectToGameHub } from "@/lib/signalr";
 import { CopyIcon, StealIcon } from "@/components/svg/svg-icons";
-import React from "react";
-import Loading from "@/components/custom/loading";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
-import Dashboard from "./dashboard";
-import PostGameControls from "./post-game-controls";
 import { GameStateType } from "@/models/Game";
 import { useTranslations } from "next-intl";
+import React from "react";
+import Board from "./board";
+import Loading from "@/components/custom/loading";
+import Dashboard from "./dashboard";
+import PostGameControls from "./post-game-controls";
 
 export default function GameIdPage() {
     const params = useParams();
@@ -27,7 +27,10 @@ export default function GameIdPage() {
     // const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        if (!id) return;
+
         let hubConnection: signalR.HubConnection;
+        let isMounted = true;
 
         // const setTimer = (turnTime: number | null) => {
         //     setTimeLeft(turnTime);
@@ -52,16 +55,23 @@ export default function GameIdPage() {
         //     }, 1000);
         // };
 
-        const setupSignalR = async () => {
+        const init = async () => {
             try {
+                await joinRoom(id);
+
                 hubConnection = await connectToGameHub(id);
 
                 hubConnection.on("MesageReceived", (message: string) => {
                     setMessages((prevMessages) => [...prevMessages, message]);
                 });
 
+                hubConnection.on("PlayerLeft", () => {
+                    setMessages((prevMessages) => [...prevMessages, `🔴 User has left`]);
+                });
+
                 hubConnection.on("PlayerJoined", async () => {
-                    updateRoom(id);
+                    if (!isMounted) return;
+                    await updateRoom(id);
                     setMessages((prevMessages) => [...prevMessages, `🔵 User has joined`]);
                     // console.log("User Joined, fetching game data", updatedRoom.game);
                     // if (updatedRoom.game.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
@@ -69,44 +79,33 @@ export default function GameIdPage() {
                     // }
                 });
 
-                hubConnection.on("PlayerLeft", () => {
-                    setMessages((prevMessages) => [...prevMessages, `🔴 User has left`]);
-                });
-
                 hubConnection.on("TurnSwitch", async (message: string) => {
-                    updateRoom(id);
+                    if (!isMounted) return;
+                    await updateRoom(id);
                     setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
                 hubConnection.on("DrawRequested", async (message: string) => {
-                    updateRoom(id);
+                    if (!isMounted) return;
+                    await updateRoom(id);
                     setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
-                if (id) {
-                    await hubConnection.invoke("JoinRoom", id);
-                }
+                await hubConnection.invoke("JoinRoom", id);
+                setChampionNames();
             } catch (err) {
                 console.error("Error setting up SignalR:", err);
             }
         };
 
-        joinRoom(id);
-        setupSignalR();
-        setChampionNames();
+        init();
 
+        async function setupSignalR() {
+            await init();
+        }
         return () => {
-            if (hubConnection) {
-                hubConnection.off("SendMessage");
-                hubConnection.off("JoinRoom");
-                hubConnection.off("LeaveRoom");
-                hubConnection.off("TurnSwitch");
-                hubConnection.off("DrawRequested");
-                hubConnection.stop();
-            }
-            // if (timerRef.current) {
-            //     clearInterval(timerRef.current);
-            // }
+            isMounted = false;
+            if (hubConnection) hubConnection.stop();
         };
     }, [id]);
 
@@ -116,25 +115,6 @@ export default function GameIdPage() {
     //         setRoom(roomData);
     //     }
     // }
-
-    if (room?.game.gameStatus === GameStateType.InProgress) {
-        return (
-            <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem]">
-                <Dashboard />
-                {timeLeft && <p className="text-sm text-gray-500">{t("info.timeLeft", { timeLeft: timeLeft })}</p>}
-                <div className="flex flex-col items-center justify-center">
-                    <Board board={room?.game.boardState} categories={room?.game.categories} />
-                    {room?.stealsEnabled && (
-                        <div className="flex items-center py-1 px-2">
-                            <StealIcon className="h-4 w-4 mr-1" />
-                            <p className="text-xs">{t("info.remainingSteals", { steals: room.slot.steals + "" })}</p>
-                        </div>
-                    )}
-                </div>
-                <PostGameControls />
-            </Card>
-        );
-    }
 
     if (room?.game.gameStatus === GameStateType.Created) {
         return (
@@ -159,9 +139,29 @@ export default function GameIdPage() {
             </div>
         );
     }
-    return (
-        <div className="h-full w-full flex flex-col items-center justify-center">
-            <Loading text="" />
-        </div>
-    );
+
+    if (room?.game.gameStatus === GameStateType.InProgress || room?.game.gameStatus === GameStateType.Finished) {
+        return (
+            <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem]">
+                <Dashboard />
+                {timeLeft && <p className="text-sm text-gray-500">{t("info.timeLeft", { timeLeft: timeLeft })}</p>}
+                <div className="flex flex-col items-center justify-center">
+                    <Board board={room?.game.boardState} categories={room?.game.categories} />
+                    {room?.stealsEnabled && (
+                        <div className="flex items-center py-1 px-2">
+                            <StealIcon className="h-4 w-4 mr-1" />
+                            <p className="text-xs">{t("info.remainingSteals", { steals: room.slot.steals + "" })}</p>
+                        </div>
+                    )}
+                </div>
+                <PostGameControls />
+            </Card>
+        );
+    }
+
+    // return (
+    //     <div className="h-full w-full flex flex-col items-center justify-center">
+    //         <Loading text="" />
+    //     </div>
+    // );
 }

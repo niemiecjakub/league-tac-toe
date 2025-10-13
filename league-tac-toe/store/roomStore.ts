@@ -30,7 +30,6 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
 
             const roomData = await joinRoom(roomGuid);
             set({ room: roomData });
-            console.log("Room:", roomData);
 
             // if (roomData?.turnTime != null) {
             //     setTimer(roomData.turnTime);
