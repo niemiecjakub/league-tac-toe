@@ -62,10 +62,20 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
             return;
         }
 
-        const stealsEnabled = room?.stealsEnabled ?? false;
         const fieldHasValue: boolean = value?.Value !== undefined && value?.Value !== null;
+        if (!fieldHasValue) {
+            return <PlusIcon className="absolute top-1 right-1" />;
+        }
+
+        const isMyField = value?.Value?.playerType === room?.slot?.playerType;
+        if (isMyField) {
+            return null;
+        }
+
         const hasSteals: boolean = (room?.slot?.steals ?? 0) > 0;
-        return stealsEnabled && fieldHasValue && hasSteals ? <StealIcon className="absolute top-1 right-1 bg-white rounded-b-full" /> : <PlusIcon className="absolute top-1 right-1" />;
+        const stealsEnabled = room?.stealsEnabled ?? false;
+
+        return stealsEnabled && hasSteals ? <StealIcon className="absolute top-1 right-1 bg-white rounded-b-full" /> : <PlusIcon className="absolute top-1 right-1" />;
     };
 
     return (
