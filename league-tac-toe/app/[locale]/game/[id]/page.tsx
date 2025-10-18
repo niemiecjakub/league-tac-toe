@@ -100,7 +100,7 @@ export default function GameIdPage() {
             <div className="h-full w-full flex flex-col items-center justify-center">
                 <Card className="flex flex-col items-center justify-between gap-0 border-league-grey-200 p-2 space-y-4">
                     <p className="text-lg">{t("waitingRoom.shareCode")}</p>
-                    <div className="flex flex-col w-full  bg-league-gold-100 space">
+                    <div className="flex flex-col w-full  bg-league-gold-100 dark:bg-league-grey-200 space">
                         <div className="flex p-2 rounded-t-xl space-x-2 justify-between items-center">
                             <div className="flex space-x-2 justify-center items-center">
                                 <p className="text-sm lg:text-md">{t("waitingRoom.roomCode")}:</p>
@@ -121,7 +121,7 @@ export default function GameIdPage() {
 
     if (room?.game.gameStatus === GameStateType.InProgress || room?.game.gameStatus === GameStateType.Finished) {
         return (
-            <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem]">
+            <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem] dark:bg-league-black-200">
                 <Dashboard />
                 <div className="flex flex-col items-center justify-center">
                     <Board board={room?.game.boardState} categories={room?.game.categories} />

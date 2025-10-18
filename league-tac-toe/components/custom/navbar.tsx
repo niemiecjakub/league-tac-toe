@@ -3,31 +3,27 @@
 import Link from "next/link";
 import { DarkMode, LightMode } from "../svg/svg-icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MODE_KEY, UiMode, useUiStore } from "@/store/uiStore";
 import CountryFlag from "./country-flag";
 import { Locale, useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useEffect, useTransition } from "react";
+import { useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { SUPPORTED_CULTURES, DEFAULT_LANG } from "@/i18n/routing";
+import { useTheme } from "next-themes";
+
+enum UiMode {
+    LIGHT = "light",
+    DARK = "dark",
+}
 
 export default function Navbar() {
-    const { mode, setMode } = useUiStore((state) => state);
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const pathname = usePathname();
     const params = useParams();
-
-    const t = useTranslations("navbar");
     const locale = useLocale();
-
-    useEffect(() => {
-        const storedMode = localStorage.getItem(MODE_KEY) as UiMode | null;
-
-        if (storedMode && Object.values(UiMode).includes(storedMode)) {
-            setMode(storedMode);
-        }
-    }, [setMode]);
+    const t = useTranslations("navbar");
+    const { theme, setTheme } = useTheme();
 
     const handleLocaleChange = (nextLocale: Locale) => {
         startTransition(() => {
@@ -42,7 +38,7 @@ export default function Navbar() {
     };
 
     return (
-        <div className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 bg-amber-50 text-sm md:text-xl">
+        <div className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 dark:bg-league-grey-300 bg-amber-50 dark:text-league-white-100 text-black text-sm md:text-xl">
             <div className="lg:w-2/3 flex justify-between items-center px-1 md:px-4 md:py-2 m-auto ">
                 <div className="flex items-center">
                     <div className="flex items-center gap-2 cursor-pointer md:pr-6 ">
@@ -74,10 +70,10 @@ export default function Navbar() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    {mode == UiMode.LIGHT ? (
-                        <DarkMode className="h-8 w-8 cursor-pointer" onClick={() => setMode(UiMode.DARK)} />
+                    {theme == UiMode.LIGHT ? (
+                        <DarkMode className="h-8 w-8 cursor-pointer" onClick={() => setTheme(UiMode.DARK)} />
                     ) : (
-                        <LightMode className="h-8 w-8 cursor-pointer" onClick={() => setMode(UiMode.LIGHT)} />
+                        <LightMode className="h-8 w-8 cursor-pointer" onClick={() => setTheme(UiMode.LIGHT)} />
                     )}
                 </div>
             </div>

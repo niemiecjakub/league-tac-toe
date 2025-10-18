@@ -79,35 +79,30 @@
     --sidebar-ring: oklch(0.707 0.022 261.325);
 }
 
-/* :root {
-    --radius: 0.625rem;
+.dark {
     --background: var(--color-league-black-200);
     --foreground: var(--color-league-white-100);
-    --card: var(--color-league-grey-300);
-    --card-foreground: var(--color-league-black-100);
-    --popover: oklch(1 0 0);
-    --popover-foreground: var(--color-league-black-100);
-    --primary: var(--color-league-gold-400);
-    --primary-foreground: var(--color-league-black-100);
-    --secondary: oklch(0.967 0.003 264.542);
-    --secondary-foreground: oklch(0.21 0.034 264.665);
-    --muted: var(--color-league-white-100);
-    --muted-foreground: var(--color-league-black-100);
-    --accent: oklch(0.967 0.003 264.542);
-    --accent-foreground: oklch(0.21 0.034 264.665);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.928 0.006 264.531);
-    --input: oklch(0.928 0.006 264.531);
-    --ring: oklch(0.707 0.022 261.325);
-    --sidebar: oklch(0.985 0.002 247.839);
-    --sidebar-foreground: oklch(0.13 0.028 261.692);
-    --sidebar-primary: oklch(0.21 0.034 264.665);
-    --sidebar-primary-foreground: oklch(0.985 0.002 247.839);
-    --sidebar-accent: oklch(0.967 0.003 264.542);
-    --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
-    --sidebar-border: oklch(0.928 0.006 264.531);
-    --sidebar-ring: oklch(0.707 0.022 261.325);
-} */
+    --card: var(--color-league-grey-200);
+    --card-foreground: var(--color-league-white-100);
+
+    --popover: var(--color-league-grey-200);
+    --popover-foreground: var(--color-league-white-100);
+
+    --primary: var(--color-league-gold-100);
+    --primary-foreground: var(--color-league-black-200);
+
+    --secondary: var(--color-league-grey-200);
+    --secondary-foreground: var(--color-league-white-100);
+
+    --muted: var(--color-league-grey-200);
+    --muted-foreground: var(--color-league-white-100);
+
+    --accent: var(--color-league-gold-300);
+    --accent-foreground: var(--color-league-white-100);
+
+    --border: var(--color-league-grey-150);
+    --input: var(--color-league-gold-100);
+}
 
 @theme {
     --color-league-blue-100: #cdfafa;
