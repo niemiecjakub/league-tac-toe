@@ -37,7 +37,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="flex flex-col items-center w-full py-2">
+        <div className="flex flex-col items-center w-full py-2 text-black dark:text-white">
             <div className="w-full flex justify-between items-center">
                 <div className="flex flex-col items-center justify-center">
                     <div className=" w-full flex justify-start">
@@ -53,8 +53,8 @@ export default function Dashboard() {
                 </div>
                 <div className="flex space-x-2 items-center">
                     <div className="flex items-center justify-center bg-gray-300 rounded-lg text-sm h-[36px]">
-                        <p className="px-2">{isYourTurn() ? `${t("yourTurn")}` : `${t("opponentsTurn")}`}</p>
-                        <Button variant="destructive" onClick={handleTurnSkip} className={`px-1 py-0 ${isYourTurn() ? "" : "hidden"}`}>
+                        <p className="px-2 dark:text-black">{isYourTurn() ? `${t("yourTurn")}` : `${t("opponentsTurn")}`}</p>
+                        <Button variant="destructive" onClick={handleTurnSkip} className={`dark:text-black px-1 py-0 ${isYourTurn() ? "" : "hidden"} `}>
                             {t("skipTurn")}
                         </Button>
                     </div>

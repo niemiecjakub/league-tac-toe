@@ -4,6 +4,7 @@ import Navbar from "@/components/custom/navbar";
 import { routing } from "@/i18n/routing";
 import { Locale, hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { ThemeProvider } from "@/components/custom/theme-provider";
 
 export const metadata: Metadata = {
     title: "League Tac Toe",
@@ -28,13 +29,15 @@ export default async function LocaleLayout({ children, params }: Props) {
     setRequestLocale(locale);
 
     return (
-        <html lang={locale}>
+        <html lang={locale} suppressHydrationWarning>
             <body className="antialiased">
                 <NextIntlClientProvider>
-                    <div className="w-full max-h-screen flex flex-col items-center">
-                        <Navbar />
-                        <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
-                    </div>
+                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                        <div className="w-full max-h-screen flex flex-col items-center">
+                            <Navbar />
+                            <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
+                        </div>
+                    </ThemeProvider>
                 </NextIntlClientProvider>
             </body>
         </html>
