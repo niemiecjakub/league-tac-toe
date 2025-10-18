@@ -16,6 +16,8 @@ import Dashboard from "./dashboard";
 import PostGameControls from "./post-game-controls";
 import { skipMove } from "@/services/gameService";
 import Messages from "@/components/custom/messages";
+import { useTheme } from "next-themes";
+import { UiMode } from "@/components/custom/navbar";
 
 export default function GameIdPage() {
     const params = useParams();
@@ -24,6 +26,7 @@ export default function GameIdPage() {
     const { setChampionNames } = useChampionStore((state) => state);
     const { room, joinRoom, updateRoom, handleTimeLeftUpdate, handleTurnSkip } = useRoomStore((state) => state);
     const [messages, setMessages] = useState<string[]>([]);
+    const { theme } = useTheme();
 
     useEffect(() => {
         if (!id) return;
@@ -127,7 +130,7 @@ export default function GameIdPage() {
                     <Board board={room?.game.boardState} categories={room?.game.categories} />
                     {room?.stealsEnabled && (
                         <div className="flex items-center py-1 px-2">
-                            <StealIcon className="h-4 w-4 mr-1" />
+                            <StealIcon className="h-4 w-4 mr-1 fill-current" fill={theme == UiMode.LIGHT ? "#000000" : "#FFFFFF"} />
                             <p className="text-xs">{t("info.remainingSteals", { steals: room.slot.steals + "" })}</p>
                         </div>
                     )}
