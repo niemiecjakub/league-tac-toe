@@ -27,6 +27,9 @@ export default function PostGameControls() {
                         {gameFinishedWithPlayerWin() && <p className="text-lg font-semibold">{youWon() ? `${t("youWon")}` : `${t("youLost")}`}</p>}
                         {gameFinishedWithDraw() && <p className="text-lg font-sem ibold">{t("draw")}</p>}
                     </div>
+                    <span>
+                        Next game starting soon...
+                    </span>
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>
@@ -34,7 +37,6 @@ export default function PostGameControls() {
                             {t("leave")}
                         </Button>
                     </DialogClose>
-                    <Button>{t("playAgain")}</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
