@@ -11,6 +11,8 @@ import { PlusIcon, StealIcon } from "@/components/svg/svg-icons";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
+import { UiMode } from "@/components/custom/navbar";
 
 export interface GuessBoardField {
     value?: BoardField;
@@ -27,7 +29,7 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("game.field");
-
+    const { theme } = useTheme();
     useEffect(() => {
         if (inputValue.trim() === "") {
             setFilteredChampions([]);
@@ -75,14 +77,14 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
         const hasSteals: boolean = (room?.slot?.steals ?? 0) > 0;
         const stealsEnabled = room?.stealsEnabled ?? false;
 
-        return stealsEnabled && hasSteals ? <StealIcon className="absolute top-1 right-1 bg-white rounded-b-full" /> : <PlusIcon className="absolute top-1 right-1" />;
+        return stealsEnabled && hasSteals ? <StealIcon className="absolute top-1 right-1 bg-white rounded-b-full" fill="#000000" /> : <PlusIcon className="absolute top-1 right-1" />;
     };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>
                 <Button
-                    className="relative w-full h-full aspect-square bg-cover bg-center text-white text-xs sm:text-sm md:text-base cursor-pointer rounded-none"
+                    className=" relative w-full h-full aspect-square bg-cover bg-center text-white text-xs sm:text-sm md:text-base cursor-pointer rounded-none"
                     style={{
                         backgroundImage: value?.Value?.championName ? `url('/champion/${value.Value.championName}.png')` : `url('/default.png')`,
                     }}
@@ -122,9 +124,9 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
                     />
 
                     {showSuggestions && filteredChampions.length > 0 && (
-                        <ul className="absolute z-10 mt-1 max-h-64 w-full overflow-auto rounded-md border bg-white p-1 text-lg shadow">
+                        <ul className="absolute z-10 mt-1 max-h-64 w-full overflow-auto rounded-md border bg-white dark:bg-league-black-200 p-1 text-lg shadow">
                             {filteredChampions.map((name) => (
-                                <li key={name} className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100")} onMouseDown={() => handleChampionSubmit(name)}>
+                                <li key={name} className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100 dark:hover:bg-league-grey-150")} onMouseDown={() => handleChampionSubmit(name)}>
                                     <img src={`/champion/${name}.png`} alt={name} className="inline-block h-10 w-10 mr-2" />
                                     {name}
                                 </li>

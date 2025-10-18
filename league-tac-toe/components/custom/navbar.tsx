@@ -11,7 +11,7 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { SUPPORTED_CULTURES, DEFAULT_LANG } from "@/i18n/routing";
 import { useTheme } from "next-themes";
 
-enum UiMode {
+export enum UiMode {
     LIGHT = "light",
     DARK = "dark",
 }
@@ -40,14 +40,12 @@ export default function Navbar() {
     return (
         <div className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 dark:bg-league-grey-300 bg-amber-50 dark:text-league-white-100 text-black text-sm md:text-xl">
             <div className="lg:w-2/3 flex justify-between items-center px-1 md:px-4 md:py-2 m-auto ">
-                <div className="flex items-center">
-                    <div className="flex items-center gap-2 cursor-pointer md:pr-6 ">
+                <div className="flex items-center ">
+                    <Link href="/" className="flex items-center gap-2 cursor-pointer md:pr-6 hover:opacity-50">
                         <img src="/lolicon.svg" alt="League of Legends Icon" className="h-[32px]" />
-                        <Link href="/">
-                            <h1 className="font-semibold uppercase hidden md:block">League Tac Toe</h1>
-                        </Link>
-                    </div>
-                    <Link href="/champions" className="font-medium">
+                        <h1 className="font-semibold uppercase hidden md:block">League Tac Toe</h1>
+                    </Link>
+                    <Link href="/champions" className="font-medium hover:opacity-50">
                         {t("champions")}
                     </Link>
                 </div>
@@ -71,9 +69,9 @@ export default function Navbar() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                     {theme == UiMode.LIGHT ? (
-                        <DarkMode className="h-8 w-8 cursor-pointer" onClick={() => setTheme(UiMode.DARK)} />
+                        <DarkMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.DARK)} />
                     ) : (
-                        <LightMode className="h-8 w-8 cursor-pointer" onClick={() => setTheme(UiMode.LIGHT)} />
+                        <LightMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.LIGHT)} />
                     )}
                 </div>
             </div>
