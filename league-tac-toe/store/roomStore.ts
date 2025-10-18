@@ -5,6 +5,7 @@ import { create } from "zustand";
 
 type RoomStore = {
     room?: Room;
+    turnTimeLeft: number | null;
 
     joinRoom: (roomGuid: string) => Promise<void>;
     updateRoom: (roomGuid: string) => Promise<void>;
@@ -13,6 +14,7 @@ type RoomStore = {
     handleSendDrawRequest: () => Promise<void>;
     handleRespondDrawRequest: () => Promise<void>;
     handleRoomLeave: () => Promise<void>;
+    handleTimeLeftUpdate: (timeLeft: number | null) => void;
 
     // Derived
     isYourTurn: () => boolean;
@@ -23,6 +25,7 @@ type RoomStore = {
 };
 export const useRoomStore = create<RoomStore>((set, get) => ({
     room: undefined,
+    turnTimeLeft: null,
 
     joinRoom: async (roomGuid) => {
         try {
@@ -43,11 +46,6 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
         try {
             const updatedRoom = await getRoom(roomGuid);
             set({ room: updatedRoom });
-            console.log("updatedGame", updatedRoom);
-
-            // if (updatedRoom?.turnTime != null) {
-            //     setTimer(updatedRoom.turnTime);
-            // }
         } catch (err) {
             console.error("Error during TurnSwitch update:", err);
         }
@@ -86,6 +84,9 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
     },
     handleRoomLeave: async () => {
         set({ room: undefined });
+    },
+    handleTimeLeftUpdate: (timeLeft) => {
+        set({ turnTimeLeft: timeLeft });
     },
 
     // Derived

@@ -14,46 +14,22 @@ import Board from "./board";
 import Loading from "@/components/custom/loading";
 import Dashboard from "./dashboard";
 import PostGameControls from "./post-game-controls";
+import { skipMove } from "@/services/gameService";
+import Messages from "@/components/custom/messages";
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
     const t = useTranslations("game");
     const { setChampionNames } = useChampionStore((state) => state);
-    const { room, joinRoom, updateRoom } = useRoomStore((state) => state);
-
+    const { room, joinRoom, updateRoom, handleTimeLeftUpdate, handleTurnSkip } = useRoomStore((state) => state);
     const [messages, setMessages] = useState<string[]>([]);
-    const [timeLeft, setTimeLeft] = useState<number | null>(null);
-    // const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (!id) return;
 
         let hubConnection: signalR.HubConnection;
         let isMounted = true;
-
-        // const setTimer = (turnTime: number | null) => {
-        //     setTimeLeft(turnTime);
-
-        //     if (turnTime === null) {
-        //         return;
-        //     }
-
-        //     if (timerRef.current) {
-        //         clearInterval(timerRef.current);
-        //     }
-
-        //     timerRef.current = setInterval(() => {
-        //         setTimeLeft((prev) => {
-        //             if (!prev || prev <= 1) {
-        //                 clearInterval(timerRef.current!);
-        //                 handleTimeout();
-        //                 return turnTime;
-        //             }
-        //             return prev - 1;
-        //         });
-        //     }, 1000);
-        // };
 
         const init = async () => {
             try {
@@ -73,10 +49,6 @@ export default function GameIdPage() {
                     if (!isMounted) return;
                     await updateRoom(id);
                     setMessages((prevMessages) => [...prevMessages, `🔵 User has joined`]);
-                    // console.log("User Joined, fetching game data", updatedRoom.game);
-                    // if (updatedRoom.game.gameStatus === GameStateType.InProgress && updatedRoom?.turnTime != null) {
-                    //     // setTimer(updatedRoom.turnTime);
-                    // }
                 });
 
                 hubConnection.on("TurnSwitch", async (message: string) => {
@@ -91,6 +63,23 @@ export default function GameIdPage() {
                     setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
+                hubConnection.on("TurnTimeTick", async (turnTimeLeft: number) => {
+                    if (!isMounted) return;
+                    handleTimeLeftUpdate(turnTimeLeft);
+                    setMessages((prevMessages) => [...prevMessages, `[SERVER] Turn time left: ${turnTimeLeft} seconds`]);
+                });
+
+                hubConnection.on("Countdown", async (time: number) => {
+                    if (!isMounted) return;
+                    setMessages((prevMessages) => [...prevMessages, `[SERVER] Next game starting in: ${time} seconds`]);
+                });
+
+                hubConnection.on("NextGameStarted", async (message: string) => {
+                    if (!isMounted) return;
+                    await updateRoom(id);
+                    setMessages((prevMessages) => [...prevMessages, `[SERVER] Next game starting!`]);
+                });
+
                 await hubConnection.invoke("JoinRoom", id);
                 setChampionNames();
             } catch (err) {
@@ -100,21 +89,11 @@ export default function GameIdPage() {
 
         init();
 
-        async function setupSignalR() {
-            await init();
-        }
         return () => {
             isMounted = false;
             if (hubConnection) hubConnection.stop();
         };
     }, [id]);
-
-    // async function handleTimeout() {
-    //     if (isYourTurn && room?.game.gameStatus === GameStateType.InProgress) {
-    //         const roomData = await skipMove(id);
-    //         setRoom(roomData);
-    //     }
-    // }
 
     if (room?.game.gameStatus === GameStateType.Created) {
         return (
@@ -144,7 +123,6 @@ export default function GameIdPage() {
         return (
             <Card className="flex flex-col items-center justify-center h-full w-full gap-0 border-0 shadow-none sm:w-96 md:w-[28rem] lg:w-[32rem]">
                 <Dashboard />
-                {timeLeft && <p className="text-sm text-gray-500">{t("info.timeLeft", { timeLeft: timeLeft })}</p>}
                 <div className="flex flex-col items-center justify-center">
                     <Board board={room?.game.boardState} categories={room?.game.categories} />
                     {room?.stealsEnabled && (
@@ -154,6 +132,7 @@ export default function GameIdPage() {
                         </div>
                     )}
                 </div>
+                {/* <Messages messages={messages} /> */}
                 <PostGameControls />
             </Card>
         );
