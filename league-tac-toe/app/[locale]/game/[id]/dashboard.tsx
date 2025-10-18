@@ -4,6 +4,7 @@ import { useRoomStore } from "@/store/roomStore";
 import { PlayerType } from "@/models/Game";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import Timer from "@/components/custom/timer";
 
 export default function Dashboard() {
     const { room, isYourTurn, handleTurnSkip, handleSendDrawRequest, opponentDrawRequested, handleRespondDrawRequest } = useRoomStore((state) => state);
@@ -58,7 +59,7 @@ export default function Dashboard() {
                 </div>
             </div>
             <div className="w-full flex justify-between items-center">
-                {room?.turnTime == null && <p>{t("noTimeLimit")}</p>}
+                <Timer />
                 <div>{getDrawControls()}</div>
             </div>
         </div>
