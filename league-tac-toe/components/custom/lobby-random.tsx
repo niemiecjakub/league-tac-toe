@@ -5,11 +5,15 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import { findRandomOpponent } from "@/services/gameService";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Spinner } from "../ui/spinner";
 
 export default function LobbyRandom() {
+    const [isFinding, setIsFinding] = useState(false);
     const router = useRouter();
     const t = useTranslations("home");
     const handleFindRandomOpponent = async () => {
+        setIsFinding(true);
         var room = await findRandomOpponent();
         router.push(`/game/${room.roomGuid}`);
     };
@@ -22,7 +26,14 @@ export default function LobbyRandom() {
             </CardHeader>
             <CardFooter className="flex-col gap-2">
                 <Button type="submit" className="w-full" onClick={handleFindRandomOpponent}>
-                    {t("start")}
+                    {isFinding ? (
+                        <>
+                            <Spinner />
+                            {t("lobby.random.searchingRoom")}
+                        </>
+                    ) : (
+                        `${t("start")}`
+                    )}
                 </Button>
             </CardFooter>
         </Card>

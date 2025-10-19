@@ -10,6 +10,7 @@ import { useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { SUPPORTED_CULTURES, DEFAULT_LANG } from "@/i18n/routing";
 import { useTheme } from "next-themes";
+import { toast } from "react-toastify";
 
 export enum UiMode {
     LIGHT = "light",
@@ -17,13 +18,14 @@ export enum UiMode {
 }
 
 export default function Navbar() {
-    const router = useRouter();
     const [isPending, startTransition] = useTransition();
+    const { theme, setTheme } = useTheme();
+    const router = useRouter();
     const pathname = usePathname();
     const params = useParams();
     const locale = useLocale();
     const t = useTranslations("navbar");
-    const { theme, setTheme } = useTheme();
+    const isInGame = pathname.includes("/game");
 
     const handleLocaleChange = (nextLocale: Locale) => {
         startTransition(() => {
@@ -37,6 +39,14 @@ export default function Navbar() {
         return culture ? culture.flagCode : DEFAULT_LANG.flagCode;
     };
 
+    const handleChampionsClick = () => {
+        if (isInGame) {
+            toast.warn(t("dontCheat"), {
+                theme: theme,
+            });
+        }
+    };
+
     return (
         <div className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 dark:bg-league-grey-300 bg-amber-50 dark:text-league-white-100 text-black text-sm md:text-xl">
             <div className="lg:w-2/3 flex justify-between items-center px-1 md:px-4 md:py-2 m-auto ">
@@ -45,7 +55,7 @@ export default function Navbar() {
                         <img src="/lolicon.svg" alt="League of Legends Icon" className="h-[32px]" />
                         <h1 className="font-semibold uppercase hidden md:block">League Tac Toe</h1>
                     </Link>
-                    <Link href="/champions" className="font-medium hover:opacity-50">
+                    <Link href={isInGame ? "#" : "/champions"} className="hover:opacity-50" onClick={handleChampionsClick}>
                         {t("champions")}
                     </Link>
                 </div>

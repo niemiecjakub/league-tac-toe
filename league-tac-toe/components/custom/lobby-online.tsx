@@ -7,9 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createRoom } from "@/services/gameService";
 import { useRouter } from "next/navigation";
-import { use, useState } from "react";
+import { useState } from "react";
 import { RoomOptions } from "@/models/Room";
 import { useTranslations } from "next-intl";
+import { Spinner } from "../ui/spinner";
 
 export default function LobbyOnline() {
     const t = useTranslations("home");
@@ -20,13 +21,17 @@ export default function LobbyOnline() {
         stealsEnabled: true,
         isPublic: false,
     });
+    const [isCreatingRoom, setIsCreatingRoom] = useState(false);
+    const [isJoining, setIsJoining] = useState(false);
 
     const handleRoomCreate = async () => {
+        setIsCreatingRoom(true);
         var room = await createRoom(newRoomOptions);
         router.push(`/game/${room.roomGuid}`);
     };
 
     const handleRoomJoin = async (roomGuid: string) => {
+        setIsJoining(true);
         router.push(`/game/${roomGuid}`);
     };
     return (
@@ -40,7 +45,14 @@ export default function LobbyOnline() {
             </CardContent>
             <CardFooter className="flex-col gap-2">
                 <Button type="submit" className="w-full" onClick={() => handleRoomJoin(roomCode)} disabled={!roomCode.trim()}>
-                    {t("lobby.online.joinRoom.join")}
+                    {isJoining ? (
+                        <>
+                            <Spinner />
+                            {t("lobby.online.joinRoom.joining")}
+                        </>
+                    ) : (
+                        `${t("lobby.online.joinRoom.join")}`
+                    )}
                 </Button>
             </CardFooter>
             <CardHeader>
@@ -101,8 +113,15 @@ export default function LobbyOnline() {
                 </div>
             </CardContent>
             <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full" onClick={handleRoomCreate}>
-                    {t("create")}
+                <Button type="submit" className="w-full" onClick={handleRoomCreate} disabled={isCreatingRoom}>
+                    {isCreatingRoom ? (
+                        <>
+                            <Spinner />
+                            {t("lobby.online.createRoom.creating")}
+                        </>
+                    ) : (
+                        `${t("lobby.online.createRoom.create")}`
+                    )}
                 </Button>
             </CardFooter>
         </Card>

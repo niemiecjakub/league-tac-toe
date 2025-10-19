@@ -29,6 +29,7 @@ export default function PostGameControls() {
                     </div>
                     <span>
                         Next game starting soon...
+                        {t("nextGameStartSoon")}
                     </span>
                 </DialogHeader>
                 <DialogFooter>
