@@ -51,7 +51,7 @@ export default function LobbyLocal() {
                 </div>
             </CardContent>
             <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full" onClick={() => alert("Same screen room functionality not implemented yet")}>
+                <Button type="submit" className="w-full" onClick={() => alert("Same screen game will be available soon. Sorry :(")}>
                     {t("start")}
                 </Button>
             </CardFooter>
