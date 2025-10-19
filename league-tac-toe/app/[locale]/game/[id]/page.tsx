@@ -18,6 +18,7 @@ import { useTheme } from "next-themes";
 import { UiMode } from "@/components/custom/navbar";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
+import router from "next/router";
 
 export default function GameIdPage() {
     const params = useParams();
@@ -45,7 +46,11 @@ export default function GameIdPage() {
                             <strong>{t("info.opponentLeft")}</strong>
                             <div>{t("info.returningToMenu")}.</div>
                         </div>,
-                        { theme: theme, autoClose: 2000 }
+                        {
+                            theme: theme,
+                            autoClose: 2000,
+                            onClose: () => (window.location.href = "/"),
+                        }
                     );
                 });
 
@@ -87,11 +92,14 @@ export default function GameIdPage() {
         return () => {
             console.log("disposing");
             isMounted = false;
+
             if (hubConnection) {
-                handleRoomLeave();
-                hubConnection.invoke("LeaveRoom", id);
-                hubConnection.stop();
-                console.log("disconnected");
+                (async () => {
+                    await hubConnection.invoke("LeaveRoom", id);
+                    await hubConnection.stop();
+                    console.log("disconnected");
+                    handleRoomLeave();
+                })();
             }
         };
     }, [id]);
