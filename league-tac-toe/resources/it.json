@@ -1,12 +1,13 @@
 {
     "navbar": {
         "champions": "Campioni",
-        "selectLanguage": "Seleziona lingua"
+        "selectLanguage": "Seleziona lingua",
+        "dontCheat": "Non barare!"
     },
     "home": {
         "subtitle": "Il quiz di League of Legends incontra il Tris.",
-        "description1": "Nomina i campioni che corrispondono alle categorie per conquistare le caselle in una griglia 3x3.",
-        "description2": "Attiva la modalità Furto per rubare la casella del tuo avversario.",
+        "description1": "Indovina i campioni che corrispondono alle categorie per conquistare le caselle in una griglia 3x3.",
+        "description2": "Attiva la modalità Furto per rubare una casella all’avversario.",
         "online": "Online",
         "randomOpponent": "Avversario casuale",
         "sameScreen": "Stesso schermo",
@@ -17,35 +18,39 @@
         "yes": "Sì",
         "no": "No",
         "create": "Crea",
-        "start": "Avvia",
+        "start": "Inizia",
         "lobby": {
             "online": {
                 "joinRoom": {
-                    "title": "Entra in una stanza esistente",
-                    "description": "Inserisci il codice della stanza e unisciti alla partita",
-                    "join": "Unisciti"
+                    "title": "Unisciti a una stanza esistente",
+                    "description": "Inserisci il codice stanza e unisciti alla partita",
+                    "join": "Unisciti",
+                    "joining": "Connessione alla stanza..."
                 },
                 "createRoom": {
                     "title": "Crea stanza",
-                    "description": "Sfida un amico in una partita online"
+                    "description": "Sfida un amico in una partita online",
+                    "create": "Crea",
+                    "creating": "Creazione della stanza..."
                 }
             },
             "random": {
                 "title": "Trova un avversario casuale",
-                "description": "Gioca contro un avversario a caso"
+                "description": "Gioca contro un avversario casuale",
+                "searchingRoom": "Ricerca di una stanza..."
             },
             "local": {
                 "title": "Partita sullo stesso schermo",
                 "description": "Gioca contro un amico sullo stesso dispositivo"
             }
         },
-        "howToPlay": "Come giocare?",
+        "howToPlay": "Come si gioca?",
         "rules": [
-            "Una griglia 3 x 3 è allineata con criteri come eredità, posizione, risorsa, tipo di raggio e regione.",
-            "Posiziona il tuo segno, una X o O, in una delle caselle se puoi nominare un campione di League of Legends che corrisponda ai criteri della riga superiore e del lato sinistro.",
-            "Il primo che ottiene tre in fila, verticalmente, orizzontalmente o diagonalmente, vince.",
-            "Con la modalità furto attivata, ogni giocatore ha 3 furti totali, dove una casella può essere rubata se occupata dall’avversario.",
-            "Fai arrabbiare il tuo avversario e ruba una casella nominando un campione diverso da quello già presente nella posizione sulla griglia."
+            "Una griglia 3x3 è riempita con criteri come eredità, posizione, risorsa, tipo di attacco e regione.",
+            "Metti il tuo simbolo, una X o una O, in una casella se riesci a nominare un campione di League of Legends che rispetta i criteri della riga superiore e della colonna sinistra.",
+            "Il primo che riesce a fare tre in fila — in verticale, orizzontale o diagonale — vince.",
+            "Con la modalità furto attiva, ogni giocatore ha a disposizione 3 furti in totale, con cui può rubare una casella occupata dall’avversario.",
+            "Fai arrabbiare il tuo avversario e ruba una casella nominando un campione diverso da quello già presente sulla griglia."
         ]
     },
     "champions": {
@@ -57,7 +62,7 @@
         },
         "filter": {
             "noResults": "Nessun risultato trovato.",
-            "clear": "Cancella filtri",
+            "clear": "Pulisci filtri",
             "selected": "{number} selezionato/i"
         },
         "pagination": {
@@ -66,7 +71,7 @@
         },
         "toolbar": {
             "reset": "Reimposta",
-            "filterChampions": "Filtra i campioni..."
+            "filterChampions": "Filtra campioni..."
         },
         "options": {
             "view": "Visualizza",
@@ -78,37 +83,46 @@
             "gameFinished": "Partita terminata",
             "draw": "Pareggio!",
             "youWon": "Hai vinto!",
-            "youLost": "Hai perso!",
+            "youLost": "Hai perso",
             "leave": "Esci",
-            "playAgain": "Rigioca"
+            "playAgain": "Gioca di nuovo",
+            "nextGameStartSoon": "La prossima partita inizierà a breve."
         },
         "field": {
             "champion": "Campione",
-            "enterChampion": "Inserisci il campione"
+            "enterChampion": "Inserisci un campione"
         },
         "dashboard": {
             "draw": {
                 "drawSuggested": "Il tuo avversario propone un pareggio",
                 "acceptDraw": "Accetta pareggio",
                 "drawRequestSent": "Richiesta di pareggio inviata",
-                "requestDraw": "Richiedi pareggio"
+                "requestDraw": "Proponi pareggio"
             },
             "youAre": "Sei {player}",
             "you": "Tu",
             "opponent": "Avversario",
             "skipTurn": "Salta turno",
             "noTimeLimit": "Nessun limite di tempo",
-            "yourTurn": "Il tuo turno",
+            "yourTurn": "È il tuo turno",
             "opponentsTurn": "Turno dell’avversario"
         },
         "waitingRoom": {
             "roomCode": "Codice stanza",
             "shareCode": "Condividi il codice o il link della stanza",
-            "waitingForPlayer": "In attesa che un altro giocatore si unisca..."
+            "waitingForPlayer": "In attesa che un altro giocatore si unisca...",
+            "searchingOpponent": "Ricerca di un avversario",
+            "roomCodeCopied": "Codice stanza copiato!",
+            "roomLinkCopied": "Link stanza copiato!",
+            "copyLink": "Copia link stanza",
+            "copyCode": "Copia codice stanza"
         },
         "info": {
-            "timeLeft": "Tempo rimasto: {timeLeft}s",
-            "remainingSteals": "Significa che puoi rubare la casella del tuo avversario. Ti rimangono {steals} furti"
+            "timeLeft": "Tempo rimanente: {timeLeft}s",
+            "remainingSteals": "Significa che puoi rubare una casella al tuo avversario. Ti restano {steals} furti",
+            "opponentLeft": "Il tuo avversario ha abbandonato la partita",
+            "returningToMenu": "Ritorno al menu principale",
+            "opponentJoined": "Il tuo avversario si è unito alla stanza"
         }
     }
 }

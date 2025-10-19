@@ -1,38 +1,43 @@
 {
     "navbar": {
         "champions": "Campioni",
-        "selectLanguage": "Selectează limba"
+        "selectLanguage": "Selectează limba",
+        "dontCheat": "Nu trișa!"
     },
     "home": {
-        "subtitle": "Quiz-ul League of Legends se întâlnește cu X și 0.",
+        "subtitle": "Quiz-ul League of Legends întâlnește X și O.",
         "description1": "Numește campioni care se potrivesc categoriilor pentru a revendica pătrate într-o grilă 3x3.",
-        "description2": "Activează Modul Furt pentru a lua pătratul adversarului.",
+        "description2": "Activează modul Fură pentru a lua pătratul adversarului.",
         "online": "Online",
-        "randomOpponent": "Adversar aleatoriu",
+        "randomOpponent": "Adversar aleator",
         "sameScreen": "Același ecran",
         "timePerTurn": "Timp pe tură",
         "unlimited": "nelimitat",
         "limited": "{number} secunde",
-        "enableSteals": "Activează furturile",
+        "enableSteals": "Activează furturi",
         "yes": "Da",
         "no": "Nu",
         "create": "Creează",
-        "start": "Start",
+        "start": "Începe",
         "lobby": {
             "online": {
                 "joinRoom": {
-                    "title": "Alătură-te unei săli existente",
-                    "description": "Introdu codul sălii și intră în joc",
-                    "join": "Alătură-te"
+                    "title": "Alătură-te unei camere existente",
+                    "description": "Introdu codul camerei și alătură-te jocului",
+                    "join": "Alătură-te",
+                    "joining": "Alăturare la cameră..."
                 },
                 "createRoom": {
-                    "title": "Creează o sală",
-                    "description": "Provocă un prieten la un joc online"
+                    "title": "Creează cameră",
+                    "description": "Provocă un prieten la un joc online",
+                    "create": "Creează",
+                    "creating": "Se creează camera..."
                 }
             },
             "random": {
-                "title": "Găsește un adversar aleatoriu",
-                "description": "Joacă împotriva unui adversar aleatoriu"
+                "title": "Găsește un adversar aleator",
+                "description": "Joacă împotriva unui adversar aleator",
+                "searchingRoom": "Căutare cameră..."
             },
             "local": {
                 "title": "Joc pe același ecran",
@@ -41,23 +46,23 @@
         },
         "howToPlay": "Cum se joacă?",
         "rules": [
-            "O grilă de 3 x 3 este completată cu criterii precum moștenire, poziție, resursă, tip de rază și regiune.",
-            "Plasează-ți marcajul, un X sau O, într-unul dintre pătrate dacă poți numi un campion League of Legends care se potrivește criteriilor din rândul de sus și din partea stângă.",
-            "Primul care reușește trei la rând, vertical, orizontal sau diagonal, câștigă.",
-            "Cu modul furt activat, fiecare jucător are în total 3 furturi, prin care poate fura un pătrat ocupat de adversar.",
-            "Enervează-ți adversarul și fură un pătrat numind un campion diferit de cel deja folosit în acea poziție din grilă."
+            "O grilă 3x3 este umplută cu criterii precum moștenire, poziție, resursă, tip de rază și regiune.",
+            "Plasează-ți marcatorul, X sau O, într-un pătrat dacă poți numi un campion League of Legends care corespunde criteriilor din rândul de sus și coloana din stânga.",
+            "Primul care aliniază trei pe linie — vertical, orizontal sau diagonal — câștigă.",
+            "Cu modul fură activat, fiecare jucător are în total 3 furturi, permițând să fure un pătrat ocupat de adversar.",
+            "Enervează-ți adversarul și fură un pătrat numind un alt campion decât cel deja plasat în grilă."
         ]
     },
     "champions": {
         "noResults": "Niciun rezultat.",
         "sorting": {
-            "asc": "Crescător",
-            "desc": "Descrescător",
+            "asc": "Ascendent",
+            "desc": "Descendent",
             "hide": "Ascunde"
         },
         "filter": {
-            "noResults": "Nu s-au găsit rezultate.",
-            "clear": "Șterge filtrele",
+            "noResults": "Nu au fost găsite rezultate.",
+            "clear": "Șterge filtre",
             "selected": "{number} selectat(e)"
         },
         "pagination": {
@@ -69,46 +74,55 @@
             "filterChampions": "Filtrează campionii..."
         },
         "options": {
-            "view": "Vizualizează",
+            "view": "Vezi",
             "toggleColumns": "Comută coloanele"
         }
     },
     "game": {
         "postGame": {
-            "gameFinished": "Joc terminat",
+            "gameFinished": "Jocul s-a încheiat",
             "draw": "Egal!",
             "youWon": "Ai câștigat!",
-            "youLost": "Ai pierdut!",
+            "youLost": "Ai pierdut",
             "leave": "Ieși",
-            "playAgain": "Joacă din nou"
+            "playAgain": "Joacă din nou",
+            "nextGameStartSoon": "Următorul joc va începe în curând."
         },
         "field": {
             "champion": "Campion",
-            "enterChampion": "Introdu campionul"
+            "enterChampion": "Introdu campion"
         },
         "dashboard": {
             "draw": {
-                "drawSuggested": "Adversarul tău a propus un egal",
-                "acceptDraw": "Acceptă egalul",
-                "drawRequestSent": "Cererea de egal a fost trimisă",
-                "requestDraw": "Propune egal"
+                "drawSuggested": "Adversarul tău sugerează egalitate",
+                "acceptDraw": "Acceptă egalitatea",
+                "drawRequestSent": "Cerere de egalitate trimisă",
+                "requestDraw": "Cere egalitate"
             },
             "youAre": "Ești {player}",
             "you": "Tu",
             "opponent": "Adversar",
-            "skipTurn": "Sari peste tură",
+            "skipTurn": "Sari tură",
             "noTimeLimit": "Fără limită de timp",
-            "yourTurn": "Rândul tău",
-            "opponentsTurn": "Rândul adversarului"
+            "yourTurn": "Tura ta",
+            "opponentsTurn": "Tura adversarului"
         },
         "waitingRoom": {
-            "roomCode": "Codul sălii",
-            "shareCode": "Distribuie codul sau linkul sălii",
-            "waitingForPlayer": "Se așteaptă ca un alt jucător să se alăture..."
+            "roomCode": "Cod cameră",
+            "shareCode": "Partajează codul sau link-ul camerei",
+            "waitingForPlayer": "Așteptând ca alt jucător să se alăture...",
+            "searchingOpponent": "Căutând adversar",
+            "roomCodeCopied": "Codul camerei a fost copiat!",
+            "roomLinkCopied": "Link-ul camerei a fost copiat!",
+            "copyLink": "Copiază link-ul camerei",
+            "copyCode": "Copiază codul camerei"
         },
         "info": {
             "timeLeft": "Timp rămas: {timeLeft}s",
-            "remainingSteals": "Înseamnă că poți fura pătratul adversarului. Mai ai {steals} furt(uri) rămase"
+            "remainingSteals": "Aceasta înseamnă că poți fura pătratul adversarului. Îți mai rămân {steals} furturi",
+            "opponentLeft": "Adversarul tău a părăsit jocul",
+            "returningToMenu": "Revenire la meniul principal",
+            "opponentJoined": "Adversarul tău s-a alăturat camerei"
         }
     }
 }

@@ -1,7 +1,8 @@
 {
     "navbar": {
         "champions": "Champions",
-        "selectLanguage": "Select language"
+        "selectLanguage": "Select language",
+        "dontCheat": "Don't cheat!"
     },
     "home": {
         "subtitle": "League of Legends Quiz meets Tic-Tac-Toe.",
@@ -23,16 +24,20 @@
                 "joinRoom": {
                     "title": "Join existing room",
                     "description": "Enter room code and join game",
-                    "join": "Join"
+                    "join": "Join",
+                    "joining": "Joining room..."
                 },
                 "createRoom": {
                     "title": "Create room",
-                    "description": "Challenge a friend to an online game"
+                    "description": "Challenge a friend to an online game",
+                    "create": "Create",
+                    "creating": "Creating room..."
                 }
             },
             "random": {
                 "title": "Find random opponent",
-                "description": "Play against a random opponent"
+                "description": "Play against a random opponent",
+                "searchingRoom": "Searching for a room..."
             },
             "local": {
                 "title": "Same screen game",
@@ -80,7 +85,8 @@
             "youWon": "You won!",
             "youLost": "You lost!",
             "leave": "Leave",
-            "playAgain": "Play again"
+            "playAgain": "Play again",
+            "nextGameStartSoon": "Next game will begin soon."
         },
         "field": {
             "champion": "Champion",
@@ -104,11 +110,19 @@
         "waitingRoom": {
             "roomCode": "Room code",
             "shareCode": "Share room code or link",
-            "waitingForPlayer": "Waiting for another player to join..."
+            "waitingForPlayer": "Waiting for another player to join...",
+            "searchingOpponent": "Searching for opponent",
+            "roomCodeCopied": "Room code copied!",
+            "roomLinkCopied": "Room link copied!",
+            "copyLink": "Copy room link",
+            "copyCode": "Copy room code"
         },
         "info": {
             "timeLeft": "Time left: {timeLeft}s",
-            "remainingSteals": "Means that you can steal your opponent's square. You have {steals} steals remaining"
+            "remainingSteals": "Means that you can steal your opponent's square. You have {steals} steals remaining",
+            "opponentLeft": "Your opponent has left the game",
+            "returningToMenu": "Returning to main menu",
+            "opponentJoined": "Your opponent has joined the room"
         }
     }
 }

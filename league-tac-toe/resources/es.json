@@ -1,51 +1,56 @@
 {
     "navbar": {
         "champions": "Campeones",
-        "selectLanguage": "Seleccionar idioma"
+        "selectLanguage": "Seleccionar idioma",
+        "dontCheat": "¡No hagas trampas!"
     },
     "home": {
-        "subtitle": "El Quiz de League of Legends se une al Tres en Raya.",
+        "subtitle": "League of Legends Quiz se une al Tres en Raya.",
         "description1": "Nombra campeones que coincidan con las categorías para reclamar casillas en una cuadrícula de 3x3.",
-        "description2": "Activa el Modo Robo para quitarle una casilla a tu oponente.",
+        "description2": "Activa el modo Robo para quitarle una casilla a tu oponente.",
         "online": "En línea",
         "randomOpponent": "Oponente aleatorio",
-        "sameScreen": "Misma pantalla",
+        "sameScreen": "Mismo dispositivo",
         "timePerTurn": "Tiempo por turno",
         "unlimited": "ilimitado",
         "limited": "{number} segundos",
-        "enableSteals": "Activar robos",
+        "enableSteals": "Habilitar robos",
         "yes": "Sí",
         "no": "No",
         "create": "Crear",
-        "start": "Iniciar",
+        "start": "Empezar",
         "lobby": {
             "online": {
                 "joinRoom": {
                     "title": "Unirse a una sala existente",
-                    "description": "Introduce el código de la sala y únete al juego",
-                    "join": "Unirse"
+                    "description": "Introduce el código de sala y únete a la partida",
+                    "join": "Unirse",
+                    "joining": "Uniéndose a la sala..."
                 },
                 "createRoom": {
                     "title": "Crear sala",
-                    "description": "Reta a un amigo a una partida en línea"
+                    "description": "Desafía a un amigo a una partida en línea",
+                    "create": "Crear",
+                    "creating": "Creando sala..."
                 }
             },
             "random": {
-                "title": "Encontrar oponente aleatorio",
-                "description": "Juega contra un oponente al azar"
+                "title": "Buscar oponente aleatorio",
+                "description": "Juega contra un oponente aleatorio",
+                "searchingRoom": "Buscando una sala..."
             },
             "local": {
-                "title": "Juego en la misma pantalla",
+                "title": "Partida en el mismo dispositivo",
                 "description": "Juega contra un amigo en el mismo dispositivo"
             }
         },
-        "howToPlay": "¿Cómo jugar?",
+        "howToPlay": "¿Cómo se juega?",
         "rules": [
-            "Una cuadrícula de 3 x 3 se llena con criterios como legado, posición, recurso, tipo de alcance y región.",
-            "Coloca tu marcador, una X u O, en una de las casillas si puedes nombrar un campeón de League of Legends que cumpla los criterios de la fila superior y del lado izquierdo.",
-            "El primero en conseguir tres en línea, ya sea vertical, horizontal o diagonal, gana.",
-            "Con el modo robo activado, cada jugador tiene 3 robos en total, donde puede robar una casilla ocupada por el jugador contrario.",
-            "Irrita a tu oponente y róbale una casilla nombrando un campeón distinto al que ya está en esa posición de la cuadrícula."
+            "Una cuadrícula de 3x3 se llena con criterios como legado, posición, recurso, tipo de ataque y región.",
+            "Coloca tu marca, una X o una O, en una casilla si puedes nombrar un campeón de League of Legends que cumpla los criterios de la fila superior y la columna izquierda.",
+            "El primero en conseguir tres en línea —ya sea vertical, horizontal o diagonal— gana.",
+            "Con el modo robo activado, cada jugador tiene 3 robos en total, en los que puede robar una casilla ocupada por el oponente.",
+            "Enfada a tu oponente y róbale una casilla nombrando un campeón diferente al que ya está en esa posición del tablero."
         ]
     },
     "champions": {
@@ -77,21 +82,22 @@
         "postGame": {
             "gameFinished": "Partida terminada",
             "draw": "¡Empate!",
-            "youWon": "¡Ganaste!",
-            "youLost": "Perdiste",
+            "youWon": "¡Has ganado!",
+            "youLost": "Has perdido",
             "leave": "Salir",
-            "playAgain": "Jugar de nuevo"
+            "playAgain": "Jugar de nuevo",
+            "nextGameStartSoon": "La próxima partida comenzará pronto."
         },
         "field": {
             "champion": "Campeón",
-            "enterChampion": "Introduce el campeón"
+            "enterChampion": "Introduce un campeón"
         },
         "dashboard": {
             "draw": {
-                "drawSuggested": "Tu oponente ha propuesto un empate",
+                "drawSuggested": "Tu oponente propone empatar la partida",
                 "acceptDraw": "Aceptar empate",
                 "drawRequestSent": "Solicitud de empate enviada",
-                "requestDraw": "Proponer empate"
+                "requestDraw": "Pedir empate"
             },
             "youAre": "Eres {player}",
             "you": "Tú",
@@ -102,13 +108,21 @@
             "opponentsTurn": "Turno del oponente"
         },
         "waitingRoom": {
-            "roomCode": "Código de la sala",
+            "roomCode": "Código de sala",
             "shareCode": "Comparte el código o enlace de la sala",
-            "waitingForPlayer": "Esperando a que otro jugador se una..."
+            "waitingForPlayer": "Esperando a que otro jugador se una...",
+            "searchingOpponent": "Buscando oponente",
+            "roomCodeCopied": "¡Código de sala copiado!",
+            "roomLinkCopied": "¡Enlace de sala copiado!",
+            "copyLink": "Copiar enlace de sala",
+            "copyCode": "Copiar código de sala"
         },
         "info": {
             "timeLeft": "Tiempo restante: {timeLeft}s",
-            "remainingSteals": "Significa que puedes robar la casilla de tu oponente. Te quedan {steals} robos"
+            "remainingSteals": "Significa que puedes robar una casilla de tu oponente. Te quedan {steals} robos",
+            "opponentLeft": "Tu oponente ha abandonado la partida",
+            "returningToMenu": "Volviendo al menú principal",
+            "opponentJoined": "Tu oponente se ha unido a la sala"
         }
     }
 }

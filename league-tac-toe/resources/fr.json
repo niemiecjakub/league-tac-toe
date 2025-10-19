@@ -1,12 +1,13 @@
 {
     "navbar": {
         "champions": "Champions",
-        "selectLanguage": "Choisir la langue"
+        "selectLanguage": "Choisir la langue",
+        "dontCheat": "Ne triche pas !"
     },
     "home": {
-        "subtitle": "Le quiz League of Legends rencontre le jeu du morpion.",
-        "description1": "Nomme des champions correspondant aux catégories pour conquérir des cases dans une grille 3x3.",
-        "description2": "Active le mode Vol pour prendre la case de ton adversaire.",
+        "subtitle": "League of Legends Quiz rencontre le Morpion.",
+        "description1": "Nomme des champions correspondant aux catégories pour réclamer des cases sur une grille 3x3.",
+        "description2": "Active le mode Vol pour voler une case à ton adversaire.",
         "online": "En ligne",
         "randomOpponent": "Adversaire aléatoire",
         "sameScreen": "Même écran",
@@ -22,30 +23,34 @@
             "online": {
                 "joinRoom": {
                     "title": "Rejoindre une salle existante",
-                    "description": "Entre le code de la salle et rejoins la partie",
-                    "join": "Rejoindre"
+                    "description": "Entre le code de la salle pour rejoindre la partie",
+                    "join": "Rejoindre",
+                    "joining": "Connexion à la salle..."
                 },
                 "createRoom": {
                     "title": "Créer une salle",
-                    "description": "Défie un ami dans une partie en ligne"
+                    "description": "Défie un ami dans une partie en ligne",
+                    "create": "Créer",
+                    "creating": "Création de la salle..."
                 }
             },
             "random": {
                 "title": "Trouver un adversaire aléatoire",
-                "description": "Joue contre un adversaire aléatoire"
+                "description": "Joue contre un adversaire aléatoire",
+                "searchingRoom": "Recherche d'une salle..."
             },
             "local": {
-                "title": "Jeu sur le même écran",
+                "title": "Partie sur le même écran",
                 "description": "Joue contre un ami sur le même appareil"
             }
         },
         "howToPlay": "Comment jouer ?",
         "rules": [
-            "Une grille de 3 x 3 est remplie avec des critères comme héritage, position, ressource, type de portée et région.",
-            "Place ton marqueur, un X ou un O, sur une case si tu peux nommer un champion de League of Legends correspondant aux critères de la ligne du haut et de la colonne de gauche.",
+            "Une grille de 3x3 est remplie de critères tels que le legs, la position, la ressource, le type d’attaque et la région.",
+            "Place ton marqueur, un X ou un O, dans une case si tu peux nommer un champion de League of Legends correspondant aux critères de la ligne supérieure et de la colonne de gauche.",
             "Le premier à aligner trois cases — verticalement, horizontalement ou en diagonale — gagne.",
-            "Avec le mode vol activé, chaque joueur dispose de 3 vols au total, permettant de prendre une case occupée par l’adversaire.",
-            "Énerve ton adversaire et vole une case en nommant un champion différent de celui déjà placé sur la grille."
+            "Avec le mode vol activé, chaque joueur dispose de 3 vols au total, permettant de voler une case occupée par l’adversaire.",
+            "Énerve ton adversaire et vole-lui une case en nommant un champion différent de celui déjà placé sur la grille."
         ]
     },
     "champions": {
@@ -70,7 +75,7 @@
         },
         "options": {
             "view": "Afficher",
-            "toggleColumns": "Afficher/masquer les colonnes"
+            "toggleColumns": "Afficher/Masquer les colonnes"
         }
     },
     "game": {
@@ -78,37 +83,46 @@
             "gameFinished": "Partie terminée",
             "draw": "Égalité !",
             "youWon": "Tu as gagné !",
-            "youLost": "Tu as perdu !",
+            "youLost": "Tu as perdu",
             "leave": "Quitter",
-            "playAgain": "Rejouer"
+            "playAgain": "Rejouer",
+            "nextGameStartSoon": "La prochaine partie va bientôt commencer."
         },
         "field": {
             "champion": "Champion",
-            "enterChampion": "Entre le nom du champion"
+            "enterChampion": "Saisis un champion"
         },
         "dashboard": {
             "draw": {
                 "drawSuggested": "Ton adversaire propose une égalité",
                 "acceptDraw": "Accepter l’égalité",
                 "drawRequestSent": "Demande d’égalité envoyée",
-                "requestDraw": "Proposer une égalité"
+                "requestDraw": "Demander une égalité"
             },
             "youAre": "Tu es {player}",
             "you": "Toi",
             "opponent": "Adversaire",
             "skipTurn": "Passer le tour",
             "noTimeLimit": "Pas de limite de temps",
-            "yourTurn": "Ton tour",
+            "yourTurn": "À ton tour",
             "opponentsTurn": "Tour de l’adversaire"
         },
         "waitingRoom": {
             "roomCode": "Code de la salle",
             "shareCode": "Partage le code ou le lien de la salle",
-            "waitingForPlayer": "En attente d’un autre joueur..."
+            "waitingForPlayer": "En attente d’un autre joueur...",
+            "searchingOpponent": "Recherche d’un adversaire",
+            "roomCodeCopied": "Code de salle copié !",
+            "roomLinkCopied": "Lien de salle copié !",
+            "copyLink": "Copier le lien de la salle",
+            "copyCode": "Copier le code de la salle"
         },
         "info": {
             "timeLeft": "Temps restant : {timeLeft}s",
-            "remainingSteals": "Cela signifie que tu peux voler la case de ton adversaire. Il te reste {steals} vol(s)"
+            "remainingSteals": "Cela signifie que tu peux voler une case à ton adversaire. Il te reste {steals} vols",
+            "opponentLeft": "Ton adversaire a quitté la partie",
+            "returningToMenu": "Retour au menu principal",
+            "opponentJoined": "Ton adversaire a rejoint la salle"
         }
     }
 }

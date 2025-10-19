@@ -1,19 +1,20 @@
 {
     "navbar": {
         "champions": "Şampiyonlar",
-        "selectLanguage": "Dil seç"
+        "selectLanguage": "Dil seç",
+        "dontCheat": "Hile yapma!"
     },
     "home": {
-        "subtitle": "League of Legends Quiz, X-Oyunu ile buluşuyor.",
-        "description1": "3x3’lük bir ızgarada kareleri kazanmak için kategorilere uygun şampiyonların adını söyleyin.",
-        "description2": "Rakibinizin karesini çalmak için Çalma Modunu etkinleştirin.",
+        "subtitle": "League of Legends Quiz, XOX ile buluşuyor.",
+        "description1": "Kategorilere uyan şampiyonları adlandırarak 3x3’lük ızgaradaki kareleri kazan.",
+        "description2": "Rakibinin karesini almak için Hırsız Modunu etkinleştir.",
         "online": "Çevrimiçi",
         "randomOpponent": "Rastgele rakip",
         "sameScreen": "Aynı ekran",
-        "timePerTurn": "Tur başına süre",
+        "timePerTurn": "Hamle süresi",
         "unlimited": "sınırsız",
         "limited": "{number} saniye",
-        "enableSteals": "Çalmaları etkinleştir",
+        "enableSteals": "Hırsızlığı etkinleştir",
         "yes": "Evet",
         "no": "Hayır",
         "create": "Oluştur",
@@ -23,33 +24,37 @@
                 "joinRoom": {
                     "title": "Mevcut odaya katıl",
                     "description": "Oda kodunu gir ve oyuna katıl",
-                    "join": "Katıl"
+                    "join": "Katıl",
+                    "joining": "Odaya katılıyor..."
                 },
                 "createRoom": {
                     "title": "Oda oluştur",
-                    "description": "Bir arkadaşını çevrimiçi oyuna davet et"
+                    "description": "Bir arkadaşına çevrimiçi oyun için meydan oku",
+                    "create": "Oluştur",
+                    "creating": "Oda oluşturuluyor..."
                 }
             },
             "random": {
                 "title": "Rastgele rakip bul",
-                "description": "Rastgele bir rakibe karşı oyna"
+                "description": "Rastgele bir rakibe karşı oyna",
+                "searchingRoom": "Oda aranıyor..."
             },
             "local": {
-                "title": "Aynı ekranda oyun",
-                "description": "Aynı cihazda bir arkadaşına karşı oyna"
+                "title": "Aynı cihazda oyun",
+                "description": "Arkadaşına aynı cihazda karşı oyna"
             }
         },
         "howToPlay": "Nasıl oynanır?",
         "rules": [
-            "3 x 3’lük bir kare ızgarası, miras, pozisyon, kaynak, menzil türü ve bölge gibi kriterlerle doldurulur.",
-            "X veya O işaretinizi, üst sıradaki ve sol taraftaki kriterlere uyan bir League of Legends şampiyonu söyleyebiliyorsanız karelerden birine yerleştirin.",
-            "Dikey, yatay veya çapraz olarak üçlü yapan ilk oyuncu kazanır.",
-            "Çalma modu etkinleştirildiğinde, her oyuncunun toplamda 3 çalması vardır; bir kare, rakip oyuncuya ait olsa bile çalınabilir.",
-            "Rakibinizi sinirlendirin ve ızgaradaki pozisyonda zaten bulunan şampiyondan farklı bir şampiyon söyleyerek kareyi çalın."
+            "3x3’lük bir ızgara, miras, pozisyon, kaynak, menzil türü ve bölge gibi kriterlerle doldurulur.",
+            "X veya O işaretini, üst satır ve sol sütundaki kriterlere uyan bir League of Legends şampiyonu adını verebiliyorsan bir kareye yerleştir.",
+            "Üçü bir sıraya ilk yerleştiren — dikey, yatay veya çapraz — kazanır.",
+            "Hırsız modu etkinleştirildiğinde, her oyuncunun toplam 3 hırsızlığı vardır; rakip tarafından işgal edilmiş bir kareyi çalabilirsin.",
+            "Rakibini sinirlendir ve ızgarada zaten bulunan şampiyondan farklı bir şampiyon adı vererek bir kareyi çal."
         ]
     },
     "champions": {
-        "noResults": "Sonuç bulunamadı.",
+        "noResults": "Sonuç yok.",
         "sorting": {
             "asc": "Artan",
             "desc": "Azalan",
@@ -61,7 +66,7 @@
             "selected": "{number} seçildi"
         },
         "pagination": {
-            "pageSelected": "Sayfa {current} / {total}",
+            "pageSelected": "{total} sayfadan {current}. sayfa",
             "rowsPerPage": "Sayfa başına satır"
         },
         "toolbar": {
@@ -69,18 +74,19 @@
             "filterChampions": "Şampiyonları filtrele..."
         },
         "options": {
-            "view": "Görüntüle",
+            "view": "Görünüm",
             "toggleColumns": "Sütunları değiştir"
         }
     },
     "game": {
         "postGame": {
-            "gameFinished": "Oyun bitti",
+            "gameFinished": "Oyun sona erdi",
             "draw": "Berabere!",
             "youWon": "Kazandın!",
-            "youLost": "Kaybettin!",
-            "leave": "Ayrıl",
-            "playAgain": "Tekrar oyna"
+            "youLost": "Kaybettin",
+            "leave": "Çık",
+            "playAgain": "Tekrar oyna",
+            "nextGameStartSoon": "Sonraki oyun yakında başlayacak."
         },
         "field": {
             "champion": "Şampiyon",
@@ -88,27 +94,35 @@
         },
         "dashboard": {
             "draw": {
-                "drawSuggested": "Rakibin oyunun berabere bitmesini önerdi",
+                "drawSuggested": "Rakibin beraberlik öneriyor",
                 "acceptDraw": "Beraberliği kabul et",
                 "drawRequestSent": "Beraberlik isteği gönderildi",
                 "requestDraw": "Beraberlik iste"
             },
-            "youAre": "Sen {player} sin",
+            "youAre": "Sen {player}",
             "you": "Sen",
             "opponent": "Rakip",
-            "skipTurn": "Turu geç",
+            "skipTurn": "Hamleyi geç",
             "noTimeLimit": "Zaman sınırı yok",
-            "yourTurn": "Sıra sende",
+            "yourTurn": "Senin sıran",
             "opponentsTurn": "Rakibin sırası"
         },
         "waitingRoom": {
             "roomCode": "Oda kodu",
             "shareCode": "Oda kodunu veya bağlantıyı paylaş",
-            "waitingForPlayer": "Bir oyuncunun katılması bekleniyor..."
+            "waitingForPlayer": "Başka bir oyuncunun katılması bekleniyor...",
+            "searchingOpponent": "Rakip aranıyor",
+            "roomCodeCopied": "Oda kodu kopyalandı!",
+            "roomLinkCopied": "Oda bağlantısı kopyalandı!",
+            "copyLink": "Oda bağlantısını kopyala",
+            "copyCode": "Oda kodunu kopyala"
         },
         "info": {
             "timeLeft": "Kalan süre: {timeLeft}s",
-            "remainingSteals": "Rakibinin karesini çalabileceğin anlamına gelir. Kalan {steals} çalman var"
+            "remainingSteals": "Bu, rakibinin karesini çalabileceğin anlamına gelir. Kalan {steals} hırsızlık hakkın var",
+            "opponentLeft": "Rakibin oyundan ayrıldı",
+            "returningToMenu": "Ana menüye dönülüyor",
+            "opponentJoined": "Rakibin odaya katıldı"
         }
     }
 }

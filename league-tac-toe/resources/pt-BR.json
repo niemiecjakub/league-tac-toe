@@ -1,19 +1,20 @@
 {
     "navbar": {
         "champions": "Campeões",
-        "selectLanguage": "Selecionar idioma"
+        "selectLanguage": "Selecionar idioma",
+        "dontCheat": "Não trapaceie!"
     },
     "home": {
         "subtitle": "Quiz de League of Legends encontra Jogo da Velha.",
         "description1": "Nomeie campeões que correspondam às categorias para conquistar quadrados em uma grade 3x3.",
-        "description2": "Ative o Modo Roubo para tomar o quadrado do seu oponente.",
+        "description2": "Ative o modo Roubo para pegar o quadrado do seu oponente.",
         "online": "Online",
         "randomOpponent": "Oponente aleatório",
-        "sameScreen": "Mesma tela",
+        "sameScreen": "Mesmo dispositivo",
         "timePerTurn": "Tempo por turno",
         "unlimited": "ilimitado",
         "limited": "{number} segundos",
-        "enableSteals": "Ativar roubos",
+        "enableSteals": "Habilitar roubos",
         "yes": "Sim",
         "no": "Não",
         "create": "Criar",
@@ -21,38 +22,42 @@
         "lobby": {
             "online": {
                 "joinRoom": {
-                    "title": "Entrar em sala existente",
+                    "title": "Entrar em uma sala existente",
                     "description": "Digite o código da sala e entre no jogo",
-                    "join": "Entrar"
+                    "join": "Entrar",
+                    "joining": "Entrando na sala..."
                 },
                 "createRoom": {
                     "title": "Criar sala",
-                    "description": "Desafie um amigo para um jogo online"
+                    "description": "Desafie um amigo para um jogo online",
+                    "create": "Criar",
+                    "creating": "Criando sala..."
                 }
             },
             "random": {
                 "title": "Encontrar oponente aleatório",
-                "description": "Jogue contra um oponente aleatório"
+                "description": "Jogue contra um oponente aleatório",
+                "searchingRoom": "Procurando uma sala..."
             },
             "local": {
-                "title": "Jogo na mesma tela",
+                "title": "Jogo no mesmo dispositivo",
                 "description": "Jogue contra um amigo no mesmo dispositivo"
             }
         },
         "howToPlay": "Como jogar?",
         "rules": [
-            "Uma grade de 3 x 3 é preenchida com critérios como legado, posição, recurso, tipo de alcance e região.",
-            "Coloque seu marcador, um X ou O, em um dos quadrados se você conseguir nomear um campeão de League of Legends que atenda aos critérios da linha superior e do lado esquerdo.",
-            "O primeiro a fazer três em linha, vertical, horizontal ou diagonalmente, vence.",
-            "Com o modo roubo ativado, cada jogador tem 3 roubos no total, onde é possível roubar um quadrado ocupado pelo jogador adversário.",
+            "Uma grade 3x3 é preenchida com critérios como legado, posição, recurso, tipo de alcance e região.",
+            "Coloque seu marcador, X ou O, em um dos quadrados se puder nomear um campeão de League of Legends que corresponda aos critérios da linha superior e da coluna à esquerda.",
+            "O primeiro a alinhar três em uma linha — vertical, horizontal ou diagonal — vence.",
+            "Com o modo roubo ativado, cada jogador tem 3 roubos no total, permitindo roubar um quadrado ocupado pelo adversário.",
             "Irrite seu oponente e roube um quadrado nomeando um campeão diferente do que já está na posição da grade."
         ]
     },
     "champions": {
         "noResults": "Nenhum resultado.",
         "sorting": {
-            "asc": "Ascendente",
-            "desc": "Descendente",
+            "asc": "Crescente",
+            "desc": "Decrescente",
             "hide": "Ocultar"
         },
         "filter": {
@@ -75,12 +80,13 @@
     },
     "game": {
         "postGame": {
-            "gameFinished": "Jogo finalizado",
+            "gameFinished": "Partida finalizada",
             "draw": "Empate!",
             "youWon": "Você venceu!",
-            "youLost": "Você perdeu!",
+            "youLost": "Você perdeu",
             "leave": "Sair",
-            "playAgain": "Jogar novamente"
+            "playAgain": "Jogar novamente",
+            "nextGameStartSoon": "A próxima partida começará em breve."
         },
         "field": {
             "champion": "Campeão",
@@ -88,10 +94,10 @@
         },
         "dashboard": {
             "draw": {
-                "drawSuggested": "Seu oponente sugeriu um empate",
+                "drawSuggested": "Seu oponente sugere empate",
                 "acceptDraw": "Aceitar empate",
-                "drawRequestSent": "Pedido de empate enviado",
-                "requestDraw": "Pedir empate"
+                "drawRequestSent": "Solicitação de empate enviada",
+                "requestDraw": "Solicitar empate"
             },
             "youAre": "Você é {player}",
             "you": "Você",
@@ -104,11 +110,19 @@
         "waitingRoom": {
             "roomCode": "Código da sala",
             "shareCode": "Compartilhe o código ou link da sala",
-            "waitingForPlayer": "Aguardando outro jogador entrar..."
+            "waitingForPlayer": "Aguardando outro jogador entrar...",
+            "searchingOpponent": "Procurando oponente",
+            "roomCodeCopied": "Código da sala copiado!",
+            "roomLinkCopied": "Link da sala copiado!",
+            "copyLink": "Copiar link da sala",
+            "copyCode": "Copiar código da sala"
         },
         "info": {
             "timeLeft": "Tempo restante: {timeLeft}s",
-            "remainingSteals": "Significa que você pode roubar o quadrado do seu oponente. Você ainda tem {steals} roubos restantes"
+            "remainingSteals": "Significa que você pode roubar um quadrado do seu oponente. Restam {steals} roubos",
+            "opponentLeft": "Seu oponente saiu da partida",
+            "returningToMenu": "Retornando ao menu principal",
+            "opponentJoined": "Seu oponente entrou na sala"
         }
     }
 }
