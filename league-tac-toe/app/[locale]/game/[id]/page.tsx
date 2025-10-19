@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { connectToGameHub } from "@/lib/signalr";
-import { CopyIcon, StealIcon } from "@/components/svg/svg-icons";
+import { StealIcon } from "@/components/svg/svg-icons";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
 import { GameStateType } from "@/models/Game";
@@ -14,18 +14,17 @@ import Board from "./board";
 import Loading from "@/components/custom/loading";
 import Dashboard from "./dashboard";
 import PostGameControls from "./post-game-controls";
-import { skipMove } from "@/services/gameService";
-import Messages from "@/components/custom/messages";
 import { useTheme } from "next-themes";
 import { UiMode } from "@/components/custom/navbar";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
     const t = useTranslations("game");
     const { setChampionNames } = useChampionStore((state) => state);
-    const { room, joinRoom, updateRoom, handleTimeLeftUpdate, handleTurnSkip } = useRoomStore((state) => state);
-    const [messages, setMessages] = useState<string[]>([]);
+    const { room, joinRoom, updateRoom, handleTimeLeftUpdate, handleRoomLeave } = useRoomStore((state) => state);
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -40,47 +39,40 @@ export default function GameIdPage() {
 
                 hubConnection = await connectToGameHub(id);
 
-                hubConnection.on("MesageReceived", (message: string) => {
-                    setMessages((prevMessages) => [...prevMessages, message]);
-                });
-
                 hubConnection.on("PlayerLeft", () => {
-                    setMessages((prevMessages) => [...prevMessages, `🔴 User has left`]);
+                    toast.warn(
+                        <div className="flex flex-col">
+                            <strong>{t("info.opponentLeft")}</strong>
+                            <div>{t("info.returningToMenu")}.</div>
+                        </div>,
+                        { theme: theme, autoClose: 2000 }
+                    );
                 });
 
                 hubConnection.on("PlayerJoined", async () => {
                     if (!isMounted) return;
                     await updateRoom(id);
-                    setMessages((prevMessages) => [...prevMessages, `🔵 User has joined`]);
+                    toast.success(t("info.opponentJoined"), { theme: theme, autoClose: 1000 });
                 });
 
-                hubConnection.on("TurnSwitch", async (message: string) => {
+                hubConnection.on("TurnSwitch", async () => {
                     if (!isMounted) return;
                     await updateRoom(id);
-                    setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
-                hubConnection.on("DrawRequested", async (message: string) => {
+                hubConnection.on("DrawRequested", async () => {
                     if (!isMounted) return;
                     await updateRoom(id);
-                    setMessages((prevMessages) => [...prevMessages, `* ${message}`]);
                 });
 
                 hubConnection.on("TurnTimeTick", async (turnTimeLeft: number) => {
                     if (!isMounted) return;
                     handleTimeLeftUpdate(turnTimeLeft);
-                    setMessages((prevMessages) => [...prevMessages, `[SERVER] Turn time left: ${turnTimeLeft} seconds`]);
                 });
 
-                hubConnection.on("Countdown", async (time: number) => {
-                    if (!isMounted) return;
-                    setMessages((prevMessages) => [...prevMessages, `[SERVER] Next game starting in: ${time} seconds`]);
-                });
-
-                hubConnection.on("NextGameStarted", async (message: string) => {
+                hubConnection.on("NextGameStarted", async () => {
                     if (!isMounted) return;
                     await updateRoom(id);
-                    setMessages((prevMessages) => [...prevMessages, `[SERVER] Next game starting!`]);
                 });
 
                 await hubConnection.invoke("JoinRoom", id);
@@ -93,31 +85,57 @@ export default function GameIdPage() {
         init();
 
         return () => {
+            console.log("disposing");
             isMounted = false;
-            if (hubConnection) hubConnection.stop();
+            if (hubConnection) {
+                handleRoomLeave();
+                hubConnection.invoke("LeaveRoom", id);
+                hubConnection.stop();
+                console.log("disconnected");
+            }
         };
     }, [id]);
+
+    const copyRoomCode = () => {
+        navigator.clipboard.writeText(room!.roomGuid);
+        toast.info(t("waitingRoom.roomCodeCopied"), {
+            theme: theme,
+        });
+    };
+
+    const copyRoomLink = () => {
+        navigator.clipboard.writeText(window.location.href);
+        toast.info(t("waitingRoom.roomLinkCopied"), {
+            theme: theme,
+        });
+    };
 
     if (room?.game.gameStatus === GameStateType.Created) {
         return (
             <div className="h-full w-full flex flex-col items-center justify-center">
-                <Card className="flex flex-col items-center justify-between gap-0 border-league-grey-200 p-2 space-y-4">
-                    <p className="text-lg">{t("waitingRoom.shareCode")}</p>
-                    <div className="flex flex-col w-full  bg-league-gold-100 dark:bg-league-grey-200 space">
-                        <div className="flex p-2 rounded-t-xl space-x-2 justify-between items-center">
+                {room.isPublic ? (
+                    <Loading text={t("waitingRoom.searchingOpponent")} />
+                ) : (
+                    <Card className="flex flex-col items-center justify-between gap-0 p-2 bg-league-gold-100 dark:bg-league-grey-200">
+                        <p>{t("waitingRoom.waitingForPlayer")}</p>
+                        <p className="text-lg">{t("waitingRoom.shareCode")}</p>
+                        <div className="flex flex-col w-full">
                             <div className="flex space-x-2 justify-center items-center">
-                                <p className="text-sm lg:text-md">{t("waitingRoom.roomCode")}:</p>
-                                <p className="text-sm lg:text-md">{room?.roomGuid}</p>
+                                <p className="text-sm lg:text-md py-4">
+                                    {t("waitingRoom.roomCode")}: {room?.roomGuid}
+                                </p>
                             </div>
-                            <CopyIcon className="h-4 w-4 cursor-pointer" onClick={() => navigator.clipboard.writeText(room?.roomGuid)} />
+                            <div className="flex w-full justify-center items-center space-x-4">
+                                <Button className="flex-1 w-full" onClick={copyRoomCode}>
+                                    {t("waitingRoom.copyCode")}
+                                </Button>
+                                <Button className="flex-1 w-full" onClick={copyRoomLink}>
+                                    {t("waitingRoom.copyLink")}
+                                </Button>
+                            </div>
                         </div>
-                        <div className="flex p-2 rounded-t-xl space-x-2">
-                            <p className="text-sm lg:text-md">{window.location.href}</p>
-                            <CopyIcon className="h-4 w-4 cursor-pointer" onClick={() => navigator.clipboard.writeText(window.location.href)} />
-                        </div>
-                    </div>
-                    <p>{t("waitingRoom.waitingForPlayer")}</p>
-                </Card>
+                    </Card>
+                )}
             </div>
         );
     }
@@ -135,15 +153,8 @@ export default function GameIdPage() {
                         </div>
                     )}
                 </div>
-                {/* <Messages messages={messages} /> */}
                 <PostGameControls />
             </Card>
         );
     }
-
-    // return (
-    //     <div className="h-full w-full flex flex-col items-center justify-center">
-    //         <Loading text="" />
-    //     </div>
-    // );
 }

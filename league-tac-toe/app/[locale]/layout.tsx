@@ -1,10 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Navbar from "@/components/custom/navbar";
+import Navbar, { UiMode } from "@/components/custom/navbar";
 import { routing } from "@/i18n/routing";
-import { Locale, hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/components/custom/theme-provider";
+import { notFound } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
     title: "League Tac Toe",
@@ -23,7 +25,7 @@ type Props = {
 export default async function LocaleLayout({ children, params }: Props) {
     const { locale } = await params;
     if (!hasLocale(routing.locales, locale)) {
-        // notFound();
+        notFound();
     }
 
     setRequestLocale(locale);
@@ -32,11 +34,12 @@ export default async function LocaleLayout({ children, params }: Props) {
         <html lang={locale} suppressHydrationWarning>
             <body className="antialiased">
                 <NextIntlClientProvider>
-                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                    <ThemeProvider attribute="class" defaultTheme={UiMode.DARK} enableSystem disableTransitionOnChange>
                         <div className="w-full max-h-screen flex flex-col items-center">
                             <Navbar />
                             <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
                         </div>
+                        <ToastContainer autoClose={1000} position="top-center" />
                     </ThemeProvider>
                 </NextIntlClientProvider>
             </body>

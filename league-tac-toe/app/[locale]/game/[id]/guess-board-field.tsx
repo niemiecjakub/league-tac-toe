@@ -11,8 +11,6 @@ import { PlusIcon, StealIcon } from "@/components/svg/svg-icons";
 import { useChampionStore } from "@/store/championStore";
 import { useRoomStore } from "@/store/roomStore";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
-import { UiMode } from "@/components/custom/navbar";
 
 export interface GuessBoardField {
     value?: BoardField;
@@ -29,7 +27,7 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("game.field");
-    const { theme } = useTheme();
+
     useEffect(() => {
         if (inputValue.trim() === "") {
             setFilteredChampions([]);
