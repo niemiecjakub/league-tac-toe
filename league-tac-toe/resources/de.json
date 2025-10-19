@@ -1,19 +1,20 @@
 {
     "navbar": {
         "champions": "Champions",
-        "selectLanguage": "Sprache auswählen"
+        "selectLanguage": "Sprache auswählen",
+        "dontCheat": "Nicht schummeln!"
     },
     "home": {
         "subtitle": "League of Legends Quiz trifft Tic-Tac-Toe.",
-        "description1": "Nenne Champions, die zu den Kategorien passen, um Felder in einem 3x3-Raster zu erobern.",
-        "description2": "Aktiviere den Stehlmodus, um das Feld deines Gegners zu übernehmen.",
+        "description1": "Benenne Champions, die zu den Kategorien passen, um Felder auf einem 3x3-Gitter zu beanspruchen.",
+        "description2": "Aktiviere den Steal-Modus, um das Feld deines Gegners zu stehlen.",
         "online": "Online",
         "randomOpponent": "Zufälliger Gegner",
         "sameScreen": "Gleicher Bildschirm",
         "timePerTurn": "Zeit pro Zug",
         "unlimited": "unbegrenzt",
         "limited": "{number} Sekunden",
-        "enableSteals": "Stehlmodus aktivieren",
+        "enableSteals": "Steals aktivieren",
         "yes": "Ja",
         "no": "Nein",
         "create": "Erstellen",
@@ -21,31 +22,35 @@
         "lobby": {
             "online": {
                 "joinRoom": {
-                    "title": "Einem bestehenden Raum beitreten",
-                    "description": "Gib den Raumcode ein und tritt dem Spiel bei",
-                    "join": "Beitreten"
+                    "title": "Vorhandenem Raum beitreten",
+                    "description": "Raumcode eingeben und Spiel beitreten",
+                    "join": "Beitreten",
+                    "joining": "Raum wird beigetreten..."
                 },
                 "createRoom": {
                     "title": "Raum erstellen",
-                    "description": "Fordere einen Freund zu einem Online-Spiel heraus"
+                    "description": "Fordere einen Freund zu einem Online-Spiel heraus",
+                    "create": "Erstellen",
+                    "creating": "Raum wird erstellt..."
                 }
             },
             "random": {
                 "title": "Zufälligen Gegner finden",
-                "description": "Spiele gegen einen zufälligen Gegner"
+                "description": "Spiele gegen einen zufälligen Gegner",
+                "searchingRoom": "Raum wird gesucht..."
             },
             "local": {
                 "title": "Spiel auf demselben Bildschirm",
                 "description": "Spiele gegen einen Freund auf demselben Gerät"
             }
         },
-        "howToPlay": "Wie wird gespielt?",
+        "howToPlay": "Wie spielt man?",
         "rules": [
-            "Ein 3 x 3-Raster wird mit Kriterien wie Vermächtnis, Position, Ressource, Reichweitenart und Region gefüllt.",
-            "Setze dein Zeichen, ein X oder O, auf ein Feld, wenn du einen League of Legends Champion nennen kannst, der zu den Kriterien der oberen Reihe und der linken Spalte passt.",
-            "Der erste Spieler mit drei in einer Reihe – vertikal, horizontal oder diagonal – gewinnt.",
-            "Im Stehlmodus hat jeder Spieler insgesamt 3 Stehlversuche, mit denen ein vom Gegner besetztes Feld übernommen werden kann.",
-            "Ärgere deinen Gegner und stiehl ein Feld, indem du einen anderen Champion nennst als den, der bereits auf diesem Feld steht."
+            "Ein 3x3-Raster ist mit Kriterien wie Vermächtnis, Position, Ressource, Angriffsart und Region versehen.",
+            "Setze dein Symbol, ein X oder O, in eines der Felder, wenn du einen League of Legends Champion nennen kannst, der zu den Kriterien der oberen Reihe und der linken Spalte passt.",
+            "Der Erste, der drei in einer Reihe hat – vertikal, horizontal oder diagonal – gewinnt.",
+            "Mit aktiviertem Steal-Modus hat jeder Spieler insgesamt 3 Steals, bei denen ein vom Gegner besetztes Feld gestohlen werden kann.",
+            "Ärgere deinen Gegner und stehle ein Feld, indem du einen anderen Champion nennst als den, der bereits auf dem Feld steht."
         ]
     },
     "champions": {
@@ -69,7 +74,7 @@
             "filterChampions": "Champions filtern..."
         },
         "options": {
-            "view": "Anzeigen",
+            "view": "Ansicht",
             "toggleColumns": "Spalten umschalten"
         }
     },
@@ -80,7 +85,8 @@
             "youWon": "Du hast gewonnen!",
             "youLost": "Du hast verloren!",
             "leave": "Verlassen",
-            "playAgain": "Noch einmal spielen"
+            "playAgain": "Erneut spielen",
+            "nextGameStartSoon": "Das nächste Spiel beginnt in Kürze."
         },
         "field": {
             "champion": "Champion",
@@ -91,24 +97,32 @@
                 "drawSuggested": "Dein Gegner schlägt ein Unentschieden vor",
                 "acceptDraw": "Unentschieden annehmen",
                 "drawRequestSent": "Anfrage zum Unentschieden gesendet",
-                "requestDraw": "Unentschieden vorschlagen"
+                "requestDraw": "Unentschieden anfragen"
             },
             "youAre": "Du bist {player}",
             "you": "Du",
             "opponent": "Gegner",
             "skipTurn": "Zug überspringen",
             "noTimeLimit": "Kein Zeitlimit",
-            "yourTurn": "Du bist dran",
-            "opponentsTurn": "Am Zug des Gegners"
+            "yourTurn": "Du bist am Zug",
+            "opponentsTurn": "Gegner ist am Zug"
         },
         "waitingRoom": {
             "roomCode": "Raumcode",
             "shareCode": "Raumcode oder Link teilen",
-            "waitingForPlayer": "Warten auf einen weiteren Spieler..."
+            "waitingForPlayer": "Warte auf einen weiteren Spieler...",
+            "searchingOpponent": "Gegner wird gesucht",
+            "roomCodeCopied": "Raumcode kopiert!",
+            "roomLinkCopied": "Raumlink kopiert!",
+            "copyLink": "Raumlink kopieren",
+            "copyCode": "Raumcode kopieren"
         },
         "info": {
             "timeLeft": "Verbleibende Zeit: {timeLeft}s",
-            "remainingSteals": "Bedeutet, dass du das Feld deines Gegners stehlen kannst. Du hast noch {steals} Stehlversuche"
+            "remainingSteals": "Bedeutet, dass du das Feld deines Gegners stehlen kannst. Du hast noch {steals} Steals übrig",
+            "opponentLeft": "Dein Gegner hat das Spiel verlassen",
+            "returningToMenu": "Zurück zum Hauptmenü",
+            "opponentJoined": "Dein Gegner ist dem Raum beigetreten"
         }
     }
 }
