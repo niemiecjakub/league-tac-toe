@@ -96,7 +96,8 @@ namespace LeagueChampions.Controllers
       if (room == null) return NotFound();
 
       await context.Clients.Group(roomGuid.ToString()).DrawRequested();
-
+       _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+            
       return Ok(room);
     }
 
