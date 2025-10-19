@@ -1,7 +1,0 @@
-Block using Champions while player is in game
-Make sure game exists while joining
-make sure 3rd player cannot join 
-
-same-screen game handling tba
-
-
