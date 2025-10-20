@@ -14,7 +14,7 @@ export default function LobbyRandom() {
     const t = useTranslations("home");
     const handleFindRandomOpponent = async () => {
         setIsFinding(true);
-        var room = await findRandomOpponent();
+        const room = await findRandomOpponent();
         router.push(`/game/${room.roomGuid}`);
     };
 

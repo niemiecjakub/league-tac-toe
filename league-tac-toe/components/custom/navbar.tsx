@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { DarkMode, LightMode } from "../svg/svg-icons";
+import { DarkMode, LightMode, LogoIcon } from "../svg/svg-icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import CountryFlag from "./country-flag";
 import { Locale, useLocale, useTranslations } from "next-intl";
@@ -29,8 +29,9 @@ export default function Navbar() {
 
     const handleLocaleChange = (nextLocale: Locale) => {
         startTransition(() => {
+            // @ts-expect-error -- TypeScript will validate that only known `params
             router.replace({ pathname, params }, { locale: nextLocale });
-            localStorage.setItem(nextLocale, nextLocale);
+            localStorage.setItem("locale", nextLocale);
         });
     };
 
@@ -52,7 +53,7 @@ export default function Navbar() {
             <div className="lg:w-2/3 flex justify-between items-center px-1 md:px-4 md:py-2 m-auto ">
                 <div className="flex items-center ">
                     <Link href="/" className="flex items-center gap-2 cursor-pointer md:pr-6 hover:opacity-50">
-                        <img src="/lolicon.svg" alt="League of Legends Icon" className="h-[32px]" />
+                        <LogoIcon className="h-[36px]" />
                         <h1 className="font-semibold uppercase hidden md:block">League Tac Toe</h1>
                     </Link>
                     <Link href={isInGame ? "#" : "/champions"} className="hover:opacity-50" onClick={handleChampionsClick}>
@@ -63,7 +64,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-4">
                     <DropdownMenu>
                         <DropdownMenuTrigger className="cursor-pointer">
-                            <CountryFlag countryCode={getFlagCode(locale)} alt={locale} className="h-6" />
+                            <CountryFlag countryCode={getFlagCode(locale)} alt={locale} height={32} width={32} />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuLabel>{t("selectLanguage")}</DropdownMenuLabel>
@@ -71,7 +72,7 @@ export default function Navbar() {
                             {SUPPORTED_CULTURES.map(({ langCode, name, flagCode }) => (
                                 <DropdownMenuItem key={langCode} disabled={isPending} onSelect={() => handleLocaleChange(langCode as Locale)} className="cursor-pointer">
                                     <div className="flex items-center gap-2">
-                                        <CountryFlag countryCode={flagCode} alt={name} className="h-6 w-6" />
+                                        <CountryFlag countryCode={flagCode} alt={name} height={24} width={24} />
                                         {name}
                                     </div>
                                 </DropdownMenuItem>

@@ -16,7 +16,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
     options: MetaFilterItem[];
 }
 
-function normalizeFacetsMap(map: Map<any, number>): Map<string, number> {
+function normalizeFacetsMap(map: Map<string | string[], number>): Map<string, number> {
     const result = new Map<string, number>();
 
     for (const [key, count] of map.entries()) {

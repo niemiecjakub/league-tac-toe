@@ -9,6 +9,34 @@ interface ImageButtonProps extends ClassNameProps {
     onClick: () => void;
 }
 
+export function LogoIcon({ className }: ClassNameProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 882.72 703.44" className={className} preserveAspectRatio="xMidYMid meet">
+            <g clipPath="url(#SVGID_2_)">
+                <path fill="#C28F2B" d="M262.29,266.28c-15.66,28.38-24.57,60.88-24.57,95.44s8.91,67.09,24.57,95.47V266.28z" />
+                <path
+                    fill="#C28F2B"
+                    d="M441.72,161.18c-16.55,0-32.61,2-48.02,5.63v31.56c15.26-4.3,31.35-6.66,48.02-6.66
+                        c95.5,0,172.93,75.88,172.93,169.5c0,42.16-15.75,80.72-41.74,110.38l-4.93,17.3l-10.91,38.29
+                        c53.54-36.14,88.68-96.75,88.68-165.41C645.72,250.96,554.39,161.18,441.72,161.18z"
+                />
+                <path
+                    fill="#C28F2B"
+                    d="M393.7,465.8h156.47h3.42c26.48-27.2,42.79-64.03,42.79-104.59c0-83.72-69.23-151.57-154.65-151.57
+                        c-16.77,0-32.89,2.67-48.02,7.48V465.8z"
+                />
+                <path fill="#C28F2B" d="M375.2,133.68h-116.4l21.98,44.86v345.51l-21.98,44.83h267.13l24.23-84.9H375.2V133.68z" />
+            </g>
+            <defs>
+                <rect id="SVGID_1_" x="237.72" y="133.68" width="408" height="435.2" />
+                <clipPath id="SVGID_2_">
+                    <use xlinkHref="#SVGID_1_" style={{ overflow: "visible" }} />
+                </clipPath>
+            </defs>
+        </svg>
+    );
+}
+
 export function GithubIcon({ className }: ClassNameProps) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" className={className} preserveAspectRatio="none" viewBox="0 0 100 100">

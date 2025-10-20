@@ -18,13 +18,12 @@ import { useTheme } from "next-themes";
 import { UiMode } from "@/components/custom/navbar";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-import router from "next/router";
 
 export default function GameIdPage() {
     const params = useParams();
     const id = params?.id as string;
     const t = useTranslations("game");
-    const { setChampionNames } = useChampionStore((state) => state);
+    const { setChampions } = useChampionStore((state) => state);
     const { room, joinRoom, updateRoom, handleTimeLeftUpdate, handleRoomLeave } = useRoomStore((state) => state);
     const { theme } = useTheme();
 
@@ -80,8 +79,8 @@ export default function GameIdPage() {
                     await updateRoom(id);
                 });
 
+                await setChampions();
                 await hubConnection.invoke("JoinRoom", id);
-                setChampionNames();
             } catch (err) {
                 console.error("Error setting up SignalR:", err);
             }
@@ -102,6 +101,7 @@ export default function GameIdPage() {
                 })();
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     const copyRoomCode = () => {

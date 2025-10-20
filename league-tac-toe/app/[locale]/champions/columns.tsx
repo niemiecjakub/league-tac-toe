@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { Champion } from "@/models/Champion";
+import Image from "next/image";
 
 export const columns: ColumnDef<Champion>[] = [
     {
@@ -13,7 +14,7 @@ export const columns: ColumnDef<Champion>[] = [
             const champion: Champion = row.original;
             return (
                 <div className="flex items-center">
-                    <img src={champion.imageUrl} alt={champion.name} style={{ width: "32px", height: "32px", marginRight: "8px" }} />
+                    <Image src={champion.imageUrl} alt={champion.name} height={32} width={32} className="mr-[8px]" />
                     <span>
                         {champion.name}, {champion.title}
                     </span>

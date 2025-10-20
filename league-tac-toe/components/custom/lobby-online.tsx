@@ -26,7 +26,7 @@ export default function LobbyOnline() {
 
     const handleRoomCreate = async () => {
         setIsCreatingRoom(true);
-        var room = await createRoom(newRoomOptions);
+        const room = await createRoom(newRoomOptions);
         router.push(`/game/${room.roomGuid}`);
     };
 
