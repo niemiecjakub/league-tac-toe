@@ -67,7 +67,7 @@ namespace LeagueChampions
         options.AddPolicy("AllowFrontend", policy =>
         {
           policy
-              .WithOrigins("http://localhost:3001")
+              .WithOrigins("http://localhost:3000")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
