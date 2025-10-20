@@ -41,7 +41,7 @@ export default function Dashboard() {
             <div className="w-full flex justify-between items-center">
                 <div className="flex flex-col items-center justify-center">
                     <div className=" w-full flex justify-start">
-                        <p className="text-sm ">{t("youAre", { player: PlayerType[room?.slot.playerType!] })}</p>
+                        <p className="text-sm ">{t("youAre", { player: room?.slot.playerType != null ? PlayerType[room.slot.playerType] : "" })}</p>
                     </div>
                     <div className="flex w-full font-semibold text-xl">
                         <div>{t("you")}</div>

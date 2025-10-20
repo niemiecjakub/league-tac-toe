@@ -7,10 +7,10 @@ import { useChampionStore } from "@/store/championStore";
 
 export default function ChampionsPage() {
     const { champions, championFilter, setChampions, setChampionFilters } = useChampionStore();
-
     useEffect(() => {
         setChampions();
         setChampionFilters();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

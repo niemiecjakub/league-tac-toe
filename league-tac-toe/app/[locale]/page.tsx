@@ -4,6 +4,7 @@ import LobbyRandom from "@/components/custom/lobby-random";
 import LobbyLocal from "@/components/custom/lobby-local";
 import RuleList from "@/components/custom/rule-list";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 export default async function Home() {
     const t = await getTranslations("home");
@@ -11,9 +12,9 @@ export default async function Home() {
     return (
         <div className="w-full md:w-2/3 2xl:w-2/5 h-full flex items-center flex-col gap-0.5">
             <div className="flex gap-4 items-baseline justify-center py-4">
-                <img src="/images/poro.png" alt="Poro Icon" className="h-[32px]" />
+                <Image src="/images/poro.png" alt="Poro Icon" height={32} width={32} />
                 <h1 className="text-center text-4xl lg:text-6xl font-extrabold tracking-tight text-balance">League Tac Toe</h1>
-                <img src="/images/poro.png" alt="Poro Icon" className="h-[32px]" />
+                <Image src="/images/poro.png" alt="Poro Icon" height={32} width={32} />
             </div>
             <p className="text-xs">{t("subtitle")}</p>
             <div className="flex flex-col items-center justify-center">

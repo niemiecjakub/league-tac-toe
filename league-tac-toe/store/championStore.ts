@@ -1,6 +1,6 @@
 import { Champion } from "@/models/Champion";
 import { ChampionMetaFilter } from "@/models/ChampionMeta";
-import { getChampionNames, getChampions, getMetaFilters } from "@/services/championService";
+import { getChampions, getMetaFilters } from "@/services/championService";
 import { create } from "zustand";
 
 type ChampionStore = {
@@ -9,7 +9,6 @@ type ChampionStore = {
     championFilter: ChampionMetaFilter | null;
 
     setChampions: () => Promise<void>;
-    setChampionNames: () => Promise<void>;
     setChampionFilters: () => Promise<void>;
 };
 export const useChampionStore = create<ChampionStore>((set) => ({
@@ -20,11 +19,6 @@ export const useChampionStore = create<ChampionStore>((set) => ({
     setChampions: async () => {
         const champions = await getChampions();
         set({ champions: champions });
-    },
-
-    setChampionNames: async () => {
-        const names = await getChampionNames();
-        set({ championNames: names });
     },
 
     setChampionFilters: async () => {

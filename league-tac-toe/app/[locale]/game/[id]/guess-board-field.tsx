@@ -9,8 +9,10 @@ import { BoardField, CategoryItem, PlayerType } from "@/models/Game";
 import { cn } from "@/lib/utils";
 import { PlusIcon, StealIcon } from "@/components/svg/svg-icons";
 import { useChampionStore } from "@/store/championStore";
-import { useRoomStore } from "@/store/roomStore";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useRoomStore } from "@/store/roomStore";
+import { Champion } from "@/models/Champion";
 
 export interface GuessBoardField {
     value?: BoardField;
@@ -19,11 +21,11 @@ export interface GuessBoardField {
 }
 
 export default function GuessBoardField({ value, cellIndex, categories }: GuessBoardField) {
-    const { championNames } = useChampionStore((state) => state);
+    const { champions } = useChampionStore((state) => state);
     const { isYourTurn, handleChampionSelect, room } = useRoomStore((state) => state);
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [filteredChampions, setFilteredChampions] = useState<string[]>([]);
+    const [filteredChampions, setFilteredChampions] = useState<Champion[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const t = useTranslations("game.field");
@@ -34,11 +36,11 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
             return;
         }
 
-        const filtered = championNames.filter((name) => name.toLowerCase().includes(inputValue.toLowerCase()));
+        const filtered = champions.filter((champion) => champion.name.toLowerCase().includes(inputValue.toLowerCase()));
 
         setFilteredChampions(filtered);
         setShowSuggestions(true);
-    }, [inputValue, championNames]);
+    }, [inputValue, champions]);
 
     const handleChampionSubmit = (championName: string) => {
         setInputValue(championName);
@@ -123,10 +125,14 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
 
                     {showSuggestions && filteredChampions.length > 0 && (
                         <ul className="absolute z-10 mt-1 max-h-64 w-full overflow-auto rounded-md border bg-white dark:bg-league-black-200 p-1 text-lg shadow">
-                            {filteredChampions.map((name) => (
-                                <li key={name} className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100 dark:hover:bg-league-grey-150")} onMouseDown={() => handleChampionSubmit(name)}>
-                                    <img src={`/champion/${name}.png`} alt={name} className="inline-block h-10 w-10 mr-2" />
-                                    {name}
+                            {filteredChampions.map((champion) => (
+                                <li
+                                    key={champion.id}
+                                    className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100 dark:hover:bg-league-grey-150")}
+                                    onMouseDown={() => handleChampionSubmit(champion.name)}
+                                >
+                                    <Image src={champion.imageUrl} alt={champion.name} className="inline-block h-10 w-10 mr-2" width={10} height={10} unoptimized />
+                                    {champion.name}
                                 </li>
                             ))}
                         </ul>
