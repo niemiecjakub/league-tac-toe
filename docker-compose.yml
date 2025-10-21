@@ -1,20 +1,48 @@
 services:
   backend:
-    build: ./backend
+    container_name: league-tac-toe-api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-      - "5001:5001"
-      - "5162:8080"
+      - "8080:8080"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};
+      - Logging__LogLevel__Default=${DEFAULT_LOGGING_LEVEL}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: league-tac-toe-db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - ./backend/Data:/app/Data
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   frontend:
-    build: ./league-tac-toe
+    container_name: league-tac-toe-front
+    build:
+      context: ./league-tac-toe
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    environment:
-      NEXT_PUBLIC_API_BASE_URL: http://backend:8080
+
+
+volumes:
+  postgres_data:
