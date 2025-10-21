@@ -2,7 +2,7 @@ INSERT INTO "Champion" VALUES(1,'aatrox','Aatrox','the Darkin Blade','https://dd
 INSERT INTO "Champion" VALUES(2,'ahri','Ahri','the Nine-Tailed Fox','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Ahri.png');
 INSERT INTO "Champion" VALUES(3,'akali','Akali','the Rogue Assassin','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Akali.png');
 INSERT INTO "Champion" VALUES(4,'akshan','Akshan','the Rogue Sentinel','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Akshan.png');
-INSERT INTO "Champion" VALUES(5,'alistar','Alistar','the Minotaur','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/cha1pion/Alistar.png');
+INSERT INTO "Champion" VALUES(5,'alistar','Alistar','the Minotaur','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Alistar.png');
 INSERT INTO "Champion" VALUES(6,'amumu','Amumu','the Sad Mummy','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Amumu.png');
 INSERT INTO "Champion" VALUES(7,'anivia','Anivia','the Cryophoenix','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Anivia.png');
 INSERT INTO "Champion" VALUES(8,'annie','Annie','the Dark Child','https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/Annie.png');

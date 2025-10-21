@@ -7,33 +7,21 @@ namespace LeagueChampions.Services
 {
   public class MetaFilterService : IMetaFilterService
   {
-    private readonly ILegacyRepository _legacyRepository;
-    private readonly IPositionRepository _positionRepository;
-    private readonly IRangeTypeRepository _rangeTypeRepository;
-    private readonly IRegionRepository _regionRepository;
-    private readonly IResourceRepository _resourceRepository;
+    private readonly IMetafilterRepository _metafilterRepository;
 
-    public MetaFilterService(
-        ILegacyRepository legacyRepository,
-        IPositionRepository positionRepository,
-        IRangeTypeRepository rangeTypeRepository,
-        IRegionRepository regionRepository,
-        IResourceRepository resourceRepository)
+
+    public MetaFilterService(IMetafilterRepository metafilterRepository)
     {
-      _legacyRepository = legacyRepository;
-      _positionRepository = positionRepository;
-      _rangeTypeRepository = rangeTypeRepository;
-      _regionRepository = regionRepository;
-      _resourceRepository = resourceRepository;
+      _metafilterRepository = metafilterRepository;
     }
 
     public async Task<ChampionMetaFiltersDto> GetMetaFiltersAsync()
     {
-      var legacyTask = _legacyRepository.GetAllAsync();
-      var positionTask = _positionRepository.GetAllAsync();
-      var rangeTypeTask = _rangeTypeRepository.GetAllAsync();
-      var regionTask = _regionRepository.GetAllAsync();
-      var resourceTask = _resourceRepository.GetAllAsync();
+      var legacyTask = _metafilterRepository.GetAllLegaciesAsync();
+      var positionTask = _metafilterRepository.GetAllPositionsAsync();
+      var rangeTypeTask = _metafilterRepository.GetAllRangeTypesAsync();
+      var regionTask = _metafilterRepository.GetAllRegionsAsync();
+      var resourceTask = _metafilterRepository.GetAllResourcesAsync();
 
       await Task.WhenAll(legacyTask, positionTask, rangeTypeTask, regionTask, resourceTask);
 

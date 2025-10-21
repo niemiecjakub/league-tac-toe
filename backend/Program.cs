@@ -23,15 +23,11 @@ namespace LeagueChampions
       builder.Services.AddSwaggerGen();
       builder.Services.AddMemoryCache();
 
-      builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+      builder.Services.AddDbContextFactory<AppDbContext>(options =>
+          options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
       builder.Services.AddScoped<IChampionRepository, ChampionRepository>();
-      builder.Services.AddScoped<ILegacyRepository, LegacyRepository>();
-      builder.Services.AddScoped<IPositionRepository, PositionRepository>();
-      builder.Services.AddScoped<IRangeTypeRepository, RangeTypeRepository>();
-      builder.Services.AddScoped<IRegionRepository, RegionRepository>();
-      builder.Services.AddScoped<IResourceRepository, ResourceRepository>();
+      builder.Services.AddScoped<IMetafilterRepository, MetafilterRepository>();
       builder.Services.AddScoped<IRoomRepository, RoomRepository>();
       builder.Services.AddScoped<IGameRepository, GameRepository>();
       builder.Services.AddScoped<IGamePlayerRepository, GamePlayerRepository>();
