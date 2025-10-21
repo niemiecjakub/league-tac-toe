@@ -14,6 +14,7 @@ const parseGameData = (data: any) => {
 };
 
 export const createRoom = async (roomOptions: RoomOptions): Promise<RoomInfo> => {
+    console.log("CREAGING!!");
     const params = new URLSearchParams({
         turnTime: roomOptions.turnTime === null ? "-1" : roomOptions.turnTime.toString(),
         stealsEnabled: roomOptions.stealsEnabled.toString(),

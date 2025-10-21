@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Campioni",
         "selectLanguage": "Selectează limba",
-        "dontCheat": "Nu trișa!"
+        "dontCheat": "Nu trișa!",
+        "cannotChangeLanguage": "Limba nu poate fi schimbată în timpul jocului."
     },
     "home": {
         "subtitle": "Quiz-ul League of Legends întâlnește X și O.",

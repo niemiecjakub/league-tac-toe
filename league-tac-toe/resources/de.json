@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Champions",
         "selectLanguage": "Sprache auswählen",
-        "dontCheat": "Nicht schummeln!"
+        "dontCheat": "Nicht schummeln!",
+        "cannotChangeLanguage": "Die Sprache kann während des Spiels nicht geändert werden."
     },
     "home": {
         "subtitle": "League of Legends Quiz trifft Tic-Tac-Toe.",

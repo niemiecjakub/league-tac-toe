@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Campeones",
         "selectLanguage": "Seleccionar idioma",
-        "dontCheat": "¡No hagas trampas!"
+        "dontCheat": "¡No hagas trampas!",
+        "cannotChangeLanguage": "No se puede cambiar el idioma durante el juego."
     },
     "home": {
         "subtitle": "League of Legends Quiz se une al Tres en Raya.",

@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Campeões",
         "selectLanguage": "Selecionar idioma",
-        "dontCheat": "Não trapaceie!"
+        "dontCheat": "Não trapaceie!",
+        "cannotChangeLanguage": "O idioma não pode ser alterado durante o jogo."
     },
     "home": {
         "subtitle": "Quiz de League of Legends encontra Jogo da Velha.",

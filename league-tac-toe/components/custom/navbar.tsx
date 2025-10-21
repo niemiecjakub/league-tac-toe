@@ -27,6 +27,13 @@ export default function Navbar() {
     const isInGame = pathname.includes("/game");
 
     const handleLocaleChange = (nextLocale: Locale) => {
+        if (isInGame) {
+            toast.warn(t("cannotChangeLanguage"), {
+                theme: theme,
+            });
+            return;
+        }
+
         startTransition(() => {
             // @ts-expect-error -- TypeScript will validate that only known `params
             router.replace({ pathname, params }, { locale: nextLocale });
