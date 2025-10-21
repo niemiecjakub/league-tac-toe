@@ -86,7 +86,7 @@ CREATE TABLE "Room" (
     "TurnTime" INTEGER,
     "StealsEnabled" BOOLEAN,
     "IsPublic" BOOLEAN DEFAULT FALSE,
-    "CreatedAt" TIMESTAMP DEFAULT NOW()
+    "CreatedAt" TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE TABLE "GamePlayer" (
@@ -106,8 +106,8 @@ CREATE TABLE "Game" (
     "CurrentTurnId" INTEGER NOT NULL,
     "StatusId" INTEGER NOT NULL,
     "WinnerId" INTEGER,
-    "CreatedAt" TIMESTAMP DEFAULT NOW() NOT NULL,
-    "UpdatedAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+    "CreatedAt" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    "UpdatedAt" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     "Categories" TEXT NOT NULL,
     "DrawRequestedId" INTEGER,
     CONSTRAINT "FK_Game_GameState" FOREIGN KEY ("StatusId") REFERENCES "GameState"("StateId"),

@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Campeones",
         "selectLanguage": "Seleccionar idioma",
-        "dontCheat": "¡No hagas trampa!"
+        "dontCheat": "¡No hagas trampa!",
+        "cannotChangeLanguage": "No se puede cambiar el idioma durante el juego."
     },
     "home": {
         "subtitle": "League of Legends Quiz se cruza con el Ta-Te-Ti.",

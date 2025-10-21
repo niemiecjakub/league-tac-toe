@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Şampiyonlar",
         "selectLanguage": "Dil seç",
-        "dontCheat": "Hile yapma!"
+        "dontCheat": "Hile yapma!",
+        "cannotChangeLanguage": "Oyun sırasında dil değiştirilemez."
     },
     "home": {
         "subtitle": "League of Legends Quiz, XOX ile buluşuyor.",

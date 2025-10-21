@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Champions",
         "selectLanguage": "Choisir la langue",
-        "dontCheat": "Ne triche pas !"
+        "dontCheat": "Ne triche pas !",
+        "cannotChangeLanguage": "La langue ne peut pas être changée pendant la partie."
     },
     "home": {
         "subtitle": "League of Legends Quiz rencontre le Morpion.",

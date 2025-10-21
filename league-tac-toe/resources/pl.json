@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Bohaterowie",
         "selectLanguage": "Wybierz język",
-        "dontCheat": "Nie oszukuj!"
+        "dontCheat": "Nie oszukuj!",
+        "cannotChangeLanguage": "Nie można zmienić języka podczas gry."
     },
     "home": {
         "subtitle": "Quiz League of Legends spotyka Kółko i Krzyżyk.",

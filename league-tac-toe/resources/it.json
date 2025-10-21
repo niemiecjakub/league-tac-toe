@@ -2,7 +2,8 @@
     "navbar": {
         "champions": "Campioni",
         "selectLanguage": "Seleziona lingua",
-        "dontCheat": "Non barare!"
+        "dontCheat": "Non barare!",
+        "cannotChangeLanguage": "La lingua non può essere modificata durante la partita."
     },
     "home": {
         "subtitle": "Il quiz di League of Legends incontra il Tris.",

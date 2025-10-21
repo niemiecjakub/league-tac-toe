@@ -12,7 +12,7 @@ export const connectToGameHub = async (roomUID: string) => {
     }
 
     connection = new signalR.HubConnectionBuilder()
-        .withUrl(`${process.env.NEXT_PUBLIC_API_BASE_URL}/gamehub`, {
+        .withUrl(`${process.env.NEXT_PUBLIC_API_URL}/gamehub`, {
             accessTokenFactory: () => getUserUid(),
         })
         .withAutomaticReconnect()
