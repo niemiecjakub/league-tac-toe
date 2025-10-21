@@ -1,4 +1,4 @@
-﻿using LeagueChampions.Models.Entity;
+using LeagueChampions.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
@@ -17,7 +17,7 @@ public class AppDbContext : DbContext
 
   public DbSet<ChampionLegacy> ChampionLegacy { get; set; }
   public DbSet<ChampionPosition> ChampionPosition { get; set; }
-  public DbSet<ChampionRangeType> ChampionRangetype { get; set; }
+  public DbSet<ChampionRangeType> ChampionRangeType { get; set; }
   public DbSet<ChampionRegion> ChampionRegion { get; set; }
   public DbSet<ChampionResource> ChampionResource { get; set; }
 
@@ -58,7 +58,7 @@ public class AppDbContext : DbContext
         .WithMany(p => p.ChampionPosition)
         .HasForeignKey(cp => cp.PositionId);
 
-    modelBuilder.Entity<ChampionRangeType>().HasKey(cl => new { cl.ChampionId, cl.RangetypeId });
+    modelBuilder.Entity<ChampionRangeType>().HasKey(cl => new { cl.ChampionId, cl.RangeTypeId });
 
     modelBuilder.Entity<ChampionRangeType>()
         .HasOne(crt => crt.Champion)
@@ -68,7 +68,7 @@ public class AppDbContext : DbContext
     modelBuilder.Entity<ChampionRangeType>()
         .HasOne(crt => crt.RangeType)
         .WithMany(rt => rt.ChampionRangeType)
-        .HasForeignKey(crt => crt.RangetypeId);
+        .HasForeignKey(crt => crt.RangeTypeId);
 
     modelBuilder.Entity<ChampionRegion>().HasKey(cl => new { cl.ChampionId, cl.RegionId });
 

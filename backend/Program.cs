@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using LeagueChampions.Hubs.Providers;
 using LeagueChampions.Service;
+using LeagueChampions.Data;
 
 namespace LeagueChampions
 {
@@ -23,7 +24,7 @@ namespace LeagueChampions
       builder.Services.AddMemoryCache();
 
       builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
       builder.Services.AddScoped<IChampionRepository, ChampionRepository>();
       builder.Services.AddScoped<ILegacyRepository, LegacyRepository>();
@@ -81,7 +82,7 @@ namespace LeagueChampions
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-
+      DbInitializer.Initialize(app.Configuration["ConnectionStrings:DefaultConnection"]);
       app.UseRouting();
       app.UseHttpsRedirection();
       app.UseAuthorization();
