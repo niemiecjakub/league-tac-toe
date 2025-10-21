@@ -68,6 +68,9 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    <Link href="/about" className="hover:opacity-50">
+                        About
+                    </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger className="cursor-pointer">
                             <CountryFlag countryCode={getFlagCode(locale)} alt={locale} height={32} width={32} />

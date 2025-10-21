@@ -7,6 +7,7 @@ import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
+import BuyMeACoffeeWidget from "@/components/custom/buy-me-a-coffee";
 
 export const metadata: Metadata = {
     title: "League Tac Toe",
@@ -37,6 +38,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                     <ThemeProvider attribute="class" defaultTheme={UiMode.DARK} enableSystem disableTransitionOnChange>
                         <div className="w-full max-h-screen flex flex-col items-center">
                             <Navbar />
+                            <BuyMeACoffeeWidget />
                             <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
                         </div>
                         <ToastContainer autoClose={1000} position="top-center" />
