@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/custom/theme-provider";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import BuyMeACoffeeWidget from "@/components/custom/buy-me-a-coffee";
+import Footer from "@/components/custom/footer";
 
 export const metadata: Metadata = {
     title: "League Tac Toe",
@@ -40,6 +41,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                             <Navbar />
                             <BuyMeACoffeeWidget />
                             <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
+                            <Footer />
                         </div>
                         <ToastContainer autoClose={1000} position="top-center" />
                     </ThemeProvider>
