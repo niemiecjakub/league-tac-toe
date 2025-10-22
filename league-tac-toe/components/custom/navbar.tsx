@@ -1,11 +1,11 @@
 "use client";
 
-import { DarkMode, LightMode, LogoIcon } from "../svg/svg-icons";
+import { DarkMode, GithubIcon, LightMode, LogoIcon } from "../svg/svg-icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import CountryFlag from "./country-flag";
 import { Locale, useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { SUPPORTED_CULTURES, DEFAULT_LANG } from "@/i18n/routing";
 import { useTheme } from "next-themes";
@@ -18,6 +18,7 @@ export enum UiMode {
 
 export default function Navbar() {
     const [isPending, startTransition] = useTransition();
+    const [mounted, setMounted] = useState(false);
     const { theme, setTheme } = useTheme();
     const router = useRouter();
     const pathname = usePathname();
@@ -25,6 +26,10 @@ export default function Navbar() {
     const locale = useLocale();
     const t = useTranslations("navbar");
     const isInGame = pathname.includes("/game");
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleLocaleChange = (nextLocale: Locale) => {
         if (isInGame) {
@@ -67,9 +72,9 @@ export default function Navbar() {
                     </Link>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <Link href="/about" className="hover:opacity-50">
-                        About
+                <div className="flex items-center justify-center gap-4">
+                    <Link href="https://github.com/niemiecjakub/league-tac-toe" target="_blank" className="hover:opacity-40">
+                        <GithubIcon className="h-[28px] inline" fill={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"} />
                     </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger className="cursor-pointer">
