@@ -1,4 +1,4 @@
-﻿using LeagueChampions.Hubs;
+using LeagueChampions.Hubs;
 using LeagueChampions.Models.Enums;
 using LeagueChampions.Models.ValueObjects;
 using LeagueChampions.Service.Interfaces;
@@ -96,8 +96,8 @@ namespace LeagueChampions.Controllers
       if (room == null) return NotFound();
 
       await context.Clients.Group(roomGuid.ToString()).DrawRequested();
-       _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
-            
+      _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+
       return Ok(room);
     }
 
@@ -112,6 +112,13 @@ namespace LeagueChampions.Controllers
       _ = _countdownService.CancelTurnCountdown(roomGuid);
       _ = _countdownService.CountdownNextRound(roomGuid);
       return Ok(room);
+    }
+
+    [HttpGet("Rooms")]
+    public async Task<IActionResult> GetRooms()
+    {
+      var rooms = await _gameService.GetRoomsAsync();
+      return Ok(rooms);
     }
   }
 }

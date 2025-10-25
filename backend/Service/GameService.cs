@@ -170,14 +170,20 @@ namespace LeagueChampions.Services
 
     public async Task CloseRoomAsync(Guid roomGuid)
     {
-     var game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if(game == null)
+      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
+      if (game == null)
       {
         return;
       }
       game.Close();
       game.UpdateDate();
       await _gameRepository.UpdateAsync(game);
+    }
+
+    public async Task<IEnumerable<RoomInfoDto>> GetRoomsAsync()
+    {
+      var rooms = await _roomRepository.GetRoomsAsync();
+      return rooms.Select(r => r.ToRoomInfoDto());
     }
 
     private async Task<Game?> SkipMoveAsync(Guid roomGuid)

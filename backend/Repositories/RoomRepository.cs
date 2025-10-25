@@ -49,5 +49,10 @@ namespace LeagueChampions.Repositories
       _context.Room.Update(room);
       await _context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<Room>> GetRoomsAsync()
+    {
+      return await _context.Room.ToListAsync();
+    }
   }
 }

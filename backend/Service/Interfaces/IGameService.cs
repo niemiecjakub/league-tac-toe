@@ -16,5 +16,6 @@ namespace LeagueChampions.Service.Interfaces
     Task<RoomDto?> RequestDrawAsync(Guid roomGuid, HttpRequest request);
     Task<RoomDto?> RespondDrawRequestAsync(Guid roomGuid, HttpRequest request);
     Task CloseRoomAsync(Guid roomGuid);
+    Task<IEnumerable<RoomInfoDto>> GetRoomsAsync();
   }
 }
