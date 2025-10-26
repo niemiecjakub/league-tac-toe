@@ -13,6 +13,7 @@ namespace LeagueChampions.Metrics
     private Counter<int> RoomsCreatedCounter { get; }
     private Counter<int> ChampionGuessesCounter { get; }
     private Counter<int> BoardFieldsCounter { get; }
+    private Counter<int> PublicGameCounter { get; }
 
     public LeagueTacToeMetrics(IMeterFactory meterFactory)
     {
@@ -22,7 +23,13 @@ namespace LeagueChampions.Metrics
       GamesCreatedCounter = meter.CreateCounter<int>("game.created.count");
       ChampionGuessesCounter = meter.CreateCounter<int>("champion.guess.count");
       BoardFieldsCounter = meter.CreateCounter<int>("board.fields.count");
+      PublicGameCounter = meter.CreateCounter<int>("public.game.count");
     }
+
+    public void AddPublicGameAttempt(PublicGameResult result) => PublicGameCounter.Add(
+      1,
+      new KeyValuePair<string, object?>("room.result", result)
+      );
 
     public void AddRoomCreated(Room room) => RoomsCreatedCounter.Add(
       1,
@@ -48,5 +55,11 @@ namespace LeagueChampions.Metrics
       new KeyValuePair<string, object?>("board.vertical", gameCategories.GetVerticalSummary()),
       new KeyValuePair<string, object?>("board.horizontal", gameCategories.GetHorizontalSummary())
       );
+  }
+
+  public enum PublicGameResult
+  {
+    Found,
+    Created
   }
 }

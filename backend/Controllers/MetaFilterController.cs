@@ -19,9 +19,7 @@ namespace LeagueChampions.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      _logger.LogInformation("Fetching metadata");
       var championMetaFilterDto = await _metaFilterService.GetMetaFiltersAsync();
-      _logger.LogInformation("Metadata fetched");
       return Ok(championMetaFilterDto);
     }
   }

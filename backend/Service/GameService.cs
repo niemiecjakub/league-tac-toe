@@ -1,3 +1,4 @@
+using LeagueChampions.Exceptions;
 using LeagueChampions.Metrics;
 using LeagueChampions.Models.Dto;
 using LeagueChampions.Models.Entity;
@@ -7,28 +8,32 @@ using LeagueChampions.Models.Mapper;
 using LeagueChampions.Models.ValueObjects;
 using LeagueChampions.Repositories.Interfaces;
 using LeagueChampions.Service.Interfaces;
+using LeagueChampions.Utils;
 
 namespace LeagueChampions.Services
 {
   public class GameService : IGameService
   {
+    private readonly ILogger<GameService> _logger;
     private readonly IGameRepository _gameRepository;
     private readonly IRoomRepository _roomRepository;
-    private readonly IChampionRepository _championRepository;
+    private readonly IChampionService _championService;
     private readonly IGameFactoryService _gameFactoryService;
     private readonly LeagueTacToeMetrics _metrics;
 
-    public GameService(IGameRepository gameRepository,
+    public GameService(ILogger<GameService> logger,
+                       IGameRepository gameRepository,
                        IGamePlayerRepository gamePlayerRepository,
                        IRoomRepository roomRepository,
-                       IChampionRepository championRepository,
+                       IChampionService championService,
                        IGameFactoryService gameFactoryService,
                        LeagueTacToeMetrics metrics
                        )
     {
+      _logger = logger;
       _gameRepository = gameRepository;
       _roomRepository = roomRepository;
-      _championRepository = championRepository;
+      _championService = championService;
       _gameFactoryService = gameFactoryService;
       _metrics = metrics;
     }
@@ -38,6 +43,8 @@ namespace LeagueChampions.Services
       var publicRoom = await _roomRepository.GetOpenPublicRoom();
       if (publicRoom != null)
       {
+        _metrics.AddPublicGameAttempt(PublicGameResult.Found);
+        _logger.LogInformation("Public room found: {RoomGuid}", publicRoom.RoomUID);
         return publicRoom.ToRoomInfoDto();
       }
 
@@ -51,18 +58,20 @@ namespace LeagueChampions.Services
       await _roomRepository.CreateRoomAsync(room);
 
       _metrics.AddRoomCreated(room);
-      _metrics.AddGameCraeted(room.GetLastestGame());
+      _metrics.AddGameCraeted(room.GetCurrentGame());
+
+      if (options.IsPublic)
+      {
+        _metrics.AddPublicGameAttempt(PublicGameResult.Created);
+      }
 
       return room.ToRoomInfoDto();
     }
 
     public async Task<RoomInfoDto> CreateNextRoundAsync(Guid roomGuid)
     {
-      Room? room = await _roomRepository.GetRoomByGuidAsync(roomGuid);
-      if (room == null)
-      {
-        throw new Exception("Room not found");
-      }
+      Room room = await _roomRepository.GetRoomByGuidAsync(roomGuid) ?? throw new RoomNotFoundException(roomGuid);
+
       var game = await _gameFactoryService.CreateNewGameAsync(room);
       game.Start();
 
@@ -74,62 +83,47 @@ namespace LeagueChampions.Services
 
     public async Task<RoomDto> JoinRoomAsync(Guid roomGuid, HttpRequest request)
     {
-      Room? room = await _roomRepository.GetRoomByGuidAsync(roomGuid);
-      if (room == null)
-      {
-        throw new Exception("Room not found");
-      }
+      Room room = await _roomRepository.GetRoomByGuidAsync(roomGuid) ?? throw new RoomNotFoundException(roomGuid);
 
-      Guid userGuid = GetUserUidFromRequest(request);
-      GamePlayer? player = room.Join(userGuid);
+      Guid userGuid = request.GetUserGuid();
+      GamePlayer player = room.Join(userGuid);
       await _roomRepository.UpdateAsync(room);
 
-      Game? game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if (game == null)
-      {
-        throw new Exception("Game not found");
-      }
+      Game game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
 
       return room.ToRoomDto(game, player);
     }
 
     public async Task<RoomDto> GetRoomAsync(Guid roomGuid, HttpRequest request)
     {
-      Room? room = await _roomRepository.GetRoomByGuidAsync(roomGuid);
-      if (room == null)
-      {
-        throw new Exception("Room not found");
-      }
+      Room room = await _roomRepository.GetRoomByGuidAsync(roomGuid) ?? throw new RoomNotFoundException(roomGuid);
 
-      Guid userGuid = GetUserUidFromRequest(request);
+      Guid userGuid = request.GetUserGuid();
       GamePlayer? player = room.GetPlayer(userGuid);
 
-      Game? game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if (game == null)
-      {
-        throw new Exception("Game not found");
-      }
+      Game game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
 
       return room.ToRoomDto(game, player);
     }
 
-    public async Task<RoomDto?> MakeMoveAsync(Guid roomGuid, int fieldId, string championName, HttpRequest request)
+    public async Task<RoomDto> MakeMoveAsync(Guid roomGuid, int fieldId, string championName, HttpRequest request)
     {
-      var room = await _roomRepository.GetRoomByGuidAsync(roomGuid);
-      if (room == null) return null;
+      var room = await _roomRepository.GetRoomByGuidAsync(roomGuid) ?? throw new RoomNotFoundException(roomGuid);
 
-      var game = room.GetLastestGame();
-      if (game == null || game.StatusId != GameStateType.InProgress)
-        return null;
+      var game = room.GetCurrentGame() ?? throw new GameNotFoundException(roomGuid);
 
+      if (game.StatusId != GameStateType.InProgress)
+      {
+        throw new GameNotInProgressException();
+      }
 
       var categoryFields = game.GetGameCategories().GetCategoryFields(fieldId);
       var championFilter = ChampionFilter.Create(categoryFields);
-      var possibleChampions = await _championRepository.GetAllAsync(championFilter);
+      var possibleChampions = await _championService.GetAllChampionsAsync(championFilter);
 
-      Guid currentPlayerGuid = GetUserUidFromRequest(request);
+      Guid currentPlayerGuid = request.GetUserGuid();
       var currentPlayer = room.GetPlayer(currentPlayerGuid);
-      var moveResult = game.MakeMove(fieldId, championName, possibleChampions, currentPlayer);
+      var moveResult = game.MakeMove(fieldId, championName, possibleChampions.Select(c => c.Name), currentPlayer);
       if (moveResult == MoveResult.STEAL)
       {
         currentPlayer.Steals--;
@@ -147,18 +141,16 @@ namespace LeagueChampions.Services
       await SkipMoveAsync(roomGuid);
     }
 
-    public async Task<RoomDto?> SkipCurrentPlayerMoveAsync(Guid roomGuid, HttpRequest request)
+    public async Task<RoomDto> SkipCurrentPlayerMoveAsync(Guid roomGuid, HttpRequest request)
     {
-      var game = await SkipMoveAsync(roomGuid);
-      if (game == null) return null;
+      var game = await SkipMoveAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
 
       return await GetRoomAsync(roomGuid, request);
     }
 
-    public async Task<RoomDto?> RequestDrawAsync(Guid roomGuid, HttpRequest request)
+    public async Task<RoomDto> RequestDrawAsync(Guid roomGuid, HttpRequest request)
     {
-      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if (game == null) return null;
+      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
 
       game.RequestDraw();
       game.SetNextPlayerTurn();
@@ -168,10 +160,9 @@ namespace LeagueChampions.Services
       return await GetRoomAsync(roomGuid, request);
     }
 
-    public async Task<RoomDto?> RespondDrawRequestAsync(Guid roomGuid, HttpRequest request)
+    public async Task<RoomDto> RespondDrawRequestAsync(Guid roomGuid, HttpRequest request)
     {
-      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if (game == null) return null;
+      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
 
       game.SetDraw();
       game.UpdateDate();
@@ -182,11 +173,8 @@ namespace LeagueChampions.Services
 
     public async Task CloseRoomAsync(Guid roomGuid)
     {
-      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if (game == null)
-      {
-        return;
-      }
+      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
+
       game.Close();
       game.UpdateDate();
       await _gameRepository.UpdateAsync(game);
@@ -200,11 +188,7 @@ namespace LeagueChampions.Services
 
     private async Task<Game?> SkipMoveAsync(Guid roomGuid)
     {
-      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid);
-      if (game == null)
-      {
-        return null;
-      }
+      var game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
 
       game.SetNextPlayerTurn();
       game.CancelDrawRequest();
@@ -212,17 +196,6 @@ namespace LeagueChampions.Services
 
       await _gameRepository.UpdateAsync(game);
       return game;
-    }
-
-    private Guid GetUserUidFromRequest(HttpRequest request)
-    {
-      var authHeader = request.Headers["Authorization"].ToString();
-      if (authHeader.StartsWith("Bearer "))
-      {
-        return new Guid(authHeader.Substring("Bearer ".Length));
-      }
-
-      return new Guid(request.Query["access_token"].ToString());
     }
   }
 }

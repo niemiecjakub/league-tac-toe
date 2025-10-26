@@ -1,7 +1,8 @@
-﻿using LeagueChampions.Models.Mapper;
-using LeagueChampions.Repositories.Interfaces;
-using LeagueChampions.Models.Filters;
+using LeagueChampions.Exceptions;
 using LeagueChampions.Models.Dto;
+using LeagueChampions.Models.Filters;
+using LeagueChampions.Models.Mapper;
+using LeagueChampions.Repositories.Interfaces;
 using LeagueChampions.Service.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -23,7 +24,7 @@ namespace LeagueChampions.Services
       return champions.Select(c => c.ToChampionDto());
     }
 
-    public async Task<ChampionDto?> GetChampionByIdAsync(int id)
+    public async Task<ChampionDto> GetChampionByIdAsync(int id)
     {
       var cacheKey = $"champion_{id}";
 
@@ -41,7 +42,7 @@ namespace LeagueChampions.Services
         }
       }
 
-      return championDto;
+      return championDto ?? throw new ChampionNotFoundException(id);
     }
   }
 }

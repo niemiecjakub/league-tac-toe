@@ -8,12 +8,14 @@ namespace LeagueChampions.Service
 {
   public class GameFactoryService : IGameFactoryService
   {
+    private readonly ILogger<GameFactoryService> _logger;
     private readonly IChampionService _championService;
     private readonly IMetaFilterService _metaFilterService;
     private readonly LeagueTacToeMetrics _metrics;
 
-    public GameFactoryService(IChampionService championService, IMetaFilterService metaFilterService, LeagueTacToeMetrics metrics)
+    public GameFactoryService(ILogger<GameFactoryService> logger, IChampionService championService, IMetaFilterService metaFilterService, LeagueTacToeMetrics metrics)
     {
+      _logger = logger;
       _championService = championService;
       _metaFilterService = metaFilterService;
       _metrics = metrics;
@@ -27,7 +29,7 @@ namespace LeagueChampions.Service
           .ToList();
 
       var totalOptions = flatOptions.Count;
-
+      int attemptsCounter = 1;
       while (true)
       {
         var usedIndexes = new HashSet<int>();
@@ -42,9 +44,12 @@ namespace LeagueChampions.Service
 
         if (await IsGameBoardValidAsync(gameCategories))
         {
+          _logger.LogInformation("Successfully crated game board after {Attempts} attempts", attemptsCounter);
           _metrics.AddBoardFields(gameCategories);
           return room.CreateNewGame(gameCategories);
         }
+
+        attemptsCounter++;
       }
     }
 

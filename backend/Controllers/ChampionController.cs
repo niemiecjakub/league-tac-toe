@@ -1,3 +1,4 @@
+using LeagueChampions.Models.Dto;
 using LeagueChampions.Models.Filters;
 using LeagueChampions.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -20,23 +21,20 @@ namespace LeagueChampions.Controllers
     [HttpGet("all")]
     public async Task<IActionResult> Get([FromQuery] ChampionFilter filter)
     {
-      _logger.LogInformation("Fetching champions with: {@Filter}", filter);
+      _logger.LogDebug("Fetching champions with filter: {Filter}", filter.GetFilterSummary());
       var champions = await _championService.GetAllChampionsAsync(filter);
-      _logger.LogInformation("Returning {ChampionCount} champions", champions.Count());
+      _logger.LogDebug("Returning {ChampionCount} champions", champions.Count());
+
       return Ok(champions);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
-      _logger.LogInformation("Fetching champion with id {Id}", id);
-      var champion = await _championService.GetChampionByIdAsync(id);
-      if (champion == null)
-      {
-        _logger.LogWarning("Champion with id {Id} not found", id);
-        return NotFound();
-      }
-      _logger.LogInformation("Returning champion with id {Id}", id);
+      _logger.LogDebug("Fetching champion with id {Id}", id);
+      ChampionDto champion = await _championService.GetChampionByIdAsync(id);
+      _logger.LogDebug("Returning champion with id {Id}", id);
+
       return Ok(champion);
     }
   }

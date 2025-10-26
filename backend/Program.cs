@@ -1,19 +1,20 @@
-using LeagueChampions.Repositories.Interfaces;
+using LeagueChampions.Data;
+using LeagueChampions.Hubs;
+using LeagueChampions.Hubs.Providers;
+using LeagueChampions.Metrics;
+using LeagueChampions.Middleware;
 using LeagueChampions.Repositories;
-using Microsoft.EntityFrameworkCore;
+using LeagueChampions.Repositories.Interfaces;
+using LeagueChampions.Service;
 using LeagueChampions.Service.Interfaces;
 using LeagueChampions.Services;
-using LeagueChampions.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
-using LeagueChampions.Hubs.Providers;
-using LeagueChampions.Service;
-using LeagueChampions.Data;
+using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using OpenTelemetry.Logs;
-using LeagueChampions.Metrics;
 
 namespace LeagueChampions
 {
@@ -29,7 +30,10 @@ namespace LeagueChampions
       builder.Services.AddMemoryCache();
 
       builder.Services.AddDbContextFactory<AppDbContext>(options =>
-          options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+          options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), o =>
+          {
+            o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+          }));
 
       builder.Services.AddScoped<IChampionRepository, ChampionRepository>();
       builder.Services.AddScoped<IMetafilterRepository, MetafilterRepository>();
@@ -64,7 +68,6 @@ namespace LeagueChampions
           }
         };
       });
-
 
       builder.Services.AddOpenTelemetry()
        .ConfigureResource(resource => resource.AddService(builder.Environment.ApplicationName))
@@ -116,6 +119,7 @@ namespace LeagueChampions
       app.UseHttpsRedirection();
       app.UseAuthorization();
       app.MapControllers();
+      app.UseMiddleware<ExceptionHandlingMiddleware>();
       app.MapHub<GameHub>("/gamehub");
       app.UseCors("AllowFrontend");
 
