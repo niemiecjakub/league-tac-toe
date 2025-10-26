@@ -1,4 +1,5 @@
-﻿using LeagueChampions.Models.Entity;
+using LeagueChampions.Metrics;
+using LeagueChampions.Models.Entity;
 using LeagueChampions.Models.Filters;
 using LeagueChampions.Models.ValueObjects;
 using LeagueChampions.Service.Interfaces;
@@ -9,11 +10,13 @@ namespace LeagueChampions.Service
   {
     private readonly IChampionService _championService;
     private readonly IMetaFilterService _metaFilterService;
+    private readonly LeagueTacToeMetrics _metrics;
 
-    public GameFactoryService(IChampionService championService, IMetaFilterService metaFilterService)
+    public GameFactoryService(IChampionService championService, IMetaFilterService metaFilterService, LeagueTacToeMetrics metrics)
     {
       _championService = championService;
       _metaFilterService = metaFilterService;
+      _metrics = metrics;
     }
 
     public async Task<Game> CreateNewGameAsync(Room room)
@@ -39,6 +42,7 @@ namespace LeagueChampions.Service
 
         if (await IsGameBoardValidAsync(gameCategories))
         {
+          _metrics.AddBoardFields(gameCategories);
           return room.CreateNewGame(gameCategories);
         }
       }
