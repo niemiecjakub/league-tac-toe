@@ -11,8 +11,6 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        const fullUrl = `${config.baseURL || ""}${config.url}`;
-        console.log(`[Axios Request] ${config.method?.toUpperCase()} to: ${fullUrl}`);
         return config;
     },
     (error) => {

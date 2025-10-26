@@ -28,16 +28,15 @@ namespace LeagueChampions.Controllers
     [HttpPost("CreateRoom")]
     public async Task<IActionResult> CreateRoom([FromQuery] RoomOptions options)
     {
-      _logger.LogInformation("Creating room with");
+      _logger.LogInformation("Attempting to create a room. User {UserGuid}", Request.GetUserGuid());
       var room = await _gameService.CreateRoomAsync(options);
-      _logger.LogInformation("Room successfully created");
       return Ok(room);
     }
 
     [HttpPost("JoinRoom/{roomGuid}")]
     public async Task<IActionResult> JoinRoom(Guid roomGuid)
     {
-      _logger.LogInformation("Attempting to join the room {RoomGuid}. User {UserGuid} ", roomGuid, Request.GetUserGuid());
+      _logger.LogInformation("Attempting to join the room {RoomGuid}. User {UserGuid}", roomGuid, Request.GetUserGuid());
       RoomDto roomDto = await _gameService.JoinRoomAsync(roomGuid, Request);
 
       if (roomDto.Game.GameStatus == GameStateType.InProgress)

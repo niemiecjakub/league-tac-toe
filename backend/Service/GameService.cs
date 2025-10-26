@@ -65,6 +65,7 @@ namespace LeagueChampions.Services
         _metrics.AddPublicGameAttempt(PublicGameResult.Created);
       }
 
+      _logger.LogInformation("Room successfully created. Room: {RoomGuid}. IsPublic: {IsPublic}", room.RoomUID, room.IsPublic);
       return room.ToRoomInfoDto();
     }
 
@@ -76,6 +77,8 @@ namespace LeagueChampions.Services
       game.Start();
 
       await _roomRepository.UpdateAsync(room);
+
+      _logger.LogInformation("Created next round. Games count: {GamesCount}. Room: {RoomGuid}.", room.RoomUID, room.Games.Count);
       _metrics.AddGameCraeted(game);
 
       return room.ToRoomInfoDto();
