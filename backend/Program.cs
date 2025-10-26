@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.SignalR;
 using LeagueChampions.Hubs.Providers;
 using LeagueChampions.Service;
 using LeagueChampions.Data;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Logs;
+using OpenTelemetry;
 
 namespace LeagueChampions
 {
@@ -40,6 +45,8 @@ namespace LeagueChampions
 
       builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
 
+      builder.Services.AddSignalR();
+
       builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
       {
         options.Events = new JwtBearerEvents
@@ -57,7 +64,33 @@ namespace LeagueChampions
         };
       });
 
-      builder.Services.AddSignalR();
+
+      builder.Services.AddOpenTelemetry()
+       .ConfigureResource(resource => resource.AddService(builder.Environment.ApplicationName))
+       .WithMetrics(metrics =>
+       {
+         metrics.AddAspNetCoreInstrumentation();
+         metrics.AddHttpClientInstrumentation();
+         metrics.AddMeter("Microsoft.AspNetCore.Hosting");
+         metrics.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
+
+         metrics.AddOtlpExporter();
+       })
+       .WithTracing(tracing =>
+       {
+         tracing.AddAspNetCoreInstrumentation();
+         tracing.AddHttpClientInstrumentation();
+         tracing.AddEntityFrameworkCoreInstrumentation();
+
+         tracing.AddOtlpExporter();
+       });
+
+      builder.Logging.AddOpenTelemetry(logging =>
+      {
+        logging.IncludeFormattedMessage = true;
+        logging.IncludeScopes = true;
+        logging.AddOtlpExporter();
+      });
 
       builder.Services.AddCors(options =>
       {
@@ -78,7 +111,7 @@ namespace LeagueChampions
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-      DbInitializer.Initialize(app.Configuration["ConnectionStrings:DefaultConnection"]);
+      DbInitializer.Initialize(app.Configuration["ConnectionStrings:DefaultConnection"]!);
       app.UseRouting();
       app.UseHttpsRedirection();
       app.UseAuthorization();

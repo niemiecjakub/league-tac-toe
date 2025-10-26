@@ -20,23 +20,23 @@ namespace LeagueChampions.Controllers
     [HttpGet("all")]
     public async Task<IActionResult> Get([FromQuery] ChampionFilter filter)
     {
-      _logger.LogInformation("Fetching champions");
+      _logger.LogInformation("Fetching champions with: {@Filter}", filter);
       var champions = await _championService.GetAllChampionsAsync(filter);
-      _logger.LogInformation($"Returning {champions.Count()} champions");
+      _logger.LogInformation("Returning {ChampionCount} champions", champions.Count());
       return Ok(champions);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
-      _logger.LogInformation($"Fetching champion with id {id}");
+      _logger.LogInformation("Fetching champion with id {Id}", id);
       var champion = await _championService.GetChampionByIdAsync(id);
       if (champion == null)
       {
-        _logger.LogWarning($"Champion with id {id} not found");
+        _logger.LogWarning("Champion with id {Id} not found", id);
         return NotFound();
       }
-      _logger.LogInformation($"Returning champion with id {id}");
+      _logger.LogInformation("Returning champion with id {Id}", id);
       return Ok(champion);
     }
   }

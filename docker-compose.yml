@@ -1,4 +1,5 @@
 services:
+
   backend:
     container_name: league-tac-toe-api
     build:
@@ -10,13 +11,17 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};
       - Logging__LogLevel__Default=${DEFAULT_LOGGING_LEVEL}
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://dashboard:18889
+    networks:
+      - otel
+      - backend_db
     depends_on:
       db:
         condition: service_healthy
 
   db:
     container_name: league-tac-toe-db
-    image: postgres:latest
+    image: postgres:17
     ports:
       - "5432:5432"
     environment:
@@ -30,6 +35,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - backend_db
 
   frontend:
     container_name: league-tac-toe-front
@@ -43,6 +50,19 @@ services:
     depends_on:
       - backend
 
-
+  dashboard:
+    container_name: league-tac-toe-api-dashboard
+    image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest
+    ports:
+      - "18888:18888"
+    environment:
+      - DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true
+    networks:
+      - otel
 volumes:
   postgres_data:
+
+networks:
+  otel:
+  backend_db:
+
