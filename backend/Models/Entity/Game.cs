@@ -1,4 +1,4 @@
-﻿using LeagueChampions.Models.Enums;
+using LeagueChampions.Models.Enums;
 using LeagueChampions.Models.ValueObjects;
 using Newtonsoft.Json;
 
@@ -23,11 +23,11 @@ namespace LeagueChampions.Models.Entity
       StatusId = GameStateType.InProgress;
     }
 
-    public MoveResult MakeMove(int fieldId, string championName, IEnumerable<Champion> possibleChampions, GamePlayer player)
+    public MoveResult MakeMove(int fieldId, string championName, IEnumerable<string> possibleChampions, GamePlayer player)
     {
       var moveResult = MoveResult.MISS;
       var board = new GameBoard(GetGameBoard());
-      bool isMatch = possibleChampions.Any(c => c.Name == championName);
+      bool isMatch = possibleChampions.Any(c => c == championName);
 
       bool canUserSteal = Room.StealsEnabled && player.HasSteals;
       if (isMatch && board.IsValidMove(fieldId, championName, canUserSteal))

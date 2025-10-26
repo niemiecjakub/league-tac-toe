@@ -1,4 +1,5 @@
-﻿using LeagueChampions.Models.Enums;
+using LeagueChampions.Exceptions;
+using LeagueChampions.Models.Enums;
 using LeagueChampions.Models.ValueObjects;
 using Newtonsoft.Json;
 
@@ -46,11 +47,22 @@ namespace LeagueChampions.Models.Entity
 
     public GamePlayer Join(Guid userGuid)
     {
+      var currentGame = GetCurrentGame();
+      if (currentGame.StatusId != GameStateType.Created)
+      {
+        throw new RoomJoinFailedException($"Game status: {currentGame.StatusId}.", userGuid, RoomUID);
+      }
+
+      // This is probably never met due to way of handling disconnections -> room is being closed when a player disconnects
       if (IsPlayerJoined(userGuid))
+      {
         return GetPlayer(userGuid);
+      }
 
       if (GamePlayers.Count >= 2)
-        throw new InvalidOperationException("Room is full");
+      {
+        throw new RoomJoinFailedException($"Room is already full.", userGuid, RoomUID);
+      }
 
       var newPlayer = new GamePlayer
       {
@@ -65,13 +77,13 @@ namespace LeagueChampions.Models.Entity
 
       if (GamePlayers.Count == 2)
       {
-        GetLastestGame().Start();
+        currentGame.Start();
       }
 
       return newPlayer;
     }
 
-    public Game GetLastestGame()
+    public Game GetCurrentGame()
     {
       return Games.OrderByDescending(g => g.CreatedAt).First();
     }
