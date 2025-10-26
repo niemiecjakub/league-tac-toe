@@ -1,4 +1,4 @@
-﻿namespace LeagueChampions.Models.ValueObjects
+namespace LeagueChampions.Models.ValueObjects
 {
   public class CategoryField
   {
@@ -11,6 +11,11 @@
       Category = category;
       Name = name;
       ResourceKey = $"{category.ToLowerInvariant().Replace(" ", "")}/{name.ToLowerInvariant().Replace(" ", "")}";
+    }
+
+    public string GetCategorySummary()
+    {
+      return $"{Category}: {Name}";
     }
   }
 }

@@ -1,4 +1,3 @@
-﻿using LeagueChampions.Models.Dto;
 using LeagueChampions.Models.Enums;
 using LeagueChampions.Models.ValueObjects;
 
@@ -63,6 +62,28 @@ namespace LeagueChampions.Models.Filters
       }
 
       return filter;
+    }
+
+    public string GetFilterSummary()
+    {
+      var parts = new List<string>();
+
+      if (Region != null && Region.Count > 0)
+        parts.Add($"Region: {string.Join(", ", Region)}");
+
+      if (Resource != null && Resource.Count > 0)
+        parts.Add($"Resource: {string.Join(", ", Resource)}");
+
+      if (Position != null && Position.Count > 0)
+        parts.Add($"Position: {string.Join(", ", Position)}");
+
+      if (Legacy != null && Legacy.Count > 0)
+        parts.Add($"Legacy: {string.Join(", ", Legacy)}");
+
+      if (RangeType != null && RangeType.Count > 0)
+        parts.Add($"RangeType: {string.Join(", ", RangeType)}");
+
+      return string.Join(" | ", parts);
     }
 
   }

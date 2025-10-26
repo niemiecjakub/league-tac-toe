@@ -1,4 +1,5 @@
-﻿using LeagueChampions.Models.Dto;
+using LeagueChampions.Metrics;
+using LeagueChampions.Models.Dto;
 using LeagueChampions.Models.Entity;
 using LeagueChampions.Models.Enums;
 using LeagueChampions.Models.Filters;
@@ -12,23 +13,24 @@ namespace LeagueChampions.Services
   public class GameService : IGameService
   {
     private readonly IGameRepository _gameRepository;
-    private readonly IGamePlayerRepository _gamePlayerRepository;
     private readonly IRoomRepository _roomRepository;
     private readonly IChampionRepository _championRepository;
     private readonly IGameFactoryService _gameFactoryService;
+    private readonly LeagueTacToeMetrics _metrics;
 
     public GameService(IGameRepository gameRepository,
                        IGamePlayerRepository gamePlayerRepository,
                        IRoomRepository roomRepository,
                        IChampionRepository championRepository,
-                       IGameFactoryService gameFactoryService
+                       IGameFactoryService gameFactoryService,
+                       LeagueTacToeMetrics metrics
                        )
     {
       _gameRepository = gameRepository;
-      _gamePlayerRepository = gamePlayerRepository;
       _roomRepository = roomRepository;
       _championRepository = championRepository;
       _gameFactoryService = gameFactoryService;
+      _metrics = metrics;
     }
 
     public async Task<RoomInfoDto> GetOrCreatePublicRoomAsync()
@@ -47,6 +49,10 @@ namespace LeagueChampions.Services
       var room = Room.Create(options);
       await _gameFactoryService.CreateNewGameAsync(room);
       await _roomRepository.CreateRoomAsync(room);
+
+      _metrics.AddRoomCreated(room);
+      _metrics.AddGameCraeted(room.GetLastestGame());
+
       return room.ToRoomInfoDto();
     }
 
@@ -59,7 +65,10 @@ namespace LeagueChampions.Services
       }
       var game = await _gameFactoryService.CreateNewGameAsync(room);
       game.Start();
+
       await _roomRepository.UpdateAsync(room);
+      _metrics.AddGameCraeted(game);
+
       return room.ToRoomInfoDto();
     }
 
@@ -115,7 +124,8 @@ namespace LeagueChampions.Services
 
 
       var categoryFields = game.GetGameCategories().GetCategoryFields(fieldId);
-      var possibleChampions = await _championRepository.GetAllAsync(ChampionFilter.Create(categoryFields));
+      var championFilter = ChampionFilter.Create(categoryFields);
+      var possibleChampions = await _championRepository.GetAllAsync(championFilter);
 
       Guid currentPlayerGuid = GetUserUidFromRequest(request);
       var currentPlayer = room.GetPlayer(currentPlayerGuid);
@@ -127,6 +137,8 @@ namespace LeagueChampions.Services
       game.UpdateDate();
 
       await _gameRepository.UpdateAsync(game);
+      _metrics.AddChampionGuess(championName, championFilter);
+
       return await GetRoomAsync(roomGuid, request);
     }
 

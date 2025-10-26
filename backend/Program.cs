@@ -13,7 +13,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Logs;
-using OpenTelemetry;
+using LeagueChampions.Metrics;
 
 namespace LeagueChampions
 {
@@ -44,6 +44,7 @@ namespace LeagueChampions
       builder.Services.AddSingleton<ICountdownService, CountdownService>();
 
       builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
+      builder.Services.AddSingleton<LeagueTacToeMetrics>();
 
       builder.Services.AddSignalR();
 
@@ -71,9 +72,7 @@ namespace LeagueChampions
        {
          metrics.AddAspNetCoreInstrumentation();
          metrics.AddHttpClientInstrumentation();
-         metrics.AddMeter("Microsoft.AspNetCore.Hosting");
-         metrics.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
-
+         metrics.AddMeter(LeagueTacToeMetrics.Name);
          metrics.AddOtlpExporter();
        })
        .WithTracing(tracing =>
@@ -89,6 +88,7 @@ namespace LeagueChampions
       {
         logging.IncludeFormattedMessage = true;
         logging.IncludeScopes = true;
+
         logging.AddOtlpExporter();
       });
 
