@@ -11,6 +11,9 @@ import { useState } from "react";
 import { RoomOptions } from "@/models/Room";
 import { useTranslations } from "next-intl";
 import { Spinner } from "../ui/spinner";
+import { useRoomStore } from "@/store/roomStore";
+import { toast } from "react-toastify";
+import { handleServiceError } from "@/lib/errorHandler";
 
 export default function LobbyOnline() {
     const t = useTranslations("home");
@@ -23,16 +26,29 @@ export default function LobbyOnline() {
     });
     const [isCreatingRoom, setIsCreatingRoom] = useState(false);
     const [isJoining, setIsJoining] = useState(false);
+    const { joinRoom } = useRoomStore((state) => state);
 
     const handleRoomCreate = async () => {
-        setIsCreatingRoom(true);
-        const room = await createRoom(newRoomOptions);
-        router.push(`/game/${room.roomGuid}`);
+        try {
+            setIsCreatingRoom(true);
+            const room = await createRoom(newRoomOptions);
+            await joinRoom(room.roomGuid);
+            router.push(`/game/${room.roomGuid}`);
+        } catch (error: unknown) {
+            toast.error(handleServiceError(error));
+            setIsCreatingRoom(false);
+        }
     };
 
     const handleRoomJoin = async (roomGuid: string) => {
-        setIsJoining(true);
-        router.push(`/game/${roomGuid}`);
+        try {
+            setIsJoining(true);
+            await joinRoom(roomGuid);
+            router.push(`/game/${roomGuid}`);
+        } catch (error: unknown) {
+            toast.error(handleServiceError(error, "Room code must be a valid GUID"));
+            setIsJoining(false);
+        }
     };
     return (
         <Card className="w-full">
@@ -44,7 +60,7 @@ export default function LobbyOnline() {
                 <Input id="roomCode" type="text" placeholder="Room code" required value={roomCode} onChange={(e) => setRoomCode(e.target.value)} />
             </CardContent>
             <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full" onClick={() => handleRoomJoin(roomCode)} disabled={!roomCode.trim()}>
+                <Button type="submit" className="w-full" onClick={() => handleRoomJoin(roomCode)} disabled={!roomCode.trim() || isJoining}>
                     {isJoining ? (
                         <>
                             <Spinner />

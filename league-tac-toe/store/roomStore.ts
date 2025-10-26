@@ -1,6 +1,7 @@
 import { GameStateType } from "@/models/Game";
 import { Room } from "@/models/Room";
 import { getRoom, joinRoom, move, respondDrawRequest, sendDrawRequest, skipMove } from "@/services/gameService";
+import { toast } from "react-toastify";
 import { create } from "zustand";
 
 type RoomStore = {
@@ -28,27 +29,14 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
     turnTimeLeft: null,
 
     joinRoom: async (roomGuid) => {
-        try {
-            if (!roomGuid) return;
-
-            const roomData = await joinRoom(roomGuid);
-            set({ room: roomData });
-
-            // if (roomData?.turnTime != null) {
-            //     setTimer(roomData.turnTime);
-            // }
-        } catch (error) {
-            console.error("Failed to join game:", error);
-        }
+        if (!roomGuid) return;
+        const roomData = await joinRoom(roomGuid);
+        set({ room: roomData });
     },
 
     updateRoom: async (roomGuid) => {
-        try {
-            const updatedRoom = await getRoom(roomGuid);
-            set({ room: updatedRoom });
-        } catch (err) {
-            console.error("Error during TurnSwitch update:", err);
-        }
+        const updatedRoom = await getRoom(roomGuid);
+        set({ room: updatedRoom });
     },
 
     handleChampionSelect: async (cellIndex, champion) => {
