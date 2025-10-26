@@ -1,12 +1,11 @@
-import { toast } from "react-toastify";
 import axios from "axios";
 
-export const handleServiceError = (error: unknown, customMessage?: string): never => {
+export const handleServiceError = (error: unknown, customMessage?: string): string => {
     let errorMessage = customMessage || "An unexpected error occurred";
 
     if (axios.isAxiosError(error)) {
         if (error.response) {
-            errorMessage = error.response.data?.message || error.response.data || `Error: ${error.response.status}`;
+            errorMessage = error.response.data?.error || error.response.data?.message || `Error: ${error.response.status}`;
         } else if (error.request) {
             errorMessage = "No response from server. Please check your connection.";
         } else {
@@ -16,6 +15,5 @@ export const handleServiceError = (error: unknown, customMessage?: string): neve
         errorMessage = error.message;
     }
 
-    toast.error(errorMessage);
-    throw error;
+    return errorMessage;
 };

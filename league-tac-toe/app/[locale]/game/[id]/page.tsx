@@ -24,7 +24,7 @@ export default function GameIdPage() {
     const id = params?.id as string;
     const t = useTranslations("game");
     const { setChampions } = useChampionStore((state) => state);
-    const { room, joinRoom, updateRoom, handleTimeLeftUpdate, handleRoomLeave } = useRoomStore((state) => state);
+    const { room, updateRoom, handleTimeLeftUpdate, handleRoomLeave } = useRoomStore((state) => state);
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -35,7 +35,6 @@ export default function GameIdPage() {
 
         const init = async () => {
             try {
-                await joinRoom(id);
 
                 hubConnection = await connectToGameHub(id);
 
@@ -134,10 +133,10 @@ export default function GameIdPage() {
                                 </p>
                             </div>
                             <div className="flex w-full justify-center items-center space-x-4">
-                                <Button className="flex-1 w-full" onClick={copyRoomCode}>
+                                <Button className="flex-1 w-full cursor-pointer hover:opacity-30" onClick={copyRoomCode}>
                                     {t("waitingRoom.copyCode")}
                                 </Button>
-                                <Button className="flex-1 w-full" onClick={copyRoomLink}>
+                                <Button className="flex-1 w-full cursor-pointer hover:opacity-30" onClick={copyRoomLink}>
                                     {t("waitingRoom.copyLink")}
                                 </Button>
                             </div>
