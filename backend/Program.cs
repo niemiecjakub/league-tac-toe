@@ -101,12 +101,14 @@ namespace LeagueChampions
         logging.AddOtlpExporter();
       });
 
+      string[] allowedOrigins = builder.Configuration["ALLOWED_ORIGINS"]!.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? Array.Empty<string>();
+
       builder.Services.AddCors(options =>
       {
         options.AddPolicy("AllowFrontend", policy =>
         {
           policy
-              .WithOrigins("http://localhost:3000")
+              .WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -115,23 +117,21 @@ namespace LeagueChampions
 
       var app = builder.Build();
 
-      if (app.Environment.IsDevelopment())
-      {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-      }
+      app.UseSwagger();
+      app.UseSwaggerUI();
+
       DbInitializer.Initialize(dbConnectionString);
       app.MapHealthChecks("/health", new HealthCheckOptions()
       {
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
       });
+      app.UseCors("AllowFrontend");
       app.UseRouting();
       app.UseHttpsRedirection();
       app.UseAuthorization();
       app.MapControllers();
       app.UseMiddleware<ExceptionHandlingMiddleware>();
       app.MapHub<GameHub>("/gamehub");
-      app.UseCors("AllowFrontend");
 
       app.Run();
     }
