@@ -8,7 +8,6 @@ import { ThemeProvider } from "@/components/custom/theme-provider";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import BuyMeACoffeeWidget from "@/components/custom/buy-me-a-coffee";
-import Footer from "@/components/custom/footer";
 
 export const metadata: Metadata = {
     title: "League Tac Toe",

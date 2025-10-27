@@ -1,3 +1,4 @@
+using HealthChecks.UI.Client;
 using LeagueChampions.Data;
 using LeagueChampions.Hubs;
 using LeagueChampions.Hubs.Providers;
@@ -9,6 +10,7 @@ using LeagueChampions.Service;
 using LeagueChampions.Service.Interfaces;
 using LeagueChampions.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Logs;
@@ -29,8 +31,9 @@ namespace LeagueChampions
       builder.Services.AddSwaggerGen();
       builder.Services.AddMemoryCache();
 
+      var dbConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
       builder.Services.AddDbContextFactory<AppDbContext>(options =>
-          options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), o =>
+          options.UseNpgsql(dbConnectionString, o =>
           {
             o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
           }));
@@ -51,6 +54,9 @@ namespace LeagueChampions
       builder.Services.AddSingleton<LeagueTacToeMetrics>();
 
       builder.Services.AddSignalR();
+      builder.Services.AddHealthChecks()
+        .AddNpgSql(dbConnectionString, tags: ["db"])
+        .AddDbContextCheck<AppDbContext>(tags: ["dbContext"]);
 
       builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
       {
@@ -114,7 +120,11 @@ namespace LeagueChampions
         app.UseSwagger();
         app.UseSwaggerUI();
       }
-      DbInitializer.Initialize(app.Configuration["ConnectionStrings:DefaultConnection"]!);
+      DbInitializer.Initialize(dbConnectionString);
+      app.MapHealthChecks("/health", new HealthCheckOptions()
+      {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+      });
       app.UseRouting();
       app.UseHttpsRedirection();
       app.UseAuthorization();
