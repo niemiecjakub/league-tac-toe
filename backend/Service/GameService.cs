@@ -200,5 +200,10 @@ namespace LeagueChampions.Services
       await _gameRepository.UpdateAsync(game);
       return game;
     }
+
+    public async Task<Dictionary<GameStateType, int>> GetGamesByStateCount()
+    {
+      return await _gameRepository.GetGamesByStateCount();
+    }
   }
 }

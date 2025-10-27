@@ -1,4 +1,4 @@
-﻿namespace LeagueChampions.Models.Dto
+namespace LeagueChampions.Models.Dto
 {
   public record ChampionDto
   {
@@ -11,5 +11,6 @@
     public List<string> Legacies { get; init; } = null!;
     public List<string> Positions { get; init; } = null!;
     public List<string> RangeTypes { get; init; } = null!;
+    public string ImageResourceKey { get; init; } = null!;
   }
 }

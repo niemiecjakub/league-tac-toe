@@ -8,4 +8,5 @@ export interface Champion {
     legacies: string[];
     positions: string[];
     rangeTypes: string[];
+    imageResourceKey: string;
 }

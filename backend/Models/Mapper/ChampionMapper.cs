@@ -1,4 +1,4 @@
-﻿using LeagueChampions.Models.Dto;
+using LeagueChampions.Models.Dto;
 using LeagueChampions.Models.Entity;
 
 namespace LeagueChampions.Models.Mapper
@@ -17,7 +17,9 @@ namespace LeagueChampions.Models.Mapper
         Resource = champion.ChampionResource.FirstOrDefault()?.Resource?.Name ?? string.Empty,
         Positions = champion.ChampionPosition.Select(position => position.Position.Name).ToList(),
         Legacies = champion.ChampionLegacy.Select(legacy => legacy.Legacy.Name).ToList(),
-        RangeTypes = champion.ChampionRangeType.Select(rangeType => rangeType.RangeType.Name).ToList()
+        RangeTypes = champion.ChampionRangeType.Select(rangeType => rangeType.RangeType.Name).ToList(),
+        // https://ddragon.leagueoflegends.com/cdn/13.22.1/img/cha1pion/Alistar.png => alistar
+        ImageResourceKey = champion.ImageUrl.Split("/")[^1].Split(".")[0].ToLower(),
       };
     }
   }

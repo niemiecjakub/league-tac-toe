@@ -5,6 +5,7 @@ import LobbyLocal from "@/components/custom/lobby-local";
 import RuleList from "@/components/custom/rule-list";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import Footer from "@/components/custom/footer";
 
 export default async function Home() {
     const t = await getTranslations("home");
@@ -40,6 +41,7 @@ export default async function Home() {
                 </Tabs>
             </div>
             <RuleList />
+            <Footer />
         </div>
     );
 }

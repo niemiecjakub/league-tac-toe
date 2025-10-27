@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { useChampionStore } from "@/store/championStore";
+import Footer from "@/components/custom/footer";
 
 export default function ChampionsPage() {
     const { champions, championFilter, setChampions, setChampionFilters } = useChampionStore();
