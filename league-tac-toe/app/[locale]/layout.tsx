@@ -41,7 +41,6 @@ export default async function LocaleLayout({ children, params }: Props) {
                             <Navbar />
                             <BuyMeACoffeeWidget />
                             <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
-                            <Footer />
                         </div>
                         <ToastContainer autoClose={1000} position="top-center" />
                     </ThemeProvider>

@@ -1,7 +1,6 @@
 import { GameStateType } from "@/models/Game";
 import { Room } from "@/models/Room";
 import { getRoom, joinRoom, move, respondDrawRequest, sendDrawRequest, skipMove } from "@/services/gameService";
-import { toast } from "react-toastify";
 import { create } from "zustand";
 
 type RoomStore = {

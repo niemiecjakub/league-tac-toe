@@ -10,8 +10,10 @@ type ChampionStore = {
 
     setChampions: () => Promise<void>;
     setChampionFilters: () => Promise<void>;
+
+    getChampionImageResourceKey: (championName: string | undefined | null) => string;
 };
-export const useChampionStore = create<ChampionStore>((set) => ({
+export const useChampionStore = create<ChampionStore>((set, get) => ({
     champions: [],
     championNames: [],
     championFilter: null,
@@ -24,5 +26,14 @@ export const useChampionStore = create<ChampionStore>((set) => ({
     setChampionFilters: async () => {
         const filters = await getMetaFilters();
         set({ championFilter: filters });
+    },
+
+    getChampionImageResourceKey: (championName: string | undefined | null): string => {
+        const { champions } = get();
+        if (championName === null || championName === undefined){
+            return "url(/default.png)";
+        }
+        const champion = champions.find((c) => c.name.toLowerCase() === championName.toLowerCase());
+        return champion ? `url(/champion/${champion.imageResourceKey}.png)` : "url(/default.png)";
     },
 }));

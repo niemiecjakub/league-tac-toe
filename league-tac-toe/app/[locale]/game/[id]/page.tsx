@@ -24,7 +24,7 @@ export default function GameIdPage() {
     const id = params?.id as string;
     const t = useTranslations("game");
     const { setChampions } = useChampionStore((state) => state);
-    const { room, updateRoom, handleTimeLeftUpdate, handleRoomLeave } = useRoomStore((state) => state);
+    const { room, updateRoom, handleTimeLeftUpdate, handleRoomLeave, joinRoom } = useRoomStore((state) => state);
     const { theme } = useTheme();
 
     useEffect(() => {
@@ -35,7 +35,6 @@ export default function GameIdPage() {
 
         const init = async () => {
             try {
-
                 hubConnection = await connectToGameHub(id);
 
                 hubConnection.on("PlayerLeft", () => {
@@ -78,6 +77,10 @@ export default function GameIdPage() {
                     await updateRoom(id);
                 });
 
+                //If user connects via link
+                if (document.referrer === "") {
+                    await joinRoom(id);
+                }
                 await setChampions();
                 await hubConnection.invoke("JoinRoom", id);
             } catch (err) {

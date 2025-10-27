@@ -1,4 +1,5 @@
 using LeagueChampions.Models.Dto;
+using LeagueChampions.Models.Enums;
 using LeagueChampions.Models.ValueObjects;
 
 namespace LeagueChampions.Service.Interfaces
@@ -17,5 +18,6 @@ namespace LeagueChampions.Service.Interfaces
     Task<RoomDto> RespondDrawRequestAsync(Guid roomGuid, HttpRequest request);
     Task CloseRoomAsync(Guid roomGuid);
     Task<IEnumerable<RoomInfoDto>> GetRoomsAsync();
+    Task<Dictionary<GameStateType, int>> GetGamesByStateCount();
   }
 }

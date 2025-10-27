@@ -21,7 +21,7 @@ export interface GuessBoardField {
 }
 
 export default function GuessBoardField({ value, cellIndex, categories }: GuessBoardField) {
-    const { champions } = useChampionStore((state) => state);
+    const { champions, getChampionImageResourceKey } = useChampionStore((state) => state);
     const { isYourTurn, handleChampionSelect, room } = useRoomStore((state) => state);
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
@@ -86,7 +86,7 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
                 <Button
                     className=" relative w-full h-full aspect-square bg-cover bg-center text-white text-xs sm:text-sm md:text-base cursor-pointer rounded-none"
                     style={{
-                        backgroundImage: value?.Value?.championName ? `url('/champion/${value.Value.championName}.png')` : `url('/default.png')`,
+                        backgroundImage: `${getChampionImageResourceKey(value?.Value?.championName)}`,
                     }}
                 >
                     {resolveIcons()}
@@ -131,7 +131,7 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
                                     className={cn("cursor-pointer rounded-sm px-2 py-1 hover:bg-gray-100 dark:hover:bg-league-grey-150")}
                                     onMouseDown={() => handleChampionSubmit(champion.name)}
                                 >
-                                    <Image src={champion.imageUrl} alt={champion.name} className="inline-block h-10 w-10 mr-2" width={10} height={10} unoptimized />
+                                    <Image src={`/champion/${champion.imageResourceKey}.png`} alt={champion.name} className="inline-block h-10 w-10 mr-2" width={10} height={10} unoptimized />
                                     {champion.name}
                                 </li>
                             ))}

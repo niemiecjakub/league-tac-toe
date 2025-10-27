@@ -14,7 +14,7 @@ export const columns: ColumnDef<Champion>[] = [
             const champion: Champion = row.original;
             return (
                 <div className="flex items-center">
-                    <Image src={champion.imageUrl} alt={champion.name} height={32} width={32} className="mr-[8px]" />
+                    <Image src={`/champion/${champion.imageResourceKey}.png`} alt={champion.name} height={32} width={32} className="mr-[8px]" />
                     <span>
                         {champion.name}, {champion.title}
                     </span>
