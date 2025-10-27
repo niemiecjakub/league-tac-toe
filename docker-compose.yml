@@ -17,6 +17,11 @@ services:
     networks:
       - otel
       - backend_db
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
     depends_on:
       db:
         condition: service_healthy
@@ -50,15 +55,14 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
   dashboard:
     container_name: league-tac-toe-api-dashboard
     image: mcr.microsoft.com/dotnet/nightly/aspire-dashboard:latest
     ports:
       - "18888:18888"
-    environment:
-      - DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true
     networks:
       - otel
 volumes:
