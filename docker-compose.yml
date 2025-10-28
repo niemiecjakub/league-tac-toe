@@ -46,7 +46,7 @@ services:
       context: ./league-tac-toe
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:8080
+        NEXT_PUBLIC_API_URL: ${API_URL}
     ports:
       - "3000:3000"
     depends_on:
