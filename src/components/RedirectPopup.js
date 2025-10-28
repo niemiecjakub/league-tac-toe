@@ -8,7 +8,7 @@ function RedirectPopup() {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          window.location.href = newSiteUrl;
+          window.location.href = "https://" + newSiteUrl;
           return 0;
         }
         return prev - 1;
@@ -27,17 +27,17 @@ function RedirectPopup() {
           </h2>
         </div>
         <div className="p-6 md:p-8 text-center">
-          <p className="text-base md:text-lg mb-4">
+          <p className="text-base md:text-lg mb-4 text-4xl">
             Check out the updated version at:
           </p>
           <a
             href={newSiteUrl}
-            className="inline-block bg-league-gold-400 w-full rounded-lg py-3 font-bold text-sm md:text-md  mb-6 break-all transition-colors"
+            className="text-xl md:text-2xl inline-block bg-league-gold-400 w-full rounded-lg py-3 font-bold text-sm md:text-md  mb-6 break-all transition-colors"
           >
             {newSiteUrl}
           </a>
           <div className="bg-league-blue-700 rounded-lg py-4 px-6">
-            <p className="text-white text-base md:text-lg">
+            <p className="text-white text-base text-sm md:text-md">
               Redirecting in <span>{countdown}</span> second
               {countdown !== 1 ? "s" : ""}...
             </p>
