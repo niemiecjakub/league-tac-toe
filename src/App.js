@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OnlineGameLobby from "./routes/OnlineGameLobby";
 import Game from "./routes/Game";
 import Landing from "./routes/Landing";
@@ -9,12 +9,14 @@ import ChampionInfo from "./routes/ChampionInfo";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import RedirectPopup from "./components/RedirectPopup";
 
 function App() {
   return (
     <BrowserRouter>
       <Toaster />
       <ScrollToTop />
+      <RedirectPopup />
       <div className="flex flex-col justify-between m-auto min-h-screen w-full bg-league-blue-600">
         <div className="font-league h-full flex justify-start items-center flex-col">
           <Navbar />
