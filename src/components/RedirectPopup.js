@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function RedirectPopup() {
   const [countdown, setCountdown] = useState(3);
-  const newSiteUrl = "https://league-tac-toe.up.railway.app/";
+  const newSiteUrl = "leaguetactoe.com";
 
   useEffect(() => {
     const timer = setInterval(() => {
