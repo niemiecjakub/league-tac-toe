@@ -1,5 +1,4 @@
 services:
-
   backend:
     container_name: league-tac-toe-api
     build:
@@ -8,6 +7,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://dashboard:18889
       - ConnectionStrings__DefaultConnection=Host=${POSTGRES_HOST};Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};
@@ -58,11 +58,10 @@ services:
     ports:
       - "18888:18888"
     networks:
-      - otel 
+      - otel
 volumes:
   postgres_data:
 
 networks:
   otel:
   backend_db:
-
