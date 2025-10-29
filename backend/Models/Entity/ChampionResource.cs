@@ -1,4 +1,4 @@
-﻿namespace LeagueChampions.Models.Entity
+namespace LeagueChampions.Models.Entity
 {
   public class ChampionResource
   {

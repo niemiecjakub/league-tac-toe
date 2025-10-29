@@ -1,4 +1,6 @@
-﻿namespace LeagueChampions.Models.Entity
+using LeagueChampions.Models.Entity.Esport;
+
+namespace LeagueChampions.Models.Entity
 {
   public class Champion
   {
@@ -13,5 +15,7 @@
     public ICollection<ChampionLegacy> ChampionLegacy { get; set; } = null!;
     public ICollection<ChampionPosition> ChampionPosition { get; set; } = null!;
     public ICollection<ChampionRangeType> ChampionRangeType { get; set; } = null!;
+    public ICollection<EsportPick> Picks { get; set; } = null!;
+    public ICollection<EsportBan> Bans { get; set; } = null!;
   }
 }
