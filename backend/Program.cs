@@ -120,7 +120,14 @@ namespace LeagueChampions
       app.UseSwagger();
       app.UseSwaggerUI();
 
-      DbInitializer.Initialize(dbConnectionString);
+      using (var scope = app.Services.CreateScope())
+      {
+        var services = scope.ServiceProvider;
+        var contextFactory = services.GetRequiredService<IDbContextFactory<AppDbContext>>();
+        DbInitializer.Initialize(dbConnectionString);
+        DbInitializer.SeedEsportData(dbConnectionString, contextFactory);
+      }
+
       app.MapHealthChecks("/health", new HealthCheckOptions()
       {
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse

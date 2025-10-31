@@ -1,4 +1,6 @@
 using DbUp;
+using LeagueChampions.Data.Esport;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace LeagueChampions.Data
@@ -15,8 +17,17 @@ namespace LeagueChampions.Data
         .WithTransaction()
         .LogToConsole()
         .Build();
-
+       
       upgrader.PerformUpgrade();
+    }
+
+    public static void SeedEsportData(string connectionString, IDbContextFactory<AppDbContext> contextFactory)
+    {
+      var paths = Directory.GetFiles("Data/Esport/SourceFiles", "*.csv").ToList();
+      EsportDataResult esportData = EsportDataReader.LoadData(paths);
+
+      var processor = new EsportsDataProcessor(contextFactory, esportData);
+      processor.Process();
     }
   }
 }

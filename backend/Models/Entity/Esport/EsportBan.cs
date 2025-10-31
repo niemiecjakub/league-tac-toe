@@ -2,8 +2,7 @@ namespace LeagueChampions.Models.Entity.Esport
 {
   public class EsportBan
   {
-    public int Id { get; set; }
-    public int GameId { get; set; }
+    public string GameId { get; set; } = null!;
     public EsportGame Game { get; set; } = null!;
 
     public int TeamId { get; set; }

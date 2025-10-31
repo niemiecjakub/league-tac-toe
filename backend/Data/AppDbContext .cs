@@ -1,4 +1,5 @@
 using LeagueChampions.Models.Entity;
+using LeagueChampions.Models.Entity.Esport;
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
@@ -26,6 +27,14 @@ public class AppDbContext : DbContext
   public DbSet<Player> Player { get; set; }
   public DbSet<GameState> GameState { get; set; }
   public DbSet<GamePlayer> GamePlayer { get; set; }
+
+
+  public DbSet<EsportBan> EsportBan { get; set; }
+  public DbSet<EsportGame> EsportGame { get; set; }
+  public DbSet<EsportLeague> EsportLeague { get; set; }
+  public DbSet<EsportPick> EsportPick { get; set; }
+  public DbSet<EsportPlayer> EsportPlayer { get; set; }
+  public DbSet<EsportTeam> EsportTeam { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -135,5 +144,15 @@ public class AppDbContext : DbContext
         .HasOne(gp => gp.Room)
         .WithMany(r => r.GamePlayers)
         .HasForeignKey(gp => gp.RoomUID);
+
+    //ESPORT
+    modelBuilder.Entity<EsportBan>(entity =>
+    {
+      entity.HasKey(e => new { e.GameId, e.TeamId, e.ChampionId });
+    });
+    modelBuilder.Entity<EsportPick>(entity =>
+    {
+      entity.HasKey(e => new { e.GameId, e.TeamId, e.PlayerId, e.ChampionId, e.PositionId });
+    });
   }
 }

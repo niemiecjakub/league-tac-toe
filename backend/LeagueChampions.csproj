@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="dbup-postgresql" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.18" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
@@ -29,6 +30,45 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Data/Scripts/Postgres/*.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\Esport\SourceFiles\2014_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2015_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2016_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2017_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2018_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2019_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2020_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2021_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2022_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2023_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2024_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Esport\SourceFiles\2025_LoL_esports_match_data_from_OraclesElixir.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

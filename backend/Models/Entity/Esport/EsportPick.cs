@@ -5,7 +5,7 @@ namespace LeagueChampions.Models.Entity.Esport
   public class EsportPick
   {
     public int Id { get; set; }
-    public EsportGameResult Result { get; set; }
+    public bool Victory { get; set; }
     public EsportMapSide Side { get; set; }
 
     public int PlayerId { get; set; }
@@ -14,7 +14,7 @@ namespace LeagueChampions.Models.Entity.Esport
     public int ChampionId { get; set; }
     public Champion Champion { get; set; } = null!;
 
-    public int GameId { get; set; }
+    public string GameId { get; set; } = null!;
     public EsportGame Game { get; set; } = null!;
 
     public int TeamId { get; set; }

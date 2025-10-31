@@ -2,12 +2,11 @@ namespace LeagueChampions.Models.Entity.Esport
 {
   public class EsportGame
   {
-    public int Id { get; set; }
-    public string Name { get; set; } = null!;
-    public string Patch { get; set; } = null!;
+    public string Id { get; set; } = null!;
+    public string? Patch { get; set; }
     public DateTime Date { get; set; }
     public int Year { get; set; }
-    public string Split { get; set; } = null!;
+    public string? Split { get; set; } = null!;
 
     public int LeagueId { get; set; }
     public EsportLeague League { get; set; } = null!;
