@@ -17,7 +17,7 @@ namespace LeagueChampions.Data
         .WithTransaction()
         .LogToConsole()
         .Build();
-       
+
       upgrader.PerformUpgrade();
     }
 
@@ -26,8 +26,18 @@ namespace LeagueChampions.Data
       var paths = Directory.GetFiles("Data/Esport/SourceFiles", "*.csv").ToList();
       EsportDataResult esportData = EsportDataReader.LoadData(paths);
 
-      var processor = new EsportsDataProcessor(contextFactory, esportData);
-      processor.Process();
+      var processor = new EsportsDbProcessor(contextFactory, esportData);
+      processor.ProcessDb();
+    }
+
+
+    public static void SeedEsportStats(string connectionString, IDbContextFactory<AppDbContext> contextFactory)
+    {
+      var paths = Directory.GetFiles("Data/Esport/SourceFiles", "*.csv").ToList();
+      EsportDataResult esportData = EsportDataReader.LoadData(paths);
+
+      var processor = new EsportStatsProcessor(contextFactory, esportData);
+      processor.ProcessStats();
     }
   }
 }

@@ -29,19 +29,29 @@ public class AppDbContext : DbContext
   public DbSet<GamePlayer> GamePlayer { get; set; }
 
 
+  public DbSet<EsportChampionStats> EsportChampionStats { get; set; }
+  public DbSet<EsportPlayer> EsportPlayer { get; set; }
+  public DbSet<EsportPlayerPick> EsportPlayerPick { get; set; }
+
+
   public DbSet<EsportBan> EsportBan { get; set; }
   public DbSet<EsportGame> EsportGame { get; set; }
   public DbSet<EsportLeague> EsportLeague { get; set; }
   public DbSet<EsportPick> EsportPick { get; set; }
-  public DbSet<EsportPlayer> EsportPlayer { get; set; }
   public DbSet<EsportTeam> EsportTeam { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    // Relationships
+
     modelBuilder.Entity<GameState>().HasKey(g => g.StateId);
     modelBuilder.Entity<Player>().HasKey(p => p.PlayerId);
     modelBuilder.Entity<Room>().HasKey(p => p.RoomUID);
+
+    modelBuilder.Entity<Champion>()
+    .HasOne(c => c.EsportStats)
+    .WithOne(s => s.Champion)
+    .HasForeignKey<EsportChampionStats>(s => s.ChampionId)
+    .OnDelete(DeleteBehavior.Cascade);
 
     modelBuilder.Entity<ChampionLegacy>().HasKey(cl => new { cl.ChampionId, cl.LegacyId });
 
@@ -150,9 +160,23 @@ public class AppDbContext : DbContext
     {
       entity.HasKey(e => new { e.GameId, e.TeamId, e.ChampionId });
     });
+
     modelBuilder.Entity<EsportPick>(entity =>
     {
       entity.HasKey(e => new { e.GameId, e.TeamId, e.PlayerId, e.ChampionId, e.PositionId });
+    });
+
+    modelBuilder.Entity<EsportPlayerPick>(entity =>
+    {
+      entity.HasKey(e => new { e.PlayerId, e.ChampionId });
+    });
+
+    modelBuilder.Entity<EsportChampionStats>(entity =>
+    {
+      entity.HasKey(c => c.ChampionId);
+      entity.Property(s => s.WinRatio).HasPrecision(4, 2);
+      entity.Property(s => s.PickRatio).HasPrecision(4, 2);
+      entity.Property(s => s.BanRatio).HasPrecision(4, 2);
     });
   }
 }

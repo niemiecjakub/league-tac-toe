@@ -1,3 +1,5 @@
+using LeagueChampions.Models.Entity.Esport;
+
 namespace LeagueChampions.Models.Entity.Esport
 {
   public class EsportPlayer
@@ -9,5 +11,6 @@ namespace LeagueChampions.Models.Entity.Esport
     public Position MostPlayedPosition { get; set; } = null!;
 
     public ICollection<EsportPick> Picks { get; set; } = null!;
+    public ICollection<EsportPlayerPick> TopPlayed { get; set; } = null!;
   }
 }

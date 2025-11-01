@@ -10,6 +10,8 @@ namespace LeagueChampions.Models.Entity
     public string Title { get; set; } = null!;
     public string ImageUrl { get; set; } = null!;
 
+    public EsportChampionStats EsportStats { get; set; } = null!;
+
     public ICollection<ChampionResource> ChampionResource { get; set; } = null!;
     public ICollection<ChampionRegion> ChampionRegion { get; set; } = null!;
     public ICollection<ChampionLegacy> ChampionLegacy { get; set; } = null!;

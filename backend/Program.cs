@@ -125,7 +125,8 @@ namespace LeagueChampions
         var services = scope.ServiceProvider;
         var contextFactory = services.GetRequiredService<IDbContextFactory<AppDbContext>>();
         DbInitializer.Initialize(dbConnectionString);
-        DbInitializer.SeedEsportData(dbConnectionString, contextFactory);
+        //DbInitializer.SeedEsportData(dbConnectionString, contextFactory);
+        //DbInitializer.SeedEsportStats(dbConnectionString, contextFactory);
       }
 
       app.MapHealthChecks("/health", new HealthCheckOptions()

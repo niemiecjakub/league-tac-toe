@@ -33,6 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Data\Scripts\001_schema.postgres.sql" />
+    <EmbeddedResource Include="Data\Scripts\002_data.postgres.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\Esport\SourceFiles\2014_LoL_esports_match_data_from_OraclesElixir.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
