@@ -116,3 +116,29 @@ CREATE TABLE "Game" (
     CONSTRAINT "FK_Game_Player_5" FOREIGN KEY ("DrawRequestedId") REFERENCES "Player"("PlayerId"),
     CONSTRAINT "FK_Game_Room_6" FOREIGN KEY ("RoomUID") REFERENCES "Room"("RoomUID")
 );
+
+
+CREATE TABLE "EsportChampionStats" (
+	"ChampionId" int4 NOT NULL,
+	"WinRatio" numeric(4, 2) NOT NULL,
+	"BanRatio" numeric(4, 2) NOT NULL,
+	"PickRatio" numeric(4, 2) NOT NULL,
+	CONSTRAINT "EsportChampionStats_pkey" PRIMARY KEY ("ChampionId"),
+	CONSTRAINT fk_champion FOREIGN KEY ("ChampionId") REFERENCES "Champion"("ChampionId") ON DELETE CASCADE
+);
+
+CREATE TABLE "EsportPlayer" (
+	"Id" serial4 NOT NULL,
+	"Name" varchar(255) NOT NULL,
+	"MostPlayedPositionId" int4 NOT NULL,
+	CONSTRAINT "EsportPlayer_pkey" PRIMARY KEY ("Id"),
+	CONSTRAINT fk_mostplayedposition FOREIGN KEY ("MostPlayedPositionId") REFERENCES "Position"("Id") ON DELETE CASCADE
+);
+
+CREATE TABLE "EsportPlayerPick" (
+	"PlayerId" int4 NOT NULL,
+	"ChampionId" int4 NOT NULL,
+	CONSTRAINT "pk_EsportPlayerPick" PRIMARY KEY ("PlayerId", "ChampionId"),
+	CONSTRAINT "fk_Champion" FOREIGN KEY ("ChampionId") REFERENCES "Champion"("ChampionId"),
+	CONSTRAINT "fk_Player" FOREIGN KEY ("PlayerId") REFERENCES "EsportPlayer"("Id")
+);
