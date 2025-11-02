@@ -1,4 +1,4 @@
-﻿using LeagueChampions.Models.Entity;
+using LeagueChampions.Models.Entity;
 
 namespace LeagueChampions.Service.Interfaces
 {

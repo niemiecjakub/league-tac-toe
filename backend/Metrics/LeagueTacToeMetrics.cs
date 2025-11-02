@@ -49,6 +49,7 @@ namespace LeagueChampions.Metrics
       new KeyValuePair<string, object?>("room.public", room.IsPublic),
       new KeyValuePair<string, object?>("room.stealsEnabled", room.StealsEnabled),
       new KeyValuePair<string, object?>("room.turnTime", room.TurnTime),
+      new KeyValuePair<string, object?>("room.esportCategories", room.IncludeEsportCategories),
       new KeyValuePair<string, object?>("room.createdAt", room.CreatedAt.ToShortDateString())
       );
 
@@ -95,7 +96,7 @@ namespace LeagueChampions.Metrics
         {
           _logger.LogError(ex, $"Metrics refresh failed: {ex.Message}");
         }
-        await Task.Delay(TimeSpan.FromSeconds(1));
+        await Task.Delay(TimeSpan.FromSeconds(60 * 60));
       }
     }
   }

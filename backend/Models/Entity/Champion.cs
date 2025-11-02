@@ -11,6 +11,7 @@ namespace LeagueChampions.Models.Entity
     public string ImageUrl { get; set; } = null!;
 
     public EsportChampionStats EsportStats { get; set; } = null!;
+    public ICollection<EsportPlayerPick> TopPlayerPicks { get; set; } = null!;
 
     public ICollection<ChampionResource> ChampionResource { get; set; } = null!;
     public ICollection<ChampionRegion> ChampionRegion { get; set; } = null!;

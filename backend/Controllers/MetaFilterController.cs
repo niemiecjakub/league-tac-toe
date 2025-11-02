@@ -1,4 +1,4 @@
-﻿using LeagueChampions.Service.Interfaces;
+using LeagueChampions.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LeagueChampions.Controllers

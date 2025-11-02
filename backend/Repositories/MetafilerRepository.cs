@@ -1,4 +1,5 @@
 using LeagueChampions.Models.Entity;
+using LeagueChampions.Models.Entity.Esport;
 using LeagueChampions.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,14 @@ namespace LeagueChampions.Repositories
     {
       using var context = _contextFactory.CreateDbContext();
       return await context.Resource.ToListAsync();
+    }
+
+    public async Task<IEnumerable<EsportPlayer>> GetEsportPlayerPickFiltersAsync()
+    {
+      using var context = _contextFactory.CreateDbContext();
+      return await context.EsportPlayerPick
+        .Select(p => p.Player)
+        .ToHashSetAsync();
     }
   }
 }

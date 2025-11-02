@@ -10,6 +10,7 @@ namespace LeagueChampions.Models.Entity
     public Guid RoomUID { get; set; }
     public int? TurnTime { get; set; }
     public bool StealsEnabled { get; set; }
+    public bool IncludeEsportCategories { get; set; }
     public bool IsPublic { get; set; }
     public DateTime CreatedAt { get; set; }
     public ICollection<Game> Games { get; set; } = new List<Game>();
@@ -26,6 +27,7 @@ namespace LeagueChampions.Models.Entity
         StealsEnabled = options.StealsEnabled,
         TurnTime = options.TurnTime,
         IsPublic = options.IsPublic,
+        IncludeEsportCategories = options.IncludeEsportCategories,
         CreatedAt = DateTime.UtcNow
       };
     }

@@ -84,7 +84,8 @@ CREATE TABLE "Player" (
 CREATE TABLE "Room" (
     "RoomUID" TEXT PRIMARY KEY NOT NULL UNIQUE,  -- unique UUID stored as text
     "TurnTime" INTEGER,
-    "StealsEnabled" BOOLEAN,
+    "StealsEnabled" BOOLEAN DEFAULT TRUE,
+    "IncludeEsportCategories" BOOLEAN DEFAULT FALSE,
     "IsPublic" BOOLEAN DEFAULT FALSE,
     "CreatedAt" TIMESTAMPTZ DEFAULT NOW()
 );

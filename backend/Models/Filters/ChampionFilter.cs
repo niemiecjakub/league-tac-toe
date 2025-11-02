@@ -10,6 +10,10 @@ namespace LeagueChampions.Models.Filters
     public ICollection<PositionType>? Position { get; set; }
     public ICollection<LegacyType>? Legacy { get; set; }
     public ICollection<RangeTypeType>? RangeType { get; set; }
+    public ICollection<string>? PlayerTopPick { get; set; }
+    public ICollection<Tuple<RatioType, double>>? PickRatio { get; set; }
+    public ICollection<Tuple<RatioType, double>>? WinRatio { get; set; }
+    public ICollection<Tuple<RatioType, double>>? BanRatio { get; set; }
 
     public static ChampionFilter Create(IEnumerable<CategoryField> categoryFields)
     {
@@ -58,9 +62,31 @@ namespace LeagueChampions.Models.Filters
               filter.Resource.Add(resource);
             }
             break;
+
+          case "player top pick":
+            filter.PlayerTopPick ??= new List<string>();
+            filter.PlayerTopPick.Add(field.Name);
+            break;
+
+          case "pick ratio":
+            filter.PickRatio ??= new List<Tuple<RatioType, double>>();
+            Enum.TryParse<RatioType>(field.Name, out RatioType pickResult);
+            filter.PickRatio.Add(new(pickResult, 50.0));
+            break;
+
+          case "win ratio":
+            filter.WinRatio ??= new List<Tuple<RatioType, double>>();
+            Enum.TryParse<RatioType>(field.Name, out RatioType winResult);
+            filter.WinRatio.Add(new(winResult, 5));
+            break;
+
+          case "ban ratio":
+            filter.BanRatio ??= new List<Tuple<RatioType, double>>();
+            Enum.TryParse<RatioType>(field.Name, out RatioType banResult);
+            filter.BanRatio.Add(new(banResult, 5));
+            break;
         }
       }
-
       return filter;
     }
 
@@ -82,6 +108,18 @@ namespace LeagueChampions.Models.Filters
 
       if (RangeType != null && RangeType.Count > 0)
         parts.Add($"RangeType: {string.Join(", ", RangeType)}");
+
+      if (PlayerTopPick != null && PlayerTopPick.Count > 0)
+        parts.Add($"PlayerTopPick: {string.Join(", ", PlayerTopPick)}");
+
+      if (PickRatio != null && PickRatio.Count > 0)
+        parts.Add($"PickRatio: {string.Join(", ", PickRatio)}");
+
+      if (WinRatio != null && WinRatio.Count > 0)
+        parts.Add($"WinRatio: {string.Join(", ", WinRatio)}");
+
+      if (BanRatio != null && BanRatio.Count > 0)
+        parts.Add($"BanRatio: {string.Join(", ", BanRatio)}");
 
       return string.Join(" | ", parts);
     }

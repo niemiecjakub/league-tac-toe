@@ -1,10 +1,11 @@
-﻿namespace LeagueChampions.Models.ValueObjects
+namespace LeagueChampions.Models.ValueObjects
 {
   public class RoomOptions
   {
     public int? TurnTime { get; set; }
     public bool StealsEnabled { get; set; }
     public bool IsPublic { get; set; }
+    public bool IncludeEsportCategories { get; set; }
 
     public void Validate()
     {
@@ -16,6 +17,7 @@
       IsPublic = true,
       TurnTime = 30,
       StealsEnabled = true,
+      IncludeEsportCategories = true,
     };
   }
 }

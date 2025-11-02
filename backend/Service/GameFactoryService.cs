@@ -23,7 +23,7 @@ namespace LeagueChampions.Service
 
     public async Task<Game> CreateNewGameAsync(Room room)
     {
-      var metaData = await _metaFilterService.GetMetaFiltersAsync();
+      var metaData = await _metaFilterService.GetChampionStatisticsFiltersAsync(room.IncludeEsportCategories);
       var flatOptions = metaData.Filters
           .SelectMany(f => f.Options.Select(opt => new CategoryField(f.Name, opt.Name)))
           .ToList();
@@ -81,6 +81,7 @@ namespace LeagueChampions.Service
       {
         var filter = ChampionFilter.Create([vertical, horizontal]);
         var champions = await _championService.GetAllChampionsAsync(filter);
+
         if (!champions.Any())
         {
           return false;

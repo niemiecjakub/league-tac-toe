@@ -1,4 +1,5 @@
 using LeagueChampions.Models.Entity;
+using LeagueChampions.Models.Entity.Esport;
 
 namespace LeagueChampions.Repositories.Interfaces
 {
@@ -9,5 +10,6 @@ namespace LeagueChampions.Repositories.Interfaces
     Task<IEnumerable<RangeType>> GetAllRangeTypesAsync();
     Task<IEnumerable<Region>> GetAllRegionsAsync();
     Task<IEnumerable<Resource>> GetAllResourcesAsync();
+    Task<IEnumerable<EsportPlayer>> GetEsportPlayerPickFiltersAsync();
   }
 }
