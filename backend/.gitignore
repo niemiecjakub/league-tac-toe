@@ -5,7 +5,6 @@ publish/
 *.exe
 *.pdb
 *.cache
-
 .vs/
 *.user
 *.suo
@@ -19,3 +18,5 @@ secrets.json
 
 .DS_Store
 .env
+
+Data/Esport/SourceFiles/.*csv

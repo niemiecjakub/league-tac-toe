@@ -15,7 +15,7 @@ namespace LeagueChampions.Data.Esport
 
 
     public static void SeedEsportStats(IDbContextFactory<AppDbContext> contextFactory)
-    { 
+    {
       var paths = Directory.GetFiles("Data/Esport/SourceFiles", "*.csv").ToList();
       EsportDataResult esportData = EsportDataReader.LoadData(paths);
 
