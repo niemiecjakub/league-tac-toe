@@ -48,7 +48,7 @@ namespace LeagueChampions.Models.Filters
             break;
 
           case "region":
-            if (Enum.TryParse(field.OptionName, true, out RegionType region))
+            if (Enum.TryParse(field.OptionName.Replace(" ",""), true, out RegionType region))
             {
               filter.Region ??= new List<RegionType>();
               filter.Region.Add(region);
@@ -63,7 +63,7 @@ namespace LeagueChampions.Models.Filters
             }
             break;
 
-          case "player top pick":
+          case "top 5 picks":
             filter.PlayerTopPick ??= new List<string>();
             filter.PlayerTopPick.Add(field.OptionName);
             break;

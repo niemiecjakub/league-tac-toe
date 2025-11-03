@@ -85,7 +85,11 @@ namespace LeagueChampions.Models.Entity
     public void SetNextPlayerTurn() => CurrentTurnId = CurrentTurnId == PlayerType.X ? PlayerType.O : PlayerType.X;
     public void CancelDrawRequest() => DrawRequestedId = null;
     public void UpdateDate() => UpdatedAt = DateTime.UtcNow;
-    public GameCategories GetGameCategories() => JsonConvert.DeserializeObject<GameCategories>(Categories)!;
+    public GameCategories GetGameCategories() => JsonConvert.DeserializeObject<GameCategories>(Categories, new JsonSerializerSettings
+    {
+      TypeNameHandling = TypeNameHandling.Auto
+    })!;
+
     public BoardField[][] GetGameBoard() => JsonConvert.DeserializeObject<BoardField[][]>(BoardState)!;
   }
 }

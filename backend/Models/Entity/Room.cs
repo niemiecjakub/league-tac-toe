@@ -39,7 +39,10 @@ namespace LeagueChampions.Models.Entity
         RoomUID = RoomUID,
         StatusId = GameStateType.Created,
         CurrentTurnId = PlayerType.X,
-        Categories = JsonConvert.SerializeObject(categories),
+        Categories = JsonConvert.SerializeObject(categories, new JsonSerializerSettings
+        {
+          TypeNameHandling = TypeNameHandling.Auto
+        }),
         BoardState = JsonConvert.SerializeObject(GameBoard.InitializeEmpty()),
       };
       Games.Add(game);

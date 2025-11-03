@@ -1,4 +1,5 @@
 using LeagueChampions.Utils;
+using Newtonsoft.Json;
 
 namespace LeagueChampions.Models.ValueObjects
 {
@@ -18,8 +19,13 @@ namespace LeagueChampions.Models.ValueObjects
       };
     }
 
+    [JsonIgnore]
     public List<CategoryField> HorizontalSorted => Horizontal.OrderBy(c => c.GetCategorySummary()).ToList();
+
+    [JsonIgnore]
     public List<CategoryField> VerticallSorted => Vertical.OrderBy(c => c.GetCategorySummary()).ToList();
+
+    [JsonIgnore]
     public List<CategoryField> AllSorted => VerticallSorted.Concat(HorizontalSorted).ToList();
 
     public string GetAllSummary()

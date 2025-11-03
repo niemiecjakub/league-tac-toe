@@ -7,12 +7,12 @@ namespace LeagueChampions.Models.ValueObjects
     public string ResourceKey { get; }
     public string? DisplayName { get; }
 
-    public CategoryField(string categoryGroup, string optionName, string? displayName = null)
+    public CategoryField(string categoryGroupName, string optionName, string? displayName = null)
     {
-      CategoryGroupName = categoryGroup;
+      CategoryGroupName = categoryGroupName;
       OptionName = optionName;
       DisplayName = displayName;
-      ResourceKey = $"{categoryGroup.ToLowerInvariant().Replace(" ", "")}/{optionName.ToLowerInvariant().Replace(" ", "")}";
+      ResourceKey = $"{categoryGroupName.ToLowerInvariant().Replace(" ", "")}/{optionName.ToLowerInvariant().Replace(" ", "")}";
     }
 
     public string GetCategorySummary()

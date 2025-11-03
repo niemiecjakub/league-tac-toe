@@ -2,7 +2,7 @@ namespace LeagueChampions.Models.ValueObjects
 {
   public class CategoryFieldTreshold : CategoryField
   {
-    public CategoryFieldTreshold(string categoryGroup, string optionName, double treshold, string? displayName = null) : base(categoryGroup, optionName, displayName)
+    public CategoryFieldTreshold(string categoryGroupName, string optionName, double treshold, string? displayName = null) : base(categoryGroupName, optionName, displayName)
     {
       Treshold = treshold;
     }
