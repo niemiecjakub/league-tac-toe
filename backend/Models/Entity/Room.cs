@@ -50,15 +50,16 @@ namespace LeagueChampions.Models.Entity
     public GamePlayer Join(Guid userGuid)
     {
       var currentGame = GetCurrentGame();
+
+      // This is probably never met due to way of handling disconnections -> room is being closed when a player disconnects
+      if (currentGame.StatusId == GameStateType.InProgress && IsPlayerJoined(userGuid))
+      {
+        return GetPlayer(userGuid);
+      }
+
       if (currentGame.StatusId != GameStateType.Created)
       {
         throw new RoomJoinFailedException($"Game status: {currentGame.StatusId}.", userGuid, RoomUID);
-      }
-
-      // This is probably never met due to way of handling disconnections -> room is being closed when a player disconnects
-      if (IsPlayerJoined(userGuid))
-      {
-        return GetPlayer(userGuid);
       }
 
       if (GamePlayers.Count >= 2)
@@ -75,7 +76,10 @@ namespace LeagueChampions.Models.Entity
         Steals = 3
       };
 
-      GamePlayers.Add(newPlayer);
+      if (!IsPlayerJoined(userGuid))
+      {
+        GamePlayers.Add(newPlayer);
+      }
 
       if (GamePlayers.Count == 2)
       {

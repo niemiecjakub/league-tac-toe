@@ -2,7 +2,6 @@ using LeagueChampions.Models.Entity;
 using LeagueChampions.Models.Filters;
 using LeagueChampions.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 
 namespace LeagueChampions.Repositories
 {

@@ -5,6 +5,6 @@ namespace LeagueChampions.Service.Interfaces
   public interface IMetaFilterService
   {
     Task<ChampionMetaFiltersDto> GetMetaFiltersAsync();
-    Task<ChampionMetaFiltersDto> GetChampionStatisticsFiltersAsync(bool includeEsportCategories);
+    Task<ChampionMetaFiltersDto> GetBoardCategoryFiltersAsync(bool includeEsportCategories);
   }
 }

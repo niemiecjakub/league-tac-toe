@@ -1,4 +1,4 @@
-﻿namespace LeagueChampions.Models.Dto
+namespace LeagueChampions.Models.Dto
 {
   public record ChampionMetaFiltersDto
   {
@@ -16,6 +16,11 @@
   {
     public int Id { get; init; }
     public string Name { get; init; } = null!;
+  }
+
+  public record MetaFilterOptioRationDto : MetaFilterOptionDto
+  {
+    public double Treshold { get; init; }
   }
 
 }

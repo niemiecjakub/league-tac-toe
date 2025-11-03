@@ -21,10 +21,10 @@ namespace LeagueChampions.Models.Filters
 
       foreach (CategoryField field in categoryFields)
       {
-        switch (field.Category.ToLower())
+        switch (field.CategoryGroupName.ToLower())
         {
           case "position":
-            if (Enum.TryParse(field.Name, true, out PositionType pos))
+            if (Enum.TryParse(field.OptionName, true, out PositionType pos))
             {
               filter.Position ??= new List<PositionType>();
               filter.Position.Add(pos);
@@ -32,7 +32,7 @@ namespace LeagueChampions.Models.Filters
             break;
 
           case "legacy":
-            if (Enum.TryParse(field.Name, true, out LegacyType legacy))
+            if (Enum.TryParse(field.OptionName, true, out LegacyType legacy))
             {
               filter.Legacy ??= new List<LegacyType>();
               filter.Legacy.Add(legacy);
@@ -40,7 +40,7 @@ namespace LeagueChampions.Models.Filters
             break;
 
           case "range type":
-            if (Enum.TryParse(field.Name, true, out RangeTypeType range))
+            if (Enum.TryParse(field.OptionName, true, out RangeTypeType range))
             {
               filter.RangeType ??= new List<RangeTypeType>();
               filter.RangeType.Add(range);
@@ -48,7 +48,7 @@ namespace LeagueChampions.Models.Filters
             break;
 
           case "region":
-            if (Enum.TryParse(field.Name, true, out RegionType region))
+            if (Enum.TryParse(field.OptionName, true, out RegionType region))
             {
               filter.Region ??= new List<RegionType>();
               filter.Region.Add(region);
@@ -56,7 +56,7 @@ namespace LeagueChampions.Models.Filters
             break;
 
           case "resources":
-            if (Enum.TryParse(field.Name, true, out ResourceType resource))
+            if (Enum.TryParse(field.OptionName, true, out ResourceType resource))
             {
               filter.Resource ??= new List<ResourceType>();
               filter.Resource.Add(resource);
@@ -65,25 +65,25 @@ namespace LeagueChampions.Models.Filters
 
           case "player top pick":
             filter.PlayerTopPick ??= new List<string>();
-            filter.PlayerTopPick.Add(field.Name);
+            filter.PlayerTopPick.Add(field.OptionName);
             break;
 
           case "pick ratio":
             filter.PickRatio ??= new List<Tuple<RatioType, double>>();
-            Enum.TryParse<RatioType>(field.Name, out RatioType pickResult);
-            filter.PickRatio.Add(new(pickResult, 50.0));
+            Enum.TryParse<RatioType>(field.OptionName, out RatioType pickResult);
+            filter.PickRatio.Add(new(pickResult, (field as CategoryFieldTreshold)?.Treshold ?? 50));
             break;
 
           case "win ratio":
             filter.WinRatio ??= new List<Tuple<RatioType, double>>();
-            Enum.TryParse<RatioType>(field.Name, out RatioType winResult);
-            filter.WinRatio.Add(new(winResult, 5));
+            Enum.TryParse<RatioType>(field.OptionName, out RatioType winResult);
+            filter.WinRatio.Add(new(winResult, (field as CategoryFieldTreshold)?.Treshold ?? 5));
             break;
 
           case "ban ratio":
             filter.BanRatio ??= new List<Tuple<RatioType, double>>();
-            Enum.TryParse<RatioType>(field.Name, out RatioType banResult);
-            filter.BanRatio.Add(new(banResult, 5));
+            Enum.TryParse<RatioType>(field.OptionName, out RatioType banResult);
+            filter.BanRatio.Add(new(banResult, (field as CategoryFieldTreshold)?.Treshold ?? 5));
             break;
         }
       }

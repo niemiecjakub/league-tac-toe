@@ -1,4 +1,5 @@
 using LeagueChampions.Metrics;
+using LeagueChampions.Models.Abstraction;
 using LeagueChampions.Models.Entity;
 using LeagueChampions.Models.Filters;
 using LeagueChampions.Models.ValueObjects;
@@ -23,13 +24,18 @@ namespace LeagueChampions.Service
 
     public async Task<Game> CreateNewGameAsync(Room room)
     {
-      var metaData = await _metaFilterService.GetChampionStatisticsFiltersAsync(room.IncludeEsportCategories);
+      var metaData = await _metaFilterService.GetBoardCategoryFiltersAsync(room.IncludeEsportCategories);
       var flatOptions = metaData.Filters
-          .SelectMany(f => f.Options.Select(opt => new CategoryField(f.Name, opt.Name)))
+          .SelectMany(f => CategoryFieldFactory.Create(f))
           .ToList();
 
       var totalOptions = flatOptions.Count;
       int attemptsCounter = 1;
+
+      foreach (var opt in flatOptions)
+      {
+        Console.WriteLine(opt.ResourceKey);
+      }
       while (true)
       {
         var usedIndexes = new HashSet<int>();

@@ -15,7 +15,7 @@ namespace LeagueChampions.Services
     {
       _metafilterRepository = metafilterRepository;
     }
-    public async Task<ChampionMetaFiltersDto> GetChampionStatisticsFiltersAsync(bool includeEsportCategories)
+    public async Task<ChampionMetaFiltersDto> GetBoardCategoryFiltersAsync(bool includeEsportCategories)
     {
       var mainFilter = await GetMetaFiltersAsync();
       if (!includeEsportCategories)
@@ -28,7 +28,7 @@ namespace LeagueChampions.Services
         {
           new MetaFilterDto
           {
-            Name = "Player top pick",
+            Name = "Top 5 picks",
             Value = "players",
             Options = playerPicks.Select(p => new MetaFilterOptionDto
             {
@@ -43,8 +43,8 @@ namespace LeagueChampions.Services
             Value = "ratio",
             Options = new List<MetaFilterOptionDto>()
             {
-              new MetaFilterOptionDto{ Id = 1, Name = nameof(RatioType.Above)},
-              new MetaFilterOptionDto{ Id = 2, Name = nameof(RatioType.Below)}
+              new MetaFilterOptioRationDto{ Id = 1, Name = nameof(RatioType.Above), Treshold = 5},
+              new MetaFilterOptioRationDto{ Id = 2, Name = nameof(RatioType.Below), Treshold = 5},
             }
             .ToList()
           },
@@ -54,8 +54,8 @@ namespace LeagueChampions.Services
             Value = "ratio",
             Options = new List<MetaFilterOptionDto>()
             {
-              new MetaFilterOptionDto{ Id = 1, Name = nameof(RatioType.Above)},
-              new MetaFilterOptionDto{ Id = 2, Name = nameof(RatioType.Below)}
+              new MetaFilterOptioRationDto{ Id = 1, Name = nameof(RatioType.Above), Treshold = 50},
+              new MetaFilterOptioRationDto{ Id = 2, Name = nameof(RatioType.Below), Treshold = 50},
             }
             .ToList()
           },
@@ -65,8 +65,8 @@ namespace LeagueChampions.Services
             Value = "ratio",
             Options = new List<MetaFilterOptionDto>()
             {
-              new MetaFilterOptionDto{ Id = 1, Name = nameof(RatioType.Above)},
-              new MetaFilterOptionDto{ Id = 2, Name = nameof(RatioType.Below)}
+              new MetaFilterOptioRationDto{ Id = 1, Name = nameof(RatioType.Above), Treshold = 5},
+              new MetaFilterOptioRationDto{ Id = 2, Name = nameof(RatioType.Below), Treshold = 5},
             }
             .ToList()
           },

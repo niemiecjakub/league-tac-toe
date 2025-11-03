@@ -94,7 +94,7 @@ namespace ImageScraper.Player
 
       byte[] imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
 
-      string fileName = Path.Combine(_destinationFolder, $"{playerName.ToLower()}.webp");
+      string fileName = Path.Combine(_destinationFolder, $"{playerName.ToLowerInvariant().Replace(" ", "")}.webp");
       await File.WriteAllBytesAsync(fileName, imageBytes);
 
       Console.WriteLine($"Image saved as {fileName.ToLower()}");
