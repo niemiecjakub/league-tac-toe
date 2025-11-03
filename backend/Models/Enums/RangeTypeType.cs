@@ -1,4 +1,4 @@
-﻿namespace LeagueChampions.Models.Enums
+namespace LeagueChampions.Models.Enums
 {
   public enum RangeTypeType
   {

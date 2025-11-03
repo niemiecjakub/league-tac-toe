@@ -24,43 +24,49 @@ namespace LeagueChampions.Models.Filters
         switch (field.CategoryGroupName.ToLower())
         {
           case "position":
-            if (Enum.TryParse(field.OptionName, true, out PositionType pos))
+            if (!Enum.TryParse(field.OptionName, true, out PositionType pos))
             {
-              filter.Position ??= new List<PositionType>();
-              filter.Position.Add(pos);
+              throw new ArgumentException(field.OptionName);
             }
+            filter.Position ??= new List<PositionType>();
+            filter.Position.Add(pos);
             break;
 
           case "legacy":
-            if (Enum.TryParse(field.OptionName, true, out LegacyType legacy))
+            if (!Enum.TryParse(field.OptionName, true, out LegacyType legacy))
             {
-              filter.Legacy ??= new List<LegacyType>();
-              filter.Legacy.Add(legacy);
+              throw new ArgumentException(field.OptionName);
             }
+            filter.Legacy ??= new List<LegacyType>();
+            filter.Legacy.Add(legacy);
+
             break;
 
           case "range type":
-            if (Enum.TryParse(field.OptionName, true, out RangeTypeType range))
+            if (!Enum.TryParse(field.OptionName, true, out RangeTypeType range))
             {
-              filter.RangeType ??= new List<RangeTypeType>();
-              filter.RangeType.Add(range);
+              throw new ArgumentException(field.OptionName);
             }
+            filter.RangeType ??= new List<RangeTypeType>();
+            filter.RangeType.Add(range);
             break;
 
           case "region":
-            if (Enum.TryParse(field.OptionName.Replace(" ",""), true, out RegionType region))
+            if (!Enum.TryParse(field.OptionName.Replace(" ", ""), true, out RegionType region))
             {
-              filter.Region ??= new List<RegionType>();
-              filter.Region.Add(region);
+              throw new ArgumentException(field.OptionName);
             }
+            filter.Region ??= new List<RegionType>();
+            filter.Region.Add(region);
             break;
 
           case "resources":
-            if (Enum.TryParse(field.OptionName, true, out ResourceType resource))
+            if (!Enum.TryParse(field.OptionName, true, out ResourceType resource))
             {
-              filter.Resource ??= new List<ResourceType>();
-              filter.Resource.Add(resource);
+              throw new ArgumentException(field.OptionName);
             }
+            filter.Resource ??= new List<ResourceType>();
+            filter.Resource.Add(resource);
             break;
 
           case "top 5 picks":

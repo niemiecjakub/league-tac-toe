@@ -32,10 +32,6 @@ namespace LeagueChampions.Service
       var totalOptions = flatOptions.Count;
       int attemptsCounter = 1;
 
-      foreach (var opt in flatOptions)
-      {
-        Console.WriteLine(opt.ResourceKey);
-      }
       while (true)
       {
         var usedIndexes = new HashSet<int>();
