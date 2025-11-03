@@ -1,4 +1,5 @@
-﻿using ImageScraper.Player;
+using ImageScraper.Player;
+using HtmlAgilityPack;
 
 namespace ImageScraper
 {
@@ -6,7 +7,7 @@ namespace ImageScraper
   {
     static async Task Main(string[] args)
     {
-      string destinationFolderPath = "";
+      string destinationFolderPath = "Images/Players";
       var scraper = new PlayerImageScraper(destinationFolderPath);
       await scraper.Run();
     }
