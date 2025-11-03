@@ -18,9 +18,10 @@ export interface GameSlot {
 }
 
 export interface CategoryItem {
-    Category: string;
-    Name: string;
+    CategoryGroupName: string;
+    OptionName: string;
     ResourceKey: string;
+    DisplayName: string | null;
 }
 
 export interface Categories {

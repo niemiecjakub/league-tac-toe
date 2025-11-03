@@ -27,6 +27,11 @@ export default function GameIdPage() {
     const { room, updateRoom, handleTimeLeftUpdate, handleRoomLeave, joinRoom } = useRoomStore((state) => state);
     const { theme } = useTheme();
 
+    const tabclose = (hubConnection: signalR.HubConnection) => {
+        hubConnection.invoke("LeaveRoom", id);
+        handleRoomLeave();
+    };
+
     useEffect(() => {
         if (!id) return;
 
@@ -77,12 +82,25 @@ export default function GameIdPage() {
                     await updateRoom(id);
                 });
 
+                hubConnection.onclose(() => {
+                    console.log("ON CLOSE CALLED");
+                    hubConnection.invoke("LeaveRoom", id);
+                    handleRoomLeave();
+                });
+
                 //If user connects via link
                 if (document.referrer === "") {
                     await joinRoom(id);
                 }
                 await setChampions();
                 await hubConnection.invoke("JoinRoom", id);
+
+                const tabclose = (hubConnection: signalR.HubConnection) => {
+                    hubConnection.invoke("LeaveRoom", id);
+                    handleRoomLeave();
+                };
+
+                window.addEventListener("beforeunload", () => tabclose(hubConnection));
             } catch (err) {
                 console.error("Error setting up SignalR:", err);
             }
@@ -91,9 +109,8 @@ export default function GameIdPage() {
         init();
 
         return () => {
-            console.log("disposing");
+            window.removeEventListener("beforeunload", () => tabclose(hubConnection));
             isMounted = false;
-
             if (hubConnection) {
                 (async () => {
                     await hubConnection.invoke("LeaveRoom", id);

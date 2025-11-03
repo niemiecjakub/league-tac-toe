@@ -11,6 +11,7 @@ export interface RoomInfo {
     turnTime: number | null;
     stealsEnabled: boolean;
     isPublic: boolean;
+    includeEsportCategories: boolean;
     score: Score;
 }
 
@@ -18,4 +19,5 @@ export interface RoomOptions {
     turnTime: number | null;
     stealsEnabled: boolean;
     isPublic: boolean;
+    includeEsportCategories: boolean;
 }

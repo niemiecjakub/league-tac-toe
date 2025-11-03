@@ -6,6 +6,7 @@ const parseGameData = (data: any) => {
     const parsedBoardState: BoardField[][] = typeof data.game.boardState === "string" ? JSON.parse(data.game.boardState) : data.game.boardState;
     const parsedCategories: Categories = typeof data.game.categories === "string" ? JSON.parse(data.game.categories) : data.game.categories;
 
+    console.log(parsedCategories);
     return {
         ...data.game,
         boardState: parsedBoardState,
@@ -17,6 +18,7 @@ export const createRoom = async (roomOptions: RoomOptions): Promise<RoomInfo> =>
     const params = new URLSearchParams({
         turnTime: roomOptions.turnTime === null ? "-1" : roomOptions.turnTime.toString(),
         stealsEnabled: roomOptions.stealsEnabled.toString(),
+        includeEsportCategories: roomOptions.includeEsportCategories.toString(),
     });
 
     const { data } = await axios.post(`Game/CreateRoom?${params.toString()}`);

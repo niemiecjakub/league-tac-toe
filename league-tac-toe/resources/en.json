@@ -16,6 +16,7 @@
         "unlimited": "unlimited",
         "limited": "{number} seconds",
         "enableSteals": "Enable steals",
+        "includeEsportCategories": "Include Esport categories",
         "yes": "Yes",
         "no": "No",
         "create": "Create",

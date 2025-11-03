@@ -50,7 +50,8 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
     };
 
     const onOpenChange = (isOpen: boolean) => {
-        if (!isYourTurn()) {
+        const isMyField = value?.Value?.playerType === room?.slot?.playerType;
+        if (!isYourTurn() || isMyField) {
             return;
         }
         setOpen(isOpen);
@@ -102,7 +103,13 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>{t("enterChampion")}</DialogTitle>
-                    <DialogDescription>{`${categories[0].Category} ${categories[0].Name} & ${categories[1].Category} ${categories[1].Name}`}</DialogDescription>
+                    <DialogDescription>
+                        <div className="flex items-center">
+                            <p>{`${categories[0].CategoryGroupName} ${categories[0].DisplayName ?? categories[0].OptionName} `}</p>
+                            <p className="px-4">&</p>
+                            <p>{`${categories[1].CategoryGroupName} ${categories[1].DisplayName ?? categories[1].OptionName} `}</p>
+                        </div>
+                    </DialogDescription>
                 </DialogHeader>
 
                 <div className="relative">

@@ -22,6 +22,7 @@ export default function LobbyOnline() {
     const [newRoomOptions, setNewRoomOptions] = useState<RoomOptions>({
         turnTime: -1,
         stealsEnabled: true,
+        includeEsportCategories: true,
         isPublic: false,
     });
     const [isCreatingRoom, setIsCreatingRoom] = useState(false);
@@ -120,6 +121,29 @@ export default function LobbyOnline() {
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>{t("enableSteals")}</SelectLabel>
+                                    <SelectItem value="true">{t("yes")}</SelectItem>
+                                    <SelectItem value="false">{t("no")}</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="flex gap-2 justify-between">
+                        <Label>{t("includeEsportCategories")}</Label>
+                        <Select
+                            value={newRoomOptions.includeEsportCategories.toString()}
+                            onValueChange={(value) =>
+                                setNewRoomOptions((prev) => ({
+                                    ...prev!,
+                                    includeEsportCategories: value === "true",
+                                }))
+                            }
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder={t("yes")} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>{t("includeEsportCategories")}</SelectLabel>
                                     <SelectItem value="true">{t("yes")}</SelectItem>
                                     <SelectItem value="false">{t("no")}</SelectItem>
                                 </SelectGroup>
