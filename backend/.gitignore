@@ -20,3 +20,4 @@ secrets.json
 .env
 
 Data/Esport/SourceFiles/.*csv
+Data/Scripts/002_data.postgres.sql
