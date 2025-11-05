@@ -6,7 +6,6 @@ using LeagueChampions.Metrics;
 using LeagueChampions.Middleware;
 using LeagueChampions.Repositories;
 using LeagueChampions.Repositories.Interfaces;
-using LeagueChampions.Scraper.Champion;
 using LeagueChampions.Service;
 using LeagueChampions.Service.Interfaces;
 using LeagueChampions.Services;
@@ -118,15 +117,13 @@ namespace LeagueChampions
 
       var app = builder.Build();
 
-      app.UseSwagger();
-      app.UseSwaggerUI();
-
-      using (var scope = app.Services.CreateScope())
+      if (app.Environment.IsDevelopment())
       {
-        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
-        DbInitializer.Initialize(dbConnectionString);
-        ChampionScraper.RunScrape(contextFactory).GetAwaiter().GetResult();
+        app.UseSwagger();
+        app.UseSwaggerUI();
       }
+
+      DbInitializer.Initialize(dbConnectionString);
 
       app.MapHealthChecks("/health", new HealthCheckOptions()
       {

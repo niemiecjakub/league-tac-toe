@@ -107,11 +107,11 @@ namespace LeagueChampions.Scraper.Player
       string imageUrl = string.Empty;
       if (imageNode != null)
       {
-        imageUrl = imageNode.GetAttributeValue("src", null);
+        imageUrl = imageNode.GetAttributeValue("src", null!);
 
         if (string.IsNullOrWhiteSpace(imageUrl) || imageUrl.Contains("data:image/gif"))
         {
-          imageUrl = node.GetAttributeValue("data-src", null);
+          imageUrl = node.GetAttributeValue("data-src", null!);
         }
       }
       else
@@ -124,7 +124,7 @@ namespace LeagueChampions.Scraper.Player
           throw new Exception("Image not found. The page structure may have changed.");
         }
 
-        imageUrl = imageNode.GetAttributeValue("data-src", null) ?? imageNode.GetAttributeValue("src", null);
+        imageUrl = imageNode.GetAttributeValue("data-src", null!) ?? imageNode.GetAttributeValue("src", null!);
       }
 
       if (string.IsNullOrWhiteSpace(imageUrl))
