@@ -42,6 +42,15 @@ public class AppDbContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    modelBuilder.Entity<Champion>(entity =>
+    {
+      entity.HasKey(c => c.ChampionId);
+      entity.Property(c => c.ChampionId).ValueGeneratedOnAdd();
+      entity.Property(c => c.ChampionKey).IsRequired();
+      entity.Property(c => c.Name).IsRequired();
+      entity.Property(c => c.Title).IsRequired();
+      entity.Property(c => c.ImageUrl).IsRequired();
+    });
 
     modelBuilder.Entity<GameState>().HasKey(g => g.StateId);
     modelBuilder.Entity<Player>().HasKey(p => p.PlayerId);

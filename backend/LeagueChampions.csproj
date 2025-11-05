@@ -36,6 +36,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Data\Scripts\001_schema.postgres.sql" />
     <EmbeddedResource Include="Data\Scripts\002_data.postgres.sql" />
+    <EmbeddedResource Include="Data\Scripts\003_data.postgres.sql" />
+    <EmbeddedResource Include="Data\Scripts\004_data.postgres.sql" />
+    <EmbeddedResource Include="Data\Scripts\005_data.postgres.sql" />
   </ItemGroup>
 
 </Project>

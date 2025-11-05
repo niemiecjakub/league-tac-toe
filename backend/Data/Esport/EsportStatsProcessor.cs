@@ -97,7 +97,7 @@ namespace LeagueChampions.Data.Esport
         })
         .Where(stat => !existingStatsChampionId.Contains(stat.ChampionId));
 
-
+      Console.WriteLine("Added champion stats: " + esportChampionStats.Count());
       context.EsportChampionStats.AddRange(esportChampionStats);
       context.SaveChanges();
     }
@@ -123,7 +123,7 @@ namespace LeagueChampions.Data.Esport
       {
         return;
       }
-
+      Console.WriteLine("Added players: " + newPlayers.Count);
       context.EsportPlayer.AddRange(newPlayers);
       context.SaveChanges();
     }
@@ -157,12 +157,13 @@ namespace LeagueChampions.Data.Esport
           .Where(pick => !existingTopPicks.Contains(new { pick.PlayerId, pick.ChampionId }))
           .ToList();
 
+      Console.WriteLine("Added top player picks: " + topPlayerPicks.Count);
       context.EsportPlayerPick.AddRange(topPlayerPicks);
       context.SaveChanges();
 
     }
 
-    private List<string> ANALYZED_PLAYERS = new List<string>
+    public static List<string> ANALYZED_PLAYERS = new List<string>
       {
         "Faker",
         "Uzi",

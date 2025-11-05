@@ -3,7 +3,8 @@ CREATE TABLE "Champion" (
     "ChampionKey" VARCHAR UNIQUE,
     "Name" VARCHAR UNIQUE,
     "Title" VARCHAR UNIQUE,
-    "ImageUrl" VARCHAR UNIQUE
+    "ImageUrl" VARCHAR UNIQUE,
+    "ReleaseDate" date NOT NULL,
 );
 
 CREATE TABLE "Legacy" (

@@ -16,7 +16,7 @@ namespace LeagueChampions.Data.Esport
 
     public static void SeedEsportStats(IDbContextFactory<AppDbContext> contextFactory)
     {
-      var paths = Directory.GetFiles("Data/Esport/SourceFiles", "*.csv").ToList();
+      var paths = Directory.GetFiles("C:\\Users\\komputerek\\Desktop\\dev\\league-tac-toe\\backend\\Data\\Esport\\SourceFiles\\", "*.csv").ToList();
       EsportDataResult esportData = EsportDataReader.LoadData(paths);
 
       var processor = new EsportStatsProcessor(contextFactory, esportData);

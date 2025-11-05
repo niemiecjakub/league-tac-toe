@@ -18,6 +18,3 @@ secrets.json
 
 .DS_Store
 .env
-
-Data/Esport/SourceFiles/.*csv
-Data/Scripts/002_data.postgres.sql

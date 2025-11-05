@@ -9,6 +9,7 @@ namespace LeagueChampions.Models.Entity
     public string Name { get; set; } = null!;
     public string Title { get; set; } = null!;
     public string ImageUrl { get; set; } = null!;
+    public DateTime ReleaseDate { get; set; }
 
     public EsportChampionStats EsportStats { get; set; } = null!;
     public ICollection<EsportPlayerPick> TopPlayerPicks { get; set; } = null!;
