@@ -20,6 +20,7 @@ namespace LeagueChampions.Models.Mapper
         RangeTypes = champion.ChampionRangeType.Select(rangeType => rangeType.RangeType.Name).ToList(),
         // https://ddragon.leagueoflegends.com/cdn/13.22.1/img/cha1pion/Alistar.png => alistar
         ImageResourceKey = champion.ImageUrl.Split("/")[^1].Split(".")[0].ToLower(),
+        ReleaseDate = champion.ReleaseDate.ToString("dd-MM-yyyy")
       };
     }
   }

@@ -4,7 +4,7 @@ CREATE TABLE "Champion" (
     "Name" VARCHAR UNIQUE,
     "Title" VARCHAR UNIQUE,
     "ImageUrl" VARCHAR UNIQUE,
-    "ReleaseDate" date NOT NULL,
+    "ReleaseDate" date NOT NULL
 );
 
 CREATE TABLE "Legacy" (
