@@ -1,6 +1,7 @@
-﻿using HtmlAgilityPack;
+using HtmlAgilityPack;
+using LeagueChampions.Data.Esport;
 
-namespace ImageScraper.Player
+namespace LeagueChampions.Scraper.Player
 {
   public class PlayerImageScraper
   {
@@ -14,7 +15,9 @@ namespace ImageScraper.Player
     public async Task Run()
     {
       var existingImageNames = GetExistingImageNames();
-      var playersToBeFetched = ANALYZED_PLAYERS.Where(playerName => !existingImageNames.Any(f => f.Contains(playerName))).ToList();
+      var playersToBeFetched = EsportStatsProcessor.ANALYZED_PLAYERS
+        .Where(playerName => !existingImageNames.Any(f => f.Contains(playerName)))
+        .ToList();
 
       if (playersToBeFetched.Count == 0)
       {
@@ -32,22 +35,19 @@ namespace ImageScraper.Player
           Console.WriteLine($"--- {playerName} ---");
 
           await DownloadPlayerImageAsync(playerName);
+          await DownloadPlayerImageAsync(playerName);
 
           Console.WriteLine("SUCCESS");
-          Console.WriteLine();
           succeed.Add(playerName);
         }
         catch (Exception ex)
         {
           Console.WriteLine($"Error: {ex.Message}");
-          Console.WriteLine();
           failed.Add(playerName);
         }
       }
 
 
-      Console.WriteLine();
-      Console.WriteLine();
       Console.WriteLine($"Succeed: {succeed.Count}/{playersToBeFetched.Count}");
       Console.WriteLine($"Failed: {failed.Count}/{playersToBeFetched.Count}");
       foreach (var failedPlayer in failed)
@@ -134,64 +134,6 @@ namespace ImageScraper.Player
 
       return imageUrl;
     }
-
-
-    private List<string> ANALYZED_PLAYERS = new List<string>
-      {
-        "Faker",
-        "Uzi",
-        "Deft",
-        "TheShy",
-        "Rookie",
-        "ShowMaker",
-        "Canyon",
-        "Perkz",
-        "Caps",
-        "JackeyLove",
-        "Ruler",
-        "Keria",
-        "Mata",
-        "Bengi",
-        "Bang",
-        "Ambition",
-        "Doinb",
-        "Scout",
-        "MaRin",
-        "Rekkles",
-        "Jankos",
-        "Bwipo",
-        "Hylissang",
-        "Hans Sama",
-        "Upset",
-        "Bjergsen",
-        "Doublelift",
-        "Impact",
-        "Sneaky",
-        "CoreJJ",
-        "Blaber",
-        "brTT",
-        "Revolta",
-        "Kami",
-        "tinowns",
-        "Chovy",
-        "Peanut",
-        "Knight",
-        "369",
-        "Zeus",
-        "Gumayusi",
-        "Levi",
-        "Evi",
-        "Froggen",
-        "xPeke",
-        "Maple",
-        "Tarzan",
-        "Score",
-        "Ming",
-        "Meiko",
-        "aphromoo",
-        "Vander",
-        "IgNar"
-      };
 
     private Dictionary<string, string> ANALYZED_PLAYERS_URL_MAPPING = new()
     {
