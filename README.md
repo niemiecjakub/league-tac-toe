@@ -43,6 +43,8 @@ API_URL=http://localhost:8080
 docker-compose up --build
 ```
 
+Embedded SQL scripts will initialize database schema and data
+
 Once the containers start, you can access:
 - Frontend: http://localhost:3000
 - Backend: http://localhost:8080
