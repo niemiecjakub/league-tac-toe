@@ -28,10 +28,7 @@ export const connectToGameHub = async (roomUID: string) => {
 
     try {
         await connection.start();
-        console.log("Connected to SignalR hub.");
-    } catch (error) {
-        console.error("SignalR connection error: ", error);
-    }
+    } catch {}
 
     return connection;
 };

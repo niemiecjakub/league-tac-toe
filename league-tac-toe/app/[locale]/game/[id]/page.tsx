@@ -83,7 +83,6 @@ export default function GameIdPage() {
                 });
 
                 hubConnection.onclose(() => {
-                    console.log("ON CLOSE CALLED");
                     hubConnection.invoke("LeaveRoom", id);
                     handleRoomLeave();
                 });
@@ -115,7 +114,6 @@ export default function GameIdPage() {
                 (async () => {
                     await hubConnection.invoke("LeaveRoom", id);
                     await hubConnection.stop();
-                    console.log("disconnected");
                     handleRoomLeave();
                 })();
             }

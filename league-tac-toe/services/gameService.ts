@@ -6,7 +6,6 @@ const parseGameData = (data: any) => {
     const parsedBoardState: BoardField[][] = typeof data.game.boardState === "string" ? JSON.parse(data.game.boardState) : data.game.boardState;
     const parsedCategories: Categories = typeof data.game.categories === "string" ? JSON.parse(data.game.categories) : data.game.categories;
 
-    console.log(parsedCategories);
     return {
         ...data.game,
         boardState: parsedBoardState,
@@ -32,7 +31,6 @@ export const joinRoom = async (roomGuid: string): Promise<Room> => {
 };
 
 export const getRoom = async (roomGuid: string): Promise<Room> => {
-    console.log("Fetching room data for roomGuid:", roomGuid);
     const { data } = await axios.get(`Game`, { params: { roomGuid } });
     data.game = parseGameData(data);
     return data;
