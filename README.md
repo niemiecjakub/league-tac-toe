@@ -1,6 +1,6 @@
 # LEAGUE-TAC-TOE
- League-tac-toe is a game of tic tac toe for League of Legends fans.\
- Challenge a friend to a game online or against random people around the world.
+League-tac-toe is a League of Legends-themed twist on the classic game of tic-tac-toe. \
+Challenge a friend to a game online or compete against random players from around the world.
 
  Play at: [leaguetactoe.com](https://leaguetactoe.com/)
  
