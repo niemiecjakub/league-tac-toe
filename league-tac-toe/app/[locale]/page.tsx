@@ -19,8 +19,8 @@ export default async function Home() {
             </div>
             <p className="text-xs">{t("subtitle")}</p>
             <div className="flex flex-col items-center justify-center">
-                <p className="text-xs lg:text-lg">{t("description1")}</p>
-                <p className="text-xs lg:text-lg">{t("description2")}</p>
+                <p className="text-xs lg:text-lg text-center">{t("description1")}</p>
+                <p className="text-xs lg:text-lg text-center">{t("description2")}</p>
             </div>
             <div className="flex w-full flex-col gap-6 my-4">
                 <Tabs defaultValue="online">

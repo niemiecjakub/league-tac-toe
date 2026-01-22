@@ -1,9 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function BuyMeACoffeeWidget() {
+    const pathname = usePathname();
+
     useEffect(() => {
+        if (pathname.includes("game")) {
+            const bmcWidget = document.getElementById("bmc-wbtn");
+            if (bmcWidget) {
+                document.body.removeChild(bmcWidget);
+            }
+            return;
+        }
+
         const script = document.createElement("script");
         script.setAttribute("data-name", "BMC-Widget");
         script.src = "https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js";
@@ -24,13 +35,16 @@ export default function BuyMeACoffeeWidget() {
         document.head.appendChild(script);
 
         return () => {
-            document.head.removeChild(script);
+            if (document.head.contains(script)) {
+                document.head.removeChild(script);
+            }
+
             const bmcWidget = document.getElementById("bmc-wbtn");
             if (bmcWidget) {
                 document.body.removeChild(bmcWidget);
             }
         };
-    }, []);
+    }, [pathname]);
 
     return null;
 }
