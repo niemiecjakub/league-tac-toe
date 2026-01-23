@@ -138,5 +138,18 @@
             "returningToMenu": "Ana menüye dönülüyor",
             "opponentJoined": "Rakibin odaya katıldı"
         }
+    },
+    "feedback": {
+        "title": "Geri Bildirim",
+        "description": "Düşüncelerinizi, önerilerinizi paylaşın veya karşılaştığınız sorunları bildirin.",
+        "nameEmailLabel": "İsim / E-posta (isteğe bağlı)",
+        "messageLabel": "Mesaj",
+        "messagePlaceholder": "Ne düşünüyorsunuz? :)",
+        "characterCount": "{count} / 5000 karakter",
+        "cancel": "İptal",
+        "send": "Gönder",
+        "sending": "Gönderiliyor...",
+        "successToast": "Geri bildiriminiz için teşekkürler!",
+        "errorToast": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
     }
 }

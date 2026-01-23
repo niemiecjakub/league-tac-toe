@@ -138,5 +138,18 @@
             "returningToMenu": "Powrót do menu głównego",
             "opponentJoined": "Twój przeciwnik dołączył do pokoju"
         }
+    },
+    "feedback": {
+        "title": "Feedback",
+        "description": "Zgłoś problem, sugestię lub po prostu zostaw mi wiadomość.",
+        "nameEmailLabel": "Imię / Email (opcjonalnie)",
+        "messageLabel": "Wiadomość",
+        "messagePlaceholder": "Zostaw mi wiadomość :)",
+        "characterCount": "{count} / 5000 znaków",
+        "cancel": "Anuluj",
+        "send": "Wyślij",
+        "sending": "Wysyłanie...",
+        "successToast": "Dziękujemy za opinię!",
+        "errorToast": "Coś poszło nie tak. Spróbuj ponownie."
     }
 }

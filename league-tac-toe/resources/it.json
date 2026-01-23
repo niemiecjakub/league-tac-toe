@@ -138,5 +138,18 @@
             "returningToMenu": "Ritorno al menu principale",
             "opponentJoined": "Il tuo avversario si è unito alla stanza"
         }
+    },
+    "feedback": {
+        "title": "Feedback",
+        "description": "Condividi i tuoi pensieri, suggerimenti o segnala eventuali problemi che hai riscontrato.",
+        "nameEmailLabel": "Nome / Email (opzionale)",
+        "messageLabel": "Messaggio",
+        "messagePlaceholder": "Cosa ne pensi? :)",
+        "characterCount": "{count} / 5000 caratteri",
+        "cancel": "Annulla",
+        "send": "Invia",
+        "sending": "Invio in corso...",
+        "successToast": "Grazie per il tuo feedback!",
+        "errorToast": "Qualcosa è andato storto. Riprova."
     }
 }

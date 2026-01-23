@@ -138,5 +138,18 @@
             "returningToMenu": "Zurück zum Hauptmenü",
             "opponentJoined": "Dein Gegner ist dem Raum beigetreten"
         }
+    },
+    "feedback": {
+        "title": "Feedback",
+        "description": "Teile uns deine Gedanken, Vorschläge mit oder melde Probleme, auf die du gestoßen bist.",
+        "nameEmailLabel": "Name / E-Mail (optional)",
+        "messageLabel": "Nachricht",
+        "messagePlaceholder": "Was denkst du? :)",
+        "characterCount": "{count} / 5000 Zeichen",
+        "cancel": "Abbrechen",
+        "send": "Senden",
+        "sending": "Wird gesendet...",
+        "successToast": "Vielen Dank für dein Feedback!",
+        "errorToast": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
     }
 }

@@ -8,6 +8,7 @@ import { Field, FieldLabel, FieldDescription } from "@/components/ui/field";
 import { useTheme } from "next-themes";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { submitFeedback } from "@/services/feedbackService";
 import { FeedbackRequest } from "@/models/Feedback";
 
@@ -18,6 +19,7 @@ interface FeedbackProps {
 
 export default function Feedback({ open, onOpenChange }: FeedbackProps) {
     const { theme } = useTheme();
+    const t = useTranslations("feedback");
     const [sender, setSender] = useState("");
     const [message, setMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +38,7 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
             const success = await submitFeedback(feedbackRequest);
             
             if (success) {
-                toast.success("Thank you!", {
+                toast.success(t("successToast"), {
                     theme: theme,
                 });
                 
@@ -44,12 +46,12 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
                 setMessage("");
                 onOpenChange(false);
             } else {
-                toast.error("Failed to send feedback. Please try again.", {
+                toast.error(t("errorToast"), {
                     theme: theme,
                 });
             }
         } catch (error) {
-            toast.error("Failed to send feedback. Please try again.", {
+            toast.error(t("errorToast"), {
                 theme: theme,
             });
         } finally {
@@ -67,16 +69,16 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Feedback</DialogTitle>
+                    <DialogTitle>{t("title")}</DialogTitle>
                     <DialogDescription>
-                        Share your thoughts, suggestions, or report issues.
+                        {t("description")}
                     </DialogDescription>
                 </DialogHeader>
                 
                 <div className="flex flex-col gap-4 py-2 min-w-0">
                     <Field>
                         <FieldLabel htmlFor="sender">
-                            Name / Email (optional)
+                            {t("nameEmailLabel")}
                         </FieldLabel>
                         <Input
                             id="sender"
@@ -96,11 +98,11 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
                     
                     <Field>
                         <FieldLabel htmlFor="textarea-message">
-                            Message <span className="text-destructive">*</span>
+                            {t("messageLabel")} <span className="text-destructive">*</span>
                         </FieldLabel>
                         <Textarea
                             id="textarea-message"
-                            placeholder="Leave me a message :)"
+                            placeholder={t("messagePlaceholder")}
                             value={message}
                             onChange={(e) => {
                                 const value = e.target.value;
@@ -114,7 +116,7 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
                             required
                         />
                         <FieldDescription>
-                            {message.length} / 5000 characters
+                            {t("characterCount", { count: message.length })}
                         </FieldDescription>
                     </Field>
                 </div>
@@ -125,13 +127,13 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
                         onClick={handleFeedbackCancel}
                         disabled={isSubmitting}
                     >
-                        Cancel
+                        {t("cancel")}
                     </Button>
                     <Button
                         onClick={handleFeedbackSubmit}
                         disabled={message.trim().length === 0 || isSubmitting}
                     >
-                        {isSubmitting ? "Sending..." : "Send"}
+                        {isSubmitting ? t("sending") : t("send")}
                     </Button>
                 </DialogFooter>
             </DialogContent>

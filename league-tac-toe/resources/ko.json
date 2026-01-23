@@ -138,5 +138,18 @@
             "returningToMenu": "메인 메뉴로 돌아가는 중",
             "opponentJoined": "상대가 방에 참가했습니다"
         }
+    },
+    "feedback": {
+        "title": "피드백",
+        "description": "의견이나 제안을 공유하거나 발견한 문제를 알려주세요.",
+        "nameEmailLabel": "이름 / 이메일 (선택사항)",
+        "messageLabel": "메시지",
+        "messagePlaceholder": "의견을 남겨주세요 :)",
+        "characterCount": "{count} / 5000자",
+        "cancel": "취소",
+        "send": "보내기",
+        "sending": "전송 중...",
+        "successToast": "피드백 감사합니다!",
+        "errorToast": "전송에 실패했습니다. 다시 시도해주세요."
     }
 }

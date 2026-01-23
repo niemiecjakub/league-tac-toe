@@ -138,5 +138,18 @@
             "returningToMenu": "メインメニューに戻ります",
             "opponentJoined": "相手がルームに参加しました"
         }
+    },
+    "feedback": {
+        "title": "フィードバック",
+        "description": "ご意見、ご提案、または問題がございましたらお知らせください。",
+        "nameEmailLabel": "お名前 / メールアドレス（任意）",
+        "messageLabel": "メッセージ",
+        "messagePlaceholder": "ご意見をお聞かせください :)",
+        "characterCount": "{count} / 5000文字",
+        "cancel": "キャンセル",
+        "send": "送信",
+        "sending": "送信中...",
+        "successToast": "フィードバックありがとうございます！",
+        "errorToast": "送信に失敗しました。もう一度お試しください。"
     }
 }

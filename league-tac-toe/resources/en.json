@@ -138,5 +138,18 @@
             "returningToMenu": "Returning to main menu",
             "opponentJoined": "Your opponent has joined the room"
         }
+    },
+    "feedback": {
+        "title": "Feedback",
+        "description": "Share your thoughts, suggestions, or report any issues you've encountered.",
+        "nameEmailLabel": "Name / Email (optional)",
+        "messageLabel": "Message",
+        "messagePlaceholder": "What's on your mind? :)",
+        "characterCount": "{count} / 5000 characters",
+        "cancel": "Cancel",
+        "send": "Send",
+        "sending": "Sending...",
+        "successToast": "Thank you for your feedback!",
+        "errorToast": "Something went wrong. Please try again."
     }
 }

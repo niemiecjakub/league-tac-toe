@@ -138,5 +138,18 @@
             "returningToMenu": "Revenire la meniul principal",
             "opponentJoined": "Adversarul tău s-a alăturat camerei"
         }
+    },
+    "feedback": {
+        "title": "Feedback",
+        "description": "Împărtășește-ți gândurile, sugestiile sau raportează problemele pe care le-ai întâlnit.",
+        "nameEmailLabel": "Nume / Email (opțional)",
+        "messageLabel": "Mesaj",
+        "messagePlaceholder": "Ce părere ai? :)",
+        "characterCount": "{count} / 5000 caractere",
+        "cancel": "Anulează",
+        "send": "Trimite",
+        "sending": "Se trimite...",
+        "successToast": "Mulțumim pentru feedback!",
+        "errorToast": "Ceva a mers greșit. Te rugăm să încerci din nou."
     }
 }
