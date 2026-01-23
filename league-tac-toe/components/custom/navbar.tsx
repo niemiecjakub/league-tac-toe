@@ -2,7 +2,9 @@
 
 import { DarkMode, GithubIcon, LightMode, LogoIcon } from "../svg/svg-icons";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import CountryFlag from "./country-flag";
+import { MessageSquareReplyIcon } from "lucide-react";
+import CountryFlag from "./country-flag";   
+import Feedback from "./Feedback";
 import { Locale, useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
@@ -26,6 +28,7 @@ export default function Navbar() {
     const locale = useLocale();
     const t = useTranslations("navbar");
     const isInGame = pathname.includes("/game");
+    const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -73,6 +76,17 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center justify-center gap-4">
+                    <button
+                        onClick={() => setIsFeedbackModalOpen(true)}
+                        className="hover:opacity-40"
+                        aria-label="Send feedback"
+                    >
+                        <MessageSquareReplyIcon 
+                            className="h-[28px] w-[28px]" 
+                            stroke={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"}
+                            fill="none"
+                        />
+                    </button>
                     <Link href="https://github.com/niemiecjakub/league-tac-toe" target="_blank" className="hover:opacity-40" aria-label="GitHub repository">
                         <GithubIcon className="h-[28px] inline" fill={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"} />
                     </Link>
@@ -100,6 +114,8 @@ export default function Navbar() {
                     )}
                 </div>
             </div>
+
+            <Feedback open={isFeedbackModalOpen} onOpenChange={setIsFeedbackModalOpen} />
         </nav>
     );
 }
