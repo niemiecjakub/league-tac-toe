@@ -43,11 +43,13 @@ namespace LeagueChampions
       builder.Services.AddScoped<IRoomRepository, RoomRepository>();
       builder.Services.AddScoped<IGameRepository, GameRepository>();
       builder.Services.AddScoped<IGamePlayerRepository, GamePlayerRepository>();
+      builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
       builder.Services.AddScoped<IGameFactoryService, GameFactoryService>();
 
       builder.Services.AddScoped<IChampionService, ChampionService>();
       builder.Services.AddScoped<IMetaFilterService, MetaFilterService>();
       builder.Services.AddScoped<IGameService, GameService>();
+      builder.Services.AddScoped<IFeedbackService, FeedbackService>();
       builder.Services.AddSingleton<ICountdownService, CountdownService>();
 
       builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();

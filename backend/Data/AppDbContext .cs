@@ -27,6 +27,7 @@ public class AppDbContext : DbContext
   public DbSet<Player> Player { get; set; }
   public DbSet<GameState> GameState { get; set; }
   public DbSet<GamePlayer> GamePlayer { get; set; }
+  public DbSet<Feedback> Feedback { get; set; }
 
 
   public DbSet<EsportChampionStats> EsportChampionStats { get; set; }
@@ -186,6 +187,15 @@ public class AppDbContext : DbContext
       entity.Property(s => s.WinRatio).HasPrecision(4, 2);
       entity.Property(s => s.PickRatio).HasPrecision(4, 2);
       entity.Property(s => s.BanRatio).HasPrecision(4, 2);
+    });
+
+    modelBuilder.Entity<Feedback>(entity =>
+    {
+      entity.HasKey(f => f.Id);
+      entity.Property(f => f.Id).ValueGeneratedOnAdd();
+      entity.Property(f => f.Sender).HasMaxLength(200);
+      entity.Property(f => f.Message).IsRequired();
+      entity.Property(f => f.CreatedAt).IsRequired();
     });
   }
 }

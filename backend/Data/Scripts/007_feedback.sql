@@ -1,0 +1,6 @@
+CREATE TABLE "Feedback" (
+    "Id" SERIAL PRIMARY KEY,
+    "Sender" VARCHAR(200) NULL,
+    "Message" TEXT NOT NULL,
+    "CreatedAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

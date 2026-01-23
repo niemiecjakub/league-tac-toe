@@ -34,12 +34,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Data\Scripts\007_feedback.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Data\Scripts\001_schema.postgres.sql" />
     <EmbeddedResource Include="Data\Scripts\002_data.postgres.sql" />
     <EmbeddedResource Include="Data\Scripts\003_data.postgres.sql" />
     <EmbeddedResource Include="Data\Scripts\004_data.postgres.sql" />
     <EmbeddedResource Include="Data\Scripts\006_version_15_24_1.sql" />
     <EmbeddedResource Include="Data\Scripts\005_data.postgres.sql" />
+    <EmbeddedResource Include="Data\Scripts\007_feedback.sql" />
   </ItemGroup>
 
 </Project>
