@@ -11,6 +11,8 @@ export const SUPPORTED_CULTURES = [
     { flagCode: "DE", name: "Deutsch", langCode: "de" },
     { flagCode: "FR", name: "Français", langCode: "fr" },
     { flagCode: "IT", name: "Italiano", langCode: "it" },
+    { flagCode: "JP", name: "日本語", langCode: "ja" },
+    { flagCode: "KR", name: "한국어", langCode: "ko" },
 ];
 
 export const DEFAULT_LANG = SUPPORTED_CULTURES.find((c) => c.langCode === "en")!;

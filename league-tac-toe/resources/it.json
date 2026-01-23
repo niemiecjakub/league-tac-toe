@@ -7,7 +7,7 @@
     },
     "home": {
         "subtitle": "Il quiz di League of Legends incontra il Tris.",
-        "description1": "Indovina i campioni che corrispondono alle categorie per conquistare le caselle in una griglia 3x3.",
+        "description1": "Nomina i campioni che corrispondono alle categorie per conquistare le caselle in una griglia 3x3.",
         "description2": "Attiva la modalità Furto per rubare una casella all’avversario.",
         "online": "Online",
         "randomOpponent": "Avversario casuale",
@@ -85,7 +85,7 @@
             "gameFinished": "Partita terminata",
             "draw": "Pareggio!",
             "youWon": "Hai vinto!",
-            "youLost": "Hai perso",
+            "youLost": "Hai perso!",
             "leave": "Esci",
             "playAgain": "Gioca di nuovo",
             "nextGameStartSoon": "La prossima partita inizierà a breve."

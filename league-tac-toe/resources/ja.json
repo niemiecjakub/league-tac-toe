@@ -1,0 +1,130 @@
+{
+    "navbar": {
+        "champions": "チャンピオン",
+        "selectLanguage": "言語を選択",
+        "dontCheat": "カンニング禁止！",
+        "cannotChangeLanguage": "ゲーム中は言語を変更できません。"
+    },
+    "home": {
+        "subtitle": "リーグ・オブ・レジェンド クイズと三目並べの組み合わせ。",
+        "description1": "カテゴリーに一致するチャンピオンの名前を答えて、3x3グリッドのマスを獲得します。",
+        "description2": "スティールモードを有効にして、相手のマスを奪い取ります。",
+        "online": "オンライン",
+        "randomOpponent": "ランダムな相手",
+        "sameScreen": "同じ画面",
+        "timePerTurn": "1ターンの時間",
+        "unlimited": "無制限",
+        "limited": "{number}秒",
+        "enableSteals": "スティールを有効にする",
+        "includeEsportCategories": "eスポーツカテゴリーを含める",
+        "yes": "はい",
+        "no": "いいえ",
+        "create": "作成",
+        "start": "開始",
+        "lobby": {
+            "online": {
+                "joinRoom": {
+                    "title": "既存のルームに参加",
+                    "description": "ルームコードを入力してゲームに参加",
+                    "join": "参加",
+                    "joining": "ルームに参加中..."
+                },
+                "createRoom": {
+                    "title": "ルームを作成",
+                    "description": "友達をオンラインゲームに招待",
+                    "create": "作成",
+                    "creating": "ルームを作成中..."
+                }
+            },
+            "random": {
+                "title": "ランダムな相手を探す",
+                "description": "ランダムな相手と対戦",
+                "searchingRoom": "ルームを検索中..."
+            },
+            "local": {
+                "title": "同じ画面でゲーム",
+                "description": "同じデバイスで友達と対戦"
+            }
+        },
+        "howToPlay": "遊び方",
+        "rules": [
+            "3x3のグリッドには、レガシー、ポジション、リソース、レンジタイプ、地域などの基準が並んでいます。",
+            "上段と左側の基準に一致するリーグ・オブ・レジェンドのチャンピオンを名前で答えられる場合、XまたはOのマーカーをマスの1つに配置します。",
+            "縦、横、または斜めに3つ並べた最初のプレイヤーが勝者です。",
+            "スティールモードが有効な場合、各プレイヤーは合計3回のスティールを持ち、相手プレイヤーが占有しているマスを奪うことができます。",
+            "グリッド上の位置に既にいるチャンピオンとは異なるチャンピオンを名前で答えることで、相手を怒らせ、マスを奪い取ります。"
+        ]
+    },
+    "champions": {
+        "noResults": "結果がありません。",
+        "sorting": {
+            "asc": "昇順",
+            "desc": "降順",
+            "hide": "非表示"
+        },
+        "filter": {
+            "noResults": "結果が見つかりませんでした。",
+            "clear": "フィルターをクリア",
+            "selected": "{number}件選択中"
+        },
+        "pagination": {
+            "pageSelected": "{total}ページ中{current}ページ目",
+            "rowsPerPage": "1ページあたりの行数"
+        },
+        "toolbar": {
+            "reset": "リセット",
+            "filterChampions": "チャンピオンをフィルター..."
+        },
+        "options": {
+            "view": "表示",
+            "toggleColumns": "列の表示/非表示"
+        }
+    },
+    "game": {
+        "postGame": {
+            "gameFinished": "ゲーム終了",
+            "draw": "引き分けです！",
+            "youWon": "あなたの勝ちです！",
+            "youLost": "あなたの負けです！",
+            "leave": "退出",
+            "playAgain": "もう一度プレイ",
+            "nextGameStartSoon": "次のゲームがまもなく開始されます。"
+        },
+        "field": {
+            "champion": "チャンピオン",
+            "enterChampion": "チャンピオンを入力"
+        },
+        "dashboard": {
+            "draw": {
+                "drawSuggested": "相手が引き分けを提案しています",
+                "acceptDraw": "引き分けを受け入れる",
+                "drawRequestSent": "引き分けリクエストを送信しました",
+                "requestDraw": "引き分けをリクエスト"
+            },
+            "youAre": "あなたは{player}です",
+            "you": "あなた",
+            "opponent": "相手",
+            "skipTurn": "ターンをスキップ",
+            "noTimeLimit": "時間制限なし",
+            "yourTurn": "あなたのターン",
+            "opponentsTurn": "相手のターン"
+        },
+        "waitingRoom": {
+            "roomCode": "ルームコード",
+            "shareCode": "ルームコードまたはリンクを共有",
+            "waitingForPlayer": "他のプレイヤーの参加を待っています...",
+            "searchingOpponent": "相手を検索中",
+            "roomCodeCopied": "ルームコードをコピーしました！",
+            "roomLinkCopied": "ルームリンクをコピーしました！",
+            "copyLink": "ルームリンクをコピー",
+            "copyCode": "ルームコードをコピー"
+        },
+        "info": {
+            "timeLeft": "残り時間: {timeLeft}秒",
+            "remainingSteals": "相手のマスを奪うことができることを意味します。残り{steals}回のスティールがあります",
+            "opponentLeft": "相手がゲームを退出しました",
+            "returningToMenu": "メインメニューに戻ります",
+            "opponentJoined": "相手がルームに参加しました"
+        }
+    }
+}

@@ -3,12 +3,12 @@
         "champions": "Champions",
         "selectLanguage": "Select language",
         "dontCheat": "Don't cheat!",
-        "cannotChangeLanguage": "Language can't be changed during game."
+        "cannotChangeLanguage": "Language can't be changed during the game."
     },
     "home": {
         "subtitle": "League of Legends Quiz meets Tic-Tac-Toe.",
         "description1": "Name champions matching categories to claim squares in a 3x3 grid.",
-        "description2": "Enable Steal Mode to swipe your opponent's square.",
+        "description2": "Enable Steal Mode to steal your opponent's square.",
         "online": "Online",
         "randomOpponent": "Random opponent",
         "sameScreen": "Same screen",
@@ -16,7 +16,7 @@
         "unlimited": "unlimited",
         "limited": "{number} seconds",
         "enableSteals": "Enable steals",
-        "includeEsportCategories": "Include Esport categories",
+        "includeEsportCategories": "Include Esports categories",
         "yes": "Yes",
         "no": "No",
         "create": "Create",
@@ -25,7 +25,7 @@
             "online": {
                 "joinRoom": {
                     "title": "Join existing room",
-                    "description": "Enter room code and join game",
+                    "description": "Enter room code and join the game",
                     "join": "Join",
                     "joining": "Joining room..."
                 },
@@ -48,11 +48,11 @@
         },
         "howToPlay": "How to play?",
         "rules": [
-            "A 3 x 3 square grid is lined up with criteria like legacy, position, resource, rangetype and region.",
-            "Place your marker, an X or O, in one of the squares if you can name League of Legends champion that matches the criteria across the top row and left hand side.",
+            "A 3x3 square grid is lined up with criteria such as legacy, position, resource, range type, and region.",
+            "Place your marker, an X or O, in one of the squares if you can name a League of Legends champion that matches the criteria across the top row and left-hand side.",
             "The first to get three in a row, vertically, horizontally or diagonally, is the winner.",
             "With steal mode enabled, each player has 3 steals in total, where a square can be stolen that is occupied by the opposing player.",
-            "Infuriate your opponent and steal a square by naming a different champion to the champion already in the position on the grid."
+            "Infuriate your opponent and steal a square by naming a different champion from the champion already in the position on the grid."
         ]
     },
     "champions": {
@@ -96,7 +96,7 @@
         },
         "dashboard": {
             "draw": {
-                "drawSuggested": "Your opponent suggests to draw the game",
+                "drawSuggested": "Your opponent suggests drawing the game",
                 "acceptDraw": "Accept draw",
                 "drawRequestSent": "Draw request sent",
                 "requestDraw": "Request Draw"
@@ -121,7 +121,7 @@
         },
         "info": {
             "timeLeft": "Time left: {timeLeft}s",
-            "remainingSteals": "Means that you can steal your opponent's square. You have {steals} steals remaining",
+            "remainingSteals": "This means that you can steal your opponent's square. You have {steals} steals remaining.",
             "opponentLeft": "Your opponent has left the game",
             "returningToMenu": "Returning to main menu",
             "opponentJoined": "Your opponent has joined the room"

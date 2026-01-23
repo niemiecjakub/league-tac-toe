@@ -24,14 +24,14 @@
         "lobby": {
             "online": {
                 "joinRoom": {
-                    "title": "Vorhandenem Raum beitreten",
+                    "title": "Raum beitreten",
                     "description": "Raumcode eingeben und Spiel beitreten",
                     "join": "Beitreten",
                     "joining": "Raum wird beigetreten..."
                 },
                 "createRoom": {
                     "title": "Raum erstellen",
-                    "description": "Fordere einen Freund zu einem Online-Spiel heraus",
+                    "description": "Lade einen Freund zu einem Online-Spiel ein",
                     "create": "Erstellen",
                     "creating": "Raum wird erstellt..."
                 }
