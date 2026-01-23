@@ -73,7 +73,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     };
 }
 
-export async function generateViewport({ params }: { params: Promise<{ locale: string }> }): Promise<Viewport> {
+export async function generateViewport(): Promise<Viewport> {
     return {
         themeColor: [
             { media: "(prefers-color-scheme: light)", color: "#fef3c7" },
@@ -99,7 +99,6 @@ export default async function LocaleLayout({ children, params }: Props) {
 
     setRequestLocale(locale);
     const t = await getTranslations({ locale, namespace: "seo" });
-    const url = `${metadataBase}${locale === "en" ? "" : `/${locale}`}`;
 
     const structuredData = {
         "@context": "https://schema.org",

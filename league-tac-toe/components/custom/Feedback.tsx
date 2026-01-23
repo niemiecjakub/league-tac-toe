@@ -50,7 +50,7 @@ export default function Feedback({ open, onOpenChange }: FeedbackProps) {
                     theme: theme,
                 });
             }
-        } catch (error) {
+        } catch {
             toast.error(t("errorToast"), {
                 theme: theme,
             });
