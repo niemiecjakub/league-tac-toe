@@ -5,7 +5,6 @@ import LobbyLocal from "@/components/custom/lobby-local";
 import RuleList from "@/components/custom/rule-list";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
-import Footer from "@/components/custom/footer";
 import type { Metadata } from "next";
 
 const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
@@ -80,7 +79,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 </Tabs>
             </section>
             <RuleList />
-            <Footer />
         </div>
     );
 }
