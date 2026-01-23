@@ -103,11 +103,11 @@ export default function GuessBoardField({ value, cellIndex, categories }: GuessB
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>{t("enterChampion")}</DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription asChild>
                         <div className="flex items-center">
-                            <p>{`${categories[0].CategoryGroupName} ${categories[0].DisplayName ?? categories[0].OptionName} `}</p>
-                            <p className="px-4">&</p>
-                            <p>{`${categories[1].CategoryGroupName} ${categories[1].DisplayName ?? categories[1].OptionName} `}</p>
+                            <span>{`${categories[0].CategoryGroupName} ${categories[0].DisplayName ?? categories[0].OptionName} `}</span>
+                            <span className="px-4">&</span>
+                            <span>{`${categories[1].CategoryGroupName} ${categories[1].DisplayName ?? categories[1].OptionName} `}</span>
                         </div>
                     </DialogDescription>
                 </DialogHeader>

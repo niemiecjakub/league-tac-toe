@@ -6,8 +6,8 @@ export default function RuleList() {
     const rules = t.raw("rules") as string[];
 
     return (
-        <div className="w-full">
-            <h2 className="font-bold text-xl my-2">{t("howToPlay")}</h2>
+        <section className="w-full" aria-labelledby="how-to-play-heading">
+            <h2 id="how-to-play-heading" className="font-bold text-xl my-2">{t("howToPlay")}</h2>
             <ul>
                 {rules.map((rule, index) => (
                     <li key={index}>
@@ -15,6 +15,6 @@ export default function RuleList() {
                     </li>
                 ))}
             </ul>
-        </div>
+        </section>
     );
 }

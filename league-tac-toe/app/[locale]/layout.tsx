@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Navbar, { UiMode } from "@/components/custom/navbar";
 import { routing } from "@/i18n/routing";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -65,6 +65,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
                 "max-snippet": -1,
             },
         },
+        appleWebApp: {
+            capable: true,
+            statusBarStyle: "default",
+            title: title,
+        },
+    };
+}
+
+export async function generateViewport({ params }: { params: Promise<{ locale: string }> }): Promise<Viewport> {
+    return {
+        themeColor: [
+            { media: "(prefers-color-scheme: light)", color: "#fef3c7" },
+            { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
+        ],
     };
 }
 
@@ -107,7 +121,6 @@ export default async function LocaleLayout({ children, params }: Props) {
     return (
         <html lang={locale} suppressHydrationWarning>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
@@ -119,9 +132,11 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <NextIntlClientProvider>
                     <ThemeProvider attribute="class" defaultTheme={UiMode.DARK} enableSystem disableTransitionOnChange>
                         <div className="w-full max-h-screen flex flex-col items-center">
-                            <Navbar />
+                            <header className="w-full">
+                                <Navbar />
+                            </header>
                             <BuyMeACoffeeWidget />
-                            <div className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</div>
+                            <main className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</main>
                         </div>
                         <ToastContainer autoClose={1000} position="top-center" />
                     </ThemeProvider>

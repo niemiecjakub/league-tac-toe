@@ -15,7 +15,7 @@ export default function Dashboard() {
             return (
                 <div className="flex items-center justify-center space-x-2">
                     <p className="text-sm">{t("draw.drawSuggested")}</p>
-                    <Button variant="destructive" onClick={handleRespondDrawRequest}>
+                    <Button variant="destructive" onClick={handleRespondDrawRequest} aria-label={t("draw.acceptDraw")}>
                         {t("draw.acceptDraw")}
                     </Button>
                 </div>
@@ -23,14 +23,14 @@ export default function Dashboard() {
         }
         if (room?.game.drawRequestedId != null && !opponentDrawRequested()) {
             return (
-                <Button className="text-gray-500" variant="secondary">
+                <Button className="text-gray-500" variant="secondary" aria-label={t("draw.drawRequestSent")}>
                     {t("draw.drawRequestSent")}
                 </Button>
             );
         }
 
         return (
-            <Button variant={isYourTurn() ? "default" : "ghost"} onClick={handleSendDrawRequest} className="px-1 py-0">
+            <Button variant={isYourTurn() ? "default" : "ghost"} onClick={handleSendDrawRequest} className="px-1 py-0" aria-label={t("draw.requestDraw")}>
                 {isYourTurn() && t("draw.requestDraw")}
             </Button>
         );
@@ -52,9 +52,9 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="flex space-x-2 items-center">
-                    <div className="flex items-center justify-center bg-gray-300 rounded-lg text-sm h-[36px]">
+                    <div className="flex items-center justify-center bg-gray-300 rounded-lg text-sm h-[36px]" aria-live="polite" aria-atomic="true">
                         <p className="px-2 dark:text-black">{isYourTurn() ? `${t("yourTurn")}` : `${t("opponentsTurn")}`}</p>
-                        <Button variant="destructive" onClick={handleTurnSkip} className={`dark:text-black px-1 py-0 ${isYourTurn() ? "" : "hidden"} `}>
+                        <Button variant="destructive" onClick={handleTurnSkip} className={`dark:text-black px-1 py-0 ${isYourTurn() ? "" : "hidden"} `} aria-label={t("skipTurn")}>
                             {t("skipTurn")}
                         </Button>
                     </div>

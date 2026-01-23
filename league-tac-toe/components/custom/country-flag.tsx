@@ -9,5 +9,6 @@ type CountryFlagProps = {
 };
 
 export default function CountryFlag({ countryCode, alt, className, height, width }: CountryFlagProps) {
-    return <Image alt={alt} src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`} className={className} width={width} height={height} />;
+    const altText = alt.includes("Flag") ? alt : `Flag of ${alt}`;
+    return <Image alt={altText} src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`} className={className} width={width} height={height} />;
 }

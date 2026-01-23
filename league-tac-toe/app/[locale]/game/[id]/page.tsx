@@ -151,10 +151,10 @@ export default function GameIdPage() {
                                 </p>
                             </div>
                             <div className="flex w-full justify-center items-center space-x-4">
-                                <Button className="flex-1 w-full cursor-pointer hover:opacity-30" onClick={copyRoomCode}>
+                                <Button className="flex-1 w-full cursor-pointer hover:opacity-30" onClick={copyRoomCode} aria-label={t("waitingRoom.copyCode")}>
                                     {t("waitingRoom.copyCode")}
                                 </Button>
-                                <Button className="flex-1 w-full cursor-pointer hover:opacity-30" onClick={copyRoomLink}>
+                                <Button className="flex-1 w-full cursor-pointer hover:opacity-30" onClick={copyRoomLink} aria-label={t("waitingRoom.copyLink")}>
                                     {t("waitingRoom.copyLink")}
                                 </Button>
                             </div>

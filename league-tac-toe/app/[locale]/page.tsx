@@ -51,17 +51,17 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
     return (
         <div className="w-full md:w-2/3 2xl:w-2/5 h-full flex items-center flex-col gap-0.5">
-            <div className="flex gap-4 items-baseline justify-center py-4">
+            <section className="flex gap-4 items-baseline justify-center py-4">
                 <Image src="/images/poro.png" alt="Poro Icon" height={32} width={32} />
                 <h1 className="text-center text-4xl lg:text-6xl font-extrabold tracking-tight text-balance">League Tac Toe</h1>
                 <Image src="/images/poro.png" alt="Poro Icon" height={32} width={32} />
-            </div>
+            </section>
             <p className="text-xs">{t("subtitle")}</p>
-            <div className="flex flex-col items-center justify-center">
+            <section className="flex flex-col items-center justify-center">
                 <p className="text-xs lg:text-lg text-center">{t("description1")}</p>
                 <p className="text-xs lg:text-lg text-center">{t("description2")}</p>
-            </div>
-            <div className="flex w-full flex-col gap-6 my-4">
+            </section>
+            <section className="flex w-full flex-col gap-6 my-4">
                 <Tabs defaultValue="online">
                     <TabsList className="w-full">
                         <TabsTrigger value="online">{t("online")}</TabsTrigger>
@@ -78,7 +78,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                         <LobbyLocal />
                     </TabsContent>
                 </Tabs>
-            </div>
+            </section>
             <RuleList />
             <Footer />
         </div>

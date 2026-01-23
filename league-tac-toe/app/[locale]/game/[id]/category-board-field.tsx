@@ -8,11 +8,17 @@ export interface CategoryFieldProps {
 
 export default function CategoryBoardField({ value }: CategoryFieldProps) {
     const categoryMap = rawCategoryMap as Record<string, string>;
+    const categoryName = value?.DisplayName ?? value?.OptionName ?? "";
+    const categoryGroup = value?.CategoryGroupName ?? "";
+    const altText = value?.ResourceKey 
+        ? `${categoryGroup} ${categoryName} category icon`
+        : "Default category icon";
+    
     return (
         <div className="p-1 w-full h-full aspect-square bg-league-grey-200 flex flex-col items-center justify-center text-white">
             <Image
                 src={value?.ResourceKey ? `/category/${categoryMap[value?.ResourceKey ?? ""]}` : "/lolIcon.svg"}
-                alt={value?.ResourceKey || "default"}
+                alt={altText}
                 className="w-3/4 h-3/4 object-contain opacity-90"
                 width={450}
                 height={450}

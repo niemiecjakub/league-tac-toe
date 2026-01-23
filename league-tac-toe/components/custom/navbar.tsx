@@ -60,12 +60,12 @@ export default function Navbar() {
     };
 
     return (
-        <div className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 dark:bg-league-grey-300 bg-amber-50 dark:text-league-white-100 text-black text-sm md:text-xl">
+        <nav className="w-full sticky top-0 z-50 border-b border-b-league-gold-200 dark:bg-league-grey-300 bg-amber-50 dark:text-league-white-100 text-black text-sm md:text-xl" aria-label="Main navigation">
             <div className="lg:w-2/3 flex justify-between items-center px-1 md:px-4 md:py-2 m-auto ">
                 <div className="flex items-center ">
-                    <Link href="/" className="flex items-center gap-2 cursor-pointer md:pr-6 hover:opacity-50">
+                    <Link href="/" className="flex items-center gap-2 cursor-pointer md:pr-6 hover:opacity-50" aria-label="League Tac Toe - Home">
                         <LogoIcon className="h-[36px]" />
-                        <h1 className="font-semibold uppercase hidden md:block">League Tac Toe</h1>
+                        <span className="font-semibold uppercase hidden md:block">League Tac Toe</span>
                     </Link>
                     <Link href={isInGame ? "#" : "/champions"} className="hover:opacity-50" onClick={handleChampionsClick}>
                         {t("champions")}
@@ -73,11 +73,11 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center justify-center gap-4">
-                    <Link href="https://github.com/niemiecjakub/league-tac-toe" target="_blank" className="hover:opacity-40">
+                    <Link href="https://github.com/niemiecjakub/league-tac-toe" target="_blank" className="hover:opacity-40" aria-label="GitHub repository">
                         <GithubIcon className="h-[28px] inline" fill={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"} />
                     </Link>
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="cursor-pointer">
+                        <DropdownMenuTrigger className="cursor-pointer" aria-label="Select language">
                             <CountryFlag countryCode={getFlagCode(locale)} alt={locale} height={32} width={32} />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
@@ -94,12 +94,12 @@ export default function Navbar() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                     {theme == UiMode.LIGHT ? (
-                        <DarkMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.DARK)} />
+                        <DarkMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.DARK)} aria-label="Toggle dark mode" />
                     ) : (
-                        <LightMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.LIGHT)} />
+                        <LightMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.LIGHT)} aria-label="Toggle light mode" />
                     )}
                 </div>
             </div>
-        </div>
+        </nav>
     );
 }
