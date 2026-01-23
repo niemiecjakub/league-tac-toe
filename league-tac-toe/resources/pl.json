@@ -80,6 +80,18 @@
             "toggleColumns": "Pokaż/ukryj kolumny"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Gra w Kółko i Krzyżyk z bohaterami League of Legends. Wyzwij znajomego na mecz online lub rywalizuj z losowymi graczami z całego świata.",
+        "home": {
+            "title": "League Tac Toe - Quiz League of Legends spotyka Kółko i Krzyżyk",
+            "description": "Podawaj bohaterów pasujących do kategorii, aby zdobywać pola w siatce 3x3. Włącz tryb kradzieży, aby przejąć pole przeciwnika. Graj online lub lokalnie ze znajomymi."
+        },
+        "champions": {
+            "title": "Bohaterowie - League Tac Toe",
+            "description": "Przeglądaj i filtruj wszystkich bohaterów League of Legends. Znajdź bohaterów według pozycji, regionu, typu zasobów i innych kryteriów."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Gra zakończona",

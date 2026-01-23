@@ -80,6 +80,18 @@
             "toggleColumns": "Sütunları değiştir"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "League of Legends şampiyonlarıyla XOX oyunu. Bir arkadaşına çevrimiçi oyun için meydan oku veya dünyanın dört bir yanından rastgele oyuncularla rekabet et.",
+        "home": {
+            "title": "League Tac Toe - League of Legends Quiz, XOX ile buluşuyor",
+            "description": "Kategorilere uyan şampiyonları adlandırarak 3x3'lük ızgaradaki kareleri kazan. Rakibinin karesini almak için Hırsız Modunu etkinleştir. Çevrimiçi veya yerel olarak arkadaşlarla oyna."
+        },
+        "champions": {
+            "title": "Şampiyonlar - League Tac Toe",
+            "description": "Tüm League of Legends şampiyonlarını gözden geçir ve filtrele. Pozisyon, bölge, kaynak türü ve daha fazlasına göre şampiyonları bul."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Oyun sona erdi",

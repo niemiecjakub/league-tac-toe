@@ -80,6 +80,18 @@
             "toggleColumns": "Afficher/Masquer les colonnes"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Un jeu de Morpion avec des champions de League of Legends. Défie un ami dans une partie en ligne ou joue contre des joueurs aléatoires du monde entier.",
+        "home": {
+            "title": "League Tac Toe - League of Legends Quiz rencontre le Morpion",
+            "description": "Nomme des champions correspondant aux catégories pour réclamer des cases sur une grille 3x3. Active le mode Vol pour voler une case à ton adversaire. Joue en ligne ou localement avec des amis."
+        },
+        "champions": {
+            "title": "Champions - League Tac Toe",
+            "description": "Parcours et filtre tous les champions de League of Legends. Trouve des champions par position, région, type de ressource et plus encore."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Partie terminée",

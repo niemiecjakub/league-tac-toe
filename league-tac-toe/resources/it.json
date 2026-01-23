@@ -80,6 +80,18 @@
             "toggleColumns": "Mostra/nascondi colonne"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Un gioco del Tris con campioni di League of Legends. Sfida un amico in una partita online o gioca contro giocatori casuali da tutto il mondo.",
+        "home": {
+            "title": "League Tac Toe - Il quiz di League of Legends incontra il Tris",
+            "description": "Nomina i campioni che corrispondono alle categorie per conquistare le caselle in una griglia 3x3. Attiva la modalità Furto per rubare una casella all'avversario. Gioca online o localmente con gli amici."
+        },
+        "champions": {
+            "title": "Campioni - League Tac Toe",
+            "description": "Naviga e filtra tutti i campioni di League of Legends. Trova campioni per posizione, regione, tipo di risorsa e altro ancora."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Partita terminata",

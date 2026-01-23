@@ -80,6 +80,18 @@
             "toggleColumns": "Spalten umschalten"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Ein Tic-Tac-Toe-Spiel mit League of Legends Champions. Lade einen Freund zu einem Online-Spiel ein oder spiele gegen zufällige Spieler aus aller Welt.",
+        "home": {
+            "title": "League Tac Toe - League of Legends Quiz trifft Tic-Tac-Toe",
+            "description": "Benenne Champions, die zu den Kategorien passen, um Felder auf einem 3x3-Gitter zu beanspruchen. Aktiviere den Steal-Modus, um das Feld deines Gegners zu stehlen. Spiele online oder lokal mit Freunden."
+        },
+        "champions": {
+            "title": "Champions - League Tac Toe",
+            "description": "Durchsuche und filtere alle League of Legends Champions. Finde Champions nach Position, Region, Ressourcentyp und mehr."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Spiel beendet",

@@ -80,6 +80,18 @@
             "toggleColumns": "열 전환"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "리그 오브 레전드 챔피언을 사용한 틱택토 게임. 친구를 온라인 게임에 초대하거나 전 세계의 랜덤 플레이어와 경쟁할 수 있습니다.",
+        "home": {
+            "title": "League Tac Toe - 리그 오브 레전드 퀴즈와 틱택토의 만남",
+            "description": "카테고리에 맞는 챔피언의 이름을 말하면 3x3 격자의 칸을 차지할 수 있습니다. 스틸 모드를 활성화하여 상대의 칸을 빼앗습니다. 온라인 또는 로컬에서 친구들과 플레이할 수 있습니다."
+        },
+        "champions": {
+            "title": "챔피언 - League Tac Toe",
+            "description": "모든 리그 오브 레전드 챔피언을 탐색하고 필터링할 수 있습니다. 포지션, 지역, 리소스 유형 등으로 챔피언을 찾을 수 있습니다."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "게임 종료",

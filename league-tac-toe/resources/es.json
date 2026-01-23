@@ -80,6 +80,18 @@
             "toggleColumns": "Mostrar/ocultar columnas"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Un juego de Tres en Raya con campeones de League of Legends. Desafía a un amigo a un juego online o compite contra jugadores aleatorios de todo el mundo.",
+        "home": {
+            "title": "League Tac Toe - League of Legends Quiz se une al Tres en Raya",
+            "description": "Nombra campeones que coincidan con las categorías para reclamar casillas en una cuadrícula de 3x3. Activa el modo Robo para quitarle una casilla a tu oponente. Juega online o localmente con amigos."
+        },
+        "champions": {
+            "title": "Campeones - League Tac Toe",
+            "description": "Navega y filtra todos los campeones de League of Legends. Encuentra campeones por posición, región, tipo de recurso y más."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Partida terminada",

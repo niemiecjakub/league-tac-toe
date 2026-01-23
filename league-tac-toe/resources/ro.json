@@ -80,6 +80,18 @@
             "toggleColumns": "Comută coloanele"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Un joc de X și O cu campioni din League of Legends. Provocă un prieten la un joc online sau concurează cu jucători aleatori din întreaga lume.",
+        "home": {
+            "title": "League Tac Toe - Quiz-ul League of Legends întâlnește X și O",
+            "description": "Numește campioni care se potrivesc categoriilor pentru a revendica pătrate într-o grilă 3x3. Activează modul Fură pentru a lua pătratul adversarului. Joacă online sau local cu prietenii."
+        },
+        "champions": {
+            "title": "Campioni - League Tac Toe",
+            "description": "Navighează și filtrează toți campionii din League of Legends. Găsește campioni după poziție, regiune, tip de resursă și multe altele."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Jocul s-a încheiat",

@@ -3,16 +3,70 @@ import type { Metadata } from "next";
 import Navbar, { UiMode } from "@/components/custom/navbar";
 import { routing } from "@/i18n/routing";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import BuyMeACoffeeWidget from "@/components/custom/buy-me-a-coffee";
 
-export const metadata: Metadata = {
-    title: "League Tac Toe",
-    description: "A game of Tic Tac Toe with League of Legends champions.",
-};
+const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "seo" });
+
+    const title = t("title");
+    const description = t("description");
+    const url = `${metadataBase}${locale === "en" ? "" : `/${locale}`}`;
+
+    return {
+        metadataBase,
+        title: {
+            default: title,
+            template: `%s | ${title}`,
+        },
+        description,
+        alternates: {
+            canonical: url,
+            languages: Object.fromEntries(
+                routing.locales.map((loc) => [loc, `${metadataBase}${loc === "en" ? "" : `/${loc}`}`])
+            ),
+        },
+        openGraph: {
+            type: "website",
+            locale: locale,
+            url: url,
+            siteName: title,
+            title: title,
+            description: description,
+            images: [
+                {
+                    url: `${metadataBase}/images/champions.jpg`,
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: title,
+            description: description,
+            images: [`${metadataBase}/images/champions.jpg`],
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
+        },
+    };
+}
 
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
@@ -30,11 +84,36 @@ export default async function LocaleLayout({ children, params }: Props) {
     }
 
     setRequestLocale(locale);
+    const t = await getTranslations({ locale, namespace: "seo" });
+    const url = `${metadataBase}${locale === "en" ? "" : `/${locale}`}`;
+
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: t("title"),
+        description: t("description"),
+        url: metadataBase.toString(),
+        applicationCategory: "Game",
+        operatingSystem: "Web",
+        offers: {
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+        },
+        inLanguage: routing.locales,
+        browserRequirements: "Requires JavaScript. Requires HTML5.",
+    };
 
     return (
         <html lang={locale} suppressHydrationWarning>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(structuredData),
+                    }}
+                />
             </head>
             <body className="antialiased">
                 <NextIntlClientProvider>

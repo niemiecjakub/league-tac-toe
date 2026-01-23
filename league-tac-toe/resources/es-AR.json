@@ -80,6 +80,18 @@
             "toggleColumns": "Mostrar/ocultar columnas"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Un juego de Ta-Te-Ti con campeones de League of Legends. Desafiá a un amigo a un juego online o competí contra jugadores aleatorios de todo el mundo.",
+        "home": {
+            "title": "League Tac Toe - League of Legends Quiz se cruza con el Ta-Te-Ti",
+            "description": "Nombrá campeones que coincidan con las categorías para reclamar casillas en una cuadrícula de 3x3. Activá el modo Robo para sacarle una casilla a tu oponente. Jugá online o localmente con amigos."
+        },
+        "champions": {
+            "title": "Campeones - League Tac Toe",
+            "description": "Navegá y filtrá todos los campeones de League of Legends. Encontrá campeones por posición, región, tipo de recurso y más."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Partida terminada",

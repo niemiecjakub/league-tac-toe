@@ -80,6 +80,18 @@
             "toggleColumns": "Alternar colunas"
         }
     },
+    "seo": {
+        "title": "League Tac Toe",
+        "description": "Um jogo da velha com campeões de League of Legends. Desafie um amigo para um jogo online ou compita contra jogadores aleatórios de todo o mundo.",
+        "home": {
+            "title": "League Tac Toe - Quiz de League of Legends encontra Jogo da Velha",
+            "description": "Nomeie campeões que correspondam às categorias para conquistar quadrados em uma grade 3x3. Ative o modo Roubo para pegar o quadrado do seu oponente. Jogue online ou localmente com amigos."
+        },
+        "champions": {
+            "title": "Campeões - League Tac Toe",
+            "description": "Navegue e filtre todos os campeões de League of Legends. Encontre campeões por posição, região, tipo de recurso e muito mais."
+        }
+    },
     "game": {
         "postGame": {
             "gameFinished": "Partida finalizada",

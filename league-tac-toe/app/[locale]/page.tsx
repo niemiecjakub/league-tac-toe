@@ -6,9 +6,48 @@ import RuleList from "@/components/custom/rule-list";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Footer from "@/components/custom/footer";
+import type { Metadata } from "next";
 
-export default async function Home() {
-    const t = await getTranslations("home");
+const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "seo.home" });
+
+    const title = t("title");
+    const description = t("description");
+    const url = `${metadataBase}${locale === "en" ? "" : `/${locale}`}`;
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical: url,
+        },
+        openGraph: {
+            title,
+            description,
+            url,
+            images: [
+                {
+                    url: `${metadataBase}/images/champions.jpg`,
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                },
+            ],
+        },
+        twitter: {
+            title,
+            description,
+            images: [`${metadataBase}/images/champions.jpg`],
+        },
+    };
+}
+
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: "home" });
 
     return (
         <div className="w-full md:w-2/3 2xl:w-2/5 h-full flex items-center flex-col gap-0.5">
