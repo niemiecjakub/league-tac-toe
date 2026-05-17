@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LobbyOnline from "@/components/custom/lobby-online";
+import GlobalStatsBanner from "@/components/custom/global-stats-banner";
 import LobbyRandom from "@/components/custom/lobby-random";
 import LobbyLocal from "@/components/custom/lobby-local";
 import RuleList from "@/components/custom/rule-list";
@@ -61,6 +62,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <p className="text-xs lg:text-lg text-center">{t("description2")}</p>
             </section>
             <section className="flex w-full flex-col gap-6 my-4">
+                <GlobalStatsBanner />
                 <Tabs defaultValue="online">
                     <TabsList className="w-full">
                         <TabsTrigger value="online">{t("online")}</TabsTrigger>

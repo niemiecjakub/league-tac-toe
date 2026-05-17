@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { createLocalRoom } from "@/services/gameService";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,6 +12,7 @@ import { Spinner } from "../ui/spinner";
 import { useRoomStore } from "@/store/roomStore";
 import { toast } from "react-toastify";
 import { handleServiceError } from "@/lib/errorHandler";
+import LobbyOptionLabel from "@/components/custom/lobby-option-label";
 
 export default function LobbyLocal() {
     const t = useTranslations("home");
@@ -46,8 +46,8 @@ export default function LobbyLocal() {
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col gap-4 ">
-                    <div className="flex gap-2 justify-between">
-                        <Label>{t("timePerTurn")}</Label>
+                    <div className="flex gap-2 justify-between items-center">
+                        <LobbyOptionLabel>{t("timePerTurn")}</LobbyOptionLabel>
                         <Select
                             value={roomOptions.turnTime?.toString() ?? "-1"}
                             onValueChange={(value) =>
@@ -72,8 +72,8 @@ export default function LobbyLocal() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex gap-2 justify-between">
-                        <Label>{t("enableSteals")}</Label>
+                    <div className="flex gap-2 justify-between items-center">
+                        <LobbyOptionLabel>{t("enableSteals")}</LobbyOptionLabel>
                         <Select
                             value={roomOptions.stealsEnabled.toString()}
                             onValueChange={(value) =>
@@ -95,8 +95,8 @@ export default function LobbyLocal() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex gap-2 justify-between">
-                        <Label>{t("includeEsportCategories")}</Label>
+                    <div className="flex gap-2 justify-between items-center">
+                        <LobbyOptionLabel>{t("includeEsportCategories")}</LobbyOptionLabel>
                         <Select
                             value={roomOptions.includeEsportCategories.toString()}
                             onValueChange={(value) =>

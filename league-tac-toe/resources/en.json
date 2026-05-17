@@ -25,7 +25,7 @@
         "start": "Start",
         "lobby": {
             "online": {
-                "globalStats": "{gamesPlayed} games played across {roomsCount} rooms",
+                "globalStats": "Over <highlight>{gamesPlayed}</highlight> games played",
                 "joinRoom": {
                     "title": "Join existing room",
                     "description": "Enter room code and join the game",

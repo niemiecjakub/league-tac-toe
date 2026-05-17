@@ -25,7 +25,7 @@
         "start": "Démarrer",
         "lobby": {
             "online": {
-                "globalStats": "{gamesPlayed} parties jouées dans {roomsCount} salles",
+                "globalStats": "Plus de <highlight>{gamesPlayed}</highlight> parties jouées",
                 "joinRoom": {
                     "title": "Rejoindre une salle existante",
                     "description": "Entre le code de la salle pour rejoindre la partie",

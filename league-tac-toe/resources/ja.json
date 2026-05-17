@@ -25,7 +25,7 @@
         "start": "開始",
         "lobby": {
             "online": {
-                "globalStats": "{roomsCount}ルームで{gamesPlayed}試合がプレイされました",
+                "globalStats": "<highlight>{gamesPlayed}</highlight>試合以上がプレイされました",
                 "joinRoom": {
                     "title": "既存のルームに参加",
                     "description": "ルームコードを入力してゲームに参加",

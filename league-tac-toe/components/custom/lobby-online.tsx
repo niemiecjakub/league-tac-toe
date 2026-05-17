@@ -4,24 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createRoom, getGlobalStats } from "@/services/gameService";
+import { createRoom } from "@/services/gameService";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { GlobalStats } from "@/models/GlobalStats";
-import { useLocale } from "next-intl";
+import { useState } from "react";
 import { RoomOptions } from "@/models/Room";
 import { useTranslations } from "next-intl";
 import { Spinner } from "../ui/spinner";
 import { useRoomStore } from "@/store/roomStore";
 import { toast } from "react-toastify";
 import { handleServiceError } from "@/lib/errorHandler";
+import LobbyOptionLabel from "@/components/custom/lobby-option-label";
 
 export default function LobbyOnline() {
     const t = useTranslations("home");
-    const locale = useLocale();
     const router = useRouter();
-    const [globalStats, setGlobalStats] = useState<GlobalStats | null>(null);
     const [roomCode, setRoomCode] = useState("");
     const [newRoomOptions, setNewRoomOptions] = useState<RoomOptions>({
         turnTime: -1,
@@ -32,14 +28,6 @@ export default function LobbyOnline() {
     const [isCreatingRoom, setIsCreatingRoom] = useState(false);
     const [isJoining, setIsJoining] = useState(false);
     const { joinRoom } = useRoomStore((state) => state);
-
-    useEffect(() => {
-        getGlobalStats()
-            .then(setGlobalStats)
-            .catch(() => setGlobalStats(null));
-    }, []);
-
-    const formatCount = (value: number) => value.toLocaleString(locale);
 
     const handleRoomCreate = async () => {
         try {
@@ -91,8 +79,8 @@ export default function LobbyOnline() {
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col gap-4">
-                    <div className="flex gap-2 justify-between">
-                        <Label>{t("timePerTurn")}</Label>
+                    <div className="flex gap-2 justify-between items-center">
+                        <LobbyOptionLabel>{t("timePerTurn")}</LobbyOptionLabel>
                         <Select
                             value={newRoomOptions?.turnTime?.toString() ?? "-1"}
                             onValueChange={(value) =>
@@ -117,8 +105,8 @@ export default function LobbyOnline() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex gap-2 justify-between">
-                        <Label>{t("enableSteals")}</Label>
+                    <div className="flex gap-2 justify-between items-center">
+                        <LobbyOptionLabel>{t("enableSteals")}</LobbyOptionLabel>
                         <Select
                             value={newRoomOptions.stealsEnabled.toString()}
                             onValueChange={(value) =>
@@ -140,8 +128,8 @@ export default function LobbyOnline() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex gap-2 justify-between">
-                        <Label>{t("includeEsportCategories")}</Label>
+                    <div className="flex gap-2 justify-between items-center">
+                        <LobbyOptionLabel>{t("includeEsportCategories")}</LobbyOptionLabel>
                         <Select
                             value={newRoomOptions.includeEsportCategories.toString()}
                             onValueChange={(value) =>
@@ -178,14 +166,6 @@ export default function LobbyOnline() {
                 </Button>
             </CardFooter>
             </Card>
-            {globalStats && (
-                <p className="text-muted-foreground text-center text-sm italic">
-                    {t("lobby.online.globalStats", {
-                        gamesPlayed: formatCount(globalStats.gamesPlayed),
-                        roomsCount: formatCount(globalStats.roomsCount),
-                    })}
-                </p>
-            )}
         </div>
     );
 }

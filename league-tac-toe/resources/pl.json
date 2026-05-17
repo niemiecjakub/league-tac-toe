@@ -25,7 +25,7 @@
         "start": "Start",
         "lobby": {
             "online": {
-                "globalStats": "Rozegrano {gamesPlayed} gier w {roomsCount} pokojach",
+                "globalStats": "Ponad <highlight>{gamesPlayed}</highlight> rozegranych gier",
                 "joinRoom": {
                     "title": "Dołącz do istniejącego pokoju",
                     "description": "Wpisz kod pokoju, aby dołączyć do gry",

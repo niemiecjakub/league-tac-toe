@@ -25,7 +25,7 @@
         "start": "Empezar",
         "lobby": {
             "online": {
-                "globalStats": "{gamesPlayed} partidas jugadas en {roomsCount} salas",
+                "globalStats": "Más de <highlight>{gamesPlayed}</highlight> partidas jugadas",
                 "joinRoom": {
                     "title": "Unirse a una sala existente",
                     "description": "Ingresá el código de sala y unite al juego",

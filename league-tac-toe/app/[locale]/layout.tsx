@@ -75,10 +75,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export async function generateViewport(): Promise<Viewport> {
     return {
-        themeColor: [
-            { media: "(prefers-color-scheme: light)", color: "#fef3c7" },
-            { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
-        ],
+        themeColor: "#1f2937",
     };
 }
 
@@ -121,6 +118,11 @@ export default async function LocaleLayout({ children, params }: Props) {
         <html lang={locale} suppressHydrationWarning>
             <head>
                 <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"){document.documentElement.classList.remove("dark")}else{document.documentElement.classList.add("dark")}}catch(e){document.documentElement.classList.add("dark")}})();`,
+                    }}
+                />
+                <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(structuredData),
@@ -129,7 +131,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             </head>
             <body className="antialiased">
                 <NextIntlClientProvider>
-                    <ThemeProvider attribute="class" defaultTheme={UiMode.DARK} enableSystem disableTransitionOnChange>
+                    <ThemeProvider attribute="class" defaultTheme={UiMode.DARK} disableTransitionOnChange>
                         <div className="w-full max-h-screen flex flex-col items-center">
                             <header className="w-full">
                                 <Navbar />

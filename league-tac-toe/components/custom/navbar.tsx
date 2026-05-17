@@ -103,11 +103,7 @@ export default function Navbar() {
                                 className="hover:opacity-40"
                                 aria-label={t("sendFeedback")}
                             >
-                                <MessageSquareReplyIcon
-                                    className="h-[28px] w-[28px]"
-                                    stroke={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"}
-                                    fill="none"
-                                />
+                                <MessageSquareReplyIcon className="h-[28px] w-[28px]" stroke="currentColor" fill="none" />
                             </button>
                         </TooltipTrigger>
                         <TooltipContent side="bottom" sideOffset={8}>
@@ -115,7 +111,7 @@ export default function Navbar() {
                         </TooltipContent>
                     </Tooltip>
                     <Link href="https://github.com/niemiecjakub/league-tac-toe" target="_blank" className="hover:opacity-40" aria-label="GitHub repository">
-                        <GithubIcon className="h-[28px] inline" fill={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"} />
+                        <GithubIcon className="h-[28px] inline fill-current" />
                     </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger className="cursor-pointer" aria-label="Select language">
@@ -134,7 +130,9 @@ export default function Navbar() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    {theme == UiMode.LIGHT ? (
+                    {!mounted ? (
+                        <span className="inline-block h-8 w-8" aria-hidden />
+                    ) : theme === UiMode.LIGHT ? (
                         <DarkMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.DARK)} aria-label="Toggle dark mode" />
                     ) : (
                         <LightMode className="h-8 w-8 cursor-pointer hover:opacity-50" onClick={() => setTheme(UiMode.LIGHT)} aria-label="Toggle light mode" />

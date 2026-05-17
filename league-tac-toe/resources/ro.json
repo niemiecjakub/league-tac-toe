@@ -25,7 +25,7 @@
         "start": "Începe",
         "lobby": {
             "online": {
-                "globalStats": "{gamesPlayed} jocuri jucate în {roomsCount} camere",
+                "globalStats": "Peste <highlight>{gamesPlayed}</highlight> jocuri jucate",
                 "joinRoom": {
                     "title": "Alătură-te unei camere existente",
                     "description": "Introdu codul camerei și alătură-te jocului",
