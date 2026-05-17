@@ -3,7 +3,9 @@
         "champions": "Champions",
         "selectLanguage": "Choisir la langue",
         "dontCheat": "Ne triche pas !",
-        "cannotChangeLanguage": "La langue ne peut pas être changée pendant la partie."
+        "cannotChangeLanguage": "La langue ne peut pas être changée pendant la partie.",
+        "feedbackTooltip": "Partagez votre avis !",
+        "sendFeedback": "Envoyer un commentaire"
     },
     "home": {
         "subtitle": "League of Legends Quiz rencontre le Morpion.",
@@ -103,6 +105,7 @@
             "leave": "Quitter",
             "playAgain": "Rejouer",
             "nextGameStartSoon": "La prochaine partie va bientôt commencer.",
+            "feedbackRequest": "En attendant la prochaine partie, dites-moi ce que vous en pensez !",
             "local": {
                 "playerWon": "Player {player} won!"
             }

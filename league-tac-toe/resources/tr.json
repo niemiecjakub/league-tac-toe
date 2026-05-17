@@ -3,7 +3,9 @@
         "champions": "Şampiyonlar",
         "selectLanguage": "Dil seç",
         "dontCheat": "Hile yapma!",
-        "cannotChangeLanguage": "Oyun sırasında dil değiştirilemez."
+        "cannotChangeLanguage": "Oyun sırasında dil değiştirilemez.",
+        "feedbackTooltip": "Geri bildiriminizi paylaşın!",
+        "sendFeedback": "Geri bildirim gönder"
     },
     "home": {
         "subtitle": "League of Legends Quiz, XOX ile buluşuyor.",
@@ -103,6 +105,7 @@
             "leave": "Çık",
             "playAgain": "Tekrar oyna",
             "nextGameStartSoon": "Sonraki oyun yakında başlayacak.",
+            "feedbackRequest": "Sonraki oyunu beklerken düşüncelerinizi paylaşın!",
             "local": {
                 "playerWon": "Player {player} won!"
             }

@@ -3,7 +3,9 @@
         "champions": "Campeones",
         "selectLanguage": "Seleccionar idioma",
         "dontCheat": "¡No hagas trampa!",
-        "cannotChangeLanguage": "No se puede cambiar el idioma durante el juego."
+        "cannotChangeLanguage": "No se puede cambiar el idioma durante el juego.",
+        "feedbackTooltip": "¡Compartí tu opinión!",
+        "sendFeedback": "Enviar comentarios"
     },
     "home": {
         "subtitle": "League of Legends Quiz se cruza con el Ta-Te-Ti.",
@@ -103,6 +105,7 @@
             "leave": "Salir",
             "playAgain": "Jugar de nuevo",
             "nextGameStartSoon": "La próxima partida comenzará pronto.",
+            "feedbackRequest": "Mientras esperás la próxima partida, ¡contame qué pensás!",
             "local": {
                 "playerWon": "Player {player} won!"
             }

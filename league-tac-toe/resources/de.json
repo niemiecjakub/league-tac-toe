@@ -3,7 +3,9 @@
         "champions": "Champions",
         "selectLanguage": "Sprache auswählen",
         "dontCheat": "Nicht schummeln!",
-        "cannotChangeLanguage": "Die Sprache kann während des Spiels nicht geändert werden."
+        "cannotChangeLanguage": "Die Sprache kann während des Spiels nicht geändert werden.",
+        "feedbackTooltip": "Teile dein Feedback mit!",
+        "sendFeedback": "Feedback senden"
     },
     "home": {
         "subtitle": "League of Legends Quiz trifft Tic-Tac-Toe.",
@@ -103,6 +105,7 @@
             "leave": "Verlassen",
             "playAgain": "Erneut spielen",
             "nextGameStartSoon": "Das nächste Spiel beginnt in Kürze.",
+            "feedbackRequest": "Während du auf das nächste Spiel wartest, teile mir gerne deine Meinung mit!",
             "local": {
                 "playerWon": "Player {player} won!"
             }

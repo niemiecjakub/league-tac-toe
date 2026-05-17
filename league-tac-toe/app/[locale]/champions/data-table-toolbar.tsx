@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { CHAMPION_COLUMN_CATEGORY_GROUP } from "@/lib/categoryIcon";
 import { ChampionMetaFilter } from "@/models/ChampionMeta";
 import { useTranslations } from "next-intl";
 
@@ -26,7 +27,19 @@ export function DataTableToolbar<TData>({ table, filter }: DataTableToolbarProps
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="h-8 w-full sm:w-[150px] lg:w-[250px]"
                 />
-                {filter != null && filter.filters.map((f) => table.getColumn(f.value) && <DataTableFacetedFilter key={f.value} column={table.getColumn(f.value)} title={f.name} options={f.options} />)}
+                {filter != null &&
+                    filter.filters.map(
+                        (f) =>
+                            table.getColumn(f.value) && (
+                                <DataTableFacetedFilter
+                                    key={f.value}
+                                    column={table.getColumn(f.value)}
+                                    title={f.name}
+                                    options={f.options}
+                                    categoryGroup={CHAMPION_COLUMN_CATEGORY_GROUP[f.value]}
+                                />
+                            )
+                    )}
 
                 {isFiltered && (
                     <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()} className="flex items-center gap-1">

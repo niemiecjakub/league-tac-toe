@@ -12,6 +12,8 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { SUPPORTED_CULTURES, DEFAULT_LANG } from "@/i18n/routing";
 import { useTheme } from "next-themes";
 import { toast } from "react-toastify";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useFeedbackTooltipStore } from "@/store/feedbackTooltipStore";
 
 export enum UiMode {
     LIGHT = "light",
@@ -29,10 +31,19 @@ export default function Navbar() {
     const t = useTranslations("navbar");
     const isInGame = pathname.includes("/game");
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+    const { isOpen: isFeedbackTooltipOpen, show: showFeedbackTooltip, hide: hideFeedbackTooltip } = useFeedbackTooltipStore();
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
+
+        showFeedbackTooltip();
+        const timer = setTimeout(hideFeedbackTooltip, 6000);
+        return () => clearTimeout(timer);
+    }, [mounted, showFeedbackTooltip, hideFeedbackTooltip]);
 
     const handleLocaleChange = (nextLocale: Locale) => {
         if (isInGame) {
@@ -76,17 +87,33 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center justify-center gap-4">
-                    <button
-                        onClick={() => setIsFeedbackModalOpen(true)}
-                        className="hover:opacity-40"
-                        aria-label="Send feedback"
+                    <Tooltip
+                        open={isFeedbackTooltipOpen}
+                        onOpenChange={(open) => {
+                            if (open) {
+                                showFeedbackTooltip();
+                            } else {
+                                hideFeedbackTooltip();
+                            }
+                        }}
                     >
-                        <MessageSquareReplyIcon 
-                            className="h-[28px] w-[28px]" 
-                            stroke={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"}
-                            fill="none"
-                        />
-                    </button>
+                        <TooltipTrigger asChild>
+                            <button
+                                onClick={() => setIsFeedbackModalOpen(true)}
+                                className="hover:opacity-40"
+                                aria-label={t("sendFeedback")}
+                            >
+                                <MessageSquareReplyIcon
+                                    className="h-[28px] w-[28px]"
+                                    stroke={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"}
+                                    fill="none"
+                                />
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" sideOffset={8}>
+                            {t("feedbackTooltip")}
+                        </TooltipContent>
+                    </Tooltip>
                     <Link href="https://github.com/niemiecjakub/league-tac-toe" target="_blank" className="hover:opacity-40" aria-label="GitHub repository">
                         <GithubIcon className="h-[28px] inline" fill={mounted && theme == UiMode.DARK ? "#FFFFFF" : "#000000"} />
                     </Link>

@@ -3,7 +3,9 @@
         "champions": "チャンピオン",
         "selectLanguage": "言語を選択",
         "dontCheat": "カンニング禁止！",
-        "cannotChangeLanguage": "ゲーム中は言語を変更できません。"
+        "cannotChangeLanguage": "ゲーム中は言語を変更できません。",
+        "feedbackTooltip": "フィードバックをお聞かせください！",
+        "sendFeedback": "フィードバックを送信"
     },
     "home": {
         "subtitle": "リーグ・オブ・レジェンド クイズと三目並べの組み合わせ。",
@@ -103,6 +105,7 @@
             "leave": "退出",
             "playAgain": "もう一度プレイ",
             "nextGameStartSoon": "次のゲームがまもなく開始されます。",
+            "feedbackRequest": "次のゲームを待っている間、ご意見をお聞かせください！",
             "local": {
                 "playerWon": "Player {player} won!"
             }

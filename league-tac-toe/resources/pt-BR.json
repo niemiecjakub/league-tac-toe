@@ -3,7 +3,9 @@
         "champions": "Campeões",
         "selectLanguage": "Selecionar idioma",
         "dontCheat": "Não trapaceie!",
-        "cannotChangeLanguage": "O idioma não pode ser alterado durante o jogo."
+        "cannotChangeLanguage": "O idioma não pode ser alterado durante o jogo.",
+        "feedbackTooltip": "Compartilhe seu feedback!",
+        "sendFeedback": "Enviar feedback"
     },
     "home": {
         "subtitle": "Quiz de League of Legends encontra Jogo da Velha.",
@@ -103,6 +105,7 @@
             "leave": "Sair",
             "playAgain": "Jogar novamente",
             "nextGameStartSoon": "A próxima partida começará em breve.",
+            "feedbackRequest": "Enquanto espera a próxima partida, conte-me o que achou!",
             "local": {
                 "playerWon": "Player {player} won!"
             }

@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRoomStore } from "@/store/roomStore";
+import { useFeedbackTooltipStore } from "@/store/feedbackTooltipStore";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -17,6 +19,13 @@ export default function PostGameControls({ mode = "online" }: PostGameControlsPr
     const router = useRouter();
     const t = useTranslations("game.postGame");
     const tLocal = useTranslations("game.postGame.local");
+    const showFeedbackTooltip = useFeedbackTooltipStore((state) => state.show);
+
+    useEffect(() => {
+        if (gameFinished) {
+            showFeedbackTooltip();
+        }
+    }, [gameFinished, showFeedbackTooltip]);
 
     const leaveRoom = async () => {
         await handleRoomLeave();
@@ -46,6 +55,7 @@ export default function PostGameControls({ mode = "online" }: PostGameControlsPr
                         <p className="text-lg font-semibold">{getResultMessage()}</p>
                     </div>
                     <span>{t("nextGameStartSoon")}</span>
+                    <p className="text-sm text-muted-foreground pt-2">{t("feedbackRequest")}</p>
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>

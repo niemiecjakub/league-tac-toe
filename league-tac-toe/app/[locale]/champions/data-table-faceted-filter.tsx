@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { CategoryBadge, CategoryIcon } from "@/components/custom/category-badge";
 import { MetaFilterItem } from "@/models/ChampionMeta";
 import { useTranslations } from "next-intl";
 
@@ -14,6 +15,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
     column?: Column<TData, TValue>;
     title?: string;
     options: MetaFilterItem[];
+    categoryGroup: string;
 }
 
 function normalizeFacetsMap(map: Map<string | string[], number>): Map<string, number> {
@@ -34,7 +36,7 @@ function normalizeFacetsMap(map: Map<string | string[], number>): Map<string, nu
     return result;
 }
 
-export function DataTableFacetedFilter<TData, TValue>({ column, title, options }: DataTableFacetedFilterProps<TData, TValue>) {
+export function DataTableFacetedFilter<TData, TValue>({ column, title, options, categoryGroup }: DataTableFacetedFilterProps<TData, TValue>) {
     const rawFacets = column?.getFacetedUniqueValues();
     const facets = rawFacets ? normalizeFacetsMap(rawFacets) : new Map();
     const selectedValues = new Set(column?.getFilterValue() as string[]);
@@ -61,9 +63,13 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                                     options
                                         .filter((option) => selectedValues.has(option.name))
                                         .map((option) => (
-                                            <Badge variant="secondary" key={option.name} className="rounded-sm px-1 font-normal">
-                                                {option.name}
-                                            </Badge>
+                                            <CategoryBadge
+                                                key={option.name}
+                                                categoryGroup={categoryGroup}
+                                                label={option.name}
+                                                variant="secondary"
+                                                className="rounded-sm px-1 font-normal"
+                                            />
                                         ))
                                 )}
                             </div>
@@ -100,7 +106,7 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                                         >
                                             <Check className="text-primary-foreground size-3.5" />
                                         </div>
-                                        {/* {option.icon && <option.icon className="text-muted-foreground size-4" />} */}
+                                        <CategoryIcon categoryGroup={categoryGroup} label={option.name} />
                                         <span>{option.name}</span>
                                         {facets?.get(option.name) && (
                                             <span className="text-muted-foreground ml-auto flex size-4 items-center justify-center font-mono text-xs">{facets.get(option.name)}</span>

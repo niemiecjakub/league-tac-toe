@@ -3,7 +3,9 @@
         "champions": "Campioni",
         "selectLanguage": "Selectează limba",
         "dontCheat": "Nu trișa!",
-        "cannotChangeLanguage": "Limba nu poate fi schimbată în timpul jocului."
+        "cannotChangeLanguage": "Limba nu poate fi schimbată în timpul jocului.",
+        "feedbackTooltip": "Împărtășește feedback-ul tău!",
+        "sendFeedback": "Trimite feedback"
     },
     "home": {
         "subtitle": "Quiz-ul League of Legends întâlnește X și O.",
@@ -103,6 +105,7 @@
             "leave": "Ieși",
             "playAgain": "Joacă din nou",
             "nextGameStartSoon": "Următorul joc va începe în curând.",
+            "feedbackRequest": "În timp ce aștepți următorul joc, spune-mi ce părere ai!",
             "local": {
                 "playerWon": "Player {player} won!"
             }

@@ -3,7 +3,9 @@
         "champions": "챔피언",
         "selectLanguage": "언어 선택",
         "dontCheat": "부정행위 금지!",
-        "cannotChangeLanguage": "게임 중에는 언어를 변경할 수 없습니다."
+        "cannotChangeLanguage": "게임 중에는 언어를 변경할 수 없습니다.",
+        "feedbackTooltip": "피드백을 공유해 주세요!",
+        "sendFeedback": "피드백 보내기"
     },
     "home": {
         "subtitle": "리그 오브 레전드 퀴즈와 틱택토의 만남.",
@@ -103,6 +105,7 @@
             "leave": "나가기",
             "playAgain": "다시 플레이",
             "nextGameStartSoon": "다음 게임이 곧 시작됩니다.",
+            "feedbackRequest": "다음 게임을 기다리는 동안 의견을 들려주세요!",
             "local": {
                 "playerWon": "Player {player} won!"
             }

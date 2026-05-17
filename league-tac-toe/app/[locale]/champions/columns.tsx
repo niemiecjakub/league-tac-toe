@@ -1,9 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
+import { CategoryBadge } from "@/components/custom/category-badge";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { Champion } from "@/models/Champion";
+import { CHAMPION_COLUMN_CATEGORY_GROUP } from "@/lib/categoryIcon";
 import Image from "next/image";
 
 export const columns: ColumnDef<Champion>[] = [
@@ -28,9 +29,10 @@ export const columns: ColumnDef<Champion>[] = [
         accessorKey: "resource",
         header: ({ column }) => <DataTableColumnHeader column={column} title="Resource" />,
         cell: ({ row }) => {
+            const resource = row.getValue("resource") as string;
             return (
                 <div className="flex items-center gap-2">
-                    <Badge variant="outline">{row.getValue("resource")}</Badge>
+                    <CategoryBadge categoryGroup={CHAMPION_COLUMN_CATEGORY_GROUP.resource} label={resource} />
                 </div>
             );
         },
@@ -42,9 +44,10 @@ export const columns: ColumnDef<Champion>[] = [
         accessorKey: "region",
         header: ({ column }) => <DataTableColumnHeader column={column} title="region" />,
         cell: ({ row }) => {
+            const region = row.getValue("region") as string;
             return (
                 <div className="flex items-center gap-2">
-                    <Badge variant="outline">{row.getValue("region")}</Badge>
+                    <CategoryBadge categoryGroup={CHAMPION_COLUMN_CATEGORY_GROUP.region} label={region} />
                 </div>
             );
         },
@@ -61,9 +64,7 @@ export const columns: ColumnDef<Champion>[] = [
             return (
                 <div className="flex items-center gap-2">
                     {legacies.map((legacy, index) => (
-                        <Badge variant="outline" key={index}>
-                            {legacy}
-                        </Badge>
+                        <CategoryBadge categoryGroup={CHAMPION_COLUMN_CATEGORY_GROUP.legacies} label={legacy} key={index} />
                     ))}
                 </div>
             );
@@ -83,9 +84,7 @@ export const columns: ColumnDef<Champion>[] = [
             return (
                 <div className="flex items-center gap-2">
                     {positions.map((position, index) => (
-                        <Badge variant="outline" key={index}>
-                            {position}
-                        </Badge>
+                        <CategoryBadge categoryGroup={CHAMPION_COLUMN_CATEGORY_GROUP.positions} label={position} key={index} />
                     ))}
                 </div>
             );
@@ -103,11 +102,9 @@ export const columns: ColumnDef<Champion>[] = [
             const rangeTypes: string[] = row.getValue("rangeTypes");
 
             return (
-                <div className="flex  items-center gap-2">
+                <div className="flex items-center gap-2">
                     {rangeTypes.map((rangeType, index) => (
-                        <Badge variant="outline" key={index}>
-                            {rangeType}
-                        </Badge>
+                        <CategoryBadge categoryGroup={CHAMPION_COLUMN_CATEGORY_GROUP.rangeTypes} label={rangeType} key={index} />
                     ))}
                 </div>
             );

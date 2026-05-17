@@ -3,7 +3,9 @@
         "champions": "Bohaterowie",
         "selectLanguage": "Wybierz język",
         "dontCheat": "Nie oszukuj!",
-        "cannotChangeLanguage": "Nie można zmienić języka podczas gry."
+        "cannotChangeLanguage": "Nie można zmienić języka podczas gry.",
+        "feedbackTooltip": "Podziel się swoją opinią!",
+        "sendFeedback": "Wyślij opinię"
     },
     "home": {
         "subtitle": "Quiz League of Legends spotyka Kółko i Krzyżyk.",
@@ -103,6 +105,7 @@
             "leave": "Wyjdź",
             "playAgain": "Zagraj ponownie",
             "nextGameStartSoon": "Następna gra rozpocznie się wkrótce.",
+            "feedbackRequest": "Czekając na następną grę, podziel się swoją opinią!",
             "local": {
                 "playerWon": "Gracz {player} wygrał!"
             }

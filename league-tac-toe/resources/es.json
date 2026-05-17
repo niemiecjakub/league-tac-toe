@@ -3,7 +3,9 @@
         "champions": "Campeones",
         "selectLanguage": "Seleccionar idioma",
         "dontCheat": "¡No hagas trampas!",
-        "cannotChangeLanguage": "No se puede cambiar el idioma durante el juego."
+        "cannotChangeLanguage": "No se puede cambiar el idioma durante el juego.",
+        "feedbackTooltip": "¡Comparte tu opinión!",
+        "sendFeedback": "Enviar comentarios"
     },
     "home": {
         "subtitle": "League of Legends Quiz se une al Tres en Raya.",
@@ -103,6 +105,7 @@
             "leave": "Salir",
             "playAgain": "Jugar de nuevo",
             "nextGameStartSoon": "La próxima partida comenzará pronto.",
+            "feedbackRequest": "Mientras esperas la próxima partida, ¡cuéntame qué piensas!",
             "local": {
                 "playerWon": "Player {player} won!"
             }
