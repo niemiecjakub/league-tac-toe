@@ -13,6 +13,7 @@ namespace LeagueChampions.Models.Mapper
         StealsEnabled = room.StealsEnabled,
         TurnTime = room.TurnTime,
         IsPublic = room.IsPublic,
+        IsLocal = room.IsLocal,
       };
     }
 
@@ -25,8 +26,9 @@ namespace LeagueChampions.Models.Mapper
         TurnTime = room.TurnTime,
         Game = game.ToGameDto(),
         Slot = gamePlayer.ToGameSlotDto(),
-        Score = room.ToScoreDto(gamePlayer),
-        IsPublic = room.IsPublic
+        Score = room.IsLocal ? room.ToLocalScoreDto() : room.ToScoreDto(gamePlayer),
+        IsPublic = room.IsPublic,
+        IsLocal = room.IsLocal,
       };
     }
   }

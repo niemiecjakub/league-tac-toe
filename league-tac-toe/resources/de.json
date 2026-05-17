@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "Spiel auf demselben Bildschirm",
-                "description": "Spiele gegen einen Freund auf demselben Gerät"
+                "description": "Spiele gegen einen Freund auf demselben Gerät",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "Wie spielt man?",
@@ -100,7 +101,10 @@
             "youLost": "Du hast verloren!",
             "leave": "Verlassen",
             "playAgain": "Erneut spielen",
-            "nextGameStartSoon": "Das nächste Spiel beginnt in Kürze."
+            "nextGameStartSoon": "Das nächste Spiel beginnt in Kürze.",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "Champion",
@@ -119,7 +123,13 @@
             "skipTurn": "Zug überspringen",
             "noTimeLimit": "Kein Zeitlimit",
             "yourTurn": "Du bist am Zug",
-            "opponentsTurn": "Gegner ist am Zug"
+            "opponentsTurn": "Gegner ist am Zug",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "Raumcode",

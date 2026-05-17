@@ -7,6 +7,7 @@ type RoomStore = {
     room?: Room;
     turnTimeLeft: number | null;
 
+    setRoom: (room: Room) => void;
     joinRoom: (roomGuid: string) => Promise<void>;
     updateRoom: (roomGuid: string) => Promise<void>;
     handleChampionSelect: (cellIndex: number, champion: string) => Promise<void>;
@@ -27,6 +28,10 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
     room: undefined,
     turnTimeLeft: null,
 
+    setRoom: (room) => {
+        set({ room, turnTimeLeft: room.turnTime && room.turnTime > 0 ? room.turnTime : null });
+    },
+
     joinRoom: async (roomGuid) => {
         if (!roomGuid) return;
         const roomData = await joinRoom(roomGuid);
@@ -35,14 +40,20 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
 
     updateRoom: async (roomGuid) => {
         const updatedRoom = await getRoom(roomGuid);
-        set({ room: updatedRoom });
+        set({
+            room: updatedRoom,
+            turnTimeLeft: updatedRoom.turnTime && updatedRoom.turnTime > 0 ? updatedRoom.turnTime : null,
+        });
     },
 
     handleChampionSelect: async (cellIndex, champion) => {
         const { room, isYourTurn } = get();
         if (isYourTurn() && room?.game.gameStatus === GameStateType.InProgress) {
             const roomData = await move(room.roomGuid, cellIndex, champion);
-            set({ room: roomData });
+            set({
+                room: roomData,
+                turnTimeLeft: roomData.turnTime && roomData.turnTime > 0 ? roomData.turnTime : null,
+            });
         }
     },
 
@@ -50,7 +61,10 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
         const { room, isYourTurn } = get();
         if (isYourTurn() && room?.game.gameStatus === GameStateType.InProgress) {
             const roomData = await skipMove(room.roomGuid);
-            set({ room: roomData });
+            set({
+                room: roomData,
+                turnTimeLeft: roomData.turnTime && roomData.turnTime > 0 ? roomData.turnTime : null,
+            });
         }
     },
 
@@ -58,7 +72,10 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
         const { room, isYourTurn } = get();
         if (isYourTurn() && room?.game.gameStatus === GameStateType.InProgress) {
             const roomData = await sendDrawRequest(room.roomGuid);
-            set({ room: roomData });
+            set({
+                room: roomData,
+                turnTimeLeft: roomData.turnTime && roomData.turnTime > 0 ? roomData.turnTime : null,
+            });
         }
     },
 
@@ -66,7 +83,10 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
         const { room } = get();
         if (room?.game.gameStatus === GameStateType.InProgress) {
             const roomData = await respondDrawRequest(room.roomGuid);
-            set({ room: roomData });
+            set({
+                room: roomData,
+                turnTimeLeft: roomData.turnTime && roomData.turnTime > 0 ? roomData.turnTime : null,
+            });
         }
     },
     handleRoomLeave: async () => {

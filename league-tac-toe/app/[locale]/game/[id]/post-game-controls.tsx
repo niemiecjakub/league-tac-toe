@@ -5,16 +5,35 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { PlayerType } from "@/models/Game";
 
-export default function PostGameControls() {
-    const { gameFinishedWithDraw, gameFinishedWithPlayerWin, youWon, handleRoomLeave } = useRoomStore((state) => state);
+type PostGameControlsProps = {
+    mode?: "online" | "local";
+};
+
+export default function PostGameControls({ mode = "online" }: PostGameControlsProps) {
+    const { gameFinishedWithDraw, gameFinishedWithPlayerWin, youWon, handleRoomLeave, room } = useRoomStore((state) => state);
     const gameFinished = gameFinishedWithDraw() || gameFinishedWithPlayerWin();
     const router = useRouter();
     const t = useTranslations("game.postGame");
+    const tLocal = useTranslations("game.postGame.local");
 
     const leaveRoom = async () => {
         await handleRoomLeave();
         router.push("/");
+    };
+
+    const getResultMessage = () => {
+        if (gameFinishedWithDraw()) {
+            return t("draw");
+        }
+        if (!gameFinishedWithPlayerWin()) {
+            return null;
+        }
+        if (mode === "local" && room?.game.winner != null) {
+            return tLocal("playerWon", { player: PlayerType[room.game.winner] });
+        }
+        return youWon() ? t("youWon") : t("youLost");
     };
 
     return (
@@ -24,12 +43,9 @@ export default function PostGameControls() {
                     <DialogTitle>{t("gameFinished")}</DialogTitle>
                     <DialogDescription></DialogDescription>
                     <div>
-                        {gameFinishedWithPlayerWin() && <p className="text-lg font-semibold">{youWon() ? `${t("youWon")}` : `${t("youLost")}`}</p>}
-                        {gameFinishedWithDraw() && <p className="text-lg font-sem ibold">{t("draw")}</p>}
+                        <p className="text-lg font-semibold">{getResultMessage()}</p>
                     </div>
-                    <span>
-                        {t("nextGameStartSoon")}
-                    </span>
+                    <span>{t("nextGameStartSoon")}</span>
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>

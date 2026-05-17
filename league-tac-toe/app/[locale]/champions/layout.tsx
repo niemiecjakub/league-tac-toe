@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
+const metadataBase = new URL("https://leaguetactoe.com");
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;

@@ -6,6 +6,7 @@ namespace LeagueChampions.Models.ValueObjects
     public bool StealsEnabled { get; set; }
     public bool IsPublic { get; set; }
     public bool IncludeEsportCategories { get; set; }
+    public bool IsLocal { get; set; }
 
     public void Validate()
     {

@@ -69,6 +69,26 @@ namespace LeagueChampions.Services
       return room.ToRoomInfoDto();
     }
 
+    public async Task<RoomDto> CreateLocalRoomAsync(RoomOptions options)
+    {
+      options.IsLocal = true;
+      options.IsPublic = false;
+
+      var room = Room.Create(options);
+      await _gameFactoryService.CreateNewGameAsync(room);
+      room.SetupLocalPlayers();
+      await _roomRepository.CreateRoomAsync(room);
+
+      _metrics.AddRoomCreated(room);
+      _metrics.AddGameCraeted(room.GetCurrentGame());
+
+      _logger.LogInformation("Local room successfully created. Room: {RoomGuid}", room.RoomUID);
+
+      var game = room.GetCurrentGame();
+      var activePlayer = room.GetActivePlayer(game);
+      return room.ToRoomDto(game, activePlayer);
+    }
+
     public async Task<RoomInfoDto> CreateNextRoundAsync(Guid roomGuid)
     {
       Room room = await _roomRepository.GetRoomByGuidAsync(roomGuid) ?? throw new RoomNotFoundException(roomGuid);
@@ -101,10 +121,16 @@ namespace LeagueChampions.Services
     {
       Room room = await _roomRepository.GetRoomByGuidAsync(roomGuid) ?? throw new RoomNotFoundException(roomGuid);
 
-      Guid userGuid = request.GetUserGuid();
-      GamePlayer? player = room.GetPlayer(userGuid);
-
       Game game = await _gameRepository.GetByRoomGuidAsync(roomGuid) ?? throw new GameNotFoundException(roomGuid);
+
+      if (room.IsLocal)
+      {
+        var activePlayer = room.GetActivePlayer(game);
+        return room.ToRoomDto(game, activePlayer);
+      }
+
+      Guid userGuid = request.GetUserGuid();
+      GamePlayer player = room.GetPlayer(userGuid);
 
       return room.ToRoomDto(game, player);
     }
@@ -124,8 +150,9 @@ namespace LeagueChampions.Services
       var championFilter = ChampionFilter.Create(categoryFields);
       var possibleChampions = await _championService.GetAllChampionsAsync(championFilter);
 
-      Guid currentPlayerGuid = request.GetUserGuid();
-      var currentPlayer = room.GetPlayer(currentPlayerGuid);
+      var currentPlayer = room.IsLocal
+        ? room.GetActivePlayer(game)
+        : room.GetPlayer(request.GetUserGuid());
       var moveResult = game.MakeMove(fieldId, championName, possibleChampions.Select(c => c.Name), currentPlayer);
       if (moveResult == MoveResult.STEAL)
       {
@@ -134,6 +161,10 @@ namespace LeagueChampions.Services
       game.UpdateDate();
 
       await _gameRepository.UpdateAsync(game);
+      if (moveResult == MoveResult.STEAL)
+      {
+        await _roomRepository.UpdateAsync(room);
+      }
       _metrics.AddChampionGuess(championName, championFilter);
 
       return await GetRoomAsync(roomGuid, request);

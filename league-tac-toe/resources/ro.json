@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "Joc pe același ecran",
-                "description": "Joacă împotriva unui prieten pe același dispozitiv"
+                "description": "Joacă împotriva unui prieten pe același dispozitiv",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "Cum se joacă?",
@@ -100,7 +101,10 @@
             "youLost": "Ai pierdut!",
             "leave": "Ieși",
             "playAgain": "Joacă din nou",
-            "nextGameStartSoon": "Următorul joc va începe în curând."
+            "nextGameStartSoon": "Următorul joc va începe în curând.",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "Campion",
@@ -119,7 +123,13 @@
             "skipTurn": "Sari tură",
             "noTimeLimit": "Fără limită de timp",
             "yourTurn": "Tura ta",
-            "opponentsTurn": "Tura adversarului"
+            "opponentsTurn": "Tura adversarului",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "Cod cameră",

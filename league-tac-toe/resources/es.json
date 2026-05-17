@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "Partida en el mismo dispositivo",
-                "description": "Juega contra un amigo en el mismo dispositivo"
+                "description": "Juega contra un amigo en el mismo dispositivo",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "¿Cómo se juega?",
@@ -100,7 +101,10 @@
             "youLost": "¡Has perdido!",
             "leave": "Salir",
             "playAgain": "Jugar de nuevo",
-            "nextGameStartSoon": "La próxima partida comenzará pronto."
+            "nextGameStartSoon": "La próxima partida comenzará pronto.",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "Campeón",
@@ -119,7 +123,13 @@
             "skipTurn": "Saltar turno",
             "noTimeLimit": "Sin límite de tiempo",
             "yourTurn": "Tu turno",
-            "opponentsTurn": "Turno del oponente"
+            "opponentsTurn": "Turno del oponente",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "Código de sala",

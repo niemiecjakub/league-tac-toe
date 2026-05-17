@@ -9,7 +9,7 @@ import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import BuyMeACoffeeWidget from "@/components/custom/buy-me-a-coffee";
 
-const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
+const metadataBase = new URL("https://leaguetactoe.com");
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;

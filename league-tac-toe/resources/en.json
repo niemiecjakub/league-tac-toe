@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "Same screen game",
-                "description": "Play against a friend on the same device"
+                "description": "Play against a friend on the same device",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "How to play?",
@@ -100,7 +101,10 @@
             "youLost": "You lost!",
             "leave": "Leave",
             "playAgain": "Play again",
-            "nextGameStartSoon": "Next game will begin soon."
+            "nextGameStartSoon": "Next game will begin soon.",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "Champion",
@@ -119,7 +123,13 @@
             "skipTurn": "Skip Turn",
             "noTimeLimit": "No time limit",
             "yourTurn": "Your turn",
-            "opponentsTurn": "Opponent's turn"
+            "opponentsTurn": "Opponent's turn",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "Room code",

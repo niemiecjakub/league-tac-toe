@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 
-const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
+const metadataBase = new URL("https://leaguetactoe.com");
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const routes: MetadataRoute.Sitemap = [];

@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const metadataBase = new URL(process.env.NEXT_PUBLIC_SITE_URL!);
+const metadataBase = new URL("https://leaguetactoe.com");
 
 export default function robots(): MetadataRoute.Robots {
     return {

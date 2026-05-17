@@ -13,14 +13,21 @@ const parseGameData = (data: any) => {
     };
 };
 
-export const createRoom = async (roomOptions: RoomOptions): Promise<RoomInfo> => {
-    const params = new URLSearchParams({
+const buildRoomOptionsParams = (roomOptions: RoomOptions) =>
+    new URLSearchParams({
         turnTime: roomOptions.turnTime === null ? "-1" : roomOptions.turnTime.toString(),
         stealsEnabled: roomOptions.stealsEnabled.toString(),
         includeEsportCategories: roomOptions.includeEsportCategories.toString(),
     });
 
-    const { data } = await axios.post(`Game/CreateRoom?${params.toString()}`);
+export const createRoom = async (roomOptions: RoomOptions): Promise<RoomInfo> => {
+    const { data } = await axios.post(`Game/CreateRoom?${buildRoomOptionsParams(roomOptions).toString()}`);
+    return data;
+};
+
+export const createLocalRoom = async (roomOptions: RoomOptions): Promise<Room> => {
+    const { data } = await axios.post(`Game/CreateLocalRoom?${buildRoomOptionsParams(roomOptions).toString()}`);
+    data.game = parseGameData(data);
     return data;
 };
 

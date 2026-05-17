@@ -11,6 +11,7 @@ export interface RoomInfo {
     turnTime: number | null;
     stealsEnabled: boolean;
     isPublic: boolean;
+    isLocal?: boolean;
     includeEsportCategories: boolean;
     score: Score;
 }

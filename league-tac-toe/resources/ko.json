@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "같은 화면 게임",
-                "description": "같은 기기에서 친구와 플레이"
+                "description": "같은 기기에서 친구와 플레이",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "플레이 방법",
@@ -100,7 +101,10 @@
             "youLost": "패배했습니다!",
             "leave": "나가기",
             "playAgain": "다시 플레이",
-            "nextGameStartSoon": "다음 게임이 곧 시작됩니다."
+            "nextGameStartSoon": "다음 게임이 곧 시작됩니다.",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "챔피언",
@@ -119,7 +123,13 @@
             "skipTurn": "턴 건너뛰기",
             "noTimeLimit": "시간 제한 없음",
             "yourTurn": "당신의 턴",
-            "opponentsTurn": "상대의 턴"
+            "opponentsTurn": "상대의 턴",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "방 코드",

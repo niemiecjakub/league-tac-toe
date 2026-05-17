@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "同じ画面でゲーム",
-                "description": "同じデバイスで友達と対戦"
+                "description": "同じデバイスで友達と対戦",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "遊び方",
@@ -100,7 +101,10 @@
             "youLost": "あなたの負けです！",
             "leave": "退出",
             "playAgain": "もう一度プレイ",
-            "nextGameStartSoon": "次のゲームがまもなく開始されます。"
+            "nextGameStartSoon": "次のゲームがまもなく開始されます。",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "チャンピオン",
@@ -119,7 +123,13 @@
             "skipTurn": "ターンをスキップ",
             "noTimeLimit": "時間制限なし",
             "yourTurn": "あなたのターン",
-            "opponentsTurn": "相手のターン"
+            "opponentsTurn": "相手のターン",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "ルームコード",

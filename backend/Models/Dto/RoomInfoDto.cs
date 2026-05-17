@@ -6,5 +6,6 @@
     public bool StealsEnabled { get; set; }
     public int? TurnTime { get; set; }
     public bool IsPublic { get; set; }
+    public bool IsLocal { get; set; }
   }
 }

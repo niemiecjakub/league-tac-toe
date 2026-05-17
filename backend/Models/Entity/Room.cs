@@ -12,6 +12,7 @@ namespace LeagueChampions.Models.Entity
     public bool StealsEnabled { get; set; }
     public bool IncludeEsportCategories { get; set; }
     public bool IsPublic { get; set; }
+    public bool IsLocal { get; set; }
     public DateTime CreatedAt { get; set; }
     public ICollection<Game> Games { get; set; } = new List<Game>();
     public ICollection<GamePlayer> GamePlayers { get; set; } = new List<GamePlayer>();
@@ -27,9 +28,38 @@ namespace LeagueChampions.Models.Entity
         StealsEnabled = options.StealsEnabled,
         TurnTime = options.TurnTime,
         IsPublic = options.IsPublic,
+        IsLocal = options.IsLocal,
         IncludeEsportCategories = options.IncludeEsportCategories,
         CreatedAt = DateTime.UtcNow
       };
+    }
+
+    public void SetupLocalPlayers()
+    {
+      GamePlayers.Add(new GamePlayer
+      {
+        PlayerUID = Guid.NewGuid(),
+        PlayerId = PlayerType.X,
+        RoomUID = RoomUID,
+        Room = this,
+        Steals = 3
+      });
+
+      GamePlayers.Add(new GamePlayer
+      {
+        PlayerUID = Guid.NewGuid(),
+        PlayerId = PlayerType.O,
+        RoomUID = RoomUID,
+        Room = this,
+        Steals = 3
+      });
+
+      GetCurrentGame().Start();
+    }
+
+    public GamePlayer GetActivePlayer(Game game)
+    {
+      return GamePlayers.First(p => p.PlayerId == game.CurrentTurnId);
     }
 
     public Game CreateNewGame(GameCategories categories)

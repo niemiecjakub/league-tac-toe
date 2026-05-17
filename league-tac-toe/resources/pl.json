@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "Gra na tym samym ekranie",
-                "description": "Zagraj przeciwko znajomemu na tym samym urządzeniu"
+                "description": "Zagraj przeciwko znajomemu na tym samym urządzeniu",
+                "starting": "Rozpoczynanie gry..."
             }
         },
         "howToPlay": "Jak grać?",
@@ -100,7 +101,10 @@
             "youLost": "Przegrałeś!",
             "leave": "Wyjdź",
             "playAgain": "Zagraj ponownie",
-            "nextGameStartSoon": "Następna gra rozpocznie się wkrótce."
+            "nextGameStartSoon": "Następna gra rozpocznie się wkrótce.",
+            "local": {
+                "playerWon": "Gracz {player} wygrał!"
+            }
         },
         "field": {
             "champion": "Bohater",
@@ -119,7 +123,13 @@
             "skipTurn": "Pomiń turę",
             "noTimeLimit": "Brak limitu czasu",
             "yourTurn": "Twoja tura",
-            "opponentsTurn": "Tura przeciwnika"
+            "opponentsTurn": "Tura przeciwnika",
+            "local": {
+                "playerTurn": "Tura gracza {player}",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "Drugi gracz proponuje remis"
+            }
         },
         "waitingRoom": {
             "roomCode": "Kod pokoju",

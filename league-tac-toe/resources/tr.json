@@ -43,7 +43,8 @@
             },
             "local": {
                 "title": "Aynı cihazda oyun",
-                "description": "Arkadaşına aynı cihazda karşı oyna"
+                "description": "Arkadaşına aynı cihazda karşı oyna",
+                "starting": "Starting game..."
             }
         },
         "howToPlay": "Nasıl oynanır?",
@@ -100,7 +101,10 @@
             "youLost": "Kaybettin!",
             "leave": "Çık",
             "playAgain": "Tekrar oyna",
-            "nextGameStartSoon": "Sonraki oyun yakında başlayacak."
+            "nextGameStartSoon": "Sonraki oyun yakında başlayacak.",
+            "local": {
+                "playerWon": "Player {player} won!"
+            }
         },
         "field": {
             "champion": "Şampiyon",
@@ -119,7 +123,13 @@
             "skipTurn": "Hamleyi geç",
             "noTimeLimit": "Zaman sınırı yok",
             "yourTurn": "Senin sıran",
-            "opponentsTurn": "Rakibin sırası"
+            "opponentsTurn": "Rakibin sırası",
+            "local": {
+                "playerTurn": "Player {player}'s turn",
+                "scoreX": "X",
+                "scoreO": "O",
+                "drawSuggested": "The other player suggests drawing the game"
+            }
         },
         "waitingRoom": {
             "roomCode": "Oda kodu",

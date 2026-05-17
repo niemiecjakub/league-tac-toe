@@ -7,6 +7,7 @@ namespace LeagueChampions.Service.Interfaces
   public interface IGameService
   {
     Task<RoomInfoDto> CreateRoomAsync(RoomOptions options);
+    Task<RoomDto> CreateLocalRoomAsync(RoomOptions options);
     Task<RoomInfoDto> CreateNextRoundAsync(Guid roomGuid);
     Task<RoomInfoDto> GetOrCreatePublicRoomAsync();
     Task<RoomDto> JoinRoomAsync(Guid roomGuid, HttpRequest request);

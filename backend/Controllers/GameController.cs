@@ -33,6 +33,14 @@ namespace LeagueChampions.Controllers
       return Ok(room);
     }
 
+    [HttpPost("CreateLocalRoom")]
+    public async Task<IActionResult> CreateLocalRoom([FromQuery] RoomOptions options)
+    {
+      _logger.LogInformation("Attempting to create a local room. User {UserGuid}", Request.GetUserGuid());
+      var room = await _gameService.CreateLocalRoomAsync(options);
+      return Ok(room);
+    }
+
     [HttpPost("JoinRoom/{roomGuid}")]
     public async Task<IActionResult> JoinRoom(Guid roomGuid)
     {
@@ -68,17 +76,25 @@ namespace LeagueChampions.Controllers
     {
       RoomDto room = await _gameService.MakeMoveAsync(roomGuid, fieldId, championName, Request);
 
-      await context.Clients.Group(roomGuid.ToString()).TurnSwitch();
+      if (!room.IsLocal)
+      {
+        await context.Clients.Group(roomGuid.ToString()).TurnSwitch();
 
-      if (room.Game.GameStatus == GameStateType.Finished)
-      {
-        _logger.LogInformation("Game finished, starting next game countdown");
-        _ = _countdownService.CancelTurnCountdown(roomGuid);
-        _ = _countdownService.CountdownNextRound(roomGuid);
+        if (room.Game.GameStatus == GameStateType.Finished)
+        {
+          _logger.LogInformation("Game finished, starting next game countdown");
+          _ = _countdownService.CancelTurnCountdown(roomGuid);
+          _ = _countdownService.CountdownNextRound(roomGuid);
+        }
+        else if (room.Game.GameStatus == GameStateType.InProgress)
+        {
+          _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+        }
       }
-      else if (room.Game.GameStatus == GameStateType.InProgress)
+      else if (room.Game.GameStatus == GameStateType.Finished)
       {
-        _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+        _logger.LogInformation("Local game finished, starting next game countdown");
+        _ = _countdownService.CountdownNextRound(roomGuid);
       }
 
       return Ok(room);
@@ -91,8 +107,11 @@ namespace LeagueChampions.Controllers
 
       _logger.LogInformation("Room: {RoomGuid}.Turn skipped by user: {UserGuid}", roomGuid, Request.GetUserGuid());
 
-      await context.Clients.Group(roomGuid.ToString()).TurnSwitch();
-      _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+      if (!room.IsLocal)
+      {
+        await context.Clients.Group(roomGuid.ToString()).TurnSwitch();
+        _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+      }
 
       return Ok(room);
     }
@@ -104,8 +123,11 @@ namespace LeagueChampions.Controllers
 
       _logger.LogInformation("Room: {RoomGuid}. Draw requested by user: {UserGuid}", roomGuid, Request.GetUserGuid());
 
-      await context.Clients.Group(roomGuid.ToString()).DrawRequested();
-      _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+      if (!room.IsLocal)
+      {
+        await context.Clients.Group(roomGuid.ToString()).DrawRequested();
+        _ = _countdownService.ResetTurnCountdownAsync(roomGuid, room.TurnTime);
+      }
 
       return Ok(room);
     }
@@ -115,11 +137,18 @@ namespace LeagueChampions.Controllers
     {
       RoomDto room = await _gameService.RespondDrawRequestAsync(roomGuid, Request);
 
-      await context.Clients.Group(roomGuid.ToString()).TurnSwitch();
-
-      _logger.LogInformation("Players agreed on a draw. Starting new game countdown: {RoomGuid}", roomGuid);
-      _ = _countdownService.CancelTurnCountdown(roomGuid);
-      _ = _countdownService.CountdownNextRound(roomGuid);
+      if (!room.IsLocal)
+      {
+        await context.Clients.Group(roomGuid.ToString()).TurnSwitch();
+        _logger.LogInformation("Players agreed on a draw. Starting new game countdown: {RoomGuid}", roomGuid);
+        _ = _countdownService.CancelTurnCountdown(roomGuid);
+        _ = _countdownService.CountdownNextRound(roomGuid);
+      }
+      else
+      {
+        _logger.LogInformation("Local players agreed on a draw. Starting new game countdown: {RoomGuid}", roomGuid);
+        _ = _countdownService.CountdownNextRound(roomGuid);
+      }
 
       return Ok(room);
     }
