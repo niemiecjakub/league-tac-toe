@@ -44,6 +44,9 @@ namespace LeagueChampions.Repositories
       await _context.SaveChangesAsync();
     }
 
-
+    public async Task<int> GetGamesCountAsync()
+    {
+      return await _context.Game.CountAsync();
+    }
   }
 }

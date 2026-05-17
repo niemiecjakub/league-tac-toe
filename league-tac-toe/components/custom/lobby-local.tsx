@@ -95,6 +95,29 @@ export default function LobbyLocal() {
                             </SelectContent>
                         </Select>
                     </div>
+                    <div className="flex gap-2 justify-between">
+                        <Label>{t("includeEsportCategories")}</Label>
+                        <Select
+                            value={roomOptions.includeEsportCategories.toString()}
+                            onValueChange={(value) =>
+                                setRoomOptions((prev) => ({
+                                    ...prev,
+                                    includeEsportCategories: value === "true",
+                                }))
+                            }
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder={t("yes")} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>{t("includeEsportCategories")}</SelectLabel>
+                                    <SelectItem value="true">{t("yes")}</SelectItem>
+                                    <SelectItem value="false">{t("no")}</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
             </CardContent>
             <CardFooter className="flex-col gap-2">

@@ -23,6 +23,7 @@
         "start": "Starten",
         "lobby": {
             "online": {
+                "globalStats": "{gamesPlayed} Spiele in {roomsCount} Räumen gespielt",
                 "joinRoom": {
                     "title": "Raum beitreten",
                     "description": "Raumcode eingeben und Spiel beitreten",

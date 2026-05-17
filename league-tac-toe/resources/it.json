@@ -23,6 +23,7 @@
         "start": "Inizia",
         "lobby": {
             "online": {
+                "globalStats": "{gamesPlayed} partite giocate in {roomsCount} stanze",
                 "joinRoom": {
                     "title": "Unisciti a una stanza esistente",
                     "description": "Inserisci il codice stanza e unisciti alla partita",

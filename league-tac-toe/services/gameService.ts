@@ -1,5 +1,6 @@
 import axios from "@/lib/axios";
 import { BoardField, Categories } from "@/models/Game";
+import { GlobalStats } from "@/models/GlobalStats";
 import { Room, RoomInfo, RoomOptions } from "@/models/Room";
 
 const parseGameData = (data: any) => {
@@ -45,6 +46,11 @@ export const getRoom = async (roomGuid: string): Promise<Room> => {
 
 export const findRandomOpponent = async (): Promise<RoomInfo> => {
     const { data } = await axios.get("Game/FindRandomOpponent");
+    return data;
+};
+
+export const getGlobalStats = async (): Promise<GlobalStats> => {
+    const { data } = await axios.get("Game/Stats");
     return data;
 };
 

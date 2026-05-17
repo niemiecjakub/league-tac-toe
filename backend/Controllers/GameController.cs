@@ -159,6 +159,13 @@ namespace LeagueChampions.Controllers
       var rooms = await _gameService.GetRoomsAsync();
       return Ok(rooms);
     }
+
+    [HttpGet("Stats")]
+    public async Task<IActionResult> GetGlobalStats()
+    {
+      var stats = await _gameService.GetGlobalStatsAsync();
+      return Ok(stats);
+    }
   }
 }
 

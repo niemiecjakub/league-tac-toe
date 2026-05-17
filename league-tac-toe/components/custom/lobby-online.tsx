@@ -5,9 +5,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createRoom } from "@/services/gameService";
+import { createRoom, getGlobalStats } from "@/services/gameService";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { GlobalStats } from "@/models/GlobalStats";
+import { useLocale } from "next-intl";
 import { RoomOptions } from "@/models/Room";
 import { useTranslations } from "next-intl";
 import { Spinner } from "../ui/spinner";
@@ -17,7 +19,9 @@ import { handleServiceError } from "@/lib/errorHandler";
 
 export default function LobbyOnline() {
     const t = useTranslations("home");
+    const locale = useLocale();
     const router = useRouter();
+    const [globalStats, setGlobalStats] = useState<GlobalStats | null>(null);
     const [roomCode, setRoomCode] = useState("");
     const [newRoomOptions, setNewRoomOptions] = useState<RoomOptions>({
         turnTime: -1,
@@ -28,6 +32,14 @@ export default function LobbyOnline() {
     const [isCreatingRoom, setIsCreatingRoom] = useState(false);
     const [isJoining, setIsJoining] = useState(false);
     const { joinRoom } = useRoomStore((state) => state);
+
+    useEffect(() => {
+        getGlobalStats()
+            .then(setGlobalStats)
+            .catch(() => setGlobalStats(null));
+    }, []);
+
+    const formatCount = (value: number) => value.toLocaleString(locale);
 
     const handleRoomCreate = async () => {
         try {
@@ -52,8 +64,9 @@ export default function LobbyOnline() {
         }
     };
     return (
-        <Card className="w-full">
-            <CardHeader>
+        <div className="flex w-full flex-col gap-2">
+            <Card className="w-full">
+                <CardHeader>
                 <CardTitle>{t("lobby.online.joinRoom.title")}</CardTitle>
                 <CardDescription>{t("lobby.online.joinRoom.description")}</CardDescription>
             </CardHeader>
@@ -164,6 +177,15 @@ export default function LobbyOnline() {
                     )}
                 </Button>
             </CardFooter>
-        </Card>
+            </Card>
+            {globalStats && (
+                <p className="text-muted-foreground text-center text-sm italic">
+                    {t("lobby.online.globalStats", {
+                        gamesPlayed: formatCount(globalStats.gamesPlayed),
+                        roomsCount: formatCount(globalStats.roomsCount),
+                    })}
+                </p>
+            )}
+        </div>
     );
 }

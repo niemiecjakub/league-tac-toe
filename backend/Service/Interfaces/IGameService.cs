@@ -20,5 +20,6 @@ namespace LeagueChampions.Service.Interfaces
     Task CloseRoomAsync(Guid roomGuid);
     Task<IEnumerable<RoomInfoDto>> GetRoomsAsync();
     Task<Dictionary<GameStateType, int>> GetGamesByStateCount();
+    Task<GlobalStatsDto> GetGlobalStatsAsync();
   }
 }

@@ -9,5 +9,6 @@ namespace LeagueChampions.Repositories.Interfaces
     Task<Game?> GetByRoomGuidAsync(Guid roomGuid);
     Task UpdateAsync(Game game);
     Task<Dictionary<GameStateType, int>> GetGamesByStateCount();
+    Task<int> GetGamesCountAsync();
   }
 }

@@ -23,6 +23,7 @@
         "start": "Démarrer",
         "lobby": {
             "online": {
+                "globalStats": "{gamesPlayed} parties jouées dans {roomsCount} salles",
                 "joinRoom": {
                     "title": "Rejoindre une salle existante",
                     "description": "Entre le code de la salle pour rejoindre la partie",

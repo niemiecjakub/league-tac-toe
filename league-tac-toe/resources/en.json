@@ -23,6 +23,7 @@
         "start": "Start",
         "lobby": {
             "online": {
+                "globalStats": "{gamesPlayed} games played across {roomsCount} rooms",
                 "joinRoom": {
                     "title": "Join existing room",
                     "description": "Enter room code and join the game",

@@ -23,6 +23,7 @@
         "start": "Başlat",
         "lobby": {
             "online": {
+                "globalStats": "{roomsCount} odada {gamesPlayed} oyun oynandı",
                 "joinRoom": {
                     "title": "Mevcut odaya katıl",
                     "description": "Oda kodunu gir ve oyuna katıl",

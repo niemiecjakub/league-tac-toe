@@ -23,6 +23,7 @@
         "start": "시작",
         "lobby": {
             "online": {
+                "globalStats": "{roomsCount}개 방에서 {gamesPlayed}게임 플레이",
                 "joinRoom": {
                     "title": "기존 방 참가",
                     "description": "방 코드를 입력하고 게임에 참가",

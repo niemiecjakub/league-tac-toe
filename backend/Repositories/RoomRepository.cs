@@ -54,5 +54,10 @@ namespace LeagueChampions.Repositories
     {
       return await _context.Room.ToListAsync();
     }
+
+    public async Task<int> GetRoomsCountAsync()
+    {
+      return await _context.Room.CountAsync();
+    }
   }
 }

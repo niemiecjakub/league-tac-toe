@@ -236,5 +236,14 @@ namespace LeagueChampions.Services
     {
       return await _gameRepository.GetGamesByStateCount();
     }
+
+    public async Task<GlobalStatsDto> GetGlobalStatsAsync()
+    {
+      return new GlobalStatsDto
+      {
+        GamesPlayed = await _gameRepository.GetGamesCountAsync(),
+        RoomsCount = await _roomRepository.GetRoomsCountAsync(),
+      };
+    }
   }
 }

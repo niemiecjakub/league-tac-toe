@@ -9,5 +9,6 @@ namespace LeagueChampions.Repositories.Interfaces
     Task<Room?> GetRoomByGuidAsync(Guid roomGuid);
     Task<IEnumerable<Room>> GetRoomsAsync();
     Task UpdateAsync(Room room);
+    Task<int> GetRoomsCountAsync();
   }
 }
