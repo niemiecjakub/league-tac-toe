@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { GlobalStats } from "@/models/GlobalStats";
 import { getGlobalStats } from "@/services/gameService";
-import { formatRoundedCount } from "@/lib/utils";
+import { getRoundedCount } from "@/lib/utils";
+import { useCountUp } from "@/lib/hooks/use-count-up";
 import Image from "next/image";
+
+const COUNT_UP_DURATION_MS = 500;
 
 export default function GlobalStatsBanner() {
     const t = useTranslations("home");
@@ -18,15 +21,18 @@ export default function GlobalStatsBanner() {
             .catch(() => setGlobalStats(null));
     }, []);
 
+    const targetCount = globalStats ? getRoundedCount(globalStats.gamesPlayed) : 0;
+    const animatedCount = useCountUp(targetCount, COUNT_UP_DURATION_MS, !!globalStats);
+
     if (!globalStats) {
         return null;
     }
 
-    const gamesPlayed = formatRoundedCount(globalStats.gamesPlayed, locale);
+    const gamesPlayed = animatedCount.toLocaleString(locale);
 
     return (
         <div className="flex w-full items-center gap-2 sm:gap-3" role="status">
-            <span className="hidden h-px flex-1 bg-border sm:block" aria-hidden />
+            <span className="h-px min-w-0 flex-1 bg-border" aria-hidden />
             <Image src="/images/ahri.png" alt="" width={24} height={24} className="shrink-0" aria-hidden />
             <p className="shrink-0 text-center text-sm italic text-muted-foreground sm:text-base">
                 {t.rich("lobby.online.globalStats", {
@@ -37,7 +43,7 @@ export default function GlobalStatsBanner() {
                 })}
             </p>
             <Image src="/images/ahri.png" alt="" width={24} height={24} className="shrink-0" aria-hidden />
-            <span className="hidden h-px flex-1 bg-border sm:block" aria-hidden />
+            <span className="h-px min-w-0 flex-1 bg-border" aria-hidden />
         </div>
     );
 }
