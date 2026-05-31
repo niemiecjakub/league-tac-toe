@@ -6,12 +6,12 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-/** Rounds counts for display (e.g. 5234 → 5000, 21 → 21). */
+/** Rounds counts for display (e.g. 5555 → 5550, 21 → 21). */
 export function getRoundedCount(value: number): number {
-    return value >= 1_000 ? Math.floor(value / 1_000) * 1_000 : value;
+    return value >= 1_000 ? Math.floor(value / 10) * 10 : value;
 }
 
-/** Rounds counts for display (e.g. 5234 → "5,000", 21 → "21"). */
+/** Rounds counts for display (e.g. 5555 → "5,550", 21 → "21"). */
 export function formatRoundedCount(value: number, locale = "en"): string {
     return getRoundedCount(value).toLocaleString(locale);
 }

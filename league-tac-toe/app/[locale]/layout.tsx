@@ -7,8 +7,6 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
-import BuyMeACoffeeWidget from "@/components/custom/buy-me-a-coffee";
-
 const metadataBase = new URL("https://leaguetactoe.com");
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -136,7 +134,6 @@ export default async function LocaleLayout({ children, params }: Props) {
                             <header className="w-full">
                                 <Navbar />
                             </header>
-                            <BuyMeACoffeeWidget />
                             <main className="flex h-screen flex-col items-center w-full px-2 sm:px-0">{children}</main>
                         </div>
                         <ToastContainer autoClose={1000} position="top-center" />
