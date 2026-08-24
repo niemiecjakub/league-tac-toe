@@ -7,42 +7,17 @@ import RuleList from "@/components/custom/rule-list";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { Metadata } from "next";
-
-const metadataBase = new URL("https://leaguetactoe.com");
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: "seo.home" });
-
-    const title = t("title");
-    const description = t("description");
-    const url = `${metadataBase}${locale === "en" ? "" : `/${locale}`}`;
-
-    return {
-        title,
-        description,
-        alternates: {
-            canonical: url,
-        },
-        openGraph: {
-            title,
-            description,
-            url,
-            images: [
-                {
-                    url: `${metadataBase}/images/champions.jpg`,
-                    width: 1200,
-                    height: 630,
-                    alt: title,
-                },
-            ],
-        },
-        twitter: {
-            title,
-            description,
-            images: [`${metadataBase}/images/champions.jpg`],
-        },
-    };
+    return pageMetadata({
+        locale,
+        path: "/",
+        title: t("title"),
+        description: t("description"),
+    });
 }
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {

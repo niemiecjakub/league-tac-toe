@@ -7,7 +7,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ThemeProvider } from "@/components/custom/theme-provider";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
-const metadataBase = new URL("https://leaguetactoe.com");
+import JsonLd from "@/components/custom/json-ld";
+import { GITHUB_URL, SITE_NAME, SITE_URL, absoluteUrl, languageAlternates, OG_LOCALE } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
     const { locale } = await params;
@@ -15,10 +16,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
     const title = t("title");
     const description = t("description");
-    const url = `${metadataBase}${locale === "en" ? "" : `/${locale}`}`;
+    const url = absoluteUrl(locale);
 
     return {
-        metadataBase,
+        metadataBase: new URL(SITE_URL),
         title: {
             default: title,
             template: `%s | ${title}`,
@@ -26,31 +27,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         description,
         alternates: {
             canonical: url,
-            languages: Object.fromEntries(
-                routing.locales.map((loc) => [loc, `${metadataBase}${loc === "en" ? "" : `/${loc}`}`])
-            ),
+            languages: languageAlternates("/"),
         },
         openGraph: {
             type: "website",
-            locale: locale,
-            url: url,
-            siteName: title,
-            title: title,
-            description: description,
-            images: [
-                {
-                    url: `${metadataBase}/images/champions.jpg`,
-                    width: 1200,
-                    height: 630,
-                    alt: title,
-                },
-            ],
+            locale: OG_LOCALE[locale] ?? locale.replace("-", "_"),
+            url,
+            siteName: SITE_NAME,
+            title,
+            description,
         },
         twitter: {
             card: "summary_large_image",
-            title: title,
-            description: description,
-            images: [`${metadataBase}/images/champions.jpg`],
+            title,
+            description,
         },
         robots: {
             index: true,
@@ -97,19 +87,35 @@ export default async function LocaleLayout({ children, params }: Props) {
 
     const structuredData = {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        name: t("title"),
-        description: t("description"),
-        url: metadataBase.toString(),
-        applicationCategory: "Game",
-        operatingSystem: "Web",
-        offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "USD",
-        },
-        inLanguage: routing.locales,
-        browserRequirements: "Requires JavaScript. Requires HTML5.",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                name: SITE_NAME,
+                description: t("description"),
+                url: absoluteUrl(locale),
+                applicationCategory: "GameApplication",
+                operatingSystem: "Any",
+                offers: {
+                    "@type": "Offer",
+                    price: "0",
+                    priceCurrency: "USD",
+                },
+                inLanguage: routing.locales,
+                browserRequirements: "Requires JavaScript. Requires HTML5.",
+            },
+            {
+                "@type": "WebSite",
+                name: SITE_NAME,
+                url: SITE_URL,
+                inLanguage: routing.locales,
+            },
+            {
+                "@type": "Organization",
+                name: SITE_NAME,
+                url: SITE_URL,
+                sameAs: [GITHUB_URL],
+            },
+        ],
     };
 
     return (
@@ -120,12 +126,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                         __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"){document.documentElement.classList.remove("dark")}else{document.documentElement.classList.add("dark")}}catch(e){document.documentElement.classList.add("dark")}})();`,
                     }}
                 />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(structuredData),
-                    }}
-                />
+                <JsonLd data={structuredData} />
             </head>
             <body className="antialiased">
                 <NextIntlClientProvider>

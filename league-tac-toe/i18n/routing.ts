@@ -21,4 +21,5 @@ const locales = [...new Set(SUPPORTED_CULTURES.map((culture) => culture.langCode
 export const routing = defineRouting({
     locales,
     defaultLocale: DEFAULT_LANG.langCode,
+    localePrefix: "always",
 });

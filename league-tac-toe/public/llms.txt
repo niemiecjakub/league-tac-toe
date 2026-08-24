@@ -1,0 +1,20 @@
+# League Tac Toe
+
+> Free browser game: League of Legends champion quiz on a tic-tac-toe board.
+
+League Tac Toe (leaguetactoe.com) is a web game where two players claim squares on a 3×3 grid. Each square is the intersection of two champion categories (region, position, resource, range type, or legacy). Name a champion who matches both categories to place X or O. First to three in a row wins.
+
+Optional steal mode: each player has three steals and can take an occupied square by naming a different valid champion.
+
+Play without an account: online with a room code, random matchmaking, or same-device local play. The game is free.
+
+## URLs
+
+- Home (play): https://leaguetactoe.com/en
+- Champion list: https://leaguetactoe.com/en/champions
+- Localized prefixes: /en /pt-BR /tr /es-AR /ro /pl /es /de /fr /it /ja /ko
+- Source: https://github.com/niemiecjakub/league-tac-toe
+
+## Not for indexing
+
+Live matches live under /game/ and should not be treated as content pages.

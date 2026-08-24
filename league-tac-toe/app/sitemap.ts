@@ -1,44 +1,23 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import { SITE_URL, sitemapLanguages, type AppPath } from "@/lib/seo";
+import { getPathname } from "@/i18n/navigation";
 
-const metadataBase = new URL("https://leaguetactoe.com");
+function urlFor(locale: string, href: AppPath): string {
+    return `${SITE_URL}${getPathname({ locale, href })}`;
+}
+
+function entry(href: AppPath, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"], priority: number): MetadataRoute.Sitemap {
+    return routing.locales.map((locale) => ({
+        url: urlFor(locale, href),
+        changeFrequency,
+        priority,
+        alternates: {
+            languages: sitemapLanguages(href),
+        },
+    }));
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const routes: MetadataRoute.Sitemap = [];
-
-    for (const locale of routing.locales) {
-        const localePath = locale === "en" ? "" : `/${locale}`;
-
-        routes.push({
-            url: `${metadataBase}${localePath}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly",
-            priority: 1.0,
-            alternates: {
-                languages: Object.fromEntries(
-                    routing.locales.map((loc) => [
-                        loc,
-                        `${metadataBase}${loc === "en" ? "" : `/${loc}`}`,
-                    ])
-                ),
-            },
-        });
-
-        routes.push({
-            url: `${metadataBase}${localePath}/champions`,
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.8,
-            alternates: {
-                languages: Object.fromEntries(
-                    routing.locales.map((loc) => [
-                        loc,
-                        `${metadataBase}${loc === "en" ? "" : `/${loc}`}/champions`,
-                    ])
-                ),
-            },
-        });
-    }
-
-    return routes;
+    return [...entry("/", "weekly", 1), ...entry("/champions", "weekly", 0.8)];
 }
